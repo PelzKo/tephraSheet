@@ -33,5 +33,21 @@
     {% endif %}
     {% block content %}{% endblock %}
   </main>
+  <button type="button" class="fb-bubble" data-fb-open aria-label="Send feedback" title="Feedback, bug report or feature request">
+    <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3 6.5a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01z"/></svg>
+  </button>
+  <div class="fb-backdrop" data-fb hidden role="dialog" aria-modal="true" aria-labelledby="fb-title">
+    <form class="paper fb-modal stack" data-fb-form method="post" action="{% url 'feedback' %}">
+      <div class="row spread"><h2 id="fb-title">Send feedback</h2><button type="button" class="btn small" data-fb-close aria-label="Close">✕</button></div>
+      <input type="hidden" name="character" value="{{ character.pk|default:'' }}">
+      <div class="row">
+        <select name="category" aria-label="Type"><option value="bug">Bug</option><option value="feature">Feature request</option><option value="feedback" selected>Feedback</option><option value="other">Other</option></select>
+        <input type="text" name="name" maxlength="80" placeholder="Your name (optional)" class="grow" aria-label="Your name">
+      </div>
+      <textarea name="message" rows="6" maxlength="5000" required placeholder="What happened, what would you like, what should change?"></textarea>
+      <p class="small muted">The page you are on{% if character.pk %}, the character ({{ character }}){% endif %} and basic device details (screen size, browser) are sent along.</p>
+      <div class="row spread"><span class="small" data-fb-status aria-live="polite"></span><button type="submit" class="btn primary">Send</button></div>
+    </form>
+  </div>
 </body>
 </html>

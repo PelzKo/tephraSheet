@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Character, CustomModifier, EffectEntry, InventoryItem, LevelLog, NarratorSettings
+from .models import Character, CustomModifier, EffectEntry, Feedback, InventoryItem, LevelLog, NarratorSettings
 
 
 class InventoryInline(admin.TabularInline):
@@ -30,3 +30,10 @@ class CharacterAdmin(admin.ModelAdmin):
 
 admin.site.register(NarratorSettings)
 admin.site.register(LevelLog)
+
+
+@admin.register(Feedback)
+class FeedbackAdmin(admin.ModelAdmin):
+    list_display = ["created", "category", "status", "name", "character_name", "page_title"]
+    list_filter = ["status", "category"]
+    search_fields = ["message", "name", "character_name", "page_url"]

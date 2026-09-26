@@ -3,7 +3,7 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from catalog import views as catalog_views
-from characters.views import admin_mode, general, levelup, sheet, wizard
+from characters.views import admin_mode, feedback, general, levelup, sheet, wizard
 
 urlpatterns = [
     path("", general.character_list, name="character_list"),
@@ -33,5 +33,8 @@ urlpatterns = [
     path("gm/logout/", auth_views.LogoutView.as_view(next_page="character_list"), name="gm_logout"),
     path("gm/", general.gm_settings, name="gm_settings"),
     path("gm/password/<int:pk>/", general.gm_reset_password, name="gm_reset_password"),
+    path("feedback/", feedback.feedback_submit, name="feedback"),
+    path("gm/feedback/<int:pk>/status/", feedback.feedback_status, name="gm_feedback_status"),
+    path("gm/feedback/<int:pk>/delete/", feedback.feedback_delete, name="gm_feedback_delete"),
     path("admin/", admin.site.urls),
 ]

@@ -6,7 +6,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from .. import access
-from ..models import Character, NarratorSettings
+from ..models import Character, Feedback, NarratorSettings
 
 
 def character_list(request):
@@ -110,8 +110,10 @@ def gm_settings(request):
         form.save()
         messages.success(request, "Narrator settings saved.")
         return redirect("gm_settings")
+    feedback = list(Feedback.objects.select_related("character"))
     return render(request, "characters/gm_settings.html", {
-        "form": form, "characters": Character.objects.all()})
+        "form": form, "characters": Character.objects.all(), "feedback": feedback,
+        "feedback_open": sum(1 for f in feedback if f.is_open), "feedback_statuses": Feedback.STATUS_CHOICES})
 
 
 @staff_member_required(login_url="gm_login")

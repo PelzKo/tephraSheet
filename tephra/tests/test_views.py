@@ -8,7 +8,7 @@ from django.urls import reverse
 from catalog.importer import parse_rows
 from catalog.models import ItemTemplate
 from characters import services
-from characters.models import Character, InventoryItem
+from characters.models import Character, Feedback, InventoryItem
 from rules.registry import get_registry
 
 
@@ -292,3 +292,46 @@ def test_instrument_battle_theme_sunder(client_char):
     resp = client.post(reverse("play", args=[c.pk, "theme-sundered"]), HTTP_HX_REQUEST="true")
     c.refresh_from_db()
     assert c.stance == "" and b"Battle Theme has been cancelled" in resp.content
+
+
+def test_catalog_sort_keys_and_inventory_toolbar(client_char):
+    client, c = client_char
+    html = client.get(reverse("catalog")).content.decode()
+    assert 'data-sort="5"' in html or 'data-sort="4"' in html  # size rank (heavy / super-heavy)
+    sabre = ItemTemplate.objects.filter(price_dukes__gt=0).first()
+    assert f'data-sort="{sabre.price_dukes}"' in html
+    client.post(reverse("wizard_step", args=[c.pk, 1]), {"action": "random_all"})
+    c.refresh_from_db()
+    client.post(reverse("wizard_step", args=[c.pk, 10]),
+                {"action": "finish", "name": c.name, "password": "abc", "password2": "abc"})
+    InventoryItem.from_template(c, sabre).save()
+    html = client.get(reverse("sheet", args=[c.pk]) + "?tab=inventory").content.decode()
+    assert "data-inv-toolbar" in html and f'data-price="{sabre.price_dukes}"' in html
+
+
+def test_feedback_submit_and_gm_review(client_char):
+    client, c = client_char
+    resp = client.post(reverse("feedback"), {
+        "category": "bug", "name": "Ann", "message": "Wings page overlaps", "character": c.pk,
+        "page_url": "http://testserver/c/1/", "page_title": "Sheet", "meta": '{"tab": "page2", "viewport": "800x600"}'})
+    assert resp.status_code == 200 and resp.json() == {"ok": True}
+    fb = Feedback.objects.get()
+    assert fb.character == c and fb.character_name == str(c) and fb.category == "bug"
+    assert fb.meta["tab"] == "page2" and "user_agent" in fb.meta and fb.status == "new"
+    assert client.post(reverse("feedback"), {"message": "  "}).status_code == 400
+    for _ in range(9):
+        client.post(reverse("feedback"), {"message": "spam"})
+    assert client.post(reverse("feedback"), {"message": "one too many"}).status_code == 429
+
+    # Only the narrator can review.
+    client.post(reverse("gm_feedback_status", args=[fb.pk]), {"status": "done"})
+    fb.refresh_from_db()
+    assert fb.status == "new"
+    User.objects.create_superuser("gm", "gm@example.com", "pw")
+    client.login(username="gm", password="pw")
+    assert "Wings page overlaps" in client.get(reverse("gm_settings")).content.decode()
+    client.post(reverse("gm_feedback_status", args=[fb.pk]), {"status": "done"})
+    fb.refresh_from_db()
+    assert fb.status == "done"
+    client.post(reverse("gm_feedback_delete", args=[fb.pk]))
+    assert not Feedback.objects.filter(pk=fb.pk).exists()

@@ -4,6 +4,7 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
+from catalog.models import KIND_CHOICES
 from rules.engine import effects as fx
 from rules.engine import tables
 from rules.engine.requirements import character_warnings
@@ -91,6 +92,7 @@ def sheet_context(request, character):
         "stat_cols": tables.COMBAT_STATS, "stat_labels": tables.COMBAT_STAT_LABELS,
         "augments": augments, "stories": stories,
         "items": items,
+        "item_kinds": [(v, label) for v, label in KIND_CHOICES if any(i.kind == v for i in items)],
         "carried": [i for i in items if i.slot in ("carried", "worn")],
         "stored": [i for i in items if i.slot == "stored"],
         "money_on_hand": tables.format_money(character.money_on_hand),

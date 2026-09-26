@@ -3,6 +3,8 @@ import json
 from django import template
 from django.utils.html import format_html
 
+from catalog.models import SIZE_CHOICES
+
 from rules.engine.modifiers import Value
 from rules.engine.tables import format_money as _format_money
 
@@ -48,6 +50,15 @@ def signed(value):
 @register.filter
 def money(dukes):
     return _format_money(dukes)
+
+
+_SIZE_RANK = {value: n for n, (value, _label) in enumerate(SIZE_CHOICES) if value}
+
+
+@register.filter
+def size_rank(size):
+    """Sort key for item sizes (minimal → super-heavy); empty for items without a size."""
+    return _SIZE_RANK.get(size, "")
 
 
 @register.filter

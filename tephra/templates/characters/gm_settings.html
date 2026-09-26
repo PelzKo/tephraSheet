@@ -7,7 +7,7 @@
 <div class="paper">
   <h2>Characters</h2>
   <div class="table-scroll"><table class="data">
-    <tr><th>Name</th><th>Player</th><th>Level</th><th>Status</th><th>Reset password</th><th></th></tr>
+    <tr><th>Name</th><th>Player</th><th>Level</th><th>Status</th><th data-nosort>Reset password</th><th data-nosort></th></tr>
     {% for c in characters %}
       <tr><td><a href="{{ c.get_absolute_url }}">{{ c }}</a></td><td>{{ c.player_name }}</td><td>{{ c.level }}</td><td>{{ c.get_status_display }}</td>
         <td><form class="row" method="post" action="{% url 'gm_reset_password' c.pk %}">{% csrf_token %}
@@ -16,5 +16,30 @@
     {% endfor %}
   </table></div>
   <p class="small muted">Raw data: <a href="{% url 'admin:index' %}">Django admin</a> · <a href="{% url 'catalog' %}">Catalog</a> · <a href="{% url 'catalog_import' %}">Bulk import</a></p>
+</div>
+<div class="paper" id="feedback">
+  <h2>Feedback{% if feedback_open %} <span class="tag">{{ feedback_open }} open</span>{% endif %}</h2>
+  {% if feedback %}
+  <div class="table-scroll"><table class="data feedback-table">
+    <tr><th>Date</th><th>Type</th><th>Status</th><th>From</th><th>Where</th><th>Message</th><th data-nosort></th></tr>
+    {% for f in feedback %}
+      <tr class="{% if not f.is_open %}fb-closed{% endif %}">
+        <td data-sort="{{ f.created|date:'c' }}" style="white-space:nowrap">{{ f.created|date:"Y-m-d H:i" }}</td>
+        <td>{{ f.get_category_display }}</td>
+        <td data-sort="{% if f.status == 'new' %}1{% elif f.status == 'progress' %}2{% elif f.status == 'done' %}3{% else %}4{% endif %}"><form method="post" action="{% url 'gm_feedback_status' f.pk %}">{% csrf_token %}
+          <select name="status" onchange="this.form.submit()" aria-label="Status">{% for v, l in feedback_statuses %}<option value="{{ v }}" {% if v == f.status %}selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+          <noscript><button class="btn small">Set</button></noscript></form></td>
+        <td>{{ f.name|default:"–" }}</td>
+        <td class="small" data-sort="{{ f.character_name }} {{ f.page_title }}">
+          {% if f.character %}<a href="{{ f.character.get_absolute_url }}">{{ f.character_name }}</a>{% elif f.character_name %}{{ f.character_name }} <span class="muted">(deleted)</span>{% endif %}
+          {% if f.meta.tab %}<div class="muted">tab: {{ f.meta.tab }}</div>{% endif %}
+          {% if f.page_url %}<div><a href="{{ f.page_url }}" title="{{ f.page_url }}">{{ f.page_title|default:f.page_url|truncatechars:40 }}</a></div>{% endif %}</td>
+        <td><div class="fb-message">{{ f.message }}</div>
+          <details class="small muted"><summary>Details</summary><dl class="fb-meta">{% for k, v in f.meta.items %}<dt>{{ k }}</dt><dd>{{ v }}</dd>{% endfor %}</dl></details></td>
+        <td><form method="post" action="{% url 'gm_feedback_delete' f.pk %}" onsubmit="return confirm('Delete this feedback?')">{% csrf_token %}<button class="btn small danger">Delete</button></form></td>
+      </tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p class="muted">No feedback yet. Players send it with the speech bubble in the bottom right corner.</p>{% endif %}
 </div>
 {% endblock %}

@@ -1,12 +1,12 @@
 {% load sheet_tags %}
 <div class="table-scroll"><table class="data">
-  <tr><th>Item</th><th>Kind</th><th>Size</th><th>Price</th><th></th></tr>
+  <tr><th>Item</th><th>Kind</th><th>Size</th><th>Price</th><th data-nosort></th></tr>
   {% for i in items %}
-    <tr><td><b>{{ i.name }}</b>{% if i.is_starting_gear %} <span class="tag">starting gear</span>{% endif %}{% if i.source == "custom" %} <span class="tag">custom</span>{% endif %}
+    <tr><td data-sort="{{ i.name }}"><b>{{ i.name }}</b>{% if i.is_starting_gear %} <span class="tag">starting gear</span>{% endif %}{% if i.source == "custom" %} <span class="tag">custom</span>{% endif %}
         {% if i.variants %}<span class="small muted"> {{ i.variants|join:", " }}</span>{% endif %}
         {% if i.augments %}<div class="small">{% for a in i.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}</div>{% endif %}
         {% if i.description %}<div class="small muted">{{ i.description|truncatechars:160 }}</div>{% endif %}</td>
-      <td>{{ i.get_kind_display }}</td><td>{{ i.get_size_display }}</td><td>{{ i.price_dukes|money }}</td>
+      <td>{{ i.get_kind_display }}</td><td data-sort="{{ i.size|size_rank }}">{{ i.get_size_display }}</td><td data-sort="{{ i.price_dukes }}">{{ i.price_dukes|money }}</td>
       <td style="white-space:nowrap">
         {% if character %}
           <form class="row" style="gap:4px;flex-wrap:nowrap" method="post" action="{% url 'add_to_inventory' i.pk %}">{% csrf_token %}
@@ -18,5 +18,5 @@
         {% endif %}
         {% if is_gm or i.source == "custom" %}<a class="btn small" href="{% url 'item_edit' i.pk %}">Edit</a>{% endif %}
       </td></tr>
-  {% empty %}<tr><td colspan="5" class="muted">No items found.</td></tr>{% endfor %}
+  {% empty %}<tr data-nosort><td colspan="5" class="muted">No items found.</td></tr>{% endfor %}
 </table></div>

@@ -8,8 +8,29 @@
       <a class="btn small" href="{% url 'catalog_import' %}?for={{ character.pk }}">Bulk import</a>
     </div>
   </div>
+  {% if items %}
+  <div class="inv-toolbar row" data-inv-toolbar data-character="{{ character.pk }}" data-target="#inv-list">
+    <input type="search" data-inv-q placeholder="Search inventory…" class="grow" aria-label="Search inventory">
+    <select data-inv-kind aria-label="Filter by kind"><option value="">All kinds</option>{% for v, l in item_kinds %}<option value="{{ v }}">{{ l }}</option>{% endfor %}</select>
+    <select data-inv-sort aria-label="Sort by">
+      <option value="slot">Sort: where it is</option>
+      <option value="name-asc">Name A → Z</option>
+      <option value="name-desc">Name Z → A</option>
+      <option value="price-desc">Price high → low</option>
+      <option value="price-asc">Price low → high</option>
+      <option value="value-desc">Total value (× quantity) high → low</option>
+      <option value="size-desc">Size heavy → light</option>
+      <option value="size-asc">Size light → heavy</option>
+      <option value="kind">Kind A → Z</option>
+    </select>
+    <button type="button" class="btn small" data-inv-reset>Reset</button>
+  </div>
+  {% endif %}
+  <div id="inv-list">
   {% for item in items %}
-    <div class="inv-slot">
+    <div class="inv-slot" data-idx="{{ forloop.counter }}" data-name="{{ item.name }}" data-kind="{{ item.kind }}" data-kind-label="{{ item.get_kind_display }}"
+         data-size="{{ item.size|size_rank }}" data-price="{{ item.price_dukes|default:0 }}" data-qty="{{ item.quantity }}"
+         data-text="{{ item.name|lower }} {{ item.get_kind_display|lower }} {{ item.description|lower }} {{ item.notes|lower }}">
       <div>
         <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name }}</b>
         <span class="tag">{{ item.get_kind_display }}{% if item.size %} · {{ item.get_size_display }}{% endif %}{% if item.hands_label %} · {{ item.hands_label }}{% endif %}{% if item.concealable %} · concealable{% endif %}</span>
@@ -43,6 +64,8 @@
   {% empty %}
     <p class="muted">Nothing carried yet.</p>
   {% endfor %}
+    <p class="muted" data-inv-empty hidden>No items match the search or filter.</p>
+  </div>
   <p class="muted small">"Worn / active" items (e.g. a flight pack) apply their modifiers; carried and stored items don't. A two-handed item always goes into the left hand and blocks the right one; a shield or parrying dagger takes the right hand (a cloak takes none).</p>
 </div>
 

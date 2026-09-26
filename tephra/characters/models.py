@@ -253,3 +253,36 @@ class LevelLog(models.Model):
 
     class Meta:
         ordering = ["level"]
+
+
+class Feedback(models.Model):
+    """Bug report, feature request or general feedback sent via the speech bubble on every page.
+
+    ``meta`` holds what the browser and server knew at the time (sheet tab, viewport, device,
+    user agent, admin mode …) so the narrator can reproduce the situation."""
+
+    CATEGORY_CHOICES = [("bug", "Bug"), ("feature", "Feature request"), ("feedback", "Feedback"), ("other", "Other")]
+    STATUS_CHOICES = [("new", "New"), ("progress", "In progress"), ("done", "Done"), ("wontfix", "Won't fix")]
+    OPEN_STATUSES = ("new", "progress")
+
+    created = models.DateTimeField(auto_now_add=True)
+    category = models.CharField(max_length=20, choices=CATEGORY_CHOICES, default="feedback")
+    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default="new")
+    name = models.CharField(max_length=80, blank=True)
+    message = models.TextField()
+    page_url = models.CharField(max_length=500, blank=True)
+    page_title = models.CharField(max_length=200, blank=True)
+    character = models.ForeignKey(Character, null=True, blank=True, on_delete=models.SET_NULL,
+                                  related_name="feedback")
+    character_name = models.CharField(max_length=120, blank=True, help_text="snapshot, kept if the character is deleted")
+    meta = models.JSONField(default=dict, blank=True)
+
+    class Meta:
+        ordering = ["-created"]
+
+    def __str__(self):
+        return f"{self.get_category_display()}: {self.message[:60]}"
+
+    @property
+    def is_open(self):
+        return self.status in self.OPEN_STATUSES

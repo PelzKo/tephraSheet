@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "base.html" %}{% load sheet_tags %}
 {% block content %}
 <div class="paper">
   <div class="row spread"><h1>Bulk import{% if character %} <span class="muted" style="font-size:18px">for {{ character }}</span>{% endif %}</h1>
@@ -15,8 +15,8 @@
 <div class="paper">
   <h2>Preview – {{ ok_count }} of {{ rows|length }} rows OK</h2>
   <div class="table-scroll"><table class="data">
-    <tr><th>Line</th><th>Name</th><th>Kind</th><th>Size</th><th>Details</th><th>Problems</th></tr>
-    {% for r in rows %}<tr class="{% if r.errors %}err{% endif %}"><td>{{ r.line }}</td><td>{{ r.values.name }}</td><td>{{ r.values.kind }}</td><td>{{ r.values.size }}</td>
+    <tr><th>Line</th><th>Name</th><th>Kind</th><th>Size</th><th data-nosort>Details</th><th>Problems</th></tr>
+    {% for r in rows %}<tr class="{% if r.errors %}err{% endif %}"><td>{{ r.line }}</td><td>{{ r.values.name }}</td><td>{{ r.values.kind }}</td><td data-sort="{{ r.values.size|lower|size_rank }}">{{ r.values.size }}</td>
       <td class="small">{% for k, v in r.values.items %}{% if k != "name" and k != "kind" and k != "size" and v %}{{ k }}={{ v }} {% endif %}{% endfor %}</td>
       <td class="small">{{ r.errors|join:"; " }}</td></tr>{% endfor %}
   </table></div>
