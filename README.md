@@ -34,7 +34,7 @@ The rule data (`tephra/rules/data/*.json`) is generated from `tephra/rules/data/
 
 ## Deployment
 
-Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Nginx), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, `migrate`, `seed_catalog` and `create_random_character --if-empty` (a demo character with password `demo` on a fresh database), then `exec`s gunicorn on `0.0.0.0:8000`. If any step fails, the app does not boot (supervisor reports FATAL).
+Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, `migrate`, `seed_catalog` and `create_random_character --if-empty` (a demo character with password `demo` on a fresh database), then `exec`s gunicorn on `0.0.0.0:8000`. If any step fails, the app does not boot (supervisor reports FATAL).
 
 Environment variables go in `tephra/.env` (see `.env.sample`):
 
@@ -47,26 +47,51 @@ Environment variables go in `tephra/.env` (see `.env.sample`):
 | `DB_*` | MySQL/MariaDB, used only when `DB_ENGINE`, `DB_NAME` and `DB_USERNAME` are all set and `LOCAL=False`; otherwise SQLite |
 | `SENTRY_DSN`, `EMAIL_*` | optional |
 
-Supervisord service (`~/etc/services.d/tephra.ini`):
+### Initial server setup (Uberspace)
 
-```ini
-[program:tephra]
-command=bash /home/<user>/tephraSheet/bin/start.sh
-directory=/home/<user>/tephraSheet/tephra
-autostart=true
-autorestart=true
-startsecs=15
-stderr_logfile=/home/<user>/logs/tephra.err.log
-stdout_logfile=/home/<user>/logs/tephra.out.log
-environment=PYTHONUNBUFFERED="1",PATH="/home/<user>/tephraSheet/.venv/bin:/usr/local/bin:/usr/bin:/bin"
-```
+The app is served on its own subdomain (e.g. `tephra.<domain>`), not a subpath of an existing domain — Uberspace forwards a path-based backend's prefix through unchanged, and this app's `urls.py` has no support for stripping one, so a subdomain avoids that mismatch entirely.
 
-Each release:
+1. Clone the repo and create the virtualenv:
+   ```bash
+   git clone <repo-url> ~/tephraSheet
+   cd ~/tephraSheet
+   python3 -m venv .venv
+   .venv/bin/pip install -r tephra/requirements.txt
+   ```
+2. If the domain is registered outside Uberspace (e.g. at Strato, as with `konstantinpelz.de`), create the subdomain there first and point it at Uberspace: add an `A` record (IPv4) and an `AAAA` record (IPv6) for `tephra.<domain>` using the IPs from `uberspace web domain show`.
+3. Register the subdomain with Uberspace and route it to the app's port:
+   ```bash
+   uberspace web domain add tephra.<domain>
+   uberspace web backend set tephra.<domain> --http --port 8999
+   ```
+   Uberspace issues the Let's Encrypt certificate automatically the first time it sees an HTTPS request for the domain (typically seconds to a few minutes after DNS has propagated) — nothing to configure manually. TLS terminates at Apache, which must forward `X-Forwarded-Proto` (already the case for Uberspace-managed domains).
+4. Create the MariaDB database via Uberspace's database overview (https://mysql.uberspace.de/phpmyadmin/), then create `tephra/.env` from `.env.sample` and fill in `SECRET_KEY`, `DEBUG=False`, `LOCAL=False`, `EXTERNAL_HOSTNAME=tephra.<domain>`, and the `DB_*` values for that database.
+5. Create the logs directory and the supervisord service file at `~/etc/services.d/tephra.ini`:
+   ```bash
+   mkdir -p ~/logs
+   ```
+   ```ini
+   [program:tephra]
+   command=bash /home/<user>/tephraSheet/bin/start.sh
+   directory=/home/<user>/tephraSheet/tephra
+   autostart=true
+   autorestart=true
+   startsecs=15
+   stderr_logfile=/home/<user>/logs/tephra.err.log
+   stdout_logfile=/home/<user>/logs/tephra.out.log
+   environment=PYTHONUNBUFFERED="1",PATH="/home/<user>/tephraSheet/.venv/bin:/usr/local/bin:/usr/bin:/bin"
+   ```
+6. Tell supervisord about the new service and start it:
+   ```bash
+   supervisorctl reread
+   supervisorctl update
+   supervisorctl status tephra
+   ```
+
+### Each release
 
 ```bash
 cd ~/tephraSheet && source .venv/bin/activate && git pull
 pip install -r tephra/requirements.txt
 supervisorctl restart tephra
 ```
-
-TLS terminates at the proxy, which must forward `X-Forwarded-Proto`.
