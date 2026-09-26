@@ -114,7 +114,7 @@ def test_quick_feet_base_speed_and_farishtaa_ace():
 def test_ap_by_level_and_fatigue():
     st = human(level=4)
     assert compute(st).stats["ap"].total == 4
-    st = human(specialties=[(spec("Fluid"), 1)], fatigued=True)
+    st = human(specialties=[(spec("Fluid"), 1)], effects=["status:fatigued"])
     assert compute(st).max_hp == (7 + 3 + 1) // 2
 
 
@@ -160,3 +160,97 @@ def test_random_character_is_legal(seed):
     assert sheet.max_wounds == 12
     if r["race"] == "gnome":
         assert len([k for k in st.random_traits if k.startswith("gnome/")]) == 2
+
+
+def test_effects_apply_modifiers():
+    st = human(effects=["status:prone", "wound:eyes"])
+    sheet = compute(st)
+    assert sheet.stats["spd"].total == 5  # prone forces 5 ft
+    assert ("Effect: Blinded", -4) in sheet.stats["acc"].breakdown
+    assert sheet.stats["def"].total == compute(human()).stats["def"].total - 1
+
+
+def test_racial_roll_bonus_in_attribute_misc():
+    st = CharacterState(race="elf", random_traits=[], skills={"Brawl": 1})
+    sheet = compute(st)
+    assert sheet.attr_misc["Brute"].breakdown == [("Racial trait: Big Boned", 2)]
+    assert sheet.attributes["Brute"].total == 3
+    assert sheet.attributes["Spirit"].total == -3
+    st.misc = {"attr:Brute": 1}
+    sheet = compute(st)
+    assert ("Manual Misc Change", 1) in sheet.attr_misc["Brute"].breakdown
+    assert sheet.attributes["Brute"].total == 4
+
+
+def test_soft_requirements_warn_but_allow():
+    from rules.engine.requirements import character_warnings, specialty_warnings
+
+    mountain = REG.specialties_by_name["Unassailable Mountain"]
+    st = human(skills={"Resilience": 3}, specialties=[])
+    assert check_specialty(mountain, st, compute(st))[0]
+    assert "heavy or heavier armor" in specialty_warnings(mountain, st)[0]
+    st.specialties = [(mountain["slug"], 1)]
+    assert character_warnings(st)[0][0] == "Unassailable Mountain"
+    st.items = [ItemState(name="Plate", kind="armor", size="heavy", slot="armor")]
+    assert not character_warnings(st)
+    # "any AP-sacrifice specialty" is a hard requirement.
+    devoted = REG.specialties_by_name["Devoted Peers"]
+    st = human(skills={"Faith": 1}, specialties=[])
+    ok, reasons = check_specialty(devoted, st, compute(st))
+    assert not ok and "Smite" in reasons[0]
+    st.specialties = [(spec("Prayer"), 1)]
+    assert check_specialty(devoted, st, compute(st))[0]
+
+
+def test_usage_conditions():
+    from rules.engine.requirements import specialty_warnings
+
+    chipping = REG.specialties_by_name["Chipping Away"]
+    st = human(skills={"Overpower": 1}, specialties=[])
+    assert check_specialty(chipping, st, compute(st))[0]
+    assert "heavy or super-heavy melee weapon" in specialty_warnings(chipping, st)[0]
+    st.items = [ItemState(name="Maul", kind="melee", size="heavy", slot="weapon1")]
+    assert not specialty_warnings(chipping, st)
+    en_garde = REG.specialties_by_name["En-Garde"]
+    assert specialty_warnings(en_garde, st)  # a heavy weapon is two-handed …
+    st.specialties = [(spec("One-Handing It"), 1)]
+    assert not specialty_warnings(en_garde, st)  # … unless One-Handing It
+    protector = REG.specialties_by_name["Protector"]
+    st.items.append(ItemState(name="Cloak", kind="deflection", slot="deflection"))
+    assert specialty_warnings(protector, st)
+    st.items[-1] = ItemState(name="Tower Shield", kind="deflection", slot="deflection")
+    assert not specialty_warnings(protector, st)
+    assert not specialty_warnings(REG.specialties_by_name["Ram"], st)  # vehicles are not checked
+
+
+def test_hand_conditions():
+    from rules.engine.requirements import specialty_warnings
+    from rules.engine.weapons import hand_layout
+
+    fist, garde = REG.specialties_by_name["Fisticuffs"], REG.specialties_by_name["En-Garde"]
+    blade, flying = REG.specialties_by_name["Invisible Blade"], REG.specialties_by_name["Focused Flying"]
+    st = human(specialties=[])
+    assert not specialty_warnings(fist, st) and not specialty_warnings(flying, st)
+    assert specialty_warnings(garde, st) and specialty_warnings(blade, st)
+    dagger = ItemState(name="Dagger", kind="melee", size="light", slot="weapon1", concealable=True)
+    st.items = [dagger]
+    assert not specialty_warnings(garde, st) and not specialty_warnings(blade, st)
+    assert specialty_warnings(flying, st)
+    st.items.append(ItemState(name="Sabre", kind="melee", size="medium", slot="weapon2"))
+    assert specialty_warnings(garde, st) and specialty_warnings(blade, st)  # sabre isn't concealable
+    assert specialty_warnings(fist, st)  # both hands full
+    maul = ItemState(name="Maul", kind="melee", size="heavy", slot="weapon2")
+    st.items = [maul]
+    layout = hand_layout(st)
+    assert layout["left"] is maul and layout["blocked_by"] is maul and layout["free"] == 0
+    assert specialty_warnings(fist, st)
+    st.items = [ItemState(name="Axe", kind="melee", size="heavy", slot="weapon1", hands=1)]
+    assert hand_layout(st)["free"] == 1 and not specialty_warnings(garde, st)
+
+
+def test_weapon_breakdown_shows_character_sources():
+    st = human(items=[ItemState(name="Sabre", kind="melee", size="medium", slot="weapon1")],
+               effects=["status:blinded"])
+    acc = compute(st).weapons[0].acc
+    assert ("Effect: Blinded", -4) in acc.breakdown
+    assert acc.total == compute(st).stats["acc"].total

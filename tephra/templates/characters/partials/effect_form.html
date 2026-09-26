@@ -1,20 +1,40 @@
-<form class="stack" hx-post="{% url 'play' character.pk 'effect-add' %}" hx-target="#sheet-body" hx-swap="outerHTML"
-      x-data="{kind: 'status'}">
+<form class="stack effect-form" hx-post="{% url 'play' character.pk 'effect-add' %}" hx-target="#sheet-body" hx-swap="outerHTML"
+      x-data="effectForm()" x-on:submit="if (!ready()) $event.preventDefault()">
   <div class="row">
-    <select name="kind" x-model="kind">
+    <select name="kind" x-model="kind" aria-label="Effect type">
       <option value="status">Status effect</option>
-      <option value="called">Called-shot effect</option>
-      <option value="wound">Wound effect</option>
-      <option value="fatal">Fatal effect</option>
+      <option value="called">Called shot</option>
     </select>
-    <select name="location">
-      <option value="">No location</option>
-      {% for n, name in location_names.items %}<option value="{{ n }}">{{ n }} – {{ name }}</option>{% endfor %}
-    </select>
-    <input type="text" name="text" list="status-names" placeholder="e.g. Bleeding, Sprained arm" required class="grow">
-    <datalist id="status-names">{% for s in status_effect_names %}<option value="{{ s }}">{% endfor %}</datalist>
-    <label x-show="kind==='fatal'">Max wounds lost <input type="number" name="lost_wounds" min="0" max="6" value="0"></label>
-    <button class="btn small primary" type="submit">Add</button>
+    <template x-if="kind === 'status'">
+      <div class="combo grow" x-on:click.outside="open = false">
+        <input type="text" x-model="q" placeholder="Type to filter, e.g. Fatigued" autocomplete="off" aria-label="Status effect"
+               x-on:focus="open = true" x-on:input="open = true; key = ''; active = 0"
+               x-on:keydown.down.prevent="move(1)" x-on:keydown.up.prevent="move(-1)"
+               x-on:keydown.enter.prevent="pick(matches()[active])" x-on:keydown.escape.stop="open = false">
+        <input type="hidden" name="key" :value="key">
+        <input type="hidden" name="text" :value="key ? '' : q.trim()">
+        <ul class="combo-list" x-show="open" role="listbox">
+          <template x-for="(o, i) in matches()" :key="o.key || 'custom'">
+            <li :class="{on: i === active}" x-on:mousedown.prevent="pick(o)" role="option">
+              <b x-text="o.name"></b> <span class="muted small" x-text="o.text"></span>
+            </li>
+          </template>
+        </ul>
+      </div>
+    </template>
+    <template x-if="kind === 'called'">
+      <div class="row grow">
+        <select name="location" x-model="location" aria-label="Location">
+          <option value="">Location…</option>
+          <template x-for="l in opts.locations" :key="l.n"><option :value="l.n" x-text="l.label"></option></template>
+        </select>
+        <select name="which" x-model="which" x-show="location" aria-label="Called-shot effect">
+          <option value="">Effect…</option>
+          <template x-for="c in called()" :key="c.kind"><option :value="c.kind" x-text="c.label"></option></template>
+        </select>
+      </div>
+    </template>
+    <button class="btn small primary" type="submit" :disabled="!ready()">Add</button>
   </div>
-  <p class="muted small">"Fatigued" as a status effect halves max HP automatically. Fatal effects can lower max wounds permanently (eyes, ears, hand, leg −1; arm −2).</p>
+  <p class="muted small" x-text="hint()"></p>
 </form>

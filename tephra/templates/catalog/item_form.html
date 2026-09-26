@@ -24,6 +24,10 @@
       <h3 style="margin-top:12px">Weapon</h3>
       <div class="row" x-show="kind==='melee' || kind==='firearm'">{% for cb in form.variants %}<label>{{ cb.tag }} {{ cb.choice_label }}</label>{% endfor %}</div>
       <div class="form-grid" style="margin-top:8px">
+        <div class="field"><label>Hands</label><select name="hands">
+          <option value="" {% if form.hands.value is None or form.hands.value == "" %}selected{% endif %} x-text="'auto (' + autoHands() + ')'">auto</option>
+          <option value="1" {% if form.hands.value|stringformat:"s" == "1" %}selected{% endif %}>One-handed</option>
+          <option value="2" {% if form.hands.value|stringformat:"s" == "2" %}selected{% endif %}>Two-handed</option></select></div>
         <div class="field"><label>Damage class</label><input type="number" name="dc" value="{{ form.dc.value|default_if_none:'' }}" :placeholder="'auto (' + auto('dc') + ')'"></div>
         <div class="field"><label>AP to use</label><input type="number" name="ap_use" value="{{ form.ap_use.value|default_if_none:'' }}" :placeholder="'auto (' + auto('ap') + ')'"></div>
         <div class="field" x-show="kind!=='melee'"><label>AP to ready</label><input type="number" name="ap_ready" value="{{ form.ap_ready.value|default_if_none:'' }}" :placeholder="'auto (' + auto('ready') + ')'"></div>
@@ -45,6 +49,10 @@
   </template>
   <template x-if="kind==='deflection'">
     <div class="form-grid" style="margin-top:12px">
+      <div class="field"><label>Hands</label><select name="hands">
+        <option value="" {% if form.hands.value is None or form.hands.value == "" %}selected{% endif %}>auto (cloak: none, shield/dagger: one)</option>
+        <option value="0" {% if form.hands.value|stringformat:"s" == "0" %}selected{% endif %}>No hand (worn)</option>
+        <option value="1" {% if form.hands.value|stringformat:"s" == "1" %}selected{% endif %}>One hand</option></select></div>
       <div class="field"><label>Evade bonus</label><input type="number" name="deflect_bonus" value="{{ form.deflect_bonus.value|default_if_none:'' }}" placeholder="3 or 4"></div>
       <div class="field"><label><input type="checkbox" name="deflect_ranged" {% if form.deflect_ranged.value %}checked{% endif %}> vs ranged</label>
         <label><input type="checkbox" name="deflect_melee" {% if form.deflect_melee.value %}checked{% endif %}> vs melee</label></div>
@@ -75,7 +83,7 @@
   {% if character and not inventory_item %}
     <div class="row" style="margin-top:12px">
       <label>Put it: <select name="slot">
-        <option value="carried">Carried</option><option value="weapon1">Weapon 1</option><option value="weapon2">Weapon 2</option>
+        <option value="carried">Carried</option><option value="weapon1">Left hand</option><option value="weapon2">Right hand</option>
         <option value="armor">Armor (worn)</option><option value="deflection">Deflection</option><option value="worn">Worn / active</option><option value="stored">Stored</option></select></label>
       <label><input type="checkbox" name="to_catalog"> Also save to the shared catalog</label>
       <input type="hidden" name="for" value="{{ character.pk }}">
@@ -104,6 +112,7 @@ window.itemCreator = function (tables, augChoices) {
       if (!row || row[key] === undefined) return "–";
       return row[key];
     },
+    autoHands() { const h = this.auto("hands"); return h === 2 ? "two-handed" : h === 1 ? "one-handed" : "–"; },
     armor(key) { const row = this.tables.armor[this.size]; return row ? row[key] : "–"; },
     get slots() { return (this.tables.slots[this.material] || 3) + (this.beta ? 2 : 0); },
     get augOptions() { return this.augChoices[this.kind] || []; },

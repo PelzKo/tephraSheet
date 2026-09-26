@@ -112,6 +112,49 @@ WEAPON_PRICES_DUKES = {  # p.85
     ("crossbow", "light"): 20, ("crossbow", "medium"): 40, ("crossbow", "heavy"): 70, ("crossbow", "super-heavy"): 140,
 }
 
+ROTATING_BARRELS = "armsmith-firearm-rotating-barrels"
+CRANK_FREE = "armsmith-firearm-crank-free"
+
+
+def _augment_slugs(item):
+    return {a[0] for a in item.augments}
+
+
+def base_hands(item):
+    """Hands from the item or its size table; deflection items: cloak 0, shield/parrying dagger 1.
+    Rotating Barrels add a hand (unless Crank-Free)."""
+    if item.hands is not None:
+        hands = item.hands
+    elif item.kind == "deflection":
+        default = next((v for v in DEFLECTION.values() if v["label"].lower() in item.name.lower()), None)
+        hands = default["hands"] if default else 1
+    else:
+        table = WEAPON_TABLES.get(item.kind)
+        hands = table.get(item.size, {}).get("hands", 1) if table else 1
+    augs = _augment_slugs(item)
+    if item.kind == "firearm" and ROTATING_BARRELS in augs and CRANK_FREE not in augs:
+        hands = min(2, hands + 1)
+    return hands
+
+
+def needs_firing_position(item):
+    """A two-handed firearm with Rotating Barrels can only be fired from a firing position."""
+    augs = _augment_slugs(item)
+    if item.kind != "firearm" or ROTATING_BARRELS not in augs or CRANK_FREE in augs:
+        return False
+    plain = item.hands if item.hands is not None else FIREARMS.get(item.size, {}).get("hands", 1)
+    return plain >= 2
+
+
+def item_hands(item, one_handing=False):
+    """Hands an item needs (0 = worn, e.g. a cloak). One-Handing It lets two-handed weapons be
+    wielded in one hand, except bows."""
+    hands = base_hands(item)
+    if one_handing and hands == 2 and item.kind != "bow":
+        return 1
+    return hands
+
+
 # Melee variants (p.75): each −1 DC.
 VARIANTS = {
     "flexible": {"label": "Flexible", "dc": -1, "note": "can make grabs"},
@@ -134,24 +177,13 @@ ARMOR = {
 }
 
 DEFLECTION = {
-    "parrying-dagger": {"label": "Parrying Dagger", "bonus": 3, "ranged": False, "melee": True, "price": 10},
-    "cloak": {"label": "Cloak", "bonus": 3, "ranged": False, "melee": True, "price": 10},
-    "shield": {"label": "Shield", "bonus": 4, "ranged": True, "melee": True, "price": 40},
+    "parrying-dagger": {"label": "Parrying Dagger", "bonus": 3, "ranged": False, "melee": True, "price": 10, "hands": 1},
+    "cloak": {"label": "Cloak", "bonus": 3, "ranged": False, "melee": True, "price": 10, "hands": 0},
+    "shield": {"label": "Shield", "bonus": 4, "ranged": True, "melee": True, "price": 40, "hands": 1},
 }
 
 # Augment slots by material (p.162/177); beta +2.
 MATERIAL_SLOTS = {"metal": 3, "wood": 2, "organic": 1, "textile": 1}
-
-# Called shot chart (p.16-17): d12 -> location.
-LOCATIONS = {
-    1: "Head", 2: "Eyes", 3: "Ears", 4: "Neck", 5: "Torso", 6: "Groin",
-    7: "Arm", 8: "Arm", 9: "Hand", 10: "Hand", 11: "Leg", 12: "Leg",
-}
-
-STATUS_EFFECTS = [
-    "Bleeding", "Blinded", "Burning", "Burnt", "Deafened", "Disoriented", "Drowning", "Enraged",
-    "Fatigued", "Scared", "Frightened", "Terrified", "True dread", "Nausea", "Paralyzed", "Prone", "Stunned",
-]
 
 DUKES_PER_PRINCE = 10
 DUKES_PER_KING = 100

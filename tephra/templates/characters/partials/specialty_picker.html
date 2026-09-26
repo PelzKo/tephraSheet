@@ -17,10 +17,17 @@
             {% if o.spec.group %}<span class="tag">{{ o.spec.group }}</span>{% endif %}
             {% if o.spec.stance %}<span class="tag">stance</span>{% endif %}
             <span class="cost">{{ o.spec.cost }}</span>
+            {% if o.spec.options and not o.owned and o.ok %}
+              <select name="opt:{{ o.spec.slug }}" aria-label="{{ o.spec.options.label }}" class="spec-option">
+                <option value="">{{ o.spec.options.label }}</option>
+                {% for k, v in o.spec.options.options.items %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select>
+            {% endif %}
           </header>
           <div>{% for k, v in o.spec.bonuses.items %}<span class="pill-bonus">{{ k|upper }} {{ v|signed }}</span>{% endfor %}
             {% if o.spec.requires_text %}<span class="small">Requires: {{ o.spec.requires_text }}</span>{% endif %}</div>
           {% if o.reasons and not o.owned %}<div class="why">✗ {{ o.reasons|join:"; " }}</div>{% endif %}
+          {% if o.spec.usage_note %}<div class="usage-note">ⓘ {{ o.spec.usage_note }}</div>{% endif %}
+          {% if o.warnings %}<div class="warn">⚠ Can be learned, but {{ o.warnings|join:"; " }}</div>{% endif %}
           <details><summary>Effect</summary><p class="effect">{{ o.spec.effect }}</p></details>
         </div>
       {% endfor %}

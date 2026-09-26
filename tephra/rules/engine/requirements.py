@@ -3,6 +3,7 @@
 from rules.registry import get_registry
 
 from . import tables
+from .weapons import hand_layout
 
 
 def owned_names(state):
@@ -24,6 +25,8 @@ def check_specialty(spec, state, sheet, ignore_owned=False):
         reasons.append(f"needs at least 1 point in {spec['skill']}")
     names = owned_names(state)
     for clause in spec.get("requires", []):
+        if clause.get("soft"):
+            continue
         t = clause["type"]
         if t == "skill":
             have = sheet.skills[clause["skill"]].total
@@ -58,8 +61,90 @@ def check_specialty(spec, state, sheet, ignore_owned=False):
             if not any(reg.specialties[s]["skill"] == clause["skill"] and s != spec["slug"]
                        for s in owned if s in reg.specialties):
                 reasons.append(f"needs another {clause['skill']} specialty")
-        # "note" clauses are situational (e.g. armor worn) and not enforced when learning.
     return not reasons, reasons
+
+
+def _weapon_matches(m, item, owned, oh):
+    if m.get("with_specialty") and m["with_specialty"] not in owned:
+        return False
+    return (not m.get("kinds") or item.kind in m["kinds"]) and (not m.get("sizes") or item.size in m["sizes"]) \
+        and (not m.get("variant") or m["variant"] in item.variants) \
+        and (not m.get("materials") or item.material in m["materials"]) \
+        and (not m.get("concealable") or item.concealable) \
+        and (not m.get("hands") or tables.item_hands(item, oh) == m["hands"])
+
+
+def _is_shield(item):
+    return "shield" in item.name.lower() or (item.deflect_ranged and item.deflect_melee)
+
+
+def soft_clause_met(clause, state):
+    """Whether a soft (usage) requirement is satisfied by the current equipment."""
+    t = clause["type"]
+    armor = state.armor
+    if t == "armor":
+        size = armor.size if armor is not None and armor.size in tables.ARMOR_ORDER else "none"
+        idx = tables.ARMOR_ORDER.index(size)
+        return not ("min" in clause and idx < tables.ARMOR_ORDER.index(clause["min"]) or
+                    "max" in clause and idx > tables.ARMOR_ORDER.index(clause["max"]))
+    if t == "armor_worn":
+        return armor is not None
+    if t == "armor_material":
+        return armor is not None and armor.material in clause["materials"]
+    if t in ("weapon", "free_hand", "hands_empty"):
+        layout = hand_layout(state)
+        if t == "free_hand":
+            return layout["free"] >= 1
+        if t == "hands_empty":
+            return layout["free"] == 2
+        owned, oh = owned_names(state), layout["one_handing"]
+
+        def fits(w):
+            return any(_weapon_matches(m, w, owned, oh) for m in clause["weapons"])
+
+        if clause.get("all"):
+            return bool(state.weapons) and all(fits(w) for w in state.weapons)
+        if clause.get("other_hand_empty"):
+            held = [i for i in (layout["left"], layout["right"]) if i is not None]
+            return len(held) == 1 and layout["free"] == 1 and fits(held[0])
+        return any(fits(w) for w in state.weapons)
+    if t == "deflection":
+        d = state.deflection
+        return d is not None and (not clause.get("shield") or _is_shield(d))
+    return False  # "note": can't be checked, always reminded
+
+
+def specialty_warnings(spec, state):
+    """Unmet soft requirements (armor worn, equipped weapon, vehicle …). They never block learning."""
+    warnings = []
+    for clause in spec.get("requires", []):
+        if clause.get("soft") and not soft_clause_met(clause, state):
+            warnings.append(f"needs {clause['text']}{_currently(clause, state)}")
+    return warnings
+
+
+def _currently(clause, state):
+    if clause["type"] in ("armor", "armor_worn", "armor_material"):
+        armor = state.armor
+        return f" (wearing {armor.name})" if armor is not None else " (no armor worn)"
+    if clause["type"] in ("weapon", "free_hand", "hands_empty"):
+        layout = hand_layout(state)
+        names = [i.name for i in (layout["left"], layout["right"], layout["blocked_by"], layout["wings"]) if i]
+        names = list(dict.fromkeys(names))
+        return f" (holding: {', '.join(names)})" if names else " (hands empty)"
+    return ""
+
+
+def character_warnings(state):
+    """[(specialty name, [warnings])] for learned specialties whose soft requirements are unmet."""
+    reg = get_registry()
+    out = []
+    for slug, _ in state.specialties:
+        spec = reg.specialties.get(slug)
+        warnings = specialty_warnings(spec, state) if spec else []
+        if warnings:
+            out.append((spec["name"], warnings))
+    return out
 
 
 def eligible_specialties(state, sheet):

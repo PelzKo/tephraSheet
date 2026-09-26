@@ -2,9 +2,49 @@
 
 from dataclasses import dataclass, field
 
+from rules.registry import get_registry
+
 from . import tables
 from .modifiers import Value, mod_amount
 from .state import ItemState
+
+
+def one_handing(state):
+    """One-Handing It: two-handed weapons (except bows) can be wielded in one hand."""
+    reg = get_registry()
+    return any(reg.specialties.get(s, {}).get("name") == "One-Handing It" for s, _ in state.specialties)
+
+
+WINGS_TRAIT = "ayodin/wings-as-arms"
+
+
+def has_wings(state):
+    return WINGS_TRAIT in state.random_traits or WINGS_TRAIT in state.fixed_traits
+
+
+def hand_layout(state):
+    """What the hands hold: weapon1 = left, weapon2 = right, plus the wings slot (Wings as Arms).
+    A two-handed item is shown in the left hand and blocks the right one; a shield or parrying
+    dagger (deflection item that needs a hand) also blocks the right hand. ``free`` counts the
+    empty real hands (wings don't count)."""
+    oh = one_handing(state)
+    left = next((i for i in state.items if i.slot == "weapon1"), None)
+    right = next((i for i in state.items if i.slot == "weapon2"), None)
+    wings = next((i for i in state.items if i.slot == "wings"), None) if has_wings(state) else None
+    defl = state.deflection
+    if left is None and right is not None and tables.item_hands(right, oh) == 2:
+        left, right = right, None
+    blocked_by, reason = None, ""
+    if left is not None and tables.item_hands(left, oh) == 2:
+        blocked_by, reason = left, f"{left.name} needs both hands"
+    elif defl is not None and tables.item_hands(defl) >= 1:
+        blocked_by, reason = defl, f"holding {defl.name}"
+    if blocked_by is not None:
+        right = None
+    return {"left": left, "right": right, "wings": wings, "has_wings": has_wings(state),
+            "blocked_by": blocked_by, "blocked_reason": reason, "one_handing": oh,
+            "two_handed": blocked_by if blocked_by is left and left is not None else None,
+            "free": (left is None) + (right is None and blocked_by is None)}
 
 
 @dataclass
@@ -75,9 +115,9 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
     state = sheet.state
     notes = []
 
-    acc = Value(parts=[("Accuracy (character)", stats["acc"].total)])
+    acc = stats["acc"].inherited("Accuracy (character)")
     uses_acc = kind in tables.ACCURACY_DAMAGE_KINDS
-    stk = None if uses_acc else Value(parts=[("Strike (character)", stats["stk"].total)])
+    stk = None if uses_acc else stats["stk"].inherited("Strike (character)")
 
     dc = Value()
     if item.dc is not None:
@@ -125,6 +165,10 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
         reach = "Adjacent" if reach_ft <= 5 else f"{reach_ft} ft"
         if "throwing" in item.variants:
             reach += f" / throw {tables.THROW_RANGE.get(size, 25)} ft"
+    if tables.needs_firing_position(item):
+        notes.append("Rotating barrels: fire only from a firing position.")
+    elif tables.ROTATING_BARRELS in {a[0] for a in item.augments} and item.hands is None:
+        notes.append("Rotating barrels: needs one more hand.")
     if "double-barreled" in item.variants:
         notes.append("Double-barreled: fire twice before readying.")
     if item.notes:
@@ -139,8 +183,8 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
 
 def unarmed_block(sheet) -> WeaponBlock:
     item = ItemState(name="Unarmed", kind="unarmed", size="unarmed", slot="unarmed")
-    acc = Value(parts=[("Accuracy (character)", sheet.stats["acc"].total)])
-    stk = Value(parts=[("Strike (character)", sheet.stats["stk"].total)])
+    acc = sheet.stats["acc"].inherited("Accuracy (character)")
+    stk = sheet.stats["stk"].inherited("Strike (character)")
     dc = Value()
     dc.set_base(f"Base ({sheet.race['name']})", sheet.race.get("unarmed_dc", 2))
     _apply_scoped(sheet, item, "unarmed", acc, stk, dc, [])

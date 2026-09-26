@@ -4,14 +4,14 @@ from dataclasses import dataclass, field
 
 from rules.registry import get_registry
 
-from . import tables
+from . import effects, tables
 from .formula import var_name
 from .modifiers import Source, Value, is_active, mod_amount
 from .state import CharacterState
 
 CHARACTER_STATS = ["acc", "eva", "stk", "def", "pri", "spd", "swim", "climb", "fly",
                    "aug", "diy", "wnd", "hp", "soak", "ap", "essence_slots"]
-MISC_LABEL = "Misc (admin)"
+MISC_LABEL = "Manual Misc Change"
 
 
 @dataclass
@@ -21,11 +21,13 @@ class Sheet:
     skills: dict = field(default_factory=dict)  # skill -> Value
     attributes: dict = field(default_factory=dict)  # attribute -> Value
     stats: dict = field(default_factory=dict)  # stat -> Value
-    roll_notes: dict = field(default_factory=dict)  # attribute -> [(label, amount)]
+    attr_misc: dict = field(default_factory=dict)  # attribute -> Value (racial roll bonuses + manual misc)
+    roll_notes: dict = field(default_factory=dict)  # attribute -> [(label, amount)] conditional roll bonuses
     notes: list = field(default_factory=list)  # [(source label, text)]
     specialty_rows: list = field(default_factory=list)
     specialty_totals: dict = field(default_factory=dict)
     specialty_misc: dict = field(default_factory=dict)
+    specialty_total_values: dict = field(default_factory=dict)  # column -> Value (for the Totals row)
     sources: list = field(default_factory=list)
     toggles: list = field(default_factory=list)  # [{key, label, active, effects}]
     stances: list = field(default_factory=list)  # [{slug, label, active}]
@@ -38,6 +40,7 @@ class Sheet:
     armor_degree: int = 0
     scoped: list = field(default_factory=list)  # [(source, mod)] with a weapon scope
     ap_ready_mods: list = field(default_factory=list)
+    hands: dict = field(default_factory=dict)  # weapons.hand_layout + left_block/right_block
 
     def __getitem__(self, key):
         return self.stats[key]
@@ -89,6 +92,10 @@ def collect_sources(state):
     for n, cm in enumerate(state.custom_modifiers):
         label = cm.get("source") or "Custom"
         sources.append(Source(cm.get("key") or f"custom:{n}", label, [cm], kind="custom"))
+    for key in state.effects:
+        e = effects.get(key)
+        if e and e.get("modifiers"):
+            sources.append(Source(f"effect:{key}", f"Effect: {e['name']}", e["modifiers"], kind="effect"))
     for slug, marque in state.body_augments:
         a = reg.augments.get(slug)
         if a:
@@ -139,6 +146,7 @@ def compute(state: CharacterState) -> Sheet:
         for skill in skills:
             v.add(skill, sheet.skills[skill].total)
         sheet.attributes[attr] = v
+        sheet.attr_misc[attr] = Value()
         sheet.roll_notes[attr] = []
 
     variables = {var_name(s): sheet.skills[s].total for s in tables.ALL_SKILLS}
@@ -152,13 +160,23 @@ def compute(state: CharacterState) -> Sheet:
                 if attr in sheet.attributes:
                     sheet.attributes[attr].add(src.label, mod_amount(m, variables, m.get("marque")))
             elif stat.startswith("roll:"):
+                # Unconditional roll bonuses go into the attribute's Misc bubble; conditional ones
+                # (when="note", e.g. "when using Heroics") are only listed below the circle.
                 attr = stat.split(":", 1)[1]
-                if attr in sheet.roll_notes and (m.get("when") == "note" or is_active(m, src, state)):
+                if attr not in sheet.attributes:
+                    continue
+                if m.get("when") == "note":
                     text = m.get("label") or f"{attr} rolls"
                     sheet.roll_notes[attr].append((f"{src.label} ({text})", mod_amount(m, variables)))
+                elif is_active(m, src, state):
+                    label = src.label + (f" ({m['label']})" if m.get("label") else "")
+                    sheet.attr_misc[attr].add(label, mod_amount(m, variables))
     for key, amount in state.misc.items():
         if key.startswith("attr:") and key[5:] in sheet.attributes:
-            sheet.attributes[key[5:]].add(MISC_LABEL, amount)
+            sheet.attr_misc[key[5:]].add(MISC_LABEL, amount)
+    for attr, misc in sheet.attr_misc.items():
+        for label, amount in misc.parts:
+            sheet.attributes[attr].add(label, amount)
     variables.update({var_name(a): v.total for a, v in sheet.attributes.items()})
 
     # --- combat stats -------------------------------------------------------
@@ -184,6 +202,12 @@ def compute(state: CharacterState) -> Sheet:
             stats[c].add(f"Specialty: {s['name']}", amount)
     sheet.specialty_misc = {c: state.misc.get(c, 0) for c in tables.COMBAT_STATS}
     sheet.specialty_totals = {c: col_totals[c] + sheet.specialty_misc[c] for c in tables.COMBAT_STATS}
+    for c in tables.COMBAT_STATS:
+        v = Value()
+        for row in sheet.specialty_rows:
+            v.add(f"Specialty: {row['name']}", row["bonuses"][c])
+        v.add(MISC_LABEL, sheet.specialty_misc[c])
+        sheet.specialty_total_values[c] = v
     variables.update({f"{c}_specialties": col_totals[c] for c in tables.COMBAT_STATS})
 
     transfers = []
@@ -212,7 +236,9 @@ def compute(state: CharacterState) -> Sheet:
             elif stat == "ap_ready":
                 sheet.ap_ready_mods.append((label, amount))
             elif stat in stats:
-                if m.get("op") == "base":
+                if m.get("op") == "set":
+                    stats[stat].override = (f"{label}: set to {amount}", amount)
+                elif m.get("op") == "base":
                     stats[stat].set_base(label, amount)
                 else:
                     stats[stat].add(label, amount)
@@ -227,17 +253,17 @@ def compute(state: CharacterState) -> Sheet:
         sheet.armor = armor_block(armor, sheet.armor_degree)
         a = sheet.armor
         stats["soak"].add(f"Armor: {armor.name}", a["soak"])
-        stats["eva"].add(f"Armor penalty: {armor.name}", -a["eva_penalty"])
-        stats["spd"].add(f"Armor penalty: {armor.name}", -a["spd_penalty"])
-        stats["swim"].add(f"Armor penalty: {armor.name}", -a["climb_swim_penalty"])
-        stats["climb"].add(f"Armor penalty: {armor.name}", -a["climb_swim_penalty"])
+        stats["eva"].add(f"Armor penalty: {armor.name}", -a["eva_penalty"].total)
+        stats["spd"].add(f"Armor penalty: {armor.name}", -a["spd_penalty"].total)
+        stats["swim"].add(f"Armor penalty: {armor.name}", -a["climb_swim_penalty"].total)
+        stats["climb"].add(f"Armor penalty: {armor.name}", -a["climb_swim_penalty"].total)
     stats["spd"].floor = 5  # crawling at 5 ft is always possible
     stats["swim"].floor = 0
     stats["climb"].floor = 0
 
     if state.lost_wounds:
         stats["wnd"].add("Permanent fatal effects", -state.lost_wounds)
-    if state.fatigued:
+    if any((effects.get(k) or {}).get("halve_hp") for k in state.effects):
         stats["hp"].halved = "Fatigued"
 
     for src, m in transfers:
@@ -254,7 +280,11 @@ def compute(state: CharacterState) -> Sheet:
     if state.deflection is not None:
         d = state.deflection
         default = next((v for v in tables.DEFLECTION.values() if v["label"].lower() in d.name.lower()), None)
-        bonus = d.deflect_bonus if d.deflect_bonus is not None else (default["bonus"] if default else 0)
+        bonus = Value()
+        if d.deflect_bonus is not None:
+            bonus.set_base(f"Item: {d.name}", d.deflect_bonus)
+        else:
+            bonus.set_base(f"{default['label']} (standard)" if default else "No bonus set", default["bonus"] if default else 0)
         sheet.deflection = {"item": d, "name": d.name, "bonus": bonus,
                             "ranged": d.deflect_ranged, "melee": d.deflect_melee}
 
@@ -281,9 +311,14 @@ def compute(state: CharacterState) -> Sheet:
     sheet.stances.append({"slug": "footing", "label": "Footing", "detail": "needed for super-heavy items",
                           "active": state.stance == "footing"})
 
-    from .weapons import unarmed_block, weapon_block
+    from .weapons import hand_layout, unarmed_block, weapon_block
 
     sheet.weapons = [weapon_block(sheet, w) for w in sorted(state.weapons, key=lambda i: i.slot)]
+    layout = hand_layout(state)
+    sheet.hands = layout
+    for side in ("left", "right", "wings"):
+        item = layout[side]
+        layout[f"{side}_block"] = weapon_block(sheet, item) if item is not None and item in state.weapons else None
     sheet.unarmed = unarmed_block(sheet)
     return sheet
 
@@ -307,21 +342,33 @@ def describe_mod(m, variables):
 
 
 def armor_block(armor, degree=0):
+    """Armor values (p.80). Penalties are positive Values (subtracted from the stats), reduced by
+    Armored Ease/Freedom degrees; explicit item values win over the size table."""
     size = armor.size if armor.size in tables.ARMOR else "none"
     base = tables.ARMOR[size]
     idx = tables.ARMOR_ORDER.index(size)
-    pen_row = tables.ARMOR[tables.ARMOR_ORDER[max(0, idx - degree)]]
+    reduced_size = tables.ARMOR_ORDER[max(0, idx - degree)]
+    pen_row = tables.ARMOR[reduced_size]
+    size_label = tables.SIZE_LABELS.get(size, size)
 
-    def pick(override, value):
-        return value if override is None else override
+    def penalty(override, key):
+        v = Value()
+        if override is not None:
+            v.set_base(f"Item: {armor.name}", override)
+        else:
+            v.set_base(f"{size_label} armor", base[key])
+            if pen_row[key] != base[key]:
+                v.add(f"Armored Ease/Freedom (as {tables.SIZE_LABELS.get(reduced_size, reduced_size).lower()})",
+                      pen_row[key] - base[key])
+        return v
 
     return {
         "item": armor,
         "name": armor.name,
-        "size": tables.SIZE_LABELS.get(size, size),
-        "soak": pick(armor.soak, base["soak"]),
-        "eva_penalty": pick(armor.eva_penalty, pen_row["eva"]),
-        "spd_penalty": pick(armor.spd_penalty, pen_row["spd"]),
-        "climb_swim_penalty": pick(armor.climb_swim_penalty, pen_row["climb_swim"]),
+        "size": size_label,
+        "soak": base["soak"] if armor.soak is None else armor.soak,
+        "eva_penalty": penalty(armor.eva_penalty, "eva"),
+        "spd_penalty": penalty(armor.spd_penalty, "spd"),
+        "climb_swim_penalty": penalty(armor.climb_swim_penalty, "climb_swim"),
         "degree_reduced": degree if degree and idx else 0,
     }

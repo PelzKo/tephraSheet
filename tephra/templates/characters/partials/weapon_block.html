@@ -1,6 +1,7 @@
 {% load sheet_tags %}
-<div class="frame box" style="--x:{{ x }};--y:195;--w:{{ w }};--h:350">
-  <h3>Weapon</h3>
+{# One hand: w_block (weapon), held (non-weapon item such as a shield), blocked (two-handed item in the other hand) or empty (unarmed). #}
+<div class="frame box{% if blocked %} blocked{% endif %}" style="--x:{{ x }};--y:{{ y|default:195 }};--w:{{ w }};--h:350">
+  <h3>{{ label }}</h3>
   {% if w_block %}
     <div class="desc" title="{{ w_block.name }}">{{ w_block.name }}</div>
     <div class="cap">Description</div>
@@ -14,21 +15,46 @@
     <div class="kv center">Accuracy <span class="v">{% stat w_block.acc "Accuracy" signed=True %}</span>
       <span class="v">{% if w_block.stk %}{% stat w_block.stk "Strike" signed=True %}{% else %}<span title="Damage uses the Accuracy roll">Acc</span>{% endif %}</span> Strike</div>
     <div class="dmg">Damage Class <span class="v dc">{% stat w_block.dc "Damage class" %}</span>
-      {% for d in w_block.damage|slice:"1:" %}<span class="v" title="Tier {{ forloop.counter|add:1 }} damage">{{ d }}</span>{% endfor %}</div>
+      {% for d in w_block.damage|slice:"1:" %}<span class="v" title="Tier {{ forloop.counter|add:1 }} damage: damage class {{ w_block.dc.total }} × {{ forloop.counter|add:1 }}">{{ d }}</span>{% endfor %}</div>
     <div class="notes-area"><b>Notes/Augments:</b>
       <ul>
+        {% if two_handed %}<li>Held with both hands</li>{% endif %}
         {% for slug_marque in w_block.item.augments %}{% with aug=slug_marque.0|augment %}<li>{{ aug.name|default:slug_marque.0 }} mQ {{ slug_marque.1|roman }}</li>{% endwith %}{% endfor %}
         {% for n in w_block.notes %}<li>{{ n }}</li>{% endfor %}
       </ul>
     </div>
+  {% elif blocked or held %}
+    <div class="desc{% if blocked %} empty-slot{% endif %}" title="{% if blocked %}Blocked by {{ blocked.name }}{% else %}{{ held.name }}{% endif %}">{% if blocked %}Blocked{% else %}{{ held.name }}{% endif %}</div>
+    <div class="cap">{% if blocked %}{{ blocked_reason|capfirst }}{% else %}Held item (not a weapon){% endif %}</div>
+    <div class="trio">
+      <div><div class="v">–</div><div class="l">Size</div></div>
+      <div><div class="v">–</div><div class="l">Type</div></div>
+      <div><div class="v">–</div><div class="l">Reach</div></div>
+    </div>
+    <div class="kv center">AP to Use <span class="v">–</span> <span class="v">–</span> AP to Ready</div>
+    <div class="kv center">Accuracy <span class="v">–</span> <span class="v">–</span> Strike</div>
+    <div class="dmg">Damage Class <span class="v dc">–</span><span class="v">–</span><span class="v">–</span><span class="v">–</span></div>
+    <div class="notes-area"><b>Notes/Augments:</b>
+      <ul>{% if blocked.kind == "deflection" %}<li>This hand holds {{ blocked.name }} – see the Deflection box.</li>{% elif blocked %}<li>This hand is holding {{ blocked.name }} together with the other hand.</li>{% elif held.kind == "deflection" %}<li>Deflection item – see the Deflection box.</li>{% endif %}</ul>
+    </div>
+  {% elif not unarmed %}
+    <div class="desc empty-slot">Empty</div>
+    <div class="cap">Holds one one-handed item</div>
+    <div class="trio">
+      <div><div class="v">–</div><div class="l">Size</div></div>
+      <div><div class="v">–</div><div class="l">Type</div></div>
+      <div><div class="v">–</div><div class="l">Reach</div></div>
+    </div>
+    <div class="kv center">AP to Use <span class="v">–</span> <span class="v">–</span> AP to Ready</div>
+    <div class="kv center">Accuracy <span class="v">–</span> <span class="v">–</span> Strike</div>
+    <div class="dmg">Damage Class <span class="v dc">–</span><span class="v">–</span><span class="v">–</span><span class="v">–</span></div>
+    <div class="notes-area"><b>Notes/Augments:</b></div>
   {% else %}
-    <div class="desc empty-slot">{{ empty_label|default:"–" }}</div>
+    <div class="desc empty-slot">Empty hand</div>
     <div class="cap">Description</div>
-    {% if fallback %}
-      <div class="kv center">Unarmed: AP {{ fallback.ap_use.total }} · Acc <span class="v">{% stat fallback.acc "Accuracy" signed=True %}</span> · Stk <span class="v">{% stat fallback.stk "Strike" signed=True %}</span></div>
-      <div class="dmg">Damage Class <span class="v dc">{% stat fallback.dc "Unarmed damage class" %}</span>
-        {% for d in fallback.damage|slice:"1:" %}<span class="v">{{ d }}</span>{% endfor %}</div>
-    {% endif %}
+    <div class="kv center">Unarmed: AP {% stat unarmed.ap_use "AP to use" %} · Acc <span class="v">{% stat unarmed.acc "Accuracy" signed=True %}</span> · Stk <span class="v">{% stat unarmed.stk "Strike" signed=True %}</span></div>
+    <div class="dmg">Damage Class <span class="v dc">{% stat unarmed.dc "Unarmed damage class" %}</span>
+      {% for d in unarmed.damage|slice:"1:" %}<span class="v" title="Tier {{ forloop.counter|add:1 }} damage: damage class {{ unarmed.dc.total }} × {{ forloop.counter|add:1 }}">{{ d }}</span>{% endfor %}</div>
     <div class="notes-area"><b>Notes/Augments:</b></div>
   {% endif %}
 </div>

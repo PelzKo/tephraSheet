@@ -54,7 +54,9 @@ def levelup(request, character):
             specialty = request.POST.get("specialty", "")
             errors = [] if specialty else ["Choose a new specialty."]
             if not errors:
-                errors = services.apply_levelup(character, delta, specialty, retrofit=retrofit, from_xp=not catch_up)
+                options = {s: request.POST.get(f"opt:{s}", "") for s in (specialty, retrofit[1]) if s}
+                errors = services.apply_levelup(character, delta, specialty, retrofit=retrofit, from_xp=not catch_up,
+                                                options=options)
         if errors:
             character.refresh_from_db()
             for e in errors:

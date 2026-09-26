@@ -6,7 +6,7 @@ from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
-from characters import access
+from characters import access, services
 from characters.models import Character, InventoryItem
 from rules.engine import tables
 
@@ -53,6 +53,20 @@ def _creator_context(form, character, item=None, inventory_item=None):
             "augments_json": json.dumps(augment_choices_json())}
 
 
+def _equip(request, character, inv, slot):
+    """Save a new inventory item into ``slot``; if the slot rules refuse, it is carried instead."""
+    try:
+        result = services.equip(character, inv, slot)
+    except services.EquipError as exc:
+        messages.error(request, f"{exc} It was added as carried.")
+        services.equip(character, inv, "carried")
+        return
+    if result["moved"]:
+        messages.info(request, f"Put away (now carried): {', '.join(result['moved'])}.")
+    if result["notice"]:
+        messages.warning(request, result["notice"])
+
+
 def item_create(request):
     character = _target_character(request)
     gm = access.is_gm(request)
@@ -71,11 +85,9 @@ def item_create(request):
             obj.save()
         if character:
             slot = request.POST.get("slot", "carried")
-            inv = InventoryItem(character=character, template=obj if obj.pk else None, slot=slot,
+            inv = InventoryItem(character=character, template=obj if obj.pk else None, slot="carried",
                                 **{f: getattr(obj, f) for f in ItemTemplate.ITEM_FIELDS})
-            if slot in ("weapon1", "weapon2", "armor", "deflection"):
-                InventoryItem.objects.filter(character=character, slot=slot).update(slot="carried")
-            inv.save()
+            _equip(request, character, inv, slot)
             messages.success(request, f"{obj.name} added to {character}'s inventory.")
             return redirect(request.POST.get("next") or f"{character.get_absolute_url()}?tab=inventory")
         messages.success(request, f"{obj.name} added to the catalog.")
@@ -129,10 +141,8 @@ def add_to_inventory(request, pk):
     if slot not in dict(InventoryItem._meta.get_field("slot").choices):
         slot = "carried"
     qty = request.POST.get("quantity", "1")
-    if slot in ("weapon1", "weapon2", "armor", "deflection"):
-        InventoryItem.objects.filter(character=character, slot=slot).update(slot="carried")
-    InventoryItem.from_template(character, template, slot=slot,
-                                quantity=max(1, int(qty) if qty.isdigit() else 1)).save()
+    _equip(request, character, InventoryItem.from_template(character, template, slot="carried",
+                                                         quantity=max(1, int(qty) if qty.isdigit() else 1)), slot)
     if request.POST.get("pay"):
         character.money_on_hand -= template.price_dukes * max(1, int(qty) if qty.isdigit() else 1)
         character.save(update_fields=["money_on_hand"])

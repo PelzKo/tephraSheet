@@ -172,6 +172,14 @@ input[type=number] { width: 5.5em; }
 .spec details summary { cursor: pointer; font-size: 13px; color: var(--info); }
 .spec .effect { white-space: pre-line; font-size: 13px; margin: 6px 0 0; }
 .spec .why { font-size: 12px; color: var(--bad); }
+.spec .warn, .warn-text { font-size: 12px; color: #7a5212; }
+.linkish { background: none; border: 0; padding: 0 4px; font: inherit; color: var(--info); text-decoration: underline; cursor: pointer; }
+.usage-note { background: #fff4d8; border-left: 4px solid var(--brass); padding: 4px 8px; margin: 6px 0; font-size: 13px; border-radius: 4px; }
+.spec-option { font-size: 13px; min-height: 30px; padding: 2px 6px; }
+.warn-banner {
+  background: #fff4d8; color: var(--ink); border: 2px solid var(--brass); border-left-width: 6px; border-radius: 8px;
+  padding: 7px 12px; margin: 0 auto 10px; max-width: 1400px; font-size: 14px;
+}
 .chosen-bar { position: sticky; top: 0; z-index: 5; background: var(--paper); border-bottom: 2px solid var(--ink); padding: 8px 0; }
 
 table.data { border-collapse: collapse; width: 100%; font-size: 14px; }
@@ -188,6 +196,8 @@ tr.err td { background: #f8e3df; }
   font-family: var(--font-body); line-height: 1.35;
 }
 .bd-pop.pinned { pointer-events: auto; }
+.bd-pop .tip { white-space: pre-line; }
+.sheet-shell [title]:not(button):not(a), .sheet-shell [data-tip] { cursor: help; }
 .bd-pop h4 { margin: 0 0 5px; font-family: var(--font-head); font-weight: 400; font-size: 15px; color: var(--brass-2); }
 .bd-pop table { width: 100%; border-collapse: collapse; }
 .bd-pop td { padding: 1px 0; vertical-align: top; }

@@ -389,7 +389,7 @@
      {
       "stat": "roll:Brute",
       "op": "add",
-      "when": "note",
+      "when": "always",
       "scope": "character",
       "value": 2
      }
@@ -434,10 +434,9 @@
      {
       "stat": "roll:Spirit",
       "op": "add",
-      "when": "note",
+      "when": "always",
       "scope": "character",
-      "value": -3,
-      "label": "Spirit attribute rolls"
+      "value": -3
      }
     ]
    },
@@ -662,10 +661,10 @@
      {
       "stat": "roll:Spirit",
       "op": "add",
-      "when": "note",
+      "when": "always",
       "scope": "character",
       "value": -3,
-      "label": "Weak Souls: Spirit attribute rolls"
+      "label": "Weak Souls"
      }
     ]
    },
@@ -679,7 +678,7 @@
      {
       "stat": "roll:Dexterity",
       "op": "add",
-      "when": "note",
+      "when": "always",
       "scope": "character",
       "value": 2
      }
@@ -777,7 +776,7 @@
      {
       "stat": "roll:Cunning",
       "op": "add",
-      "when": "note",
+      "when": "always",
       "scope": "character",
       "value": 2
      }
@@ -813,7 +812,7 @@
      {
       "stat": "roll:Spirit",
       "op": "add",
-      "when": "note",
+      "when": "always",
       "scope": "character",
       "value": 3
      }
@@ -828,7 +827,7 @@
      {
       "stat": "roll:Brute",
       "op": "add",
-      "when": "note",
+      "when": "always",
       "scope": "character",
       "value": -2
      }

@@ -12,7 +12,7 @@
     <div class="inv-slot">
       <div>
         <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name }}</b>
-        <span class="tag">{{ item.get_kind_display }}{% if item.size %} · {{ item.get_size_display }}{% endif %}</span>
+        <span class="tag">{{ item.get_kind_display }}{% if item.size %} · {{ item.get_size_display }}{% endif %}{% if item.hands_label %} · {{ item.hands_label }}{% endif %}{% if item.concealable %} · concealable{% endif %}</span>
         {% if item.slot != "carried" %}<span class="tag ok">{{ item.get_slot_display }}</span>{% endif %}
         <div class="meta">
           {% for a in item.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}
@@ -26,7 +26,8 @@
           <input type="hidden" name="id" value="{{ item.pk }}"><input type="hidden" name="tab" value="inventory">
           <select name="slot" aria-label="Where">
             {% for value, label in slot_choices %}
-              {% if value == "weapon1" or value == "weapon2" %}{% if item.is_weapon or item.kind == "deflection" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
+              {% if value == "weapon1" or value == "weapon2" %}{% if item.is_weapon %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
+              {% elif value == "wings" %}{% if has_wings and item.is_weapon and item.hands_label == "one-handed" or item.slot == "wings" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
               {% elif value == "armor" %}{% if item.kind == "armor" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
               {% elif value == "deflection" %}{% if item.kind == "deflection" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
               {% else %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
@@ -42,7 +43,7 @@
   {% empty %}
     <p class="muted">Nothing carried yet.</p>
   {% endfor %}
-  <p class="muted small">"Worn / active" items (e.g. a flight pack) apply their modifiers; carried and stored items don't.</p>
+  <p class="muted small">"Worn / active" items (e.g. a flight pack) apply their modifiers; carried and stored items don't. A two-handed item always goes into the left hand and blocks the right one; a shield or parrying dagger takes the right hand (a cloak takes none).</p>
 </div>
 
 <div class="paper">

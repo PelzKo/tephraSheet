@@ -1,6 +1,8 @@
 {% extends "base.html" %}{% load sheet_tags %}
 {% block content %}
-<form method="post" class="paper" id="lvlform">
+<form method="post" class="paper" id="lvlform" x-data="{two: '', a: '', b: '',
+      get dup() { const v = [this.two, this.a, this.b].filter(Boolean); return new Set(v).size < v.length; }}"
+      x-on:submit="if (dup && $event.submitter && $event.submitter.value === 'apply') $event.preventDefault()">
   {% csrf_token %}
   <div class="row spread">
     <h1>{{ character.name }}: level {{ character.level }} → {{ new_level }}</h1>
@@ -15,13 +17,15 @@
   </ul>
   <h2>Skill points</h2>
   <div class="form-grid">
-    <div class="field"><label>+2 points</label><select name="skill_two" class="lvl-skill" required><option value="">–</option>
+    <div class="field"><label>+2 points</label><select name="skill_two" class="lvl-skill" required x-model="two"><option value="">–</option>
       {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr }}">{% for s in skills %}<option value="{{ s }}">{{ s }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
-    <div class="field"><label>+1 point</label><select name="skill_one_a" class="lvl-skill" required><option value="">–</option>
+    <div class="field"><label>+1 point</label><select name="skill_one_a" class="lvl-skill" required x-model="a"><option value="">–</option>
       {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr }}">{% for s in skills %}<option value="{{ s }}">{{ s }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
-    <div class="field"><label>+1 point</label><select name="skill_one_b" class="lvl-skill" required><option value="">–</option>
+    <div class="field"><label>+1 point</label><select name="skill_one_b" class="lvl-skill" required x-model="b"><option value="">–</option>
       {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr }}">{% for s in skills %}<option value="{{ s }}">{{ s }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
   </div>
+  <div class="warn-banner" role="alert" x-show="dup" style="display:none;margin-top:10px">
+    ⚠ Each skill can only be chosen once: +2 go into one skill and +1 into two <i>other</i> skills.</div>
   {% if retrofit %}
     <h2 style="margin-top:14px">Retrofit (optional)</h2>
     <div class="form-grid"><div class="field"><label>Replace specialty</label>
@@ -31,6 +35,6 @@
        hx-trigger="load, change[target.matches('.lvl-skill, #retro-old')] from:#lvlform" hx-swap="innerHTML">
     <p class="muted">Choose your skill points to see the specialties you can learn.</p></div>
   <div class="wizard-actions"><a class="btn" href="{% url 'sheet' character.pk %}">Cancel</a>
-    <button class="btn primary" type="submit" name="action" value="apply">Level up ✓</button></div>
+    <button class="btn primary" type="submit" name="action" value="apply" :disabled="dup">Level up ✓</button></div>
 </form>
 {% endblock %}

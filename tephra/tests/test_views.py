@@ -73,7 +73,8 @@ def test_manual_wizard_flow(client_char):
     sheet_resp = client.get(reverse("sheet", args=[c.pk]))
     assert sheet_resp.status_code == 200
     assert b"Ada Cogsley" in sheet_resp.content
-    # Relentless: 3 + 1 per specialty; Fisticuffs 10, Gunsmith 4, Fluid 7.
+    # Relentless: 3 + 1 per specialty; Fisticuffs 10, Gunsmith 4, Fluid 7 (the rolled trait may add HP).
+    c.random_traits = []
     assert c.compute().max_hp == 21 + 3 + 3
 
 
@@ -128,7 +129,7 @@ def test_admin_mode_misc(client_char):
     c.refresh_from_db()
     after = c.compute().stats["acc"]
     assert after.total == before + 1
-    assert any(label == "Misc (admin)" for label, _ in after.breakdown)
+    assert any(label == "Manual Misc Change" for label, _ in after.breakdown)
     assert client.get(reverse("edit_choices", args=[c.pk])).status_code == 200
 
 
@@ -163,3 +164,131 @@ def test_gm_pages(client, catalog):
     assert client.get(reverse("gm_settings")).status_code == 200
     c = Character.objects.create(name="X", race="human", status="active")
     assert client.get(reverse("sheet", args=[c.pk])).status_code == 200
+
+
+def test_effects_play_actions(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(3))
+    services.finish_creation(c)
+    play = lambda a, **d: client.post(reverse("play", args=[c.pk, a]), d, HTTP_HX_REQUEST="true")  # noqa: E731
+    full_hp, full_wounds = c.compute().max_hp, c.compute().max_wounds
+    assert play("effect-add", kind="status", key="status:fatigued").status_code == 200
+    assert c.compute().max_hp == full_hp // 2
+    play("effect-add", kind="called", location="2", which="fatal")
+    play("effect-add", kind="called", location="5", which="wound")
+    play("effect-add", kind="status", text="Poisoned")
+    kinds = sorted(c.effects.filter(active=True).values_list("kind", "key"))
+    assert kinds == [("fatal", "fatal:eyes"), ("status", ""), ("status", "status:fatigued"), ("wound", "wound:torso")]
+    assert c.compute().max_wounds == full_wounds - 1
+    resp = client.get(reverse("sheet", args=[c.pk]))
+    assert b"Broken ribs" in resp.content and b"Permanently blind" in resp.content
+    play("breather")
+    assert not c.effects.filter(active=True, key="wound:torso").exists()  # ends with a breather
+    play("set-hp", value="1")
+    c.refresh_from_db()
+    assert c.current_hp == 1
+
+
+def test_create_random_character_command(catalog):
+    call_command("create_random_character", "--if-empty", "--level", "2", "--seed", "5")
+    c = Character.objects.get()
+    assert c.status == "active" and c.level == 2 and c.check_password("demo")
+    call_command("create_random_character", "--if-empty")
+    assert Character.objects.count() == 1
+
+
+def test_two_handed_equip_blocks_right_hand(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(4))
+    services.finish_creation(c)
+    c.items.filter(slot__in=["weapon1", "weapon2"]).update(slot="carried")
+    sabre = InventoryItem.objects.create(character=c, name="Sabre", kind="melee", size="medium")
+    maul = InventoryItem.objects.create(character=c, name="Maul", kind="melee", size="heavy")
+    play = lambda a, **d: client.post(reverse("play", args=[c.pk, a]), d, HTTP_HX_REQUEST="true")  # noqa: E731
+    play("equip", id=sabre.pk, slot="weapon1")
+    play("equip", id=maul.pk, slot="weapon2")  # two-handed: goes left, sabre is put away
+    maul.refresh_from_db(), sabre.refresh_from_db()
+    assert (maul.slot, sabre.slot) == ("weapon1", "carried")
+    resp = client.get(reverse("sheet", args=[c.pk]))
+    assert b"Weapon (Right)" in resp.content and b"Maul needs both hands" in resp.content
+    play("equip", id=sabre.pk, slot="weapon2")  # one-handed into the right hand frees the maul
+    maul.refresh_from_db()
+    assert maul.slot == "carried"
+
+
+def test_battle_theme_choice_and_cancel(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(5))
+    services.finish_creation(c)
+    theme = get_registry().specialties_by_name["Battle Theme"]
+    c.skills = dict(c.skills, Showmanship=3)
+    errors = services.add_specialties_sequentially(c, [theme["slug"]], options={theme["slug"]: ""})
+    assert errors and "perform" in errors[0]
+    assert not services.add_specialties_sequentially(c, [theme["slug"]], options={theme["slug"]: "singing"})
+    c.stance = theme["slug"]
+    c.save()
+    play = lambda a, **d: client.post(reverse("play", args=[c.pk, a]), d, HTTP_HX_REQUEST="true")  # noqa: E731
+    resp = play("effect-add", kind="called", location="9", which="wound")  # hand: no effect on singing
+    c.refresh_from_db()
+    assert c.stance == theme["slug"] and b"cancelled" not in resp.content
+    resp = play("effect-add", kind="called", location="4", which="wound")
+    c.refresh_from_db()
+    assert c.stance == "" and b"Battle Theme has been cancelled" in resp.content
+
+
+def test_shield_wings_and_hand_hit(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(6))
+    services.finish_creation(c)
+    c.items.filter(slot__in=["weapon1", "weapon2", "deflection", "wings"]).update(slot="carried")
+    sabre = InventoryItem.objects.create(character=c, name="Sabre", kind="melee", size="medium")
+    knife = InventoryItem.objects.create(character=c, name="Knife", kind="melee", size="light")
+    shield = InventoryItem.objects.create(character=c, name="Shield", kind="deflection")
+    cloak = InventoryItem.objects.create(character=c, name="Cloak", kind="deflection")
+    maul = InventoryItem.objects.create(character=c, name="Maul", kind="melee", size="heavy")
+    services.equip(c, sabre, "weapon1")
+    services.equip(c, knife, "weapon2")
+    assert services.equip(c, shield, "deflection")["moved"] == ["Knife"]  # the shield takes the right hand
+    assert services.equip(c, cloak, "deflection")["moved"] == ["Shield"]
+    services.equip(c, knife, "weapon2")  # a cloak takes no hand
+    assert set(c.items.filter(slot__in=["weapon1", "weapon2"]).values_list("name", flat=True)) == {"Sabre", "Knife"}
+    with pytest.raises(services.EquipError):
+        services.equip(c, knife, "wings")  # no Wings as Arms
+    c.random_traits = ["ayodin/wings-as-arms"]
+    c.save()
+    with pytest.raises(services.EquipError):
+        services.equip(c, maul, "wings")  # wings take only one-handed items
+    services.equip(c, knife, "wings")
+    resp = client.get(reverse("sheet", args=[c.pk]))
+    assert b"Weapon (Wings)" in resp.content
+    play = lambda a, **d: client.post(reverse("play", args=[c.pk, a]), d, HTTP_HX_REQUEST="true")  # noqa: E731
+    resp = play("effect-add", kind="called", location="9", which="normal")  # left hand hit: drop the sabre
+    sabre.refresh_from_db()
+    assert sabre.slot == "carried" and b"You dropped Sabre" in resp.content
+
+
+def test_rotating_barrels_hands():
+    from rules.engine import tables
+    from rules.engine.state import ItemState
+
+    pistol = ItemState(name="Pepperbox", kind="firearm", size="light", augments=[(tables.ROTATING_BARRELS, 1)])
+    rifle = ItemState(name="Gatling", kind="firearm", size="heavy", augments=[(tables.ROTATING_BARRELS, 1)])
+    assert tables.item_hands(pistol) == 2 and not tables.needs_firing_position(pistol)
+    assert tables.item_hands(rifle) == 2 and tables.needs_firing_position(rifle)
+    pistol.augments.append((tables.CRANK_FREE, 1))
+    assert tables.item_hands(pistol) == 1
+
+
+def test_instrument_battle_theme_sunder(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(7))
+    services.finish_creation(c)
+    theme = get_registry().specialties_by_name["Battle Theme"]
+    c.specialties = list(c.specialties) + [[theme["slug"], 1]]
+    c.specialty_choices = {theme["slug"]: "instrument"}
+    c.stance = theme["slug"]
+    c.save()
+    assert b"Instrument sundered" in client.get(reverse("sheet", args=[c.pk])).content
+    resp = client.post(reverse("play", args=[c.pk, "theme-sundered"]), HTTP_HX_REQUEST="true")
+    c.refresh_from_db()
+    assert c.stance == "" and b"Battle Theme has been cancelled" in resp.content

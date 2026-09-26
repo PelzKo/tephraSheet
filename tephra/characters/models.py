@@ -3,13 +3,14 @@ from django.db import models
 from django.urls import reverse
 
 from catalog.models import ItemFields, ItemTemplate
-from rules.engine import tables
+from rules.engine import effects, tables
 from rules.engine.state import CharacterState
 from rules.registry import get_registry
 
 SLOT_CHOICES = [
-    ("weapon1", "Weapon 1"),
-    ("weapon2", "Weapon 2"),
+    ("weapon1", "Left hand"),
+    ("weapon2", "Right hand"),
+    ("wings", "Wings"),
     ("armor", "Armor (worn)"),
     ("deflection", "Deflection item"),
     ("worn", "Worn / active"),
@@ -78,6 +79,8 @@ class Character(models.Model):
     augments = models.JSONField(default=list, blank=True)
     body_augments = models.JSONField(default=list, blank=True, help_text='[["slug", marque], ...]')
     stories = models.JSONField(default=list, blank=True)
+    specialty_choices = models.JSONField(default=dict, blank=True,
+                                         help_text='choices made when learning, e.g. {"<battle-theme slug>": "singing"}')
 
     # Play state.
     stance = models.CharField(max_length=120, blank=True)
@@ -122,13 +125,13 @@ class Character(models.Model):
         if include_items and self.pk:
             items = [i.to_item_state(slot=i.slot) for i in self.items.all()]
         lost = 0
-        fatigued = False
+        effect_keys = []
         custom = []
         if self.pk:
             for e in self.effects.filter(active=True):
                 lost += e.lost_wounds
-                if e.kind == "status" and e.text.strip().lower().startswith("fatigued"):
-                    fatigued = True
+                if e.key:
+                    effect_keys.append(e.key)
             custom = [c.as_modifier() for c in self.custom_modifiers.all()]
         return CharacterState(
             race=self.race or "human",
@@ -146,7 +149,7 @@ class Character(models.Model):
             stance=self.stance,
             toggles=set(self.toggles),
             misc={k: int(v) for k, v in self.misc.items() if v},
-            fatigued=fatigued,
+            effects=effect_keys,
             lost_wounds=lost,
         )
 
@@ -175,6 +178,12 @@ class InventoryItem(ItemFields):
     def __str__(self):
         return self.name
 
+    @property
+    def hands_label(self):
+        if not self.is_weapon and self.kind != "deflection":
+            return ""
+        return {0: "no hand", 1: "one-handed", 2: "two-handed"}[tables.item_hands(self.to_item_state())]
+
     @classmethod
     def from_template(cls, character, template, slot="carried", quantity=1):
         return cls(character=character, template=template, slot=slot, quantity=quantity,
@@ -182,12 +191,16 @@ class InventoryItem(ItemFields):
 
 
 class EffectEntry(models.Model):
-    KIND_CHOICES = [("wound", "Wound effect"), ("fatal", "Fatal effect"), ("status", "Status effect"),
-                    ("called", "Called-shot effect")]
+    """An active status effect or called-shot (wounded/fatal) effect. ``key`` points into
+    ``rules/engine/effects.py``; custom status effects have no key and no mechanical effect."""
+
+    KIND_CHOICES = [("normal", "Called-shot effect"), ("wound", "Wound effect"), ("fatal", "Fatal effect"),
+                    ("status", "Status effect")]
 
     character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="effects")
     kind = models.CharField(max_length=10, choices=KIND_CHOICES)
-    location = models.PositiveSmallIntegerField(null=True, blank=True, help_text="called-shot d12 location")
+    key = models.CharField(max_length=40, blank=True)
+    location = models.PositiveSmallIntegerField(null=True, blank=True, help_text="silhouette location 1-12")
     text = models.CharField(max_length=255)
     lost_wounds = models.PositiveSmallIntegerField(default=0, help_text="permanent max-wound loss")
     active = models.BooleanField(default=True)
@@ -201,7 +214,12 @@ class EffectEntry(models.Model):
 
     @property
     def location_name(self):
-        return tables.LOCATIONS.get(self.location, "") if self.location else ""
+        return effects.LOCATION_LABELS.get(self.location, "") if self.location else ""
+
+    @property
+    def rule_text(self):
+        data = effects.get(self.key)
+        return data["text"] if data else ""
 
 
 class CustomModifier(models.Model):

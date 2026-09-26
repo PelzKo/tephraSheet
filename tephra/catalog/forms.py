@@ -8,7 +8,7 @@ from rules.registry import get_registry
 from .importer import AUGMENT_LISTS_BY_KIND
 from .models import ItemTemplate
 
-FORM_FIELDS = ["name", "kind", "size", "material", "beta", "concealable", "ap_use", "ap_ready", "dc", "reach",
+FORM_FIELDS = ["name", "kind", "size", "material", "beta", "concealable", "hands", "ap_use", "ap_ready", "dc", "reach",
                "range", "increment", "soak", "eva_penalty", "spd_penalty", "climb_swim_penalty", "deflect_bonus",
                "deflect_ranged", "deflect_melee", "price_dukes", "description"]
 

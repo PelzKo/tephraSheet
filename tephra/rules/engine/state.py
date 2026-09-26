@@ -8,10 +8,12 @@ class ItemState:
     name: str
     kind: str  # melee firearm bow crossbow armor deflection ammo gear animal vehicle
     size: str = ""
-    slot: str = ""  # weapon1 weapon2 armor deflection worn carried stored
+    slot: str = ""  # weapon1 (left hand) weapon2 (right hand) wings armor deflection worn carried stored
     variants: list = field(default_factory=list)
     material: str = "metal"
     beta: bool = False
+    concealable: bool = False
+    hands: int | None = None  # 0 (worn), 1 or 2; None = size table (tables.item_hands)
     # Explicit overrides; None = use the size table.
     ap_use: int | None = None
     ap_ready: int | None = None
@@ -49,15 +51,22 @@ class CharacterState:
     stance: str = ""  # specialty slug, or "footing"
     toggles: set = field(default_factory=set)
     misc: dict = field(default_factory=dict)  # admin overrides: stat / "attr:X" / "skill:X" -> int
-    fatigued: bool = False
+    effects: list = field(default_factory=list)  # active effect keys (rules/engine/effects.py)
     lost_wounds: int = 0  # permanent max-wound losses from fatal effects
 
     def equipped(self, slot):
         return [i for i in self.items if i.slot == slot]
 
     @property
-    def weapons(self):
+    def in_hands(self):
+        """Items held in the two hand slots (weapon1 = left, weapon2 = right)."""
         return [i for i in self.items if i.slot in ("weapon1", "weapon2")]
+
+    @property
+    def weapons(self):
+        """Weapons ready to use: both hands and the wings slot (Wings as Arms)."""
+        return [i for i in self.items if i.slot in ("weapon1", "weapon2", "wings")
+                and i.kind in ("melee", "firearm", "bow", "crossbow")]
 
     @property
     def armor(self):

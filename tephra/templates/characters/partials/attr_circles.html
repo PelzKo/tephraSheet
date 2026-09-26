@@ -1,7 +1,7 @@
 {% load sheet_tags %}
 <div class="gear plain attr-circle" style="--cx:{{ cx }};--cy:{{ cy }};--r:23"><div class="face"><span class="val">{% stat a attr %}</span></div></div>
 <div class="gear plain misc-circle" style="--cx:{{ mx }};--cy:{{ my }};--r:18">
-  <div class="face"><span class="val">{% with m="attr:"|add:attr %}{{ character.misc|get:m|default:"" }}{% endwith %}</span></div>
+  <div class="face">{% with mv=sheet.attr_misc|get:attr %}{% if mv.parts %}{% stat mv attr|add:" misc" signed=True %}{% endif %}{% endwith %}</div>
 </div>
 <div class="at misc-lbl" style="--x:{{ mx|add:-40 }};--y:{{ my|add:-6 }}">Misc</div>
 {% if admin_mode %}

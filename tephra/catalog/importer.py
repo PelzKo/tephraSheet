@@ -11,16 +11,16 @@ from .models import KIND_CHOICES, MATERIAL_CHOICES, SIZE_CHOICES
 
 TEMPLATE_HEADER = ["name", "kind", "size", "variants", "material", "dc", "ap_use", "ap_ready", "reach", "range",
                    "increment", "soak", "eva_penalty", "spd_penalty", "climb_swim_penalty", "deflect_bonus",
-                   "deflect_ranged", "deflect_melee", "concealable", "beta", "augments", "price",
+                   "deflect_ranged", "deflect_melee", "concealable", "hands", "beta", "augments", "price",
                    "is_starting_gear", "quantity", "description"]
 TEMPLATE_ROWS = [
-    ["Cavalry Sabre", "melee", "medium", "", "metal", "", "", "", "", "", "", "", "", "", "", "", "", "", "no", "no",
+    ["Cavalry Sabre", "melee", "medium", "", "metal", "", "", "", "", "", "", "", "", "", "", "", "", "", "no", "", "no",
      "Accurate I", "7 pr", "no", "1", "A curved officer's blade."],
-    ["Boarding Pike", "melee", "heavy", "polearm", "wood", "", "", "", "", "", "", "", "", "", "", "", "", "", "no",
+    ["Boarding Pike", "melee", "heavy", "polearm", "wood", "", "", "", "", "", "", "", "", "", "", "", "", "", "no", "2",
      "no", "", "12 pr", "no", "1", ""],
-    ["Pepperbox Pistol", "firearm", "light", "", "metal", "", "", "", "", "", "", "", "", "", "", "", "", "", "yes",
+    ["Pepperbox Pistol", "firearm", "light", "", "metal", "", "", "", "", "", "", "", "", "", "", "", "", "", "yes", "1",
      "no", "", "2 pr", "no", "1", ""],
-    ["Brass Cuirass", "armor", "medium", "", "metal", "", "", "", "", "", "", "", "", "", "", "", "", "", "no", "no",
+    ["Brass Cuirass", "armor", "medium", "", "metal", "", "", "", "", "", "", "", "", "", "", "", "", "", "no", "", "no",
      "Damage Soaking I", "15 pr", "no", "1", ""],
 ]
 
@@ -32,7 +32,7 @@ ALIASES = {
     "evade bonus": "deflect_bonus", "deflect": "deflect_bonus", "vs ranged": "deflect_ranged",
     "vs melee": "deflect_melee", "cost": "price", "price (dukes)": "price_dukes", "notes": "description",
     "effect": "description", "starting gear": "is_starting_gear", "qty": "quantity", "amount": "quantity",
-    "augs": "augments",
+    "augs": "augments", "handed": "hands",
 }
 KIND_ALIASES = {"weapon": "melee", "melee weapon": "melee", "gun": "firearm", "pistol": "firearm", "rifle": "firearm",
                 "shield": "deflection", "equipment": "gear", "item": "gear", "ammunition": "ammo"}
@@ -167,6 +167,14 @@ def parse_rows(text):
         for f in BOOL_FIELDS:
             if raw.get(f, "") != "":
                 values[f] = parse_bool(raw[f])
+        hands = raw.get("hands", "").strip().lower()
+        if hands:
+            parsed = {"0": 0, "none": 0, "worn": 0, "1": 1, "one": 1, "one-handed": 1, "2": 2, "two": 2,
+                      "two-handed": 2}.get(hands)
+            if parsed is not None:
+                values["hands"] = parsed
+            else:
+                errors.append(f"hands must be 0, 1 or 2, not '{hands}'")
         if raw.get("augments"):
             values["augments"] = parse_augments(raw["augments"], kind, errors)
         result.append({"line": n, "values": values, "errors": errors})

@@ -99,8 +99,34 @@ def revalidate(character):
 
 
 # --------------------------------------------------------------------------- steps 4/5
-def add_specialties_sequentially(character, slugs, level=1):
-    """Add specialties one by one, rejecting illegal ones. Returns list of error strings."""
+def set_specialty_option(character, slug, value):
+    """Store the choice a specialty needs (e.g. Battle Theme: singing or instrument)."""
+    spec = get_registry().specialties.get(slug)
+    if not spec or value not in spec.get("options", {}).get("options", {}):
+        return False
+    character.specialty_choices = dict(character.specialty_choices, **{slug: value})
+    return True
+
+
+def fill_random_options(character, rng):
+    """Pick random choices for learned specialties that still need one (random characters)."""
+    reg = get_registry()
+    for slug, _ in character.specialties:
+        spec = reg.specialties.get(slug, {})
+        if spec.get("options") and slug not in character.specialty_choices:
+            set_specialty_option(character, slug, rng.choice(sorted(spec["options"]["options"])))
+
+
+def missing_options(character):
+    """Learned specialties whose choice hasn't been made yet: [spec, ...]."""
+    reg = get_registry()
+    return [reg.specialties[s] for s, _ in character.specialties
+            if reg.specialties.get(s, {}).get("options") and s not in character.specialty_choices]
+
+
+def add_specialties_sequentially(character, slugs, level=1, options=None):
+    """Add specialties one by one, rejecting illegal ones. Returns list of error strings.
+    ``options`` ({slug: value}) supplies the choice for specialties that need one."""
     errors = []
     reg = get_registry()
     for slug in slugs:
@@ -108,12 +134,18 @@ def add_specialties_sequentially(character, slugs, level=1):
         if not spec:
             errors.append(f"Unknown specialty {slug}.")
             continue
+        if options is not None and spec.get("options") and \
+                (options.get(slug) or "") not in spec["options"]["options"]:
+            errors.append(f"{spec['name']}: {spec['options']['label']}")
+            continue
         state = character.to_state()
         ok, reasons = check_specialty(spec, state, compute(state))
         if not ok:
             errors.append(f"{spec['name']}: {'; '.join(reasons)}")
             continue
         character.specialties = list(character.specialties) + [[slug, level]]
+        if options:
+            set_specialty_option(character, slug, options.get(slug))
     return errors
 
 
@@ -157,11 +189,113 @@ def random_augments(character, rng):
     character.augments = state.augments
 
 
+# --------------------------------------------------------------------------- equipment
+HAND_SLOTS = ("weapon1", "weapon2")  # left hand, right hand
+WINGS_TRAIT = "ayodin/wings-as-arms"
+
+
+class EquipError(ValueError):
+    pass
+
+
+def one_handing(character):
+    """One-Handing It: two-handed weapons (except bows) fit in one hand."""
+    reg = get_registry()
+    return any(reg.specialties.get(s, {}).get("name") == "One-Handing It" for s, _ in character.specialties)
+
+
+def has_wings(character):
+    return WINGS_TRAIT in character.random_traits or WINGS_TRAIT in character.fixed_traits
+
+
+def item_hands(character, item):
+    return tables.item_hands(item.to_item_state(), one_handing(character))
+
+
+def equip(character, item, slot):
+    """Put ``item`` into ``slot`` and move displaced items to "carried".
+
+    - A two-handed item always goes into the left hand and empties the right one.
+    - A shield or parrying dagger (deflection item that needs a hand) blocks the right hand.
+    - The wings slot (Wings as Arms) only takes one-handed items.
+    Returns {"moved": [names put away], "notice": pop-up text or ""}; raises EquipError."""
+    moved = []
+    others = InventoryItem.objects.filter(character=character)
+    if item.pk:
+        others = others.exclude(pk=item.pk)
+
+    def carry(items):
+        for o in items:
+            o.slot = "carried"
+            o.save(update_fields=["slot"])
+            moved.append(o.name)
+
+    hands = item_hands(character, item)
+    shield = [o for o in others.filter(slot="deflection") if item_hands(character, o) >= 1]
+    if slot == "wings":
+        if not has_wings(character):
+            raise EquipError("Only characters with Wings as Arms can hold items in their wings.")
+        if hands != 1 or item.kind == "deflection":
+            raise EquipError(f"The wings can only hold one-handed items, and {item.name} is not one.")
+        carry(others.filter(slot="wings"))
+    elif slot in HAND_SLOTS:
+        if item.kind == "deflection":
+            slot = "deflection"
+        elif hands == 2:
+            slot = "weapon1"
+            carry(list(others.filter(slot__in=HAND_SLOTS)) + shield)
+        else:
+            carry(others.filter(slot=slot))
+            other = "weapon2" if slot == "weapon1" else "weapon1"
+            carry([o for o in others.filter(slot=other) if item_hands(character, o) == 2])
+            if slot == "weapon2":
+                carry(shield)
+    if slot == "deflection":
+        carry(others.filter(slot="deflection"))
+        if hands >= 1:  # the shield takes the right hand
+            carry(list(others.filter(slot="weapon2")) +
+                  [o for o in others.filter(slot="weapon1") if item_hands(character, o) == 2])
+    elif slot == "armor":
+        carry(others.filter(slot="armor"))
+    item.slot = slot
+    item.save()
+    notice = ""
+    if slot in HAND_SLOTS + ("wings",) and tables.needs_firing_position(item.to_item_state()):
+        notice = f"{item.name} has rotating barrels: you need to be in a firing position to fire it."
+    return {"moved": moved, "notice": notice}
+
+
+def normalize_hands(character):
+    """Fix hand slots that break the hand rules (e.g. data from before items had hands).
+    The left hand wins over the shield, the shield over the right hand. Returns names put away."""
+    items = {i.slot: i for i in character.items.filter(slot__in=["weapon1", "weapon2", "wings", "deflection"])}
+    left, right, wings, defl = (items.get(k) for k in ("weapon1", "weapon2", "wings", "deflection"))
+    moved = []
+
+    def carry(item):
+        item.slot = "carried"
+        item.save(update_fields=["slot"])
+        moved.append(item.name)
+
+    if right and not left and item_hands(character, right) == 2:
+        right.slot, left, right = "weapon1", right, None
+        left.save(update_fields=["slot"])
+    if left and item_hands(character, left) == 2:
+        if right:
+            carry(right)
+        if defl and item_hands(character, defl) >= 1:
+            carry(defl)
+    elif right and (item_hands(character, right) == 2 or defl and item_hands(character, defl) >= 1):
+        carry(right)
+    if wings and (not has_wings(character) or item_hands(character, wings) != 1):
+        carry(wings)
+    return moved
+
+
 # --------------------------------------------------------------------------- steps 6/7
 def equip_template(character, template, slot):
-    InventoryItem.objects.filter(character=character, slot=slot).update(slot="carried")
-    item = InventoryItem.from_template(character, template, slot=slot)
-    item.save()
+    item = InventoryItem.from_template(character, template, slot="carried")
+    equip(character, item, slot)
     return item
 
 
@@ -178,7 +312,9 @@ def random_weapons_and_armor(character, rng):
     second = rng.choice([w for w in weapons if w.kind != first.kind] or weapons)
     InventoryItem.objects.filter(character=character, slot__in=["weapon1", "weapon2", "armor", "deflection"]).delete()
     equip_template(character, first, "weapon1")
-    equip_template(character, second, "weapon2")
+    left = equip_template(character, second, "carried")
+    if item_hands(character, left) == 1 and item_hands(character, character.items.get(slot="weapon1")) == 1:
+        equip(character, left, "weapon2")
     armors = list(ItemTemplate.objects.filter(kind="armor", size__in=["minimal", "light", "medium"]))
     if armors:
         equip_template(character, rng.choice(armors), "armor")
@@ -235,8 +371,10 @@ def random_step(character, step, rng=None):
         character.save()
     elif step == 4:
         character.specialties = []
+        character.specialty_choices = {}
         random_specialties(character, tables.CREATION_SPECIALTIES, 1, rng)
         revalidate(character)
+        fill_random_options(character, rng)
         character.save()
     elif step == 5:
         character.augments = []
@@ -282,7 +420,7 @@ def finish_creation(character):
 
 
 @transaction.atomic
-def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(), from_xp=True):
+def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(), from_xp=True, options=None):
     """Apply one level-up. ``retrofit`` = (old_slug, new_slug) at levels 4/8/12."""
     errors = leveling.validate_levelup_skills(skill_delta)
     if errors:
@@ -306,10 +444,10 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
         replaced_level = old[idx][1]
         del old[idx]
         character.specialties = old
-        errs = add_specialties_sequentially(character, [retrofit[1]], level=replaced_level)
+        errs = add_specialties_sequentially(character, [retrofit[1]], level=replaced_level, options=options)
         if errs:
             return errs
-    errs = add_specialties_sequentially(character, [specialty], level=new_level)
+    errs = add_specialties_sequentially(character, [specialty], level=new_level, options=options)
     if errs:
         return errs
     if augments:
@@ -341,6 +479,8 @@ def random_levelup(character, rng=None, from_xp=True):
         new_augs = [a for a in state.augments if a not in character.augments]
         errors = apply_levelup(character, delta, slug, augments=new_augs, from_xp=from_xp)
         if not errors:
+            fill_random_options(character, rng)
+            character.save(update_fields=["specialty_choices"])
             return []
         character.refresh_from_db()
     return ["Could not find a legal random level-up."]

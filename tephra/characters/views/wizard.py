@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 
 from catalog.models import ItemTemplate
 from rules.engine import creation, tables
-from rules.engine.requirements import augment_lists, check_augment, check_specialty
+from rules.engine.requirements import augment_lists, check_augment, check_specialty, specialty_warnings
 from rules.engine.stats import compute
 from rules.registry import get_registry
 
@@ -228,6 +228,7 @@ def specialty_options(character, level=None, extra_state=None):
             continue
         ok, reasons = check_specialty(spec, state, sheet)
         groups.setdefault(skill, []).append({"spec": spec, "ok": ok, "reasons": reasons,
+                                             "warnings": specialty_warnings(spec, state),
                                              "owned": spec["slug"] in owned})
     order = {s: i for i, s in enumerate(tables.ALL_SKILLS)}
     return sheet, sorted(groups.items(), key=lambda kv: order.get(kv[0], 99))
@@ -246,7 +247,9 @@ def save_step4(request, character, action):
     if action == "add":
         if len(character.specialties) >= tables.CREATION_SPECIALTIES:
             return [f"You can only choose {tables.CREATION_SPECIALTIES} specialties now; remove one first."]
-        errors = services.add_specialties_sequentially(character, [request.POST.get("slug", "")], level=1)
+        slug = request.POST.get("slug", "")
+        errors = services.add_specialties_sequentially(character, [slug], level=1,
+                                                       options={slug: request.POST.get(f"opt:{slug}", "")})
     elif action == "remove":
         slug = request.POST.get("slug")
         character.specialties = [s for s in character.specialties if s[0] != slug]
@@ -314,10 +317,16 @@ def save_step6(request, character, action):
         if current and current.template_id and str(current.template_id) == value:
             continue
         tpl = ItemTemplate.objects.filter(pk=value).first()
-        if tpl:
-            if current:
-                current.delete()
-            services.equip_template(character, tpl, slot)
+        if not tpl:
+            continue
+        left = character.items.filter(slot="weapon1").first()
+        if slot == "weapon2" and left and services.item_hands(character, left) == 2:
+            return [f"{left.name} needs both hands, so the right hand stays empty."]
+        if current:
+            current.delete()
+        result = services.equip(character, InventoryItem.from_template(character, tpl), slot)
+        if result["moved"]:
+            return [f"{tpl.name} needs a free hand: put away {', '.join(result['moved'])}."]
     return []
 
 

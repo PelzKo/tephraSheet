@@ -54,9 +54,18 @@ class Value:
             rows.append(self.override)
         return rows
 
-    @property
-    def is_composite(self):
-        return len(self.breakdown) > 1
+    def inherited(self, label):
+        """A new Value that starts with this value's parts (so breakdowns show the real sources).
+        Values that are overridden, halved or floored are taken over as one part named ``label``."""
+        v = Value()
+        rows = ([self.base] if self.base else []) + self.parts
+        if self.override is None and not self.halved and self.raw_total == sum(a for _, a in rows):
+            for part_label, amount in rows:
+                v.add(part_label, amount)
+        else:
+            note = self.override[0] if self.override is not None else self.halved or "minimum"
+            v.parts.append((f"{label} ({note})", self.total))
+        return v
 
     def __int__(self):
         return self.total

@@ -2,7 +2,24 @@
 <div id="sheet-body" class="sheet-shell" x-data="sheetUI('{{ tab }}')" x-on:keydown.escape.window="close()"
      hx-vals='js:{tab: (window.Alpine ? Alpine.$data(document.getElementById("sheet-body")).tab : "page1")}'>
   {{ spec_data|json_script:"spec-data" }}
-  {% if messages %}<ul class="messages" style="max-width:1400px;margin:0 auto 10px">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>{% endif %}
+  {{ effect_options|json_script:"effect-options" }}
+  {% if messages %}
+    {% for m in messages %}{% if "popup" in m.tags %}
+      <div class="modal-backdrop" x-data="{open: true}" x-show="open" x-on:click.self="open = false" role="alertdialog" aria-label="Notice">
+        <div class="paper modal"><h2>Heads up</h2><p>{{ m }}</p>
+          <div class="row" style="justify-content:flex-end"><button class="btn primary" type="button" x-on:click="open = false">OK</button></div></div>
+      </div>
+    {% endif %}{% endfor %}
+    <ul class="messages" style="max-width:1400px;margin:0 auto 10px">{% for m in messages %}{% if "popup" not in m.tags %}<li class="{{ m.tags }}">{{ m }}</li>{% endif %}{% endfor %}</ul>
+  {% endif %}
+  {% if missing_options %}
+    <div class="warn-banner" role="alert"><b>Choice needed:</b>
+      {% for sp in missing_options %}<button type="button" class="linkish" x-on:click="showSpec('{{ sp.slug }}')">{{ sp.name }} – {{ sp.options.label }}</button>{% endfor %}</div>
+  {% endif %}
+  {% if spec_warnings %}
+    <div class="warn-banner" role="alert"><b>Requirements not met:</b>
+      {% for name, warnings in spec_warnings %}<span>{{ name }} – {{ warnings|join:"; " }}</span>{% if not forloop.last %} · {% endif %}{% endfor %}</div>
+  {% endif %}
   {% if admin_mode %}
     <div class="admin-banner">Admin mode – values can be changed freely.
       <a href="{% url 'edit_choices' character.pk %}" style="color:#fff">Edit choices…</a></div>
@@ -29,8 +46,11 @@
     </div>
     <div class="grp"><b>Stance</b>
       {% for s in sheet.stances %}
-        <button class="chip{% if s.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'stance' %}" hx-vals='{"stance": "{{ s.slug }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ s.detail }}">{{ s.label }}</button>
+        <button class="chip{% if s.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'stance' %}" hx-vals='{"stance": "{{ s.slug }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ s.detail }}">{{ s.label }}{% if s.detail %} <small>{{ s.detail|truncatechars:28 }}</small>{% endif %}</button>
       {% endfor %}
+      {% if battle_theme and battle_theme.2 and battle_theme.1 == "instrument" %}
+        <button class="btn small danger" hx-post="{% url 'play' character.pk 'theme-sundered' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="A sunder or disarm of your instrument cancels the Battle Theme">Instrument sundered / disarmed</button>
+      {% endif %}
     </div>
     {% if sheet.toggles %}
       <div class="grp"><b>Situational</b>
@@ -60,9 +80,15 @@
     <button type="button" :class="{on: tab==='inventory'}" x-on:click="setTab('inventory')">Inventory &amp; Effects</button>
   </nav>
 
-  <div class="pages" :data-tab="tab" data-tab="{{ tab }}">
+  <div class="pages{% if sheet.hands.has_wings %} has-wings{% endif %}" :data-tab="tab" data-tab="{{ tab }}">
     {% include "characters/partials/page1.html" %}
     {% include "characters/partials/page2.html" %}
+    {% if sheet.hands.has_wings %}
+      {# Wings as Arms: an extra weapon box; shown next to Weapon (Left) or above page 1 (order: -1). #}
+      <section class="page-wings" aria-label="Weapon held with the wings">
+        {% include "characters/partials/weapon_block.html" with x=9 y=10 w=282 label="Weapon (Wings)" w_block=sheet.hands.wings_block held=sheet.hands.wings blocked=None two_handed=None unarmed=None %}
+      </section>
+    {% endif %}
   </div>
 
   <div class="inventory" x-show="tab==='inventory'" {% if tab != "inventory" %}style="display:none"{% endif %}>
@@ -110,6 +136,16 @@
           <p class="muted small"><span x-text="spec.skill"></span> · <span x-text="spec.cost"></span>
             <template x-if="spec.requires"><span> · Requires: <span x-text="spec.requires"></span></span></template></p>
           <p class="small" x-text="spec.bonuses"></p>
+          <template x-if="spec.usage_note"><div class="usage-note" x-text="'ⓘ ' + spec.usage_note"></div></template>
+          <template x-if="spec.options">
+            <form class="row" hx-post="{% url 'play' character.pk 'spec-option' %}" hx-target="#sheet-body" hx-swap="outerHTML" hx-trigger="change">
+              <input type="hidden" name="slug" :value="spec.slug">
+              <label><span x-text="spec.options.label"></span>
+                <select name="value"><option value="">–</option>
+                  <template x-for="[k, v] in Object.entries(spec.options.options)" :key="k"><option :value="k" x-text="v" :selected="k === spec.choice"></option></template>
+                </select></label>
+            </form>
+          </template>
           <p style="white-space:pre-line" x-text="spec.effect"></p>
           <div class="row" style="justify-content:flex-end"><button class="btn" type="button" x-on:click="close()">Close</button></div>
         </div>

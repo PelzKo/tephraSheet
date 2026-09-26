@@ -5,7 +5,8 @@ Merged over the parsed data by ``build_rules_data`` (curated keys win).
 Modifier schema (see rules/engine/modifiers.py):
     stat     acc eva stk def pri spd swim climb fly aug diy wnd hp soak ap
              dc (with scope), ap_ready, reach, essence_slots, armor_degree,
-             skill:<Skill>, attr:<Attribute>, roll:<Attribute> (roll-only note)
+             skill:<Skill>, attr:<Attribute>, roll:<Attribute> (attribute-roll bonus: Misc bubble,
+             or only listed with when=note)
     value    int                      | formula: str (safe expression)
     by_marque [I, II, III, IV]        (augments)
     op       add (default) | base (replace base value) | transfer (Raging)
@@ -80,7 +81,105 @@ SPECIALTIES = {
     "Beta Essence": {"modifiers": [mod("essence_slots", value=2)]},
 }
 
-AP_SACRIFICE_SPECIALTIES = ["Grief & Hope", "Infallible Faith", "Prayer", "Smite"]
+AP_SACRIFICE_SPECIALTIES = ["Grief & Hope", "Infallible Faith", "Prayer", "Smite", "Conduit of Faith"]
+
+# Usage conditions: specialties without a formal prerequisite that only work with certain equipment.
+# They become soft requirement clauses: learning is allowed, the picker and the sheet warn while unmet.
+# Weapon matchers are tested against the weapons in the hands (weapon1 = left, weapon2 = right); a
+# matcher with "with_specialty" only counts when that specialty is known (e.g. Pinpoint Shot).
+# "hands": 1 uses the item's hands (One-Handing It included). Clause flags: "all" = every equipped
+# weapon must match, "other_hand_empty" = exactly this weapon and one free hand.
+MELEE_SIZES = ["light", "medium", "heavy", "super-heavy"]
+RANGED_KINDS = ["firearm", "bow", "crossbow"]
+
+
+def weapon(text, *matchers):
+    return {"type": "weapon", "text": text, "weapons": list(matchers)}
+
+
+def match(kinds=None, sizes=None, variant=None, materials=None, with_specialty=None, concealable=False, hands=None):
+    return {k: v for k, v in (("kinds", kinds), ("sizes", sizes), ("variant", variant), ("materials", materials),
+                              ("with_specialty", with_specialty), ("concealable", concealable),
+                              ("hands", hands)) if v}
+
+
+LIGHT_MELEE = weapon("a light melee weapon", match(["melee"], ["light"]),
+                     match(RANGED_KINDS, ["light"], with_specialty="Pinpoint Shot"))
+HEAVY_OR_SMALLER = weapon("a heavy or smaller melee weapon", match(["melee"], ["light", "medium", "heavy"]))
+HEAVY_PLUS = weapon("a heavy or super-heavy melee weapon", match(["melee"], ["heavy", "super-heavy"]))
+SUPER_HEAVY_MELEE = weapon("a super-heavy melee weapon", match(["melee"], ["super-heavy"]))
+ONE_HANDED = weapon("a one-handed melee weapon", match(["melee"], hands=1))
+MELEE_WEAPON = weapon("a melee weapon", match(["melee"]))
+RANGED_WEAPON = weapon("a ranged weapon", match(RANGED_KINDS), match(["melee"], variant="throwing"))
+BOW = weapon("a bow", match(["bow"]))
+
+USAGE_CONDITIONS = {
+    # Frenzy / Overpower: weapon size
+    "Fray Fighter": [HEAVY_OR_SMALLER],
+    "Hundred Strikes": [HEAVY_OR_SMALLER],
+    "Unquenchable Thirst": [HEAVY_OR_SMALLER],
+    "Heavy Hitter": [HEAVY_PLUS],
+    "Keep Them Down": [HEAVY_PLUS],
+    "Chipping Away": [HEAVY_PLUS],
+    "Armor Sunder": [HEAVY_PLUS],
+    "Monstrous Attacks": [SUPER_HEAVY_MELEE],
+    "Titanic Strength": [SUPER_HEAVY_MELEE],
+    "Robust Toss": [weapon("a medium or larger throwing weapon", match(["melee"], MELEE_SIZES[1:], "throwing"),
+                           match(["melee"], MELEE_SIZES[1:], with_specialty="Hurl"))],
+    # Espionage / Swashbuckling / Agility
+    "Heartseeker": [LIGHT_MELEE],
+    "Critical Hits": [LIGHT_MELEE],
+    "Hairsplitter": [LIGHT_MELEE],
+    "Invisible Blade": [dict(weapon("only light, concealable melee weapons",
+                                    match(["melee"], ["light"], concealable=True)), all=True)],
+    "Fisticuffs": [{"type": "free_hand", "text": "a free hand"}],
+    "En-Garde": [dict(ONE_HANDED, text="a one-handed melee weapon with the other hand empty",
+                      other_hand_empty=True)],
+    "Lightning Slash": [ONE_HANDED],
+    "Flickering": [ONE_HANDED],
+    "Side-Swipe": [ONE_HANDED],
+    "Parry": [MELEE_WEAPON],
+    "Riposte": [MELEE_WEAPON],
+    "Beat Parry": [MELEE_WEAPON],
+    "Experienced Parries": [MELEE_WEAPON],
+    "Druidic": [weapon("a wooden or organic weapon", match(materials=["wood", "organic"]))],
+    # Resilience / Swashbuckling: deflection items and armor
+    "Blast Proof": [{"type": "deflection", "text": "a shield", "shield": True}],
+    "Brace for Impact": [{"type": "deflection", "text": "a shield", "shield": True}],
+    "Protector": [{"type": "deflection", "text": "a shield", "shield": True}],
+    "Sword and Board": [{"type": "deflection", "text": "a deflection item"}],
+    "Armored Ease": [{"type": "armor_worn", "text": "armor worn"}],
+    "Armored Freedom": [{"type": "armor_worn", "text": "armor worn"}],
+    "Naturalist": [{"type": "armor_material", "text": "wooden or organic armor",
+                    "materials": ["wood", "organic"]}],
+    # Marksmanship / Faith: ranged weapons
+    "Arching Shot": [BOW],
+    "Flight of Arrows": [BOW],
+    "Flesh Biter": [BOW],
+    "Efficient Ranger": [weapon("a heavy or super-heavy bow", match(["bow"], ["heavy", "super-heavy"]))],
+    "Snap Reload": [weapon("a firearm or crossbow", match(["firearm", "crossbow"]))],
+    "Stable Shot": [weapon("a super-heavy bow, crossbow or firearm", match(RANGED_KINDS, ["super-heavy"]))],
+    "Penetrating Shot": [RANGED_WEAPON],
+    "Point Blank": [RANGED_WEAPON],
+    "Knock-Off": [RANGED_WEAPON],
+    "Turret": [RANGED_WEAPON],
+    "Smiting Shot": [RANGED_WEAPON],
+    # Ace: both hands on the controls
+    **{name: [{"type": "hands_empty", "text": "both hands empty (on the controls)"}] for name in [
+        "Focused Flying", "Fine-Tuned Flying", "Fully Focused Flying"]},
+}
+
+# Conditions the sheet can't check; shown highlighted in the specialty details.
+USAGE_NOTES = {
+    "Turret": "Only while stationary and on your feet (not mounted). Moving ends the stance.",
+}
+
+# Choices made when learning a specialty (stored in Character.specialty_choices).
+SPECIALTY_OPTIONS = {
+    "Battle Theme": {"label": "How do you perform?", "options": {
+        "singing": "Singing (a called shot to your neck cancels it)",
+        "instrument": "Playing an instrument (a sunder or disarm cancels it)"}},
+}
 
 # --------------------------------------------------------------------------- races
 RACES = {
@@ -108,10 +207,10 @@ RACIAL_TRAITS = {
     "ayodin/natural-touch": {"modifiers": [mod("dc", 3, op="base", scope="unarmed")]},
     "ayodin/terror-from-the-deep": {"modifiers": [mod("stk", 3, when="toggle", scope="melee",
                                                       label="vs adjacent foes")]},
-    "elf/big-boned": {"modifiers": [mod("roll:Brute", 2, when="note")]},
+    "elf/big-boned": {"modifiers": [mod("roll:Brute", 2)]},
     "elf/tough": {"modifiers": [mod("hp", 4)]},
     "elf/tree-ripping-strength": {"modifiers": [mod("dc", 1, scope="melee")]},
-    "elf/weak-souls": {"modifiers": [mod("roll:Spirit", -3, when="note", label="Spirit attribute rolls")]},
+    "elf/weak-souls": {"modifiers": [mod("roll:Spirit", -3)]},
     "elf/depleted-essence": {"modifiers": [mod("essence_slots", -1)]},
     "elf/danger-sense": {"modifiers": [mod("pri", 3)]},
     "elf/flight-without-wings": {"modifiers": [mod("spd", 10)]},
@@ -122,15 +221,15 @@ RACIAL_TRAITS = {
     "farishtaa/piercing-scrutiny": {"modifiers": [mod("acc", 1)]},
     "farishtaa/botched-surgery": {"modifiers": [
         mod("dc", 1, scope="melee", label="Tree-Ripping Strength"),
-        mod("roll:Spirit", -3, when="note", label="Weak Souls: Spirit attribute rolls"),
+        mod("roll:Spirit", -3, label="Weak Souls"),
     ]},
-    "farishtaa/dancers-body": {"modifiers": [mod("roll:Dexterity", 2, when="note")]},
+    "farishtaa/dancers-body": {"modifiers": [mod("roll:Dexterity", 2)]},
     "farishtaa/prominent-host": {"reroll_on": "elf"},
     "farishtaa/tinge-of-insanity": {"modifiers": [mod("acc", 4, when="toggle", label="at 0 HP"),
                                                   mod("stk", 4, when="toggle", label="at 0 HP")]},
-    "farishtaa/unexplainable-memories": {"modifiers": [mod("roll:Cunning", 2, when="note")]},
-    "gnome/greater-spirit": {"modifiers": [mod("roll:Spirit", 3, when="note")]},
-    "gnome/light-build": {"modifiers": [mod("roll:Brute", -2, when="note")]},
+    "farishtaa/unexplainable-memories": {"modifiers": [mod("roll:Cunning", 2)]},
+    "gnome/greater-spirit": {"modifiers": [mod("roll:Spirit", 3)]},
+    "gnome/light-build": {"modifiers": [mod("roll:Brute", -2)]},
     "gnome/small-stature": {"modifiers": [mod("eva", 1)]},
     "gnome/smaller-weapons": {"modifiers": []},
     "gnome/random-racial-traits": {"modifiers": []},

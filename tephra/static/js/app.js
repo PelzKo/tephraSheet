@@ -1,4 +1,6 @@
-/* Breakdown popovers for composite values: hover on mouse devices, tap on touch devices. */
+/* Breakdown popovers for composite values: hover on mouse devices, click/tap everywhere.
+   Any other sheet element with a hover title (truncated text, racial traits, locations) shows
+   that text in the same popover on click/tap, so everything works on tablets too. */
 (function () {
   const pop = document.createElement("div");
   pop.className = "bd-pop";
@@ -14,6 +16,32 @@
     return n > 0 ? "+" + n : String(n);
   }
 
+  function place(el) {
+    pop.hidden = false;
+    const r = el.getBoundingClientRect();
+    const pw = pop.offsetWidth, ph = pop.offsetHeight;
+    let left = r.left + r.width / 2 - pw / 2;
+    left = Math.max(8, Math.min(left, window.innerWidth - pw - 8));
+    let top = r.bottom + 8;
+    if (top + ph > window.innerHeight - 8) top = r.top - ph - 8;
+    pop.style.left = left + "px";
+    pop.style.top = Math.max(8, top) + "px";
+  }
+
+  function showText(el, text) {
+    pop.innerHTML = `<div class="tip">${esc(text)}</div>`;
+    place(el);
+  }
+
+  // Elements whose hover title can also be opened by click (not buttons/links that do something else).
+  const TIP_SELECTOR = ".sheet-shell [title], .sheet-shell [data-tip]";
+  function tipTarget(target) {
+    const el = target.closest(TIP_SELECTOR);
+    if (!el || el.closest("a, button, input, select, textarea, label, [hx-post], .play-btn, .modal")) return null;
+    const text = el.dataset.tip || el.getAttribute("title");
+    return text && text.trim() ? el : null;
+  }
+
   function show(el) {
     let data;
     try { data = JSON.parse(el.dataset.bd); } catch (e) { return; }
@@ -24,15 +52,7 @@
     }).join("");
     const title = el.dataset.title ? `<h4>${esc(el.dataset.title)}</h4>` : "";
     pop.innerHTML = `${title}<table>${rows}<tr class="total"><td>Total</td><td class="n">${data.total}</td></tr></table>`;
-    pop.hidden = false;
-    const r = el.getBoundingClientRect();
-    const pw = pop.offsetWidth, ph = pop.offsetHeight;
-    let left = r.left + r.width / 2 - pw / 2;
-    left = Math.max(8, Math.min(left, window.innerWidth - pw - 8));
-    let top = r.bottom + 8;
-    if (top + ph > window.innerHeight - 8) top = r.top - ph - 8;
-    pop.style.left = left + "px";
-    pop.style.top = Math.max(8, top) + "px";
+    place(el);
   }
 
   function hide() { pop.hidden = true; pinnedFor = null; pop.classList.remove("pinned"); }
@@ -57,6 +77,14 @@
       if (pinnedFor === el) { hide(); return; }
       show(el);
       pinnedFor = el;
+      pop.classList.add("pinned");
+      return;
+    }
+    const tip = tipTarget(e.target);
+    if (tip) {
+      if (pinnedFor === tip) { hide(); return; }
+      showText(tip, tip.dataset.tip || tip.getAttribute("title"));
+      pinnedFor = tip;
       pop.classList.add("pinned");
       return;
     }
@@ -91,6 +119,46 @@ window.sheetUI = function (tab) {
         this.spec = data[slug] || null;
       } catch (e) { this.spec = null; }
       this.panel = this.spec ? "spec" : null;
+    },
+  };
+};
+
+/* Alpine component for the add-effect form: filterable status list or called-shot location + effect. */
+window.effectForm = function () {
+  let opts = { status: [], locations: [], called: {} };
+  try { opts = JSON.parse(document.getElementById("effect-options").textContent); } catch (e) { /* no data */ }
+  return {
+    opts, kind: "status", q: "", key: "", open: false, active: 0, location: "", which: "",
+    matches() {
+      const q = this.q.trim().toLowerCase();
+      const list = this.opts.status.filter((o) => !q || o.name.toLowerCase().includes(q));
+      if (q && !this.opts.status.some((o) => o.name.toLowerCase() === q)) {
+        list.push({ key: "", name: this.q.trim(), text: "custom effect (no automatic changes)" });
+      }
+      return list;
+    },
+    move(d) {
+      const n = this.matches().length;
+      this.open = true;
+      if (n) this.active = (this.active + d + n) % n;
+    },
+    pick(o) {
+      if (!o) return;
+      this.q = o.name;
+      this.key = o.key;
+      this.open = false;
+    },
+    called() { return this.opts.called[this.location] || []; },
+    ready() {
+      return this.kind === "status" ? !!(this.key || this.q.trim()) : !!(this.location && this.which);
+    },
+    hint() {
+      if (this.kind === "status") {
+        const o = this.opts.status.find((s) => s.key === this.key);
+        return o ? o.text : "Pick a status effect from the list, or type your own.";
+      }
+      const c = this.called().find((x) => x.kind === this.which);
+      return c ? c.text : "Choose the hit location, then the wounded or fatal effect.";
     },
   };
 };

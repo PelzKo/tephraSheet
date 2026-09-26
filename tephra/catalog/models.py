@@ -39,6 +39,10 @@ class ItemFields(models.Model):
     material = models.CharField(max_length=20, choices=MATERIAL_CHOICES, default="metal")
     beta = models.BooleanField(default=False, help_text="Beta item: +2 augment slots")
     concealable = models.BooleanField(default=False)
+    hands = models.PositiveSmallIntegerField(
+        null=True, blank=True, choices=[(0, "No hand (worn)"), (1, "One-handed"), (2, "Two-handed")],
+        help_text="empty = size table (melee/firearm/crossbow: light & medium one-handed; bows always two-handed; "
+                  "cloak no hand, shield/parrying dagger one hand)")
     ap_use = models.IntegerField(null=True, blank=True)
     ap_ready = models.IntegerField(null=True, blank=True)
     dc = models.IntegerField("damage class", null=True, blank=True)
@@ -60,7 +64,7 @@ class ItemFields(models.Model):
     class Meta:
         abstract = True
 
-    ITEM_FIELDS = ["name", "kind", "size", "variants", "material", "beta", "concealable", "ap_use", "ap_ready",
+    ITEM_FIELDS = ["name", "kind", "size", "variants", "material", "beta", "concealable", "hands", "ap_use", "ap_ready",
                    "dc", "reach", "range", "increment", "soak", "eva_penalty", "spd_penalty",
                    "climb_swim_penalty", "deflect_bonus", "deflect_ranged", "deflect_melee", "augments",
                    "modifiers", "price_dukes", "description"]
@@ -81,7 +85,8 @@ class ItemFields(models.Model):
     def to_item_state(self, slot=""):
         return ItemState(
             name=self.name, kind=self.kind, size=self.size, slot=slot, variants=list(self.variants or []),
-            material=self.material, beta=self.beta, ap_use=self.ap_use, ap_ready=self.ap_ready, dc=self.dc,
+            material=self.material, beta=self.beta, concealable=self.concealable, hands=self.hands,
+            ap_use=self.ap_use, ap_ready=self.ap_ready, dc=self.dc,
             reach=self.reach, range=self.range, increment=self.increment, soak=self.soak,
             eva_penalty=self.eva_penalty, spd_penalty=self.spd_penalty,
             climb_swim_penalty=self.climb_swim_penalty, deflect_bonus=self.deflect_bonus,

@@ -5,8 +5,9 @@ A digital character sheet for the steampunk pen & paper game **Tephra**. The she
 - Guided character creation in 10 steps (race & nationality → finishings). Every step can be chosen by hand or rolled randomly, or you can roll a full random character.
 - Each character is protected by its own password. The main page lists all characters as cards.
 - Level-up wizard: +2/+1/+1 skill points, a new specialty, retrofitting at levels 4/8/12, AP by level, and new augments.
-- Hover over (or tap) any combined number to see where it comes from, e.g. Accuracy = specialties + race + weapon augment.
-- Play controls: damage and healing (HP first, then wounds), breather, XP clock, money, stances, situational toggles, wound/fatal/status effects.
+- Hover over (or click/tap) any combined number to see where it comes from, e.g. Accuracy = specialties + race + weapon augment. Truncated text and racial traits open the same way.
+- Play controls: damage and healing (HP first, then wounds), breather, XP clock, money, stances, situational toggles, status effects and called-shot (wounded/fatal) effects. Effects change the numbers automatically (Fatigued halves max HP, Blinded −4 Acc/Eva, lost max wounds…).
+- Printable (A4, both pages).
 - Item catalog, an object creator for weapons, armor and items (with augment slots), and bulk import from CSV or a pasted table.
 - Admin mode can raise or lower any value without rule checks. The narrator logs in with a Django staff account and can edit every character, the catalog and the global settings.
 
@@ -19,6 +20,7 @@ cd tephra
 cp .env.sample .env              # set LOCAL=True, DEBUG=True for development
 ../.venv/bin/python manage.py migrate
 ../.venv/bin/python manage.py seed_catalog
+../.venv/bin/python manage.py create_random_character --if-empty   # demo sheet, password "demo"
 ../.venv/bin/python manage.py createsuperuser   # narrator account
 ../.venv/bin/python manage.py runserver
 ../.venv/bin/pytest                             # tests
@@ -32,7 +34,7 @@ The rule data (`tephra/rules/data/*.json`) is generated from `tephra/rules/data/
 
 ## Deployment
 
-Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Nginx), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, `migrate` and `seed_catalog`, then `exec`s gunicorn on `0.0.0.0:8000`. If any step fails, the app does not boot (supervisor reports FATAL).
+Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Nginx), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, `migrate`, `seed_catalog` and `create_random_character --if-empty` (a demo character with password `demo` on a fresh database), then `exec`s gunicorn on `0.0.0.0:8000`. If any step fails, the app does not boot (supervisor reports FATAL).
 
 Environment variables go in `tephra/.env` (see `.env.sample`):
 

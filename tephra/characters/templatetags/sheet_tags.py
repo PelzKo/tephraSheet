@@ -16,16 +16,21 @@ def _breakdown_json(value):
     return json.dumps({"total": value.total, "rows": rows, "base": value.base is not None})
 
 
+def signed_text(n):
+    return f"{n:+d}" if n else "0"
+
+
 @register.simple_tag
 def stat(value, title="", css="", signed=False):
-    """Render a computed Value; composite values get a breakdown popover (hover or tap)."""
+    """Render a computed Value. Every value with at least one source gets a breakdown popover
+    (hover, click or tap), so each number on the sheet can explain itself."""
     if value is None:
         return format_html('<span class="val {}">–</span>', css)
     if not isinstance(value, Value):
-        text = f"{value:+d}" if signed and isinstance(value, int) else value
+        text = signed_text(value) if signed and isinstance(value, int) else value
         return format_html('<span class="val {}">{}</span>', css, text)
-    text = f"{value.total:+d}" if signed else str(value.total)
-    if not value.is_composite:
+    text = signed_text(value.total) if signed else str(value.total)
+    if not value.breakdown:
         return format_html('<span class="val {}">{}</span>', css, text)
     return format_html('<button type="button" class="val has-bd {}" data-title="{}" data-bd="{}">{}</button>',
                        css, title, _breakdown_json(value), text)

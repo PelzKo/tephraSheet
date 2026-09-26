@@ -3,11 +3,11 @@
 {% block intro %}<p class="muted">Choose your weapons and armor by size class. Accuracy/Strike and Evade/Defense come from your specialties. Need something special? <a href="{% url 'item_create' %}?for={{ character.pk }}">Create a custom item</a>.</p>{% endblock %}
 {% block step %}
 <div class="form-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
-  <div class="field"><label>Weapon 1</label>
+  <div class="field"><label>Weapon (left hand)</label>
     <select name="weapon1"><option value="">– none –</option>
       {% for w in weapons %}<option value="{{ w.pk }}" {% if equipped.weapon1.template_id == w.pk %}selected{% endif %}>{{ w.name }} ({{ w.get_kind_display }})</option>{% endfor %}
       {% if equipped.weapon1 and not equipped.weapon1.template_id %}<option value="custom" selected>{{ equipped.weapon1.name }}</option>{% endif %}</select></div>
-  <div class="field"><label>Weapon 2</label>
+  <div class="field"><label>Weapon (right hand)</label>
     <select name="weapon2"><option value="">– none –</option>
       {% for w in weapons %}<option value="{{ w.pk }}" {% if equipped.weapon2.template_id == w.pk %}selected{% endif %}>{{ w.name }} ({{ w.get_kind_display }})</option>{% endfor %}
       {% if equipped.weapon2 and not equipped.weapon2.template_id %}<option value="custom" selected>{{ equipped.weapon2.name }}</option>{% endif %}</select></div>

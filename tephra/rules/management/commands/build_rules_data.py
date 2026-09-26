@@ -94,7 +94,15 @@ class Command(BaseCommand):
             cur = curated.SPECIALTIES.get(slug) or curated.SPECIALTIES.get(d["n"])
             if cur:
                 entry.update(cur)
+            entry["requires"] += [dict(c, soft=True) for c in curated.USAGE_CONDITIONS.get(d["n"], [])]
+            if d["n"] in curated.USAGE_NOTES:
+                entry["usage_note"] = curated.USAGE_NOTES[d["n"]]
+            if d["n"] in curated.SPECIALTY_OPTIONS:
+                entry["options"] = curated.SPECIALTY_OPTIONS[d["n"]]
             result.append(entry)
+        missing = set(curated.USAGE_CONDITIONS) - names
+        if missing:
+            self.warnings.append(f"usage conditions for unknown specialties: {sorted(missing)}")
         return result
 
     def parse_requirements(self, text, names, d):
@@ -143,8 +151,13 @@ class Command(BaseCommand):
             return {"type": "skill_specialty", "skill": m.group(1)}
         if part == "any AP-sacrifice specialty":
             return {"type": "specialty", "any": curated.AP_SACRIFICE_SPECIALTIES}
+        # Armor conditions are soft: checked and warned about, but they never block learning.
+        m = re.search(r"(minimal|light|medium|heavy|super-heavy) or (heavier|lighter) armor", part)
+        if m:
+            bound = "min" if m.group(2) == "heavier" else "max"
+            return {"type": "armor", bound: m.group(1), "soft": True, "text": part}
         if "armor" in part:
-            return {"type": "note", "text": part, "situational": True}
+            return {"type": "note", "text": part, "soft": True}
         return None
 
     # ------------------------------------------------------------------ races

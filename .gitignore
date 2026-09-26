@@ -6,3 +6,5 @@ tephra/db.sqlite3
 tephra/staticfiles/
 .pytest_cache/
 tephra/.cache/
+# Added by code-review-graph
+.code-review-graph/

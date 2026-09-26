@@ -14,7 +14,7 @@
     <image href="{% static 'img/gear-big.svg' %}" x="787" y="630" width="140" height="140"/>
   </svg>
 
-  <div class="box line-field" style="--x:376;--y:52;--w:200;--h:44;text-align:center">
+  <div class="box line-field" style="--x:376;--y:38;--w:200;--h:44;text-align:center">
     <div class="v">{{ character.name }}</div><div class="l">Character Name</div>
   </div>
 
@@ -27,7 +27,7 @@
       </thead>
       <tbody>
         <tr class="totals"><td></td><td class="label">Totals</td>
-          {% for c in stat_cols %}<td class="c">{{ sheet.specialty_totals|get:c|signed }}</td>{% endfor %}</tr>
+          {% for c in stat_cols %}<td class="c">{% stat sheet.specialty_total_values|get:c stat_labels|get:c signed=True %}</td>{% endfor %}</tr>
         <tr class="misc"><td class="lvl" style="font-size:calc(13*var(--u))">Lvl</td><td class="label">Misc</td>
           {% for c in stat_cols %}<td class="c">
             {% if admin_mode %}<span class="admin-adj">
@@ -53,7 +53,7 @@
   </div>
   <div class="lined box" style="--x:190;--y:712;--w:572;--h:66;border-bottom:0">
     <b>Racial Traits:</b>
-    {% for t in sheet.traits %}<span title="{{ t.text }}">{{ t.name }}{% if t.choice %} ({{ t.choice }}){% endif %}{% if t.roll %} <span class="muted">[d12: {{ t.roll }}]</span>{% endif %}</span>{% if not forloop.last %} · {% endif %}{% endfor %}
+    {% for t in sheet.traits %}<span title="{{ t.name }}: {{ t.text }}">{{ t.name }}{% if t.choice %} ({{ t.choice }}){% endif %}{% if t.roll %} <span class="muted">[d12: {{ t.roll }}]</span>{% endif %}</span>{% if not forloop.last %} · {% endif %}{% endfor %}
   </div>
 
   <div class="gear plain money play-btn" style="--cx:95;--cy:700;--r:52" x-on:click="openPanel('money')">
@@ -65,6 +65,7 @@
     <h3>Gear</h3>
     <div class="lines">
       {% for i in items %}{% if i.slot != "stored" %}<div title="{{ i.description }}">{% if i.quantity > 1 %}{{ i.quantity }}× {% endif %}{{ i.name }}{% if i.slot != "carried" %} <span class="muted">({{ i.get_slot_display }})</span>{% endif %}</div>{% endif %}{% endfor %}
+      {% for _ in blank_lines.gear %}<div></div>{% endfor %}
     </div>
   </div>
   <div class="barrel box" style="--x:336;--y:790;--w:280;--h:400">
@@ -73,6 +74,7 @@
       {% for a in augments %}<div title="{{ a.text|default:a.notes }}">{{ a.name }} <span class="muted">({{ a.lists|join:"/" }})</span></div>{% endfor %}
       {% for a in character.body_augments %}{% with aug=a.0|augment %}<div>{{ aug.name }} mQ {{ a.1|roman }} <span class="muted">(installed)</span></div>{% endwith %}{% endfor %}
       {% if sheet.stats.aug.total > augments|length %}<div><a href="{% url 'augments' character.pk %}">Learn augments ({{ augments|length }}/{{ sheet.stats.aug.total }})</a></div>{% endif %}
+      {% for _ in blank_lines.augments %}<div></div>{% endfor %}
     </div>
   </div>
   <div class="barrel box" style="--x:632;--y:790;--w:280;--h:400">
@@ -80,7 +82,8 @@
     <div class="lines">
       {% if character.personality %}<div title="{{ character.personality }}"><b>Personality:</b> {{ character.personality }}</div>{% endif %}
       {% for label, text in sheet.notes %}<div title="{{ label }} {{ text }}">{{ label|cut:"Specialty: " }}: {{ text }}</div>{% endfor %}
-      {% for line in character.notes.splitlines %}<div>{{ line }}</div>{% endfor %}
+      {% for line in character.notes.splitlines %}<div title="{{ line }}">{{ line }}</div>{% endfor %}
+      {% for _ in blank_lines.notes %}<div></div>{% endfor %}
     </div>
   </div>
 </section>

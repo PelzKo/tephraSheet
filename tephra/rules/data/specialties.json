@@ -88,7 +88,13 @@
   },
   "cost": "Stance (needs a free hand)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "free_hand",
+    "text": "a free hand",
+    "soft": true
+   }
+  ],
   "tags": "[STANCE] [GEAR] [SCALE:Brawl] unarmedDC += 1 + floor(Brawl/6)",
   "stance": true,
   "repeatable": false,
@@ -677,7 +683,25 @@
   },
   "cost": "3 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a heavy or smaller melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "light",
+       "medium",
+       "heavy"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ACTION]",
   "stance": false,
   "repeatable": false,
@@ -699,7 +723,25 @@
   },
   "cost": "All AP of the turn (must be at max)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a heavy or smaller melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "light",
+       "medium",
+       "heavy"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ACTION]",
   "stance": false,
   "repeatable": false,
@@ -992,6 +1034,23 @@
     "type": "skill",
     "skill": "Frenzy",
     "min": 12
+   },
+   {
+    "type": "weapon",
+    "text": "a heavy or smaller melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "light",
+       "medium",
+       "heavy"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[STANCE] [REQ] [GEAR] melee AP=1",
@@ -1183,6 +1242,22 @@
     "type": "skill",
     "skill": "Overpower",
     "min": 4
+   },
+   {
+    "type": "weapon",
+    "text": "a heavy or super-heavy melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "heavy",
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[STANCE] [GEAR] [SCALE:Overpower] DC += floor(Overpower/4)",
@@ -1214,7 +1289,24 @@
   },
   "cost": "Heavy+ melee attack",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a heavy or super-heavy melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "heavy",
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[COND]",
   "stance": false,
   "repeatable": false,
@@ -1236,7 +1328,23 @@
   },
   "cost": "Super-heavy melee attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a super-heavy melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1] [SCALE:Overpower] DC += 2 + floor(Overpower/6)",
   "stance": false,
   "repeatable": false,
@@ -1311,7 +1419,37 @@
   },
   "cost": "Medium+ thrown attack",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a medium or larger throwing weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "medium",
+       "heavy",
+       "super-heavy"
+      ],
+      "variant": "throwing"
+     },
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "medium",
+       "heavy",
+       "super-heavy"
+      ],
+      "with_specialty": "Hurl"
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+0]",
   "stance": false,
   "repeatable": false,
@@ -1404,6 +1542,21 @@
     "type": "skill",
     "skill": "Overpower",
     "min": 3
+   },
+   {
+    "type": "weapon",
+    "text": "a super-heavy melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[PASSIVE] [GEAR]",
@@ -1455,7 +1608,24 @@
   },
   "cost": "Heavy+ melee attack +1 AP; resist Dex (opposed, negates)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a heavy or super-heavy melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "heavy",
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1]",
   "stance": false,
   "repeatable": false,
@@ -1483,6 +1653,22 @@
     "any": [
      "Chipping Away"
     ]
+   },
+   {
+    "type": "weapon",
+    "text": "a heavy or super-heavy melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "heavy",
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[ATTACK+1] [REQ]",
@@ -1608,7 +1794,14 @@
   },
   "cost": "Shield deflection +1 AP reflexive; resist Cunning (tiers down)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "deflection",
+    "text": "a shield",
+    "shield": true,
+    "soft": true
+   }
+  ],
   "tags": "[REFLEX]",
   "stance": false,
   "repeatable": false,
@@ -1661,7 +1854,14 @@
   },
   "cost": "As a shield deflection",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "deflection",
+    "text": "a shield",
+    "shield": true,
+    "soft": true
+   }
+  ],
   "tags": "[REFLEX]",
   "stance": false,
   "repeatable": false,
@@ -1793,7 +1993,14 @@
   },
   "cost": "As shield deflection",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "deflection",
+    "text": "a shield",
+    "shield": true,
+    "soft": true
+   }
+  ],
   "tags": "[REFLEX]",
   "stance": false,
   "repeatable": false,
@@ -1949,9 +2156,10 @@
   "requires_text": "heavy or heavier armor worn",
   "requires": [
    {
-    "type": "note",
-    "text": "heavy or heavier armor worn",
-    "situational": true
+    "type": "armor",
+    "min": "heavy",
+    "soft": true,
+    "text": "heavy or heavier armor worn"
    }
   ],
   "tags": "[REFLEX] [REQ:armor≥heavy]",
@@ -2033,7 +2241,13 @@
   },
   "cost": "Passive",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "armor_worn",
+    "text": "armor worn",
+    "soft": true
+   }
+  ],
   "tags": "[PASSIVE] [GEAR] armor penalty degree −1",
   "stance": false,
   "repeatable": false,
@@ -2075,6 +2289,11 @@
     "type": "skill",
     "skill": "Resilience",
     "min": 7
+   },
+   {
+    "type": "armor_worn",
+    "text": "armor worn",
+    "soft": true
    }
   ],
   "tags": "[PASSIVE] [GEAR] [REQ] armor penalty degree −2 more",
@@ -2299,7 +2518,34 @@
   },
   "cost": "Light-weapon melee attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a light melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "light"
+      ]
+     },
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ],
+      "sizes": [
+       "light"
+      ],
+      "with_specialty": "Pinpoint Shot"
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1] [REQ:light weapon]",
   "stance": false,
   "repeatable": false,
@@ -2321,7 +2567,25 @@
   },
   "cost": "Stance",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "only light, concealable melee weapons",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "light"
+      ],
+      "concealable": true
+     }
+    ],
+    "all": true,
+    "soft": true
+   }
+  ],
   "tags": "[STANCE] [GEAR] AP=1",
   "stance": true,
   "repeatable": false,
@@ -2558,7 +2822,34 @@
   },
   "cost": "Passive",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a light melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "light"
+      ]
+     },
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ],
+      "sizes": [
+       "light"
+      ],
+      "with_specialty": "Pinpoint Shot"
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[COND] [SCALE] DC += min(floor((Acc−Eva)/5), Espionage)",
   "stance": false,
   "repeatable": false,
@@ -2591,6 +2882,32 @@
     "type": "stat",
     "stat": "acc",
     "min": 6
+   },
+   {
+    "type": "weapon",
+    "text": "a light melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "sizes": [
+       "light"
+      ]
+     },
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ],
+      "sizes": [
+       "light"
+      ],
+      "with_specialty": "Pinpoint Shot"
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[COND] [REQ:Acc≥6] DC += min(floor((Acc−Eva)/3), Espionage)",
@@ -3762,7 +4079,14 @@
     "scope": "character",
     "formula": "3 + showmanship // 5"
    }
-  ]
+  ],
+  "options": {
+   "label": "How do you perform?",
+   "options": {
+    "singing": "Singing (a called shot to your neck cancels it)",
+    "instrument": "Playing an instrument (a sunder or disarm cancels it)"
+   }
+  }
  },
  {
   "slug": "showmanship-heavenly-serenade",
@@ -4932,7 +5256,13 @@
   },
   "cost": "Stance (both hands on controls, no other actions)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "hands_empty",
+    "text": "both hands empty (on the controls)",
+    "soft": true
+   }
+  ],
   "tags": "[STANCE] [SCALE:Ace]",
   "stance": true,
   "repeatable": false,
@@ -4965,6 +5295,11 @@
     "type": "skill",
     "skill": "Ace",
     "min": 2
+   },
+   {
+    "type": "hands_empty",
+    "text": "both hands empty (on the controls)",
+    "soft": true
    }
   ],
   "tags": "[COND] [REQ] [SCALE:Ace]",
@@ -4999,6 +5334,11 @@
     "type": "skill",
     "skill": "Ace",
     "min": 3
+   },
+   {
+    "type": "hands_empty",
+    "text": "both hands empty (on the controls)",
+    "soft": true
    }
   ],
   "tags": "[COND] [REQ] [SCALE:Ace]",
@@ -5184,9 +5524,10 @@
   "requires_text": "medium or lighter armor",
   "requires": [
    {
-    "type": "note",
-    "text": "medium or lighter armor",
-    "situational": true
+    "type": "armor",
+    "max": "medium",
+    "soft": true,
+    "text": "medium or lighter armor"
    }
   ],
   "tags": "[ACTION] [REQ:armor≤medium]",
@@ -5276,7 +5617,21 @@
   },
   "cost": "As melee attack, reflexive",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a one-handed melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "hands": 1
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[REFLEX] [SCALE:miss margin]",
   "stance": false,
   "repeatable": false,
@@ -5753,7 +6108,28 @@
   },
   "cost": "Ranged attack +1 AP; resist Dex (negates)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a ranged weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ]
+     },
+     {
+      "kinds": [
+       "melee"
+      ],
+      "variant": "throwing"
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1]",
   "stance": false,
   "repeatable": false,
@@ -5819,7 +6195,28 @@
   },
   "cost": "Ranged attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a ranged weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ]
+     },
+     {
+      "kinds": [
+       "melee"
+      ],
+      "variant": "throwing"
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1]",
   "stance": false,
   "repeatable": false,
@@ -5841,7 +6238,28 @@
   },
   "cost": "Ranged attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a ranged weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ]
+     },
+     {
+      "kinds": [
+       "melee"
+      ],
+      "variant": "throwing"
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1]",
   "stance": false,
   "repeatable": false,
@@ -5885,7 +6303,21 @@
   },
   "cost": "Passive",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a firearm or crossbow",
+    "weapons": [
+     {
+      "kinds": [
+       "firearm",
+       "crossbow"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[PASSIVE] [GEAR] AP to Ready −1",
   "stance": false,
   "repeatable": false,
@@ -5948,6 +6380,23 @@
     "type": "attribute",
     "attribute": "Brute",
     "min": 3
+   },
+   {
+    "type": "weapon",
+    "text": "a super-heavy bow, crossbow or firearm",
+    "weapons": [
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ],
+      "sizes": [
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[PASSIVE] [GEAR] [REQ]",
@@ -5971,13 +6420,35 @@
   },
   "cost": "Stance (stationary, standing, not mounted)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a ranged weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ]
+     },
+     {
+      "kinds": [
+       "melee"
+      ],
+      "variant": "throwing"
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[STANCE]",
   "stance": true,
   "repeatable": false,
   "crafts": [],
   "effect": "stanCe (costs 1 AP to enter)\nYou find the perfect spot on the battlefield. You sweep around the field, raise your rifle, and fire. Nothing’s going to get to you. While in this stance, you cannot move. You must be stationary and on your feet (you cannot be mounted). If you move, you fall out of your turret stance. For 2 action points reflexively, you can make a ranged attack at anything that moves so much as five feet toward you.\nIf anybody comes into a space adjacent to you, you can make ranged attacks against them for 1 action point during your turn and with a bonus to your damage class, if you hit.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
-  "modifiers": []
+  "modifiers": [],
+  "usage_note": "Only while stationary and on your feet (not mounted). Moving ends the stance."
  },
  {
   "slug": "marksmanship-warning-shot",
@@ -6037,7 +6508,20 @@
   },
   "cost": "Bow attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a bow",
+    "weapons": [
+     {
+      "kinds": [
+       "bow"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1] [GEAR] [SCALE:Marksmanship]",
   "stance": false,
   "repeatable": false,
@@ -6064,6 +6548,22 @@
     "type": "skill",
     "skill": "Marksmanship",
     "min": 3
+   },
+   {
+    "type": "weapon",
+    "text": "a heavy or super-heavy bow",
+    "weapons": [
+     {
+      "kinds": [
+       "bow"
+      ],
+      "sizes": [
+       "heavy",
+       "super-heavy"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[PASSIVE] [GEAR] [REQ] bow AP=2",
@@ -6087,7 +6587,20 @@
   },
   "cost": "Bow attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a bow",
+    "weapons": [
+     {
+      "kinds": [
+       "bow"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1]",
   "stance": false,
   "repeatable": false,
@@ -6109,7 +6622,20 @@
   },
   "cost": "Bow attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a bow",
+    "weapons": [
+     {
+      "kinds": [
+       "bow"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1]",
   "stance": false,
   "repeatable": false,
@@ -6363,7 +6889,13 @@
   },
   "cost": "Stance",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "deflection",
+    "text": "a deflection item",
+    "soft": true
+   }
+  ],
   "tags": "[STANCE]",
   "stance": true,
   "repeatable": false,
@@ -6407,7 +6939,22 @@
   },
   "cost": "Stance (one-handed melee weapon, other hand empty)",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a one-handed melee weapon with the other hand empty",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "hands": 1
+     }
+    ],
+    "other_hand_empty": true,
+    "soft": true
+   }
+  ],
   "tags": "[STANCE] [COND] reflex Acc +4",
   "stance": true,
   "repeatable": false,
@@ -6483,6 +7030,19 @@
     "type": "skill",
     "skill": "Swashbuckling",
     "min": 16
+   },
+   {
+    "type": "weapon",
+    "text": "a one-handed melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "hands": 1
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[ACTION] [REQ] [SCALE:Swashbuckling]",
@@ -6506,7 +7066,21 @@
   },
   "cost": "One-handed melee attack +1 AP",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a one-handed melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ],
+      "hands": 1
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[ATTACK+1]",
   "stance": false,
   "repeatable": false,
@@ -6613,7 +7187,20 @@
   },
   "cost": "1 AP reflexive",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[REFLEX] [SCALE:Swashbuckling]",
   "stance": false,
   "repeatable": false,
@@ -6641,6 +7228,18 @@
     "any": [
      "Parry"
     ]
+   },
+   {
+    "type": "weapon",
+    "text": "a melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[REFLEX] [REQ]",
@@ -6704,6 +7303,18 @@
     "type": "skill",
     "skill": "Swashbuckling",
     "min": 9
+   },
+   {
+    "type": "weapon",
+    "text": "a melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[REFLEX] [REQ]",
@@ -6733,6 +7344,18 @@
     "any": [
      "Parry"
     ]
+   },
+   {
+    "type": "weapon",
+    "text": "a melee weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "melee"
+      ]
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[REFLEX] [REQ]",
@@ -7023,7 +7646,8 @@
      "Grief & Hope",
      "Infallible Faith",
      "Prayer",
-     "Smite"
+     "Smite",
+     "Conduit of Faith"
     ]
    }
   ],
@@ -7059,7 +7683,8 @@
      "Grief & Hope",
      "Infallible Faith",
      "Prayer",
-     "Smite"
+     "Smite",
+     "Conduit of Faith"
     ]
    }
   ],
@@ -7091,7 +7716,8 @@
      "Grief & Hope",
      "Infallible Faith",
      "Prayer",
-     "Smite"
+     "Smite",
+     "Conduit of Faith"
     ]
    }
   ],
@@ -7309,6 +7935,26 @@
     "any": [
      "Smite"
     ]
+   },
+   {
+    "type": "weapon",
+    "text": "a ranged weapon",
+    "weapons": [
+     {
+      "kinds": [
+       "firearm",
+       "bow",
+       "crossbow"
+      ]
+     },
+     {
+      "kinds": [
+       "melee"
+      ],
+      "variant": "throwing"
+     }
+    ],
+    "soft": true
    }
   ],
   "tags": "[PASSIVE] [REQ]",
@@ -8467,7 +9113,21 @@
   },
   "cost": "Stance",
   "requires_text": "",
-  "requires": [],
+  "requires": [
+   {
+    "type": "weapon",
+    "text": "a wooden or organic weapon",
+    "weapons": [
+     {
+      "materials": [
+       "wood",
+       "organic"
+      ]
+     }
+    ],
+    "soft": true
+   }
+  ],
   "tags": "[STANCE] [GEAR] DC +2 (wood/organic)",
   "stance": true,
   "repeatable": false,
@@ -8598,6 +9258,15 @@
     "type": "skill",
     "skill": "Shamanism",
     "min": 5
+   },
+   {
+    "type": "armor_material",
+    "text": "wooden or organic armor",
+    "materials": [
+     "wood",
+     "organic"
+    ],
+    "soft": true
    }
   ],
   "tags": "[COND] [REQ] [STAT:Soak += floor(Sham/5)]",
