@@ -1,0 +1,836 @@
+[
+ {
+  "name": "Light melee weapon (dagger, knife)",
+  "kind": "melee",
+  "size": "light",
+  "variants": [],
+  "price_dukes": 10,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal",
+  "concealable": true
+ },
+ {
+  "name": "Medium melee weapon (sword, axe, mace)",
+  "kind": "melee",
+  "size": "medium",
+  "variants": [],
+  "price_dukes": 70,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Heavy melee weapon (greatsword, great axe)",
+  "kind": "melee",
+  "size": "heavy",
+  "variants": [],
+  "price_dukes": 150,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Super-heavy melee weapon (massive hammer)",
+  "kind": "melee",
+  "size": "super-heavy",
+  "variants": [],
+  "price_dukes": 0,
+  "description": "Needs the Footing stance; without it −3 Accuracy and Strike.",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Whip",
+  "kind": "melee",
+  "size": "light",
+  "variants": [
+   "flexible"
+  ],
+  "price_dukes": 10,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "organic"
+ },
+ {
+  "name": "Flail / chain",
+  "kind": "melee",
+  "size": "medium",
+  "variants": [
+   "flexible"
+  ],
+  "price_dukes": 70,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Spear",
+  "kind": "melee",
+  "size": "medium",
+  "variants": [
+   "polearm"
+  ],
+  "price_dukes": 70,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Halberd",
+  "kind": "melee",
+  "size": "heavy",
+  "variants": [
+   "polearm"
+  ],
+  "price_dukes": 150,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Throwing knife",
+  "kind": "melee",
+  "size": "light",
+  "variants": [
+   "throwing"
+  ],
+  "price_dukes": 10,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal",
+  "concealable": true
+ },
+ {
+  "name": "Javelin",
+  "kind": "melee",
+  "size": "medium",
+  "variants": [
+   "throwing"
+  ],
+  "price_dukes": 70,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Bolas",
+  "kind": "melee",
+  "size": "light",
+  "variants": [
+   "throwing",
+   "flexible"
+  ],
+  "price_dukes": 10,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "organic"
+ },
+ {
+  "name": "Light firearm (pocket pistol)",
+  "kind": "firearm",
+  "size": "light",
+  "variants": [],
+  "price_dukes": 20,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal",
+  "concealable": true
+ },
+ {
+  "name": "Medium firearm (revolver, pistol)",
+  "kind": "firearm",
+  "size": "medium",
+  "variants": [],
+  "price_dukes": 50,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Heavy firearm (rifle, shotgun)",
+  "kind": "firearm",
+  "size": "heavy",
+  "variants": [],
+  "price_dukes": 120,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Double-barreled shotgun",
+  "kind": "firearm",
+  "size": "heavy",
+  "variants": [
+   "double-barreled"
+  ],
+  "price_dukes": 120,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Super-heavy firearm (elephant gun)",
+  "kind": "firearm",
+  "size": "super-heavy",
+  "variants": [],
+  "price_dukes": 200,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Light bow (slingshot, shortbow)",
+  "kind": "bow",
+  "size": "light",
+  "variants": [],
+  "price_dukes": 5,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Medium bow",
+  "kind": "bow",
+  "size": "medium",
+  "variants": [],
+  "price_dukes": 10,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Heavy bow (longbow)",
+  "kind": "bow",
+  "size": "heavy",
+  "variants": [],
+  "price_dukes": 50,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Super-heavy bow",
+  "kind": "bow",
+  "size": "super-heavy",
+  "variants": [],
+  "price_dukes": 170,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Light crossbow",
+  "kind": "crossbow",
+  "size": "light",
+  "variants": [],
+  "price_dukes": 20,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Medium crossbow (pistol crossbow)",
+  "kind": "crossbow",
+  "size": "medium",
+  "variants": [],
+  "price_dukes": 40,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Heavy crossbow",
+  "kind": "crossbow",
+  "size": "heavy",
+  "variants": [],
+  "price_dukes": 70,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "wood"
+ },
+ {
+  "name": "Super-heavy crossbow (steam crossbow)",
+  "kind": "crossbow",
+  "size": "super-heavy",
+  "variants": [],
+  "price_dukes": 140,
+  "description": "",
+  "is_starting_gear": false,
+  "material": "metal"
+ },
+ {
+  "name": "Minimal armor (padded clothes)",
+  "kind": "armor",
+  "size": "minimal",
+  "price_dukes": 10,
+  "material": "textile",
+  "description": "Don: 3 AP."
+ },
+ {
+  "name": "Light armor (leather)",
+  "kind": "armor",
+  "size": "light",
+  "price_dukes": 50,
+  "material": "organic",
+  "description": "Don: 6 AP."
+ },
+ {
+  "name": "Medium armor (chain, brigandine)",
+  "kind": "armor",
+  "size": "medium",
+  "price_dukes": 150,
+  "material": "metal",
+  "description": "Don: 24 AP (12 AP with help)."
+ },
+ {
+  "name": "Heavy armor (plate)",
+  "kind": "armor",
+  "size": "heavy",
+  "price_dukes": 400,
+  "material": "metal",
+  "description": "Don: 3 min (1 min with help)."
+ },
+ {
+  "name": "Super-heavy armor (full plate)",
+  "kind": "armor",
+  "size": "super-heavy",
+  "price_dukes": 750,
+  "material": "metal",
+  "description": "Don: 10 min (3 min with help)."
+ },
+ {
+  "name": "Parrying Dagger",
+  "kind": "deflection",
+  "size": "light",
+  "deflect_bonus": 3,
+  "deflect_ranged": false,
+  "deflect_melee": true,
+  "price_dukes": 10,
+  "material": "metal",
+  "description": "Deflect (1 AP, melee only). Also counts as a light weapon."
+ },
+ {
+  "name": "Cloak",
+  "kind": "deflection",
+  "size": "light",
+  "deflect_bonus": 3,
+  "deflect_ranged": false,
+  "deflect_melee": true,
+  "price_dukes": 10,
+  "material": "textile",
+  "description": "Deflect (1 AP, melee only). Hand stays free, can make grabs."
+ },
+ {
+  "name": "Shield",
+  "kind": "deflection",
+  "size": "medium",
+  "deflect_bonus": 4,
+  "deflect_ranged": true,
+  "deflect_melee": true,
+  "price_dukes": 40,
+  "material": "wood",
+  "description": "Deflect (1 AP) vs melee and ranged. Holding things in the shield hand prevents deflecting."
+ },
+ {
+  "name": "Cartridges (standard)",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "Base stats."
+ },
+ {
+  "name": "Shot cartridges",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "No accuracy loss with range; −1 DC per range increment beyond base."
+ },
+ {
+  "name": "Sniper cartridges",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "−1 Acc per 2 range increments; −1 DC."
+ },
+ {
+  "name": "High damage cartridges",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "+2 DC; +1 AP readying time."
+ },
+ {
+  "name": "Blank cartridges",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "No projectile."
+ },
+ {
+  "name": "Arrows / bolts (standard)",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "Base stats."
+ },
+ {
+  "name": "Bladed arrows / bolts",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "−2 Acc; 1 bleeding per tier of damage dealt."
+ },
+ {
+  "name": "Hooked arrows / bolts",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "Removing costs 2 AP; attach rope for 1 AP → climb/zip-line."
+ },
+ {
+  "name": "Signal arrows / bolts",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "Very loud whistle; −1 DC."
+ },
+ {
+  "name": "Backpack",
+  "kind": "gear",
+  "price_dukes": 2,
+  "price_text": "2 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Journal",
+  "kind": "gear",
+  "price_dukes": 3,
+  "price_text": "3 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Bedroll",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Ladder (10 ft)",
+  "kind": "gear",
+  "price_dukes": 2,
+  "price_text": "2 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Cable (25 ft, metal)",
+  "kind": "gear",
+  "price_dukes": 50,
+  "price_text": "5 princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Lantern (light 25 ft)",
+  "kind": "gear",
+  "price_dukes": 2,
+  "price_text": "2 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Case (2 scrolls/maps)",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Lockpicks",
+  "kind": "gear",
+  "price_dukes": 3,
+  "price_text": "3 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Chain (10 ft)",
+  "kind": "gear",
+  "price_dukes": 10,
+  "price_text": "1 prince",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Magnifying Glass",
+  "kind": "gear",
+  "price_dukes": 10,
+  "price_text": "1 prince",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Chalk",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Metal Canister",
+  "kind": "gear",
+  "price_dukes": 4,
+  "price_text": "4 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Charcoal",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Musical Instrument",
+  "kind": "gear",
+  "price_dukes": 20,
+  "price_text": "2 princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Chest",
+  "kind": "gear",
+  "price_dukes": 10,
+  "price_text": "1 prince",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Pole (5 ft, steel)",
+  "kind": "gear",
+  "price_dukes": 5,
+  "price_text": "5 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Clothing (working)",
+  "kind": "gear",
+  "price_dukes": 3,
+  "price_text": "3 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Pole (5 ft, wood)",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Clothing (middle-class)",
+  "kind": "gear",
+  "price_dukes": 10,
+  "price_text": "1 prince",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Rope (25 ft)",
+  "kind": "gear",
+  "price_dukes": 4,
+  "price_text": "4 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Clothing (gentry)",
+  "kind": "gear",
+  "price_dukes": 50,
+  "price_text": "5+ princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Rations (1 day)",
+  "kind": "gear",
+  "price_dukes": 2,
+  "price_text": "2 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Crowbar",
+  "kind": "gear",
+  "price_dukes": 10,
+  "price_text": "1 prince",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Spyglass",
+  "kind": "gear",
+  "price_dukes": 100,
+  "price_text": "10 princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Flare",
+  "kind": "gear",
+  "price_dukes": 100,
+  "price_text": "10 princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Tent",
+  "kind": "gear",
+  "price_dukes": 20,
+  "price_text": "2 princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Glass Bottle",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Torch",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Grappling Hook",
+  "kind": "gear",
+  "price_dukes": 30,
+  "price_text": "3 princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Vials (set of 5)",
+  "kind": "gear",
+  "price_dukes": 3,
+  "price_text": "3 dukes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Hose (10 ft)",
+  "kind": "gear",
+  "price_dukes": 100,
+  "price_text": "10 princes",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Inkpen",
+  "kind": "gear",
+  "price_dukes": 1,
+  "price_text": "1 duke",
+  "is_starting_gear": true,
+  "description": "Adventuring basics (p.84)."
+ },
+ {
+  "name": "Elympia Dark (lager)",
+  "kind": "gear",
+  "price_dukes": 40,
+  "price_text": "4 pr/glass, 40 pr/bottle (10 glasses)",
+  "description": "One of the most popular drinks in Evangless, this satyr-brewed dark lager never fails to pick one’s spirits up. It’s rich flavor re- stores 4 hit points per glass. A bottle contains 10 glasses worth. It costs 1 AP per glass to drink. Please drink responsibly.",
+  "is_starting_gear": false
+ },
+ {
+  "name": "CRIMSON (clothing line)",
+  "kind": "armor",
+  "price_dukes": 300,
+  "price_text": "30 pr",
+  "description": "by Crimson Marshal Lucinda Mirasol This controversial fashion line by the infamous Evanglessian militarist didn’t get its name simply for its creator’s rank; each piece cannot be caught on tier 1 fire! This clothing counts as minimal armor and is guaranteed to look downright dashing in every season.",
+  "is_starting_gear": false,
+  "size": "minimal",
+  "material": "textile"
+ },
+ {
+  "name": "Mindcuffs",
+  "kind": "gear",
+  "price_dukes": 30,
+  "price_text": "3 pr",
+  "description": "Developed by the Dolby Home for the Scientifically Unstable, these handcuffs can be used for one action point grabs. Attach- able to a maximum of two body parts, any hands or legs grabbed become unusable. Perfect for keeping any doomsday-machine obsessed evil genius unable to build, the target can only free a body part by making a tier 2 brute resist or by the cuffs’ owner releasing them.",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Water Filter",
+  "kind": "gear",
+  "price_dukes": 150,
+  "price_text": "15 pr",
+  "description": "An essential gadget for safari hunters and desert scavengers alike, this handy tool attaches to any flask or bottle. Simply by tipping it over you will pour out any impurities leaving only the cleanest of water behind. It can be used 15 times before breaking and is concealable.",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Any-Altitude Parachute",
+  "kind": "gear",
+  "price_dukes": 40,
+  "price_text": "4 pr",
+  "description": "This state-of-the-art parachute by Spendo deploys quickly for one reflexive action point whenever you’re falling. Never take falling damage again! While not concealable, its multi-stage deployment process ensures it will protect whether you fall 5 feet or 500 feet! SPENDO-BRAND: 91.6% GUARANTEED!",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Spendo-Grenade",
+  "kind": "gear",
+  "price_dukes": 30,
+  "price_text": "3 pr",
+  "description": "Sometimes you just have to blow something up. Spendo under- stands. That’s why he created the Spendo-Grenade. This conceal- able bomb is a statuette of Spendo the gnome himself (if Spendo smelled like gunpowder, had dark green skin and clothes, and made ticking sounds like a bomb). It costs 1 action point to ac- tivate the bomb and 2 action points to throw it. It will explode at the beginning of your next turn. It deals 10 damage to everyone in your target square and all squares adjacent to it. People in those squares can spend 1 action point to attempt a resist the impending explosion with their Dexterity. If they recieve a tier 2 result or higher, they take no damage and move out of the blast range. SPENDO-BRAND: 91.6% GUARANTEED!",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Spendo-Brand Illumitorch",
+  "kind": "gear",
+  "price_dukes": 20,
+  "price_text": "2 pr",
+  "description": "Whether you’re afraid of the dark or simply can’t see in it, Spen- do the gnome has the perfect fix! Torches are hot and can burn you; that’s dangerous! Use Spendo’s illumitorches instead! Eas- ily wielded in one hand and concealable, Spendo illumitorches consist of small hand-cranked bulbs which project light 25 feet around themselves. SPENDO-BRAND: 91.6% GUARANTEED!",
+  "is_starting_gear": false
+ },
+ {
+  "name": "The Lawn-Deformer (chainsaw)",
+  "kind": "melee",
+  "price_dukes": 320,
+  "price_text": "32 pr",
+  "description": "Spendo brings you his newest product in his line of landscaping tools. Designed with vigilante gardeners in mind, this nifty chain- saw acts as a medium weapon. Whenever you successfully hit an opponent, you can spend an action point to deal 1 unsoakable damage to them by spinning the chainsaw blades. This can be done as many times as you have remaining action points during your current turn. SPENDO-BRAND: 91.6% GUARANTEED!",
+  "is_starting_gear": false,
+  "size": "medium",
+  "material": "metal"
+ },
+ {
+  "name": "Gas-Fabulous (gasmask)",
+  "kind": "gear",
+  "price_dukes": 40,
+  "price_text": "4 pr",
+  "description": "Based on a design by the Coaldust Unions of Evangless, this handy gasmask gives its wearer a +4 to resists against alchemical gases. But you shouldn’t buy from them, oh no! Buy your gas- mask from Spendo and his hard-working artisans will customize the mask’s appearance for free! SPENDO-BRAND: 91.6% GUARANTEED!",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Protective Goggles",
+  "kind": "gear",
+  "price_dukes": 100,
+  "price_text": "10 pr",
+  "description": "Spendo doesn’t like dirt in his eyes. Neither should you! These handy industrial goggles protect you from dirt and other things too! They grant you +1 to your soak class against called shots to your eyes and a +3 to Brute resists against anything that would affect your eyes. SPENDO-BRAND: 91.6% GUARANTEED!",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Grapple Gun",
+  "kind": "gear",
+  "price_dukes": 60,
+  "price_text": "6 pr",
+  "description": "Perfect for the gentleman thief on the run, this grapple-gun can propel up to 50 feet of chain, rope, or cable and will attach to rocky, magnetic, rough, or slick surfaces. It will increase your climb speed by 20 feet while you retract the cord towards its latch. It costs 1 action point to shoot your grapple-gun, 1 action point to unlatch it, and 1 action point to retract it to climb. Just be wary, this trinket isn’t concealable. MaskedMen Inc. Unleash Your Inner Rogue!",
+  "is_starting_gear": false,
+  "modifiers": [
+   {
+    "stat": "climb",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "value": 20,
+    "label": "retracting the cord"
+   }
+  ]
+ },
+ {
+  "name": "Chains of Security",
+  "kind": "gear",
+  "price_dukes": 100,
+  "price_text": "10 pr",
+  "description": "Back by popular demand, Red-Gate Security is proud to present the Chains of Security! Attachable to any item, a single chain can secure an item to its owner’s hands, granting the wielder a +2 on resists against the item being disarmed. reD-gate: Keeping Evangless Safe",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Tinted Glasses",
+  "kind": "gear",
+  "price_dukes": 100,
+  "price_text": "10 pr",
+  "description": "Standard-issue for the Evanglessian military police, these styl- ish pieces of eyewear art by Red-Gate Security protect your eyes from the harmful rays of the sun, as well as any flashes of light. Wearing them grants you a +3 to resist being blinded by flashes of light. reD-gate: Keeping Evangless Safe",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Heat-Sight Monocle",
+  "kind": "gear",
+  "price_dukes": 100,
+  "price_text": "10 pr",
+  "description": "You’re in the middle of a barfight. Your chosen foe pushes a table on its side and ducks behind it. Your curiousity piques. What is he doing back there? With a Heat-Sight monocle from Masked- Men Incorporated, you could see his heat signature clear as day! This handy monocle allows you to see heat through anything deemed poor cover. MaskedMen Inc. Unleash Your Inner Rogue!",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Hidden Intentions (poison)",
+  "kind": "gear",
+  "price_dukes": 80,
+  "price_text": "8 pr/dose",
+  "description": "At MaskedMen Incorporated, we believe subtlety is the greatest weapon in any gentleman’s arsenal. Simply add a dose of Hid- den Intentions to your target’s food or drink. Requiring a Tier 3 Cunning resist to detect the added ingredient in their meal, your target will take 6 unsoakable damage roughly 6 seconds or three action points after they ingest it. MaskedMen Inc. Unleash Your Inner Rogue!",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Reasonable Doubt (auto lockpick)",
+  "kind": "gear",
+  "price_dukes": 80,
+  "price_text": "8 pr",
+  "description": "The premier product of MaskedMen Incorporated, this automat- ed lockpicking device keeps the lock fingerprint-free. It spends 1 action point lockpicking any lock it’s attached to whenever your action points refresh. One-handed and concealable, you can place it on a lock for 1 action point or throw it at a lock for 2 action points. MaskedMen Inc. Unleash Your Inner Rogue! *Though there are some rumors concerning the legitimacy and morality of MaskedMen Incorporated, all of their agents have been very forthright with us and leave us no reason to question the validity of their company.",
+  "is_starting_gear": false
+ },
+ {
+  "name": "Graviton Board",
+  "kind": "gear",
+  "price_dukes": 850,
+  "price_text": "85 pr",
+  "description": "A small hoverboard perfect for anyone wanting to travel in style, this premium clanker by Burgenhind Industries may not fly through the air, but it quickly skims across land and the surface of water! With a speed of 40 feet per action point and 12 wounds (losing 5 feet of speed whenever it takes damage), you’ll be the envy of all pedestrians in your path! Burgenhind Industries: Need a Lift?",
+  "is_starting_gear": false
+ },
+ {
+  "name": "The Fashionable Arrival (flight pack)",
+  "kind": "gear",
+  "price_dukes": 32000,
+  "price_text": "3,200 pr",
+  "description": "The latest in personal transportation clankers by Burgenhind Industries, this graviton-sphere powered pack features a stylish brass finish and fits comfortably on the back of any tailcoat or corset. For every action point you spend moving it, the Fashion- able Arrival will fly up to 40 feet. It has 12 wounds and loses 5 feet of movement whenever damaged. If you aren’t arriving fashion- ably, why show up at all? Burgenhind Industries: Need a Lift?",
+  "is_starting_gear": false,
+  "modifiers": [
+   {
+    "stat": "fly",
+    "op": "base",
+    "when": "always",
+    "scope": "character",
+    "value": 40
+   }
+  ]
+ },
+ {
+  "name": "Horse",
+  "kind": "animal",
+  "price_dukes": 1000,
+  "price_text": "100 pr",
+  "is_starting_gear": false,
+  "description": "AP: 3; HP: 16; Wounds: 9; Pri: +0; Speed: 50 ft (×2 if all AP spent moving); Eva: −1; Def: +1; Soak (T1–T4): 3/6/9/12 (hide); Attack: Hoof 2 AP, natural medium, Acc +0, Stk +1, dmg 6/12/18/24"
+ },
+ {
+  "name": "Canine",
+  "kind": "animal",
+  "price_dukes": 350,
+  "price_text": "35 pr",
+  "is_starting_gear": false,
+  "description": "AP: 3; HP: 12; Wounds: 8; Pri: +0; Speed: 40 ft; Eva: +0; Def: +0; Soak (T1–T4): 2/4/6/8 (hide); Attack: Bite 2 AP, natural medium, Acc +1, Stk +3, dmg 6/12/18/24; +1 Stk per ally within 25 ft with Pack Instincts; can move–attack–move"
+ },
+ {
+  "name": "Bird of prey",
+  "kind": "animal",
+  "price_dukes": 450,
+  "price_text": "45 pr",
+  "is_starting_gear": false,
+  "description": "AP: 3; HP: 11; Wounds: 8; Pri: +0; Speed: 25 ft, 45 ft flight; Eva: +1; Def: +0; Soak (T1–T4): 0 (unarmored); Attack: Talon 2 AP, natural light, Acc +3, Stk +1, dmg 4/8/12/16; after 10+ ft dive target Brute resist vs Agility (+2) or prone"
+ }
+]

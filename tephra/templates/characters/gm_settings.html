@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="paper">
+  <h1>Narrator settings</h1>
+  <form method="post" class="stack">{% csrf_token %}{{ form.as_div }}<button class="btn primary">Save settings</button></form>
+</div>
+<div class="paper">
+  <h2>Characters</h2>
+  <div class="table-scroll"><table class="data">
+    <tr><th>Name</th><th>Player</th><th>Level</th><th>Status</th><th>Reset password</th><th></th></tr>
+    {% for c in characters %}
+      <tr><td><a href="{{ c.get_absolute_url }}">{{ c }}</a></td><td>{{ c.player_name }}</td><td>{{ c.level }}</td><td>{{ c.get_status_display }}</td>
+        <td><form class="row" method="post" action="{% url 'gm_reset_password' c.pk %}">{% csrf_token %}
+          <input type="text" name="password" placeholder="new password" required><button class="btn small">Set</button></form></td>
+        <td><form method="post" action="{% url 'delete_character' c.pk %}" onsubmit="return confirm('Delete {{ c|escapejs }} permanently?')">{% csrf_token %}<button class="btn small danger">Delete</button></form></td></tr>
+    {% endfor %}
+  </table></div>
+  <p class="small muted">Raw data: <a href="{% url 'admin:index' %}">Django admin</a> · <a href="{% url 'catalog' %}">Catalog</a> · <a href="{% url 'catalog_import' %}">Bulk import</a></p>
+</div>
+{% endblock %}

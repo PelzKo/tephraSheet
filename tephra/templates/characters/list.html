@@ -1,0 +1,37 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block content %}
+<div class="row spread" style="margin-bottom:14px;color:var(--paper)">
+  <h1>Characters</h1>
+  <form method="post" action="{% url 'character_new' %}">{% csrf_token %}<button class="btn brass">+ New character</button></form>
+</div>
+<div class="cards">
+  {% for card in cards %}{% with c=card.character %}
+    <a class="card" href="{% if card.unlocked %}{{ c.get_absolute_url }}{% else %}{% url 'unlock' c.pk %}{% endif %}">
+      <span class="lock" title="{% if card.unlocked %}Unlocked{% else %}Password protected{% endif %}">{% if card.unlocked %}🔓{% else %}🔒{% endif %}</span>
+      <h2>{{ c.name|default:"Unnamed character" }}</h2>
+      <div class="sub">
+        {% if c.status == "draft" %}<span class="tag">In creation – step {{ c.wizard_step }}/10</span>{% endif %}
+        {{ c.race_data.name|default:"" }}{% if c.nationality_name %} · {{ c.nationality_name }}{% endif %}
+        {% if c.player_name %}<br>played by {{ c.player_name }}{% endif %}
+      </div>
+      {% if card.sheet %}
+        <div class="stats">
+          <div><b>{{ c.level }}</b><span>Level</span></div>
+          <div><b>{{ card.hp }}/{{ card.sheet.max_hp }}</b><span>HP</span></div>
+          <div><b>{{ card.wounds }}/{{ card.sheet.max_wounds }}</b><span>Wounds</span></div>
+          <div><b>{{ card.sheet.stats.ap.total }}</b><span>AP</span></div>
+          <div><b>{{ card.sheet.stats.eva.total|signed }}</b><span>Evade</span></div>
+          <div><b>{{ card.sheet.stats.def.total|signed }}</b><span>Defense</span></div>
+          <div><b>{{ card.sheet.stats.pri.total|signed }}</b><span>Priority</span></div>
+          <div><b>{{ card.sheet.stats.spd.total }}</b><span>Speed</span></div>
+        </div>
+        <div class="hpbar" title="Hit points"><i style="width:{% if card.sheet.max_hp %}{% widthratio card.hp card.sheet.max_hp 100 %}{% else %}0{% endif %}%"></i></div>
+        <div class="weapon">⚔ <b>{{ card.weapon.name }}</b> · Acc {{ card.weapon.acc.total|signed }}{% if card.weapon.stk %} · Stk {{ card.weapon.stk.total|signed }}{% endif %} · DC {{ card.weapon.dc.total }}</div>
+      {% endif %}
+    </a>
+  {% endwith %}{% empty %}
+    <form class="card new" method="post" action="{% url 'character_new' %}" onclick="this.submit()">{% csrf_token %}
+      <span>+ Create your first character</span><p class="muted small">Go step by step through the character creation rules.</p></form>
+  {% endfor %}
+</div>
+{% endblock %}

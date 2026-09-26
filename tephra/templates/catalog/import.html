@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="paper">
+  <div class="row spread"><h1>Bulk import{% if character %} <span class="muted" style="font-size:18px">for {{ character }}</span>{% endif %}</h1>
+    <a class="btn" href="{% url 'catalog_import_template' %}">Download CSV template</a></div>
+  <p class="muted small">Upload a CSV file or paste a table (from a spreadsheet, CSV with , or ;, or a markdown table). Needed column: <code>name</code>. Useful: <code>kind</code> (melee, firearm, bow, crossbow, armor, deflection, ammo, gear, animal, vehicle), <code>size</code>, <code>variants</code> (flexible/polearm/throwing/impromptu/double-barreled), <code>material</code>, <code>price</code> ("5 pr", "3 d"), <code>augments</code> ("Accurate II; Damaging I"), <code>description</code>, <code>quantity</code>. Empty numbers use the rules' size tables.</p>
+  <form method="post" enctype="multipart/form-data" class="stack">{% csrf_token %}
+    {% if character %}<input type="hidden" name="for" value="{{ character.pk }}">{% endif %}
+    <input type="file" name="file" accept=".csv,.tsv,.txt,text/csv">
+    <textarea name="text" rows="8" placeholder="name,kind,size,price&#10;Cavalry Sabre,melee,medium,7 pr"></textarea>
+    <div><button class="btn primary" name="action" value="preview">Preview</button></div>
+  </form>
+</div>
+{% if rows is not None %}
+<div class="paper">
+  <h2>Preview – {{ ok_count }} of {{ rows|length }} rows OK</h2>
+  <div class="table-scroll"><table class="data">
+    <tr><th>Line</th><th>Name</th><th>Kind</th><th>Size</th><th>Details</th><th>Problems</th></tr>
+    {% for r in rows %}<tr class="{% if r.errors %}err{% endif %}"><td>{{ r.line }}</td><td>{{ r.values.name }}</td><td>{{ r.values.kind }}</td><td>{{ r.values.size }}</td>
+      <td class="small">{% for k, v in r.values.items %}{% if k != "name" and k != "kind" and k != "size" and v %}{{ k }}={{ v }} {% endif %}{% endfor %}</td>
+      <td class="small">{{ r.errors|join:"; " }}</td></tr>{% endfor %}
+  </table></div>
+  {% if ok_count %}
+  <form method="post" class="row" style="margin-top:10px">{% csrf_token %}
+    {% if character %}<input type="hidden" name="for" value="{{ character.pk }}">
+      <label><input type="radio" name="target" value="inventory" checked> Into {{ character }}'s inventory</label>
+      <label><input type="radio" name="target" value="catalog"> Into the shared catalog</label>
+    {% else %}<input type="hidden" name="target" value="catalog">{% endif %}
+    <button class="btn primary" name="action" value="commit">Import {{ ok_count }} item{{ ok_count|pluralize }}</button>
+  </form>
+  {% endif %}
+</div>
+{% endif %}
+{% endblock %}

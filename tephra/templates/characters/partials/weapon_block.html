@@ -1,0 +1,34 @@
+{% load sheet_tags %}
+<div class="frame box" style="--x:{{ x }};--y:195;--w:{{ w }};--h:350">
+  <h3>Weapon</h3>
+  {% if w_block %}
+    <div class="desc" title="{{ w_block.name }}">{{ w_block.name }}</div>
+    <div class="cap">Description</div>
+    <div class="trio">
+      <div><div class="v">{{ w_block.size }}</div><div class="l">Size</div></div>
+      <div><div class="v" title="{{ w_block.type_label }}">{{ w_block.type_label }}</div><div class="l">Type</div></div>
+      <div><div class="v" title="{{ w_block.reach }}">{{ w_block.reach }}</div><div class="l">Reach</div></div>
+    </div>
+    <div class="kv center">AP to Use <span class="v">{% stat w_block.ap_use "AP to use" %}</span>
+      <span class="v">{% if w_block.ap_ready %}{% stat w_block.ap_ready "AP to ready" %}{% else %}–{% endif %}</span> AP to Ready</div>
+    <div class="kv center">Accuracy <span class="v">{% stat w_block.acc "Accuracy" signed=True %}</span>
+      <span class="v">{% if w_block.stk %}{% stat w_block.stk "Strike" signed=True %}{% else %}<span title="Damage uses the Accuracy roll">Acc</span>{% endif %}</span> Strike</div>
+    <div class="dmg">Damage Class <span class="v dc">{% stat w_block.dc "Damage class" %}</span>
+      {% for d in w_block.damage|slice:"1:" %}<span class="v" title="Tier {{ forloop.counter|add:1 }} damage">{{ d }}</span>{% endfor %}</div>
+    <div class="notes-area"><b>Notes/Augments:</b>
+      <ul>
+        {% for slug_marque in w_block.item.augments %}{% with aug=slug_marque.0|augment %}<li>{{ aug.name|default:slug_marque.0 }} mQ {{ slug_marque.1|roman }}</li>{% endwith %}{% endfor %}
+        {% for n in w_block.notes %}<li>{{ n }}</li>{% endfor %}
+      </ul>
+    </div>
+  {% else %}
+    <div class="desc empty-slot">{{ empty_label|default:"–" }}</div>
+    <div class="cap">Description</div>
+    {% if fallback %}
+      <div class="kv center">Unarmed: AP {{ fallback.ap_use.total }} · Acc <span class="v">{% stat fallback.acc "Accuracy" signed=True %}</span> · Stk <span class="v">{% stat fallback.stk "Strike" signed=True %}</span></div>
+      <div class="dmg">Damage Class <span class="v dc">{% stat fallback.dc "Unarmed damage class" %}</span>
+        {% for d in fallback.damage|slice:"1:" %}<span class="v">{{ d }}</span>{% endfor %}</div>
+    {% endif %}
+    <div class="notes-area"><b>Notes/Augments:</b></div>
+  {% endif %}
+</div>

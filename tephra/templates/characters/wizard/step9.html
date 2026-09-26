@@ -1,0 +1,17 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Background Stories{% endblock %}
+{% block intro %}<p class="muted">If your narrator allows it, choose stories according to their guidelines. Most characters choose {{ count }} background stor{{ count|pluralize:"y,ies" }}. Membership and faith stories need the narrator's approval.</p>{% endblock %}
+{% block step %}
+{% for type, stories in by_type.items %}
+  <details class="spec-group" {% if type == "background" %}open{% endif %}>
+    <summary>{{ type|capfirst }} stories</summary>
+    <div class="choice-grid" style="margin-top:8px">
+      {% for s in stories %}
+        <label class="choice"><input type="checkbox" name="stories" value="{{ s.slug }}" {% if s.slug in selected %}checked{% endif %}>
+          <b>{{ s.name }}</b>{% if s.group %} <span class="tag">{{ s.group }}</span>{% endif %}{% if s.requires %} <span class="tag">req. {{ s.requires }}</span>{% endif %}
+          <div class="small">{{ s.text }}</div></label>
+      {% endfor %}
+    </div>
+  </details>
+{% endfor %}
+{% endblock %}

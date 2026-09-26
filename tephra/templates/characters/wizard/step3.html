@@ -1,0 +1,14 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Attributes{% endblock %}
+{% block random_btn %}{% endblock %}
+{% block intro %}<p class="muted">Add up the skills under each attribute to determine the attribute bonus. This is calculated for you.</p>{% endblock %}
+{% block step %}
+<div class="grid">
+  {% for attr, v in sheet.attributes.items %}
+    <div class="choice selected"><h3>{{ attr }} {% stat v attr %}</h3>
+      <ul class="trait-list">{% for label, n in v.breakdown %}{% if n %}<li>{{ label }}: {{ n }}</li>{% endif %}{% endfor %}</ul>
+      {% for label, n in sheet.roll_notes|get:attr %}<div class="small muted">{{ label }}: {{ n|signed }} on {{ attr }} rolls</div>{% endfor %}
+    </div>
+  {% endfor %}
+</div>
+{% endblock %}

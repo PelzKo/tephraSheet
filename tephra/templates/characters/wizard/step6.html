@@ -1,0 +1,30 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Weapons &amp; Armor{% endblock %}
+{% block intro %}<p class="muted">Choose your weapons and armor by size class. Accuracy/Strike and Evade/Defense come from your specialties. Need something special? <a href="{% url 'item_create' %}?for={{ character.pk }}">Create a custom item</a>.</p>{% endblock %}
+{% block step %}
+<div class="form-grid" style="grid-template-columns:repeat(auto-fill,minmax(260px,1fr))">
+  <div class="field"><label>Weapon 1</label>
+    <select name="weapon1"><option value="">– none –</option>
+      {% for w in weapons %}<option value="{{ w.pk }}" {% if equipped.weapon1.template_id == w.pk %}selected{% endif %}>{{ w.name }} ({{ w.get_kind_display }})</option>{% endfor %}
+      {% if equipped.weapon1 and not equipped.weapon1.template_id %}<option value="custom" selected>{{ equipped.weapon1.name }}</option>{% endif %}</select></div>
+  <div class="field"><label>Weapon 2</label>
+    <select name="weapon2"><option value="">– none –</option>
+      {% for w in weapons %}<option value="{{ w.pk }}" {% if equipped.weapon2.template_id == w.pk %}selected{% endif %}>{{ w.name }} ({{ w.get_kind_display }})</option>{% endfor %}
+      {% if equipped.weapon2 and not equipped.weapon2.template_id %}<option value="custom" selected>{{ equipped.weapon2.name }}</option>{% endif %}</select></div>
+  <div class="field"><label>Armor</label>
+    <select name="armor"><option value="">– unarmored –</option>
+      {% for w in armors %}<option value="{{ w.pk }}" {% if equipped.armor.template_id == w.pk %}selected{% endif %}>{{ w.name }}</option>{% endfor %}</select></div>
+  <div class="field"><label>Deflection item</label>
+    <select name="deflection"><option value="">– none –</option>
+      {% for w in deflections %}<option value="{{ w.pk }}" {% if equipped.deflection.template_id == w.pk %}selected{% endif %}>{{ w.name }}</option>{% endfor %}</select></div>
+</div>
+<div class="row" style="margin-top:10px"><button class="btn" name="action" value="equip" formnovalidate>Update preview</button></div>
+<h3 style="margin-top:14px">Preview</h3>
+<div class="table-scroll"><table class="data">
+  <tr><th>Weapon</th><th class="num">AP</th><th class="num">Accuracy</th><th class="num">Strike</th><th class="num">DC</th><th>Damage T1–T4</th><th>Reach</th></tr>
+  {% for w in sheet.weapons %}<tr><td>{{ w.name }}</td><td class="num">{% stat w.ap_use %}</td><td class="num">{% stat w.acc "Accuracy" signed=True %}</td>
+    <td class="num">{% if w.stk %}{% stat w.stk "Strike" signed=True %}{% else %}uses Acc{% endif %}</td><td class="num">{% stat w.dc "DC" %}</td><td>{{ w.damage|join:" / " }}</td><td>{{ w.reach }}</td></tr>{% endfor %}
+  {% with w=sheet.unarmed %}<tr><td>Unarmed</td><td class="num">1</td><td class="num">{% stat w.acc "Accuracy" signed=True %}</td><td class="num">{% stat w.stk "Strike" signed=True %}</td><td class="num">{% stat w.dc "DC" %}</td><td>{{ w.damage|join:" / " }}</td><td>{{ w.reach }}</td></tr>{% endwith %}
+</table></div>
+<p>Evade {% stat sheet.stats.eva "Evade" signed=True %} · Defense {% stat sheet.stats.def "Defense" signed=True %} · Soak {% stat sheet.stats.soak "Soak" %} · Speed {% stat sheet.stats.spd "Speed" %}</p>
+{% endblock %}

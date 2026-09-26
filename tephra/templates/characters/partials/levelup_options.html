@@ -1,0 +1,8 @@
+{% load sheet_tags %}
+{% if errors %}<p class="why">{{ errors|join:" " }}</p>{% endif %}
+{% if retrofit_targets %}
+  <div class="field" style="margin-top:10px"><label>…for this specialty (same attribute)</label>
+    <select name="retrofit_new"><option value="">–</option>{% for s in retrofit_targets %}<option value="{{ s.slug }}" {% if s.slug == retrofit_new %}selected{% endif %}>{{ s.skill|default:"General" }}: {{ s.name }}</option>{% endfor %}</select></div>
+{% endif %}
+<h2 style="margin-top:14px">New specialty</h2>
+{% include "characters/partials/specialty_picker.html" with mode="levelup" %}

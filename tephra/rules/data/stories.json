@@ -1,0 +1,977 @@
+[
+ {
+  "slug": "ayodin-of-the-exodus",
+  "name": "Ayodin of the Exodus",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "Ayodin",
+  "text": "Respected by older Evanglessians (fought with surfacers).",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "royalist",
+  "name": "Royalist",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "",
+  "text": "Sided with Emperor's automaton armies in Civil War; better with Royalists.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "militarist",
+  "name": "Militarist",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "",
+  "text": "Sided with the military coup; better with Militarists.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "veteran",
+  "name": "Veteran",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "",
+  "text": "Civil War veteran with war stories.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "settler-of-the-west",
+  "name": "Settler of the West",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "",
+  "text": "Can easily calm & direct livestock.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "naturalized-tharmurian",
+  "name": "Naturalized Tharmurian",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "",
+  "text": "Seen as foreigner (white hair, pale).",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "evanglessian-nobility",
+  "name": "Evanglessian Nobility",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "",
+  "text": "Access to most government buildings.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "adopted-by-evangless",
+  "name": "Adopted by Evangless",
+  "type": "nationality",
+  "group": "Evangless",
+  "requires": "",
+  "text": "May take 1 nationality story from another nationality.",
+  "tags": "[RULE]",
+  "modifiers": []
+ },
+ {
+  "slug": "savage-elf",
+  "name": "Savage Elf",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "",
+  "text": "Survive indefinitely in forests without provisions.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "highborne-elf",
+  "name": "Highborne Elf",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "Elf",
+  "text": "Slightly higher regard than average elf.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "second-generation-farishtaa",
+  "name": "Second Generation Farishtaa",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "Farishtaa",
+  "text": "Born farishtaa; elves jealous.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "member-of-the-night-society",
+  "name": "Member of the Night Society",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "Farishtaa",
+  "text": "Access to all facilities except Day Society's.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "miadruid",
+  "name": "Miadruid",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "Gnome",
+  "text": "Get along with non-caste Dalvozzeans.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "white-tower-mercenary",
+  "name": "White-Tower Mercenary",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "",
+  "text": "Regarded like Night Society; stacks prestige with it.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "ashen-angel",
+  "name": "Ashen Angel",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "",
+  "text": "Rebel tattoo; kinship with rebels; police treat you as terrorist.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "elf-of-adoipa",
+  "name": "Elf of Adoipa",
+  "type": "nationality",
+  "group": "Dalvozzea",
+  "requires": "Elf",
+  "text": "Admired by other elves.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "disciple-of-pain",
+  "name": "Disciple of Pain",
+  "type": "nationality",
+  "group": "Izeda",
+  "requires": "",
+  "text": "Ritually scarred; pain doesn't slow you (book gives no number — unclear; likely narrative).",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "raised-to-scavenge",
+  "name": "Raised to Scavenge",
+  "type": "nationality",
+  "group": "Izeda",
+  "requires": "",
+  "text": "Can scavenge/sell petty objects.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "asagnu-caravaneer",
+  "name": "Asagnu Caravaneer",
+  "type": "nationality",
+  "group": "Izeda",
+  "requires": "",
+  "text": "Proud royal caravan.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "caravaneer-of-sapience",
+  "name": "Caravaneer of Sapience",
+  "type": "nationality",
+  "group": "Izeda",
+  "requires": "",
+  "text": "Affinity with vultures.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "sunrage-elf",
+  "name": "Sunrage Elf",
+  "type": "nationality",
+  "group": "Izeda",
+  "requires": "Elf",
+  "text": "Desert elf, weathers prejudice.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "stowaway",
+  "name": "Stowaway",
+  "type": "nationality",
+  "group": "Paldorus",
+  "requires": "",
+  "text": "Not a colony citizen.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "chosen-by-jinzi",
+  "name": "Chosen by Jinzi",
+  "type": "nationality",
+  "group": "Paldorus",
+  "requires": "",
+  "text": "Personally invited by the church.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "paldoran-militant",
+  "name": "Paldoran Militant",
+  "type": "nationality",
+  "group": "Paldorus",
+  "requires": "",
+  "text": "Military raider; shunned/hanged elsewhere.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "grounded-exile",
+  "name": "Grounded Exile",
+  "type": "nationality",
+  "group": "Paldorus",
+  "requires": "",
+  "text": "Expelled from Stormship.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "signs-of-radiation",
+  "name": "Signs of Radiation",
+  "type": "nationality",
+  "group": "Paldorus",
+  "requires": "",
+  "text": "Minor skin peeling from radiation.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "stormship-engineer",
+  "name": "Stormship Engineer",
+  "type": "nationality",
+  "group": "Paldorus",
+  "requires": "",
+  "text": "Start with 1 point in Engineer (skill).",
+  "tags": "[STAT:Engineer +1]",
+  "modifiers": [
+   {
+    "stat": "skill:Engineer",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "value": 1
+   }
+  ]
+ },
+ {
+  "slug": "matriarch",
+  "name": "Matriarch",
+  "type": "nationality",
+  "group": "Zelhost",
+  "requires": "Female",
+  "text": "Haudi men bow to you.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "imperial-traditionalist",
+  "name": "Imperial Traditionalist",
+  "type": "nationality",
+  "group": "Zelhost",
+  "requires": "",
+  "text": "Get along with Siyeshi Hauds.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "satyr-servant",
+  "name": "Satyr Servant",
+  "type": "nationality",
+  "group": "Zelhost",
+  "requires": "Satyr",
+  "text": "Flinch when a Haud raises a hand (out of combat).",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "honor-without-etiquette",
+  "name": "Honor without Etiquette",
+  "type": "nationality",
+  "group": "Zelhost",
+  "requires": "",
+  "text": "Hauds recognize your respectability.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "national-passtime",
+  "name": "National Passtime",
+  "type": "nationality",
+  "group": "Zelhost",
+  "requires": "",
+  "text": "+4 Sciences to identify augments in an alchemical solution.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "brimstone-thug",
+  "name": "Brimstone Thug",
+  "type": "membership",
+  "group": "The Brimstones",
+  "requires": "",
+  "text": "free low-grade beef from barons",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "small-government-big-gun",
+  "name": "Small Government, Big Gun",
+  "type": "membership",
+  "group": "The Brimstones",
+  "requires": "",
+  "text": "+2 resist vs intimidation by non-military officials on baron land",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "carnie",
+  "name": "Carnie",
+  "type": "membership",
+  "group": "The Carnival",
+  "requires": "",
+  "text": "ride on Carnival airships",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "carnival-performer",
+  "name": "Carnival Performer",
+  "type": "membership",
+  "group": "The Carnival",
+  "requires": "",
+  "text": "sleeper cell; recognize members instantly",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "coaldust-laborer",
+  "name": "Coaldust Laborer",
+  "type": "membership",
+  "group": "Coaldust Unions",
+  "requires": "",
+  "text": "+4 Notice whether a workplace is unsafe",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "coaldust-protestor",
+  "name": "Coaldust Protestor",
+  "type": "membership",
+  "group": "Coaldust Unions",
+  "requires": "",
+  "text": "find sympathetic employees",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "fulbourne-initiate",
+  "name": "Fulbourne Initiate",
+  "type": "membership",
+  "group": "Fulbourne Society",
+  "requires": "",
+  "text": "access to lodges",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "fulbourne-scout",
+  "name": "Fulbourne Scout",
+  "type": "membership",
+  "group": "Fulbourne Society",
+  "requires": "",
+  "text": "tells T2+ reveal old money",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "new-blood-fulbourne",
+  "name": "New Blood Fulbourne",
+  "type": "membership",
+  "group": "Fulbourne Society",
+  "requires": "",
+  "text": "access to Society records on you",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "highflyer",
+  "name": "Highflyer",
+  "type": "membership",
+  "group": "Highflyers",
+  "requires": "",
+  "text": "badges → unrestricted Evanglessian airspace",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "civil-war-ace",
+  "name": "Civil War Ace",
+  "type": "membership",
+  "group": "Highflyers",
+  "requires": "",
+  "text": "arrange sanctioned duels",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "legendary-highflyer",
+  "name": "Legendary Highflyer",
+  "type": "membership",
+  "group": "Highflyers",
+  "requires": "",
+  "text": "VIP pass",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "lavrey-agent",
+  "name": "LaVrey Agent",
+  "type": "membership",
+  "group": "LaVrey National Detective Agency",
+  "requires": "",
+  "text": "receive job notices",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "lavrey-detective",
+  "name": "LaVrey Detective",
+  "type": "membership",
+  "group": "LaVrey National Detective Agency",
+  "requires": "",
+  "text": "badge",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "lavrey-train-guard",
+  "name": "LaVrey Train Guard",
+  "type": "membership",
+  "group": "LaVrey National Detective Agency",
+  "requires": "",
+  "text": "stop cargo trains",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "renovator",
+  "name": "Renovator",
+  "type": "membership",
+  "group": "Renovators",
+  "requires": "",
+  "text": "landmark pictographs",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "renovator-foreman",
+  "name": "Renovator Foreman",
+  "type": "membership",
+  "group": "Renovators",
+  "requires": "",
+  "text": "instant historical records via engine",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "renovator-designer",
+  "name": "Renovator Designer",
+  "type": "membership",
+  "group": "Renovators",
+  "requires": "",
+  "text": "access to laborers",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "son-of-strife",
+  "name": "Son of Strife",
+  "type": "membership",
+  "group": "Sons of Strife",
+  "requires": "",
+  "text": "friends among Militarists/unions",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "born-a-son",
+  "name": "Born a Son",
+  "type": "membership",
+  "group": "Sons of Strife",
+  "requires": "",
+  "text": "journalists interested",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "charitable-daughter",
+  "name": "Charitable Daughter",
+  "type": "membership",
+  "group": "Sons of Strife",
+  "requires": "",
+  "text": "allies in low places",
+  "tags": "",
+  "modifiers": []
+ },
+ {
+  "slug": "airborne",
+  "name": "Airborne",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Fight unhindered in the air.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "bartender",
+  "name": "Bartender",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Mix any drink.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "burglar",
+  "name": "Burglar",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Cunning to spot a target's inventory +1 tier.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "cattle-wrangler",
+  "name": "Cattle Wrangler",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "+1 Acc to grab an animal with a whip.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "chef",
+  "name": "Chef",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Sciences roll for cooking: roll twice, take higher.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "clergy",
+  "name": "Clergy",
+  "type": "background",
+  "group": "",
+  "requires": "a Faith membership story",
+  "text": "Persuading someone of your faith +1 tier.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "conductor",
+  "name": "Conductor",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Know layout/function of civilian train cars.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "cowboy",
+  "name": "Cowboy",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Cunning to scout during a breather: roll twice, take higher.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "cutpurse",
+  "name": "Cutpurse",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Hand/take items stealthily without provoking reflexes.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "forgery-artist",
+  "name": "Forgery Artist",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Forge documents.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "forest-gatherer",
+  "name": "Forest Gatherer",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Always find food in the wild.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "gambler",
+  "name": "Gambler",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Each downtime wager ≤10 princes double-or-nothing (odd/even).",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "gentry",
+  "name": "Gentry",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Employees of your estate +1 Brute.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "handy-craftsman",
+  "name": "Handy Craftsman",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Make all \"Adventuring Basics\" equipment during downtime.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "kinematician",
+  "name": "Kinematician",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Determine a weapon's range via Cunning.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "lawman",
+  "name": "Lawman",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "+2 Cunning to catch lawbreakers in the act.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "librarian",
+  "name": "Librarian",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Research takes half time.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "lumberjack",
+  "name": "Lumberjack",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Predict where trees fall.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "mariner",
+  "name": "Mariner",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Know nearby aquatic life.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "moneylender",
+  "name": "Moneylender",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Remember names/locations; lend money.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "mysterious-twin",
+  "name": "Mysterious Twin",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Take the skills, specialties, XP and stories of a party member who just died.",
+  "tags": "[RULE]",
+  "modifiers": []
+ },
+ {
+  "slug": "nobility",
+  "name": "Nobility",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Signet ring; welcome among elites.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "physician",
+  "name": "Physician",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Cunning to diagnose: roll twice, take higher.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "railway-worker",
+  "name": "Railway Worker",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Free passenger train rides.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "repairman",
+  "name": "Repairman",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "Repair broken items outside battle even if you can't make them.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "rodeo-rider",
+  "name": "Rodeo Rider",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "+4 Dex to stay mounted when being knocked off.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "raised-by-the-church",
+  "name": "Raised by the Church",
+  "type": "background",
+  "group": "",
+  "requires": "",
+  "text": "+2 Cunning to get something from a Tailemite church.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "crusader-of-tailemy",
+  "name": "Crusader of Tailemy",
+  "type": "faith",
+  "group": "Tailemy",
+  "requires": "",
+  "text": "+1 Strike vs anyone who declared heresy against the Beloved Mother.",
+  "tags": "[COND] [STAT:Stk +1]",
+  "modifiers": [
+   {
+    "stat": "stk",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "value": 1,
+    "label": "vs heretics"
+   }
+  ]
+ },
+ {
+  "slug": "devout-of-tailemy",
+  "name": "Devout of Tailemy",
+  "type": "personality",
+  "group": "Tailemy",
+  "requires": "",
+  "text": "Any week you attended a Tailemite sermon: +1 on all Spirit rolls.",
+  "tags": "[COND]",
+  "modifiers": [
+   {
+    "stat": "roll:Spirit",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "value": 1,
+    "label": "attended a sermon this week"
+   }
+  ]
+ },
+ {
+  "slug": "martyr-of-tailemy",
+  "name": "Martyr of Tailemy",
+  "type": "faith",
+  "group": "Tailemy",
+  "requires": "",
+  "text": "Clergy; treated well by believers.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "ordained-by-tailemy",
+  "name": "Ordained by Tailemy",
+  "type": "faith",
+  "group": "Tailemy",
+  "requires": "any other Tailemite membership story",
+  "text": "May perform rites & represent the church.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "paladin-of-tailemy",
+  "name": "Paladin of Tailemy",
+  "type": "faith",
+  "group": "Tailemy",
+  "requires": "",
+  "text": "+1 Soak Class when defending another Tailemite.",
+  "tags": "[COND] [STAT:Soak +1]",
+  "modifiers": [
+   {
+    "stat": "soak",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "value": 1,
+    "label": "defending a Tailemite"
+   }
+  ]
+ },
+ {
+  "slug": "free-will-acolyte",
+  "name": "Free Will Acolyte",
+  "type": "faith",
+  "group": "Free Will",
+  "requires": "",
+  "text": "+1 Spirit when interacting with the hidebound/dogmatic.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "teacher-of-the-faith",
+  "name": "Teacher of the Faith",
+  "type": "faith",
+  "group": "Free Will",
+  "requires": "",
+  "text": "May lead services; +2 Cunning on days you do.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "free-will-savant",
+  "name": "Free Will Savant",
+  "type": "faith",
+  "group": "Free Will",
+  "requires": "Teacher of the Faith + published intellectual work",
+  "text": "Teacher benefits; may represent Free Will regionally.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "scion-of-the-sun",
+  "name": "Scion of the Sun",
+  "type": "faith",
+  "group": "Jinzium",
+  "requires": "",
+  "text": "+2 Spirit to stay focused on bright, blue days.",
+  "tags": "[COND]",
+  "modifiers": []
+ },
+ {
+  "slug": "archon",
+  "name": "Archon",
+  "type": "faith",
+  "group": "Jinzium",
+  "requires": "",
+  "text": "May lead services; aid & shelter from congregations.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "soul-of-sol",
+  "name": "Soul of Sol",
+  "type": "faith",
+  "group": "Jinzium",
+  "requires": "Archon",
+  "text": "May speak for the church.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "orthodox-jinzist",
+  "name": "Orthodox Jinzist",
+  "type": "faith",
+  "group": "Jinzium",
+  "requires": "",
+  "text": "Sermon by Igi fully reassures your faith.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "starborn-traditionalist",
+  "name": "Starborn Traditionalist",
+  "type": "faith",
+  "group": "Jinzium",
+  "requires": "",
+  "text": "Rituals intrigue agnostics.",
+  "tags": "[NARR]",
+  "modifiers": []
+ },
+ {
+  "slug": "angel-fever",
+  "name": "Angel Fever",
+  "type": "faith",
+  "group": "Jinzium",
+  "requires": "",
+  "text": "Never fatigued in presence of a winged farishtaa.",
+  "tags": "[COND]",
+  "modifiers": []
+ }
+]

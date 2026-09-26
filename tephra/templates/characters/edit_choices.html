@@ -1,0 +1,91 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block content %}
+<div class="admin-banner">Admin mode – changes here skip all rule checks.</div>
+<form method="post" class="paper">{% csrf_token %}
+  <div class="row spread"><h1>Edit {{ character.name }}</h1><a class="btn" href="{% url 'sheet' character.pk %}">Back to sheet</a></div>
+  <div class="form-grid">
+    <div class="field"><label>Name</label><input type="text" name="name" value="{{ character.name }}"></div>
+    <div class="field"><label>Player</label><input type="text" name="player_name" value="{{ character.player_name }}"></div>
+    <div class="field"><label>Race</label><select name="race">{% for r in races %}<option value="{{ r.slug }}" {% if r.slug == character.race %}selected{% endif %}>{{ r.name }}</option>{% endfor %}</select></div>
+    <div class="field"><label>Nationality</label><select name="nationality">{% for n in nationalities %}<option value="{{ n.slug }}" {% if n.slug == character.nationality %}selected{% endif %}>{{ n.name }}</option>{% endfor %}</select></div>
+    <div class="field"><label>Custom nationality</label><input type="text" name="nationality_custom" value="{{ character.nationality_custom }}"></div>
+    <div class="field"><label>Religion</label><input type="text" name="religion" value="{{ character.religion }}"></div>
+    <div class="field"><label>Age</label><input type="text" name="age" value="{{ character.age }}"></div>
+    <div class="field"><label>Height</label><input type="text" name="height" value="{{ character.height }}"></div>
+    <div class="field"><label>Weight</label><input type="text" name="weight" value="{{ character.weight }}"></div>
+    <div class="field"><label>Level</label><input type="number" name="level" min="1" max="12" value="{{ character.level }}"></div>
+    <div class="field"><label>Target level</label><input type="number" name="target_level" min="1" max="12" value="{{ character.target_level }}"></div>
+    <div class="field"><label>XP</label><input type="number" name="xp" min="0" max="99" value="{{ character.xp }}"></div>
+  </div>
+
+  <h2 style="margin-top:14px">Skill points (allocated)</h2>
+  <div class="skill-alloc">{% for attr, skills in skills_by_attr.items %}<fieldset><legend>{{ attr }}</legend>
+    {% for s in skills %}<div class="skill-row"><label for="sk-{{ s }}">{{ s }}</label><input id="sk-{{ s }}" type="number" name="skill:{{ s }}" min="0" max="60" value="{{ character.skills|get:s|default:0 }}"></div>{% endfor %}
+  </fieldset>{% endfor %}</div>
+
+  <h2 style="margin-top:14px">Racial traits</h2>
+  <div class="choice-grid">
+    {% for t in all_traits %}{% if t.race == character.race or t.key in character.random_traits or t.key in character.fixed_traits %}
+      <div class="choice"><b>{{ t.name }}</b> <span class="muted small">{{ t.race }} · {{ t.kind }}{% if t.roll %} {{ t.roll }}{% endif %}</span>
+        <div class="row small">
+          {% if t.kind == "fixed" %}<label><input type="checkbox" name="fixed_traits" value="{{ t.key }}" {% if t.key in character.fixed_traits %}checked{% endif %}> active</label>
+          {% else %}<label><input type="checkbox" name="random_traits" value="{{ t.key }}" {% if t.key in character.random_traits %}checked{% endif %}> active</label>{% endif %}
+          {% if t.choice %}<select name="choice:{{ t.key }}"><option value="">–</option>{% for a in attributes %}<option {% if character.trait_choices|get:t.key == a %}selected{% endif %}>{{ a }}</option>{% endfor %}</select>{% endif %}
+        </div></div>
+    {% endif %}{% endfor %}
+  </div>
+  <p class="small muted">Races with "all fixed traits" (not Human) always apply their fixed traits.</p>
+
+  <h2 style="margin-top:14px">Specialties</h2>
+  <table class="data">{% for s, lvl in owned %}
+    <tr><td>{{ s.name }} <span class="muted small">{{ s.skill|default:"General" }}</span></td>
+      <td><label class="small">Level <input type="number" name="spec_level:{{ s.slug }}" value="{{ lvl }}" min="1" max="12"></label></td>
+      <td><label class="small"><input type="checkbox" name="remove_spec:{{ s.slug }}" value="1"> remove</label></td></tr>{% endfor %}</table>
+
+  <h2 style="margin-top:14px">Stories</h2>
+  <details><summary>{{ character.stories|length }} selected – show all</summary>
+    <div class="choice-grid" style="margin-top:8px">{% for s in stories %}
+      <label class="choice"><input type="checkbox" name="stories" value="{{ s.slug }}" {% if s.slug in character.stories %}checked{% endif %}> <b>{{ s.name }}</b> <span class="muted small">{{ s.type }}{% if s.group %} · {{ s.group }}{% endif %}</span></label>{% endfor %}</div>
+  </details>
+  <div class="wizard-actions"><span></span><button class="btn primary" name="action" value="save">Save</button></div>
+</form>
+
+<div class="paper">
+  <h2>Add any specialty</h2>
+  <form method="post" class="row">{% csrf_token %}<input type="hidden" name="action" value="add_specialty">
+    <select name="slug" required style="max-width:420px">{% for s in specialties %}<option value="{{ s.slug }}">{{ s.attribute }} / {{ s.skill|default:"General" }}: {{ s.name }}</option>{% endfor %}</select>
+    <label>Level <input type="number" name="level" min="1" max="12" value="{{ character.level }}"></label>
+    <button class="btn">Add</button></form>
+</div>
+
+<div class="paper">
+  <h2>Installed essence augments &amp; prosthetics</h2>
+  <p class="small muted">Augments placed on the character's body (Bio-Flux essence, Automata prosthetics) – stat changes are applied automatically.</p>
+  {% for a, m in body_augments %}<form method="post" class="row">{% csrf_token %}<input type="hidden" name="action" value="remove_body_augment"><input type="hidden" name="slug" value="{{ a.slug }}">
+    <span>{{ a.name }} mQ {{ m|roman }}</span><button class="btn small danger">Remove</button></form>{% endfor %}
+  <form method="post" class="row" style="margin-top:8px">{% csrf_token %}<input type="hidden" name="action" value="add_body_augment">
+    <select name="slug">{% for a in essence_augments %}<option value="{{ a.slug }}">{{ a.lists|join:"/" }}: {{ a.name }}</option>{% endfor %}</select>
+    <select name="marque"><option value="1">mQ I</option><option value="2">mQ II</option><option value="3">mQ III</option><option value="4">mQ IV</option></select>
+    <button class="btn">Install</button></form>
+</div>
+
+<div class="paper">
+  <h2>Custom modifiers</h2>
+  <p class="small muted">For narrator-granted stories (personality, alteration…) or anything the rules data doesn't cover.</p>
+  {% for m in modifiers %}<form method="post" class="row">{% csrf_token %}<input type="hidden" name="action" value="remove_modifier"><input type="hidden" name="id" value="{{ m.pk }}">
+    <span><b>{{ m.source }}</b>: {{ m.get_stat_display }} {{ m.value|signed }} ({{ m.get_when_display }}, {{ m.get_scope_display }})</span><button class="btn small danger">Remove</button></form>{% endfor %}
+  <form method="post" class="row" style="margin-top:8px">{% csrf_token %}<input type="hidden" name="action" value="add_modifier">
+    <input type="text" name="source" placeholder="Story: Burn Victim" required>
+    <select name="stat">{% for v, l in stat_choices %}<option value="{{ v }}">{{ l }}</option>{% endfor %}</select>
+    <input type="number" name="value" required placeholder="±">
+    <select name="when">{% for v, l in when_choices %}<option value="{{ v }}">{{ l }}</option>{% endfor %}</select>
+    <select name="scope">{% for v, l in scope_choices %}<option value="{{ v }}">{{ l }}</option>{% endfor %}</select>
+    <button class="btn">Add</button></form>
+</div>
+
+<div class="paper">
+  <h2>Misc adjustments</h2>
+  <p class="small">{% for k, v in misc.items %}<span class="pill-bonus">{{ k }} {{ v|signed }}</span>{% empty %}None.{% endfor %} Use the +/− buttons on the sheet in admin mode.</p>
+  <form method="post">{% csrf_token %}<button class="btn small danger" name="action" value="reset_misc">Reset all misc values</button></form>
+</div>
+{% endblock %}

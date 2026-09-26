@@ -1,0 +1,66 @@
+{% load sheet_tags %}
+<div class="paper">
+  <div class="row spread">
+    <h2>Inventory</h2>
+    <div class="row">
+      <a class="btn small primary" href="{% url 'catalog' %}?for={{ character.pk }}">Add from catalog</a>
+      <a class="btn small" href="{% url 'item_create' %}?for={{ character.pk }}">Create item</a>
+      <a class="btn small" href="{% url 'catalog_import' %}?for={{ character.pk }}">Bulk import</a>
+    </div>
+  </div>
+  {% for item in items %}
+    <div class="inv-slot">
+      <div>
+        <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name }}</b>
+        <span class="tag">{{ item.get_kind_display }}{% if item.size %} · {{ item.get_size_display }}{% endif %}</span>
+        {% if item.slot != "carried" %}<span class="tag ok">{{ item.get_slot_display }}</span>{% endif %}
+        <div class="meta">
+          {% for a in item.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}
+          {% if item.price_dukes %} · {{ item.price_dukes|money }}{% endif %}
+          {% if item.description %} · {{ item.description|truncatechars:140 }}{% endif %}
+          {% if item.notes %} · {{ item.notes }}{% endif %}
+        </div>
+      </div>
+      <div class="inv-actions">
+        <form hx-post="{% url 'play' character.pk 'equip' %}" hx-target="#sheet-body" hx-swap="outerHTML" hx-trigger="change">
+          <input type="hidden" name="id" value="{{ item.pk }}"><input type="hidden" name="tab" value="inventory">
+          <select name="slot" aria-label="Where">
+            {% for value, label in slot_choices %}
+              {% if value == "weapon1" or value == "weapon2" %}{% if item.is_weapon or item.kind == "deflection" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
+              {% elif value == "armor" %}{% if item.kind == "armor" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
+              {% elif value == "deflection" %}{% if item.kind == "deflection" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
+              {% else %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
+            {% endfor %}
+          </select>
+        </form>
+        <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="One more">+</button>
+        <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "-1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="One less">−</button>
+        <a class="btn small" href="{% url 'inventory_item_edit' character.pk item.pk %}">Edit</a>
+        <button class="btn small danger" hx-post="{% url 'play' character.pk 'drop' %}" hx-vals='{"id": "{{ item.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" hx-confirm="Remove {{ item.name }}?">Drop</button>
+      </div>
+    </div>
+  {% empty %}
+    <p class="muted">Nothing carried yet.</p>
+  {% endfor %}
+  <p class="muted small">"Worn / active" items (e.g. a flight pack) apply their modifiers; carried and stored items don't.</p>
+</div>
+
+<div class="paper">
+  <h2>Effects</h2>
+  {% for e in effects %}
+    <div class="inv-slot"><div><b>{{ e.get_kind_display }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name }}{% endif %}: {{ e.text }}{% if e.lost_wounds %} (−{{ e.lost_wounds }} max wounds){% endif %}</div>
+      <div class="inv-actions"><button class="btn small" hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML">Remove</button></div></div>
+  {% empty %}<p class="muted">No active effects.</p>{% endfor %}
+  <h3 style="margin-top:12px">Add effect</h3>
+  {% include "characters/partials/effect_form.html" %}
+</div>
+
+<div class="paper">
+  <h2>Notes</h2>
+  <form hx-post="{% url 'play' character.pk 'notes' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+    <input type="hidden" name="tab" value="inventory">
+    <textarea name="notes" rows="5">{{ character.notes }}</textarea>
+    <div class="row" style="margin-top:8px"><button class="btn small primary">Save notes</button>
+      <a class="btn small" href="{% url 'augments' character.pk %}">Augments ({{ augments|length }}/{{ sheet.stats.aug.total }})</a></div>
+  </form>
+</div>

@@ -1,0 +1,41 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block content %}
+<form method="post" class="paper">{% csrf_token %}
+  <div class="row spread"><h1>Augments – {{ character.name }}</h1>
+    <div class="row"><button class="btn dice" name="action" value="random"> Random</button><a class="btn" href="{% url 'sheet' character.pk %}">Back to sheet</a></div></div>
+  <p><b>Known {{ known|length }} / {{ capacity }}</b> (from your specialties' Aug bonuses). Whenever you learn a new augment you may swap one known augment from the same skill.</p>
+  <div class="row">{% for a in known %}<span class="chip on">{{ a.name }}{% if admin_mode %} <button class="val" name="action" value="remove" onclick="this.form.slug.value='{{ a.slug }}'" style="color:inherit;cursor:pointer">✕</button>{% endif %}</span>{% endfor %}</div>
+  <input type="hidden" name="slug" value="">
+  {% if known and known|length >= capacity %}
+    <details style="margin-top:10px"><summary>Swap an augment (retrofit)</summary>
+      <div class="row" style="margin-top:6px">
+        <select name="old">{% for a in known %}<option value="{{ a.slug }}">{{ a.name }} ({{ a.skill }})</option>{% endfor %}</select>
+        <span>for the augment chosen below with "Swap in"</span></div>
+    </details>
+  {% endif %}
+  <div x-data="{q: ''}">
+    <input type="search" x-model="q" placeholder="Filter augments…" style="width:100%;margin-top:10px">
+    {% for group, items in groups %}
+      <details class="spec-group" open><summary>{{ group }}</summary>
+        {% for o in items %}
+          <div class="spec{% if not o.ok %} off{% endif %}{% if o.known %} owned{% endif %}" x-show="!q || $el.dataset.name.includes(q.toLowerCase())" data-name="{{ o.aug.name|lower }}">
+            <header>
+              {% if o.known %}<span class="tag ok">known</span>
+              {% elif o.ok %}
+                {% if known|length < capacity %}<button class="btn small primary" name="action" value="add" onclick="this.form.slug.value='{{ o.aug.slug }}'">Learn</button>
+                {% else %}<button class="btn small" name="action" value="swap" onclick="this.form.slug.value='{{ o.aug.slug }}'">Swap in</button>{% endif %}
+              {% endif %}
+              <b>{{ o.aug.name }}</b> <span class="tag">{{ o.aug.slots|default_if_none:"?" }} slot{{ o.aug.slots|pluralize }}</span>
+              {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
+              <span class="cost">your marque: {{ o.marque|roman }}</span>
+            </header>
+            <div class="small">{% for m in o.aug.marques %}{% if m %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m }}</span>{% endif %}{% endfor %} {{ o.aug.notes }}</div>
+            {% if o.reasons and not o.known %}<div class="why">✗ {{ o.reasons|join:"; " }}</div>{% endif %}
+            {% if o.aug.text %}<details><summary>Book text</summary><p class="effect">{{ o.aug.text }}</p></details>{% endif %}
+          </div>
+        {% endfor %}
+      </details>
+    {% empty %}<p class="muted">No augment lists unlocked. Crafting specialties (e.g. Gunsmith, Acid Brewer, Manipulate Essence) unlock them.</p>{% endfor %}
+  </div>
+</form>
+{% endblock %}

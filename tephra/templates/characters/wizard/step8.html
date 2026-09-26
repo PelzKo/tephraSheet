@@ -1,0 +1,19 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Derived Statistics{% endblock %}
+{% block random_btn %}{% endblock %}
+{% block intro %}<p class="muted">Everything is chosen – the rest of the sheet is filled in automatically: priority, speed (by race), action points (3 at first level), wounds and hit points. Hover or tap a number to see where it comes from.</p>{% endblock %}
+{% block step %}
+<div class="cards" style="grid-template-columns:repeat(auto-fill,minmax(150px,1fr))">
+  <div class="card"><h3>Action points</h3><h2>{% stat sheet.stats.ap "AP" %}</h2></div>
+  <div class="card"><h3>Priority</h3><h2>{% stat sheet.stats.pri "Priority" signed=True %}</h2></div>
+  <div class="card"><h3>Speed</h3><h2>{% stat sheet.stats.spd "Speed" %} ft</h2><div class="small">Swim {% stat sheet.stats.swim "Swim" %} · Climb {% stat sheet.stats.climb "Climb" %}</div></div>
+  <div class="card"><h3>Hit points</h3><h2>{% stat sheet.stats.hp "Max HP" %}</h2></div>
+  <div class="card"><h3>Wounds</h3><h2>{% stat sheet.stats.wnd "Max wounds" %}</h2></div>
+  <div class="card"><h3>Accuracy</h3><h2>{% stat sheet.stats.acc "Accuracy" signed=True %}</h2></div>
+  <div class="card"><h3>Evade</h3><h2>{% stat sheet.stats.eva "Evade" signed=True %}</h2></div>
+  <div class="card"><h3>Strike</h3><h2>{% stat sheet.stats.stk "Strike" signed=True %}</h2></div>
+  <div class="card"><h3>Defense</h3><h2>{% stat sheet.stats.def "Defense" signed=True %}</h2></div>
+  <div class="card"><h3>Soak class</h3><h2>{% stat sheet.stats.soak "Soak" %}</h2></div>
+  <div class="card"><h3>Augments / DIY</h3><h2>{% stat sheet.stats.aug "Augments" %} / {% stat sheet.stats.diy "DIY" %}</h2></div>
+</div>
+{% endblock %}

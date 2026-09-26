@@ -1,0 +1,15 @@
+{% load sheet_tags %}
+<div class="gear plain attr-circle" style="--cx:{{ cx }};--cy:{{ cy }};--r:23"><div class="face"><span class="val">{% stat a attr %}</span></div></div>
+<div class="gear plain misc-circle" style="--cx:{{ mx }};--cy:{{ my }};--r:18">
+  <div class="face"><span class="val">{% with m="attr:"|add:attr %}{{ character.misc|get:m|default:"" }}{% endwith %}</span></div>
+</div>
+<div class="at misc-lbl" style="--x:{{ mx|add:-40 }};--y:{{ my|add:-6 }}">Misc</div>
+{% if admin_mode %}
+  <div class="at admin-adj" style="--x:{{ mx|add:-22 }};--y:{{ my|add:20 }}">
+    {% with m="attr:"|add:attr %}
+    <button hx-post="{% url 'misc_adjust' character.pk %}" hx-vals='{"key": "{{ m }}", "delta": "-1"}' hx-target="#sheet-body" hx-swap="outerHTML" title="Misc −1">−</button>
+    <button hx-post="{% url 'misc_adjust' character.pk %}" hx-vals='{"key": "{{ m }}", "delta": "1"}' hx-target="#sheet-body" hx-swap="outerHTML" title="Misc +1">+</button>
+    {% endwith %}
+  </div>
+{% endif %}
+{% for label, amount in sheet.roll_notes|get:attr %}{% if forloop.first %}<div class="at small" style="--x:{{ cx|add:-40 }};--y:{{ cy|add:24 }};font-size:calc(11*var(--u))" title="{% for l, n in sheet.roll_notes|get:attr %}{{ l }} {{ n|signed }}; {% endfor %}">rolls {% endif %}{{ amount|signed }}{% if not forloop.last %}/{% else %}</div>{% endif %}{% endfor %}

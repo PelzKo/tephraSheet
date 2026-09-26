@@ -1,0 +1,33 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block title %}Create character – step {{ step }}{% endblock %}
+{% block content %}
+<div class="row spread" style="color:var(--paper);margin-bottom:8px">
+  <h1 style="margin:0">{{ character.name|default:"New character" }}</h1>
+  <form method="post" action="{% url 'wizard_step' character.pk step %}" onsubmit="return confirm('Roll a complete random character? This replaces your current choices.')">
+    {% csrf_token %}<button class="btn brass dice" name="action" value="random_all"> Random character</button>
+  </form>
+</div>
+<nav class="steps">
+  {% for s in steps %}<a href="{% url 'wizard_step' character.pk s.n %}" class="{% if s.current %}current{% elif s.done %}done{% endif %}"><b>{{ s.n }}</b>{{ s.label }}</a>{% endfor %}
+</nav>
+<form method="post" action="{% url 'wizard_step' character.pk step %}" class="paper" id="stepform">
+  {% csrf_token %}
+  <button name="action" value="save" hidden tabindex="-1" aria-hidden="true" formnovalidate></button>
+  <div class="row spread">
+    <h2>{{ step }} – {% block step_title %}{% endblock %}</h2>
+    {% block random_btn %}<button class="btn dice" name="action" value="random" formnovalidate> Random</button>{% endblock %}
+  </div>
+  {% block intro %}{% endblock %}
+  {% block step %}{% endblock %}
+  <div class="wizard-actions">
+    <div class="row">
+      {% if step > 1 %}<button class="btn" name="action" value="back" formnovalidate>← Back</button>{% endif %}
+      <button class="btn" name="action" value="save" formnovalidate>Save</button>
+    </div>
+    {% block next_btn %}<button class="btn primary" name="action" value="next">Next →</button>{% endblock %}
+  </div>
+</form>
+{% if step == 1 %}
+<form method="post" action="{% url 'delete_character' character.pk %}" style="margin-top:14px;text-align:right" onsubmit="return confirm('Discard this draft?')">{% csrf_token %}<button class="btn small danger">Discard draft</button></form>
+{% endif %}
+{% endblock %}

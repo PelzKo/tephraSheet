@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="paper">
+  <div class="row spread">
+    <h1>Catalog{% if character %} <span class="muted" style="font-size:18px">→ adding to {{ character }}</span>{% endif %}</h1>
+    <div class="row">
+      <a class="btn primary" href="{% url 'item_create' %}{% if character %}?for={{ character.pk }}{% endif %}">Create item</a>
+      <a class="btn" href="{% url 'catalog_import' %}{% if character %}?for={{ character.pk }}{% endif %}">Bulk import</a>
+      {% if character %}<a class="btn" href="{{ character.get_absolute_url }}?tab=inventory">Back to sheet</a>{% endif %}
+    </div>
+  </div>
+  <form class="row" hx-get="{% url 'catalog' %}" hx-target="#results" hx-trigger="input changed delay:250ms from:#q, change from:#kind" hx-push-url="true">
+    {% if character %}<input type="hidden" name="for" value="{{ character.pk }}">{% endif %}
+    <input id="q" type="search" name="q" value="{{ q }}" placeholder="Search items…" class="grow">
+    <select id="kind" name="kind"><option value="">All kinds</option>{% for v, l in kinds %}<option value="{{ v }}" {% if v == kind %}selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+  </form>
+  <div id="results">{% include "catalog/partials/results.html" %}</div>
+</div>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Augments{% endblock %}
+{% block intro %}<p class="muted">Every "Aug +X" from your specialties lets you learn X augments from lists unlocked by your crafting specialties (e.g. Gunsmith, Acid Brewer). You can learn them regardless of slot size.</p>{% endblock %}
+{% block step %}
+<p><b>Known {{ known|length }} / {{ capacity }}</b>
+  {% for a in known %}<span class="chip on">{{ a.name }} <button class="val" name="action" value="remove:{{ a.slug }}" formnovalidate style="color:inherit;cursor:pointer" title="Remove">✕</button></span>{% endfor %}</p>
+{% if not capacity %}
+  <p class="muted">Your specialties grant no augments – nothing to choose here.</p>
+{% elif not lists %}
+  <p class="muted">You have augment choices, but no crafting specialty that unlocks an augment list. Choose a crafting specialty in step 4 (e.g. Gunsmith, Acid Brewer), or ask your narrator.</p>
+{% endif %}
+{% include "characters/partials/augment_picker.html" with mode="wizard" %}
+{% endblock %}

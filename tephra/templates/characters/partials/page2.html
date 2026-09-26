@@ -1,0 +1,86 @@
+{% load sheet_tags static %}
+<section class="page page2" aria-label="Character sheet page 2">
+  <svg class="deco" viewBox="0 0 952 1232" aria-hidden="true">
+    <path d="M0,28 Q476,-8 952,28 L952,42 Q476,6 0,42 Z" fill="#141210"/>
+    <path d="M0,46 Q476,10 952,46" fill="none" stroke="#141210" stroke-width="16" stroke-dasharray="9 11"/>
+    <!-- the large toothed ring around the specialties -->
+    <path d="M150,40 C40,160 60,480 170,600" fill="none" stroke="#141210" stroke-width="9"/>
+    <path d="M138,44 C28,164 48,484 158,604" fill="none" stroke="#141210" stroke-width="18" stroke-dasharray="10 12"/>
+    <path d="M802,40 C912,160 892,480 782,600" fill="none" stroke="#141210" stroke-width="9"/>
+    <path d="M814,44 C924,164 904,484 794,604" fill="none" stroke="#141210" stroke-width="18" stroke-dasharray="10 12"/>
+    <path d="M170,600 L782,600" stroke="#141210" stroke-width="5"/>
+    <path d="M182,600 L182,780 M770,600 L770,780 M182,780 L770,780" stroke="#141210" stroke-width="4" fill="none"/>
+    <image href="{% static 'img/gear-big.svg' %}" x="25" y="630" width="140" height="140"/>
+    <image href="{% static 'img/gear-big.svg' %}" x="787" y="630" width="140" height="140"/>
+  </svg>
+
+  <div class="box line-field" style="--x:376;--y:52;--w:200;--h:44;text-align:center">
+    <div class="v">{{ character.name }}</div><div class="l">Character Name</div>
+  </div>
+
+  <div class="spec-title at" style="--x:205;--y:118">Specialties</div>
+  <div class="box" style="--x:128;--y:74;--w:720;--h:520">
+    <table class="spec-table">
+      <thead>
+        <tr><th></th><th></th>
+          {% for c in stat_cols %}<th class="col"><span>{{ stat_labels|get:c }}</span></th>{% endfor %}</tr>
+      </thead>
+      <tbody>
+        <tr class="totals"><td></td><td class="label">Totals</td>
+          {% for c in stat_cols %}<td class="c">{{ sheet.specialty_totals|get:c|signed }}</td>{% endfor %}</tr>
+        <tr class="misc"><td class="lvl" style="font-size:calc(13*var(--u))">Lvl</td><td class="label">Misc</td>
+          {% for c in stat_cols %}<td class="c">
+            {% if admin_mode %}<span class="admin-adj">
+              <button hx-post="{% url 'misc_adjust' character.pk %}" hx-vals='{"key": "{{ c }}", "delta": "-1"}' hx-target="#sheet-body" hx-swap="outerHTML">−</button>
+              <button hx-post="{% url 'misc_adjust' character.pk %}" hx-vals='{"key": "{{ c }}", "delta": "1"}' hx-target="#sheet-body" hx-swap="outerHTML">+</button></span>
+              <div>{{ sheet.specialty_misc|get:c|nonzero|signed }}</div>
+            {% else %}{{ sheet.specialty_misc|get:c|nonzero }}{% endif %}</td>{% endfor %}</tr>
+        {% for slot in specialty_slots %}
+          <tr>
+            <td class="lvl">{{ slot.level }}</td>
+            <td class="name">{% if slot.row %}<button type="button" class="spec-name" x-on:click="showSpec('{{ slot.row.slug }}')" title="{{ slot.row.name }} ({{ slot.row.skill }})">{{ slot.row.name }}</button>{% endif %}</td>
+            {% for c in stat_cols %}<td class="c">{% if slot.row %}{{ slot.row.bonuses|get:c|nonzero }}{% endif %}</td>{% endfor %}
+          </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="lined box" style="--x:190;--y:606;--w:572;--h:106;border-top:0">
+    <b>Stories:</b>
+    <ul>{% for s in stories %}<li><b>{{ s.name }}</b>{% if s.group %} <span class="muted">({{ s.group }})</span>{% endif %} – {{ s.text }}</li>{% endfor %}
+      {% for m in character.custom_modifiers.all %}<li><b>{{ m.source }}</b> – {{ m.get_stat_display }} {{ m.value|signed }}{% if m.when == "toggle" %} (toggle){% endif %}</li>{% endfor %}</ul>
+  </div>
+  <div class="lined box" style="--x:190;--y:712;--w:572;--h:66;border-bottom:0">
+    <b>Racial Traits:</b>
+    {% for t in sheet.traits %}<span title="{{ t.text }}">{{ t.name }}{% if t.choice %} ({{ t.choice }}){% endif %}{% if t.roll %} <span class="muted">[d12: {{ t.roll }}]</span>{% endif %}</span>{% if not forloop.last %} · {% endif %}{% endfor %}
+  </div>
+
+  <div class="gear plain money play-btn" style="--cx:95;--cy:700;--r:52" x-on:click="openPanel('money')">
+    <div class="face"><span class="val" style="font-size:calc(19*var(--u))">{{ money_on_hand }}</span><span class="lbl">Money on-hand</span></div></div>
+  <div class="gear plain money play-btn" style="--cx:857;--cy:700;--r:52" x-on:click="openPanel('money')">
+    <div class="face"><span class="val" style="font-size:calc(19*var(--u))">{{ money_in_bank }}</span><span class="lbl">Money in bank</span></div></div>
+
+  <div class="barrel box" style="--x:40;--y:790;--w:280;--h:400">
+    <h3>Gear</h3>
+    <div class="lines">
+      {% for i in items %}{% if i.slot != "stored" %}<div title="{{ i.description }}">{% if i.quantity > 1 %}{{ i.quantity }}× {% endif %}{{ i.name }}{% if i.slot != "carried" %} <span class="muted">({{ i.get_slot_display }})</span>{% endif %}</div>{% endif %}{% endfor %}
+    </div>
+  </div>
+  <div class="barrel box" style="--x:336;--y:790;--w:280;--h:400">
+    <h3>Augments</h3>
+    <div class="lines">
+      {% for a in augments %}<div title="{{ a.text|default:a.notes }}">{{ a.name }} <span class="muted">({{ a.lists|join:"/" }})</span></div>{% endfor %}
+      {% for a in character.body_augments %}{% with aug=a.0|augment %}<div>{{ aug.name }} mQ {{ a.1|roman }} <span class="muted">(installed)</span></div>{% endwith %}{% endfor %}
+      {% if sheet.stats.aug.total > augments|length %}<div><a href="{% url 'augments' character.pk %}">Learn augments ({{ augments|length }}/{{ sheet.stats.aug.total }})</a></div>{% endif %}
+    </div>
+  </div>
+  <div class="barrel box" style="--x:632;--y:790;--w:280;--h:400">
+    <h3>Notes</h3>
+    <div class="lines">
+      {% if character.personality %}<div title="{{ character.personality }}"><b>Personality:</b> {{ character.personality }}</div>{% endif %}
+      {% for label, text in sheet.notes %}<div title="{{ label }} {{ text }}">{{ label|cut:"Specialty: " }}: {{ text }}</div>{% endfor %}
+      {% for line in character.notes.splitlines %}<div>{{ line }}</div>{% endfor %}
+    </div>
+  </div>
+</section>

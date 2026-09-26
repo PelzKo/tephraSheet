@@ -1,0 +1,24 @@
+{% load sheet_tags %}
+<div x-data="{q: ''}">
+  {% if groups %}<input type="search" x-model="q" placeholder="Filter augments…" style="width:100%;margin-top:6px" aria-label="Filter augments">{% endif %}
+  {% for group, items in groups %}
+    <details class="spec-group" open>
+      <summary>{{ group }}</summary>
+      {% for o in items %}
+        <div class="spec{% if not o.ok %} off{% endif %}{% if o.known %} owned{% endif %}" x-show="!q || $el.dataset.name.includes(q.toLowerCase())" data-name="{{ o.aug.name|lower }}">
+          <header>
+            {% if o.known %}<span class="tag ok">known</span>
+            {% elif o.ok and known|length < capacity %}<button class="btn small primary" name="action" value="add:{{ o.aug.slug }}" formnovalidate>Learn</button>{% endif %}
+            <b>{{ o.aug.name }}</b>
+            <span class="tag">{{ o.aug.slots|default_if_none:"?" }} slot{{ o.aug.slots|pluralize }}</span>
+            {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
+            <span class="cost">your marque: {{ o.marque|roman }}</span>
+          </header>
+          <div class="small">{% for m in o.aug.marques %}{% if m %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m }}</span>{% endif %}{% endfor %} {{ o.aug.notes }}</div>
+          {% if o.reasons and not o.known %}<div class="why">✗ {{ o.reasons|join:"; " }}</div>{% endif %}
+          {% if o.aug.text %}<details><summary>Book text</summary><p class="effect">{{ o.aug.text }}</p></details>{% endif %}
+        </div>
+      {% endfor %}
+    </details>
+  {% endfor %}
+</div>

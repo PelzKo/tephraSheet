@@ -1,0 +1,82 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Race &amp; Nationality{% endblock %}
+{% block intro %}<p class="muted">Choose your race and nationality. You receive the racial traits for it, and then roll on the random racial traits chart.</p>{% endblock %}
+{% block step %}
+<h3>Race</h3>
+<div class="choice-grid">
+  {% for r in races %}
+    <label class="choice">
+      <input type="radio" name="race" value="{{ r.slug }}" {% if r.slug == character.race %}checked{% endif %}
+             onchange="this.form.querySelector('[name=action][value=race]').click()">
+      <h3 style="display:inline">{{ r.name }}</h3>
+      <div class="small muted">Speed {{ r.speed }} · Swim {{ r.swim }} · Climb {{ r.climb }}</div>
+      <ul class="trait-list">{% for t in r.fixed %}<li><b>{{ t.name }}</b>: {{ t.text|truncatechars:90 }}</li>{% endfor %}</ul>
+    </label>
+  {% endfor %}
+</div>
+<button name="action" value="race" hidden formnovalidate>Choose race</button>
+
+{% if race %}
+  {% if slots.fixed_choose %}
+    <h3 style="margin-top:16px">Racial traits – choose {{ slots.fixed_choose }}</h3>
+    <div class="choice-grid">
+      {% for t in fixed %}
+        <label class="choice"><input type="checkbox" name="fixed_traits" value="{{ t.key }}" {% if t.key in character.fixed_traits %}checked{% endif %}>
+          <b>{{ t.name }}</b><div class="small">{{ t.text }}</div></label>
+      {% endfor %}
+    </div>
+  {% endif %}
+
+  <h3 style="margin-top:16px">Random racial trait{% if slots.random_count > 1 %}s ({{ slots.random_count }}){% endif %}</h3>
+  {% if slots.random_choose and not settings.allow_choose_random_trait %}<p class="small muted">{{ race.name }}s choose {{ slots.random_choose }} trait and roll the rest (duplicates are re-rolled).</p>{% endif %}
+  {% if chosen_random %}
+    <div class="choice-grid">{% for t in chosen_random %}
+      <div class="choice selected"><b>{% if t.roll %}d12 {{ t.roll }}: {% endif %}{{ t.name }}</b> <span class="muted small">({{ t.race }})</span><div class="small">{{ t.text }}</div></div>
+    {% endfor %}</div>
+  {% endif %}
+  <div class="row" style="margin-top:8px">
+    {% if not character.random_traits %}<button class="btn primary dice" name="action" value="roll" formnovalidate> Roll d12</button>
+    {% elif settings.allow_reroll_random_trait %}<button class="btn dice" name="action" value="reroll" formnovalidate> Re-roll</button>{% endif %}
+    {% if character.trait_rolls %}<span class="muted small">Rolls so far: {{ character.trait_rolls|join:", " }}</span>{% endif %}
+  </div>
+  {% if settings.allow_choose_random_trait or slots.random_choose %}
+    <details style="margin-top:8px" {% if slots.random_choose %}open{% endif %}><summary>{% if settings.allow_choose_random_trait %}Choose instead of rolling (narrator allows){% else %}Choose your trait{% endif %}</summary>
+      <input type="hidden" name="chosen_random_submitted" value="1">
+      <div class="choice-grid" style="margin-top:8px">
+        {% for t in random_table %}
+          <label class="choice"><input type="checkbox" name="chosen_random" value="{{ t.key }}" {% if t.key in character.random_traits %}checked{% endif %}>
+            <b>{{ t.roll }} · {{ t.name }}</b><div class="small">{{ t.text }}</div></label>
+        {% endfor %}
+      </div>
+    </details>
+  {% endif %}
+  <details style="margin-top:8px"><summary class="small">Show the full d12 table</summary>
+    <table class="data small">{% for t in random_table %}<tr><td class="num">{{ t.roll }}</td><td><b>{{ t.name }}</b></td><td>{{ t.text }}</td></tr>{% endfor %}</table>
+  </details>
+
+  {% for t in choice_traits %}
+    <div class="field" style="margin-top:10px"><label>{{ t.name }}: choose an attribute</label>
+      <select name="choice:{{ t.key }}"><option value="">–</option>{% for a in attributes %}<option {% if character.trait_choices|get:t.key == a %}selected{% endif %}>{{ a }}</option>{% endfor %}</select></div>
+  {% endfor %}
+{% endif %}
+
+<h3 style="margin-top:18px">Nationality</h3>
+<div class="form-grid">
+  <div class="field"><label for="nat">Nationality</label>
+    <select id="nat" name="nationality" onchange="this.form.querySelector('[name=action][value=save]').click()">
+      <option value="">–</option>{% for n in nationalities %}<option value="{{ n.slug }}" {% if n.slug == character.nationality %}selected{% endif %}>{{ n.name }}</option>{% endfor %}
+    </select></div>
+  {% if character.nationality == "other" %}<div class="field"><label>Custom nationality</label><input type="text" name="nationality_custom" value="{{ character.nationality_custom }}"></div>{% endif %}
+  <div class="field"><label>Religion</label>
+    <select name="religion">{% for r in religions %}<option value="{{ r }}" {% if r == character.religion %}selected{% endif %}>{{ r|default:"–" }}</option>{% endfor %}</select></div>
+</div>
+{% for n in nationalities %}{% if n.slug == character.nationality %}<p class="small muted">{{ n.summary }} <i>{{ n.relations }}</i></p>{% endif %}{% endfor %}
+{% if nat_stories %}
+  <h3>Nationality story <span class="muted small">(optional)</span></h3>
+  <div class="choice-grid">
+    <label class="choice"><input type="radio" name="nationality_story" value="" {% if not nat_story %}checked{% endif %}> None</label>
+    {% for s in nat_stories %}<label class="choice"><input type="radio" name="nationality_story" value="{{ s.slug }}" {% if s.slug == nat_story %}checked{% endif %}>
+      <b>{{ s.name }}</b>{% if s.requires %} <span class="tag">{{ s.requires }}</span>{% endif %}<div class="small">{{ s.text }}</div></label>{% endfor %}
+  </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,14 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Gear{% endblock %}
+{% block intro %}<p class="muted">Take any gear you want from the starting gear (Adventuring Basics), within reason. You also receive 10 princes ({{ money }} on hand).</p>{% endblock %}
+{% block step %}
+<div class="choice-grid">
+  {% for g in gear %}
+    <label class="choice"><input type="checkbox" name="gear" value="{{ g.t.pk }}" {% if g.item %}checked{% endif %}>
+      <b>{{ g.t.name }}</b> <span class="muted small">{{ g.t.price_dukes|money }}</span>
+      <div class="row small" style="margin-top:4px">Qty <input type="number" name="qty:{{ g.t.pk }}" min="1" value="{{ g.item.quantity|default:1 }}" style="width:4.5em;min-height:30px"></div>
+    </label>
+  {% endfor %}
+</div>
+<p class="small muted">Other things you find later can be added from the catalog on your sheet.</p>
+{% endblock %}

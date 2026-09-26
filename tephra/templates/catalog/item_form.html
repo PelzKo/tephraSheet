@@ -1,0 +1,117 @@
+{% extends "base.html" %}
+{% block content %}
+<form method="post" class="paper" x-data="itemCreator({{ tables_json }}, {{ augments_json }})" x-init="init()">
+  {% csrf_token %}
+  <div class="row spread">
+    <h1>{% if inventory_item %}Edit {{ inventory_item.name }}{% elif item %}Edit catalog item{% else %}Object creator{% endif %}</h1>
+    {% if character %}<a class="btn" href="{{ character.get_absolute_url }}?tab=inventory">Back to {{ character }}</a>{% else %}<a class="btn" href="{% url 'catalog' %}">Back to catalog</a>{% endif %}
+  </div>
+  <p class="muted small">Pick kind and size – the rules' values are filled in automatically (shown as "auto"). Only fill a number to override it.</p>
+  {{ form.non_field_errors }}
+  <div class="form-grid">
+    <div class="field">{{ form.name.label_tag }}{{ form.name }}{{ form.name.errors }}</div>
+    <div class="field">{{ form.kind.label_tag }}<select name="kind" x-model="kind">{% for v, l in form.fields.kind.choices %}<option value="{{ v }}" {% if form.kind.value == v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+    <div class="field">{{ form.size.label_tag }}<select name="size" x-model="size">{% for v, l in form.fields.size.choices %}<option value="{{ v }}" {% if form.size.value == v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+    <div class="field">{{ form.material.label_tag }}<select name="material" x-model="material">{% for v, l in form.fields.material.choices %}<option value="{{ v }}" {% if form.material.value == v %}selected{% endif %}>{{ l }}</option>{% endfor %}</select></div>
+    <div class="field">{{ form.price_princes.label_tag }}{{ form.price_princes }}</div>
+    <div class="field"><label><input type="checkbox" name="beta" x-model="beta" {% if form.beta.value %}checked{% endif %}> Beta (+2 slots)</label>
+      <label>{{ form.concealable }} Concealable</label>
+      {% if form.is_starting_gear %}<label>{{ form.is_starting_gear }} Starting gear</label>{% endif %}</div>
+  </div>
+
+  <template x-if="isWeapon">
+    <div>
+      <h3 style="margin-top:12px">Weapon</h3>
+      <div class="row" x-show="kind==='melee' || kind==='firearm'">{% for cb in form.variants %}<label>{{ cb.tag }} {{ cb.choice_label }}</label>{% endfor %}</div>
+      <div class="form-grid" style="margin-top:8px">
+        <div class="field"><label>Damage class</label><input type="number" name="dc" value="{{ form.dc.value|default_if_none:'' }}" :placeholder="'auto (' + auto('dc') + ')'"></div>
+        <div class="field"><label>AP to use</label><input type="number" name="ap_use" value="{{ form.ap_use.value|default_if_none:'' }}" :placeholder="'auto (' + auto('ap') + ')'"></div>
+        <div class="field" x-show="kind!=='melee'"><label>AP to ready</label><input type="number" name="ap_ready" value="{{ form.ap_ready.value|default_if_none:'' }}" :placeholder="'auto (' + auto('ready') + ')'"></div>
+        <div class="field" x-show="kind==='melee'"><label>Reach (ft)</label><input type="number" name="reach" value="{{ form.reach.value|default_if_none:'' }}" placeholder="auto"></div>
+        <div class="field" x-show="kind!=='melee'"><label>Range (ft)</label><input type="number" name="range" value="{{ form.range.value|default_if_none:'' }}" :placeholder="'auto (' + auto('range') + ')'"></div>
+        <div class="field" x-show="kind!=='melee'"><label>Range increment (ft)</label><input type="number" name="increment" value="{{ form.increment.value|default_if_none:'' }}" :placeholder="'auto (' + auto('increment') + ')'"></div>
+      </div>
+      <p class="small" x-show="auto('dc') !== '–'">Damage per tier (before variants/augments): <b x-text="[1,2,3,4].map(t => t * (Number($root.querySelector('[name=dc]')?.value) || Number(auto('dc')) || 0)).join(' / ')"></b>
+        <span x-show="kind==='firearm' || kind==='crossbow'"> · damage uses the Accuracy roll</span></p>
+    </div>
+  </template>
+  <template x-if="kind==='armor'">
+    <div class="form-grid" style="margin-top:12px">
+      <div class="field"><label>Soak class</label><input type="number" name="soak" value="{{ form.soak.value|default_if_none:'' }}" :placeholder="'auto (' + armor('soak') + ')'"></div>
+      <div class="field"><label>Evade penalty</label><input type="number" name="eva_penalty" value="{{ form.eva_penalty.value|default_if_none:'' }}" :placeholder="'auto (' + armor('eva') + ')'"></div>
+      <div class="field"><label>Speed penalty</label><input type="number" name="spd_penalty" value="{{ form.spd_penalty.value|default_if_none:'' }}" :placeholder="'auto (' + armor('spd') + ')'"></div>
+      <div class="field"><label>Climb/swim penalty</label><input type="number" name="climb_swim_penalty" value="{{ form.climb_swim_penalty.value|default_if_none:'' }}" :placeholder="'auto (' + armor('climb_swim') + ')'"></div>
+    </div>
+  </template>
+  <template x-if="kind==='deflection'">
+    <div class="form-grid" style="margin-top:12px">
+      <div class="field"><label>Evade bonus</label><input type="number" name="deflect_bonus" value="{{ form.deflect_bonus.value|default_if_none:'' }}" placeholder="3 or 4"></div>
+      <div class="field"><label><input type="checkbox" name="deflect_ranged" {% if form.deflect_ranged.value %}checked{% endif %}> vs ranged</label>
+        <label><input type="checkbox" name="deflect_melee" {% if form.deflect_melee.value %}checked{% endif %}> vs melee</label></div>
+    </div>
+  </template>
+
+  <template x-if="augOptions.length">
+    <div style="margin-top:12px">
+      <h3>Augments <span class="tag" :class="usedSlots > slots ? 'bad' : 'ok'" x-text="usedSlots + ' / ' + slots + ' slots'"></span></h3>
+      <template x-for="(a, i) in augs" :key="i">
+        <div class="row" style="margin-bottom:4px">
+          <b x-text="nameOf(a[0])"></b>
+          <select x-model.number="a[1]"><option value="1">mQ I</option><option value="2">mQ II</option><option value="3">mQ III</option><option value="4">mQ IV</option></select>
+          <span class="small muted" x-text="effectOf(a[0], a[1])"></span>
+          <button type="button" class="btn small danger" x-on:click="augs.splice(i, 1)">Remove</button>
+        </div>
+      </template>
+      <div class="row"><select x-model="pick"><option value="">Add augment…</option>
+        <template x-for="o in augOptions" :key="o.slug"><option :value="o.slug" x-text="o.name + ' (' + o.slots + ' slot' + (o.slots === 1 ? '' : 's') + ', ' + o.list + ')'"></option></template></select>
+        <button type="button" class="btn small" x-on:click="if (pick) { augs.push([pick, 1]); pick=''; }">Add</button></div>
+    </div>
+  </template>
+  <input type="hidden" name="augments_json" :value="JSON.stringify(augs)" value="{{ form.augments_json.value|default:'[]' }}">
+
+  <div class="field" style="margin-top:12px">{{ form.description.label_tag }}{{ form.description }}</div>
+  {% if inventory_item %}<div class="field" style="margin-top:8px"><label>Notes</label><input type="text" name="notes" value="{{ inventory_item.notes }}"></div>{% endif %}
+
+  {% if character and not inventory_item %}
+    <div class="row" style="margin-top:12px">
+      <label>Put it: <select name="slot">
+        <option value="carried">Carried</option><option value="weapon1">Weapon 1</option><option value="weapon2">Weapon 2</option>
+        <option value="armor">Armor (worn)</option><option value="deflection">Deflection</option><option value="worn">Worn / active</option><option value="stored">Stored</option></select></label>
+      <label><input type="checkbox" name="to_catalog"> Also save to the shared catalog</label>
+      <input type="hidden" name="for" value="{{ character.pk }}">
+    </div>
+  {% endif %}
+  <div class="wizard-actions">
+    {% if item and request.user.is_staff %}<button class="btn danger" name="delete" value="1" onclick="return confirm('Delete this catalog item?')">Delete</button>{% else %}<span></span>{% endif %}
+    <button class="btn primary" type="submit">{% if inventory_item or item %}Save{% elif character %}Add to inventory{% else %}Add to catalog{% endif %}</button>
+  </div>
+</form>
+<script>
+window.itemCreator = function (tables, augChoices) {
+  return {
+    tables, augChoices, kind: "", size: "", material: "metal", beta: false, augs: [], pick: "",
+    init() {
+      const f = this.$root;
+      this.kind = f.querySelector("[name=kind]").value;
+      this.size = f.querySelector("[name=size]").value;
+      this.material = f.querySelector("[name=material]").value;
+      this.beta = f.querySelector("[name=beta]").checked;
+      try { this.augs = JSON.parse(f.querySelector("[name=augments_json]").getAttribute("value") || "[]"); } catch (e) { this.augs = []; }
+    },
+    get isWeapon() { return ["melee", "firearm", "bow", "crossbow"].includes(this.kind); },
+    auto(key) {
+      const t = this.tables[this.kind]; const row = t && t[this.size];
+      if (!row || row[key] === undefined) return "–";
+      return row[key];
+    },
+    armor(key) { const row = this.tables.armor[this.size]; return row ? row[key] : "–"; },
+    get slots() { return (this.tables.slots[this.material] || 3) + (this.beta ? 2 : 0); },
+    get augOptions() { return this.augChoices[this.kind] || []; },
+    get usedSlots() { return this.augs.reduce((s, a) => s + ((this.find(a[0]) || {}).slots || 0), 0); },
+    find(slug) { return (this.augOptions || []).find(o => o.slug === slug); },
+    nameOf(slug) { const o = this.find(slug); return o ? o.name : slug; },
+    effectOf(slug, m) { const o = this.find(slug); return o ? (o.marques[m - 1] || o.marques[0] || "") : ""; },
+  };
+};
+</script>
+{% endblock %}

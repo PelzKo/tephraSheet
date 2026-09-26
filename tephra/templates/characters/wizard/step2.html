@@ -1,0 +1,46 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Skills{% endblock %}
+{% block intro %}<p class="muted">Place 3 points in one skill, 2 points in two skills, and 1 point in three skills. They can't be placed in the same skills.</p>{% endblock %}
+{% block step %}
+<div x-data="skillAlloc({{ pool|safe }}, { {% for g in groups %}{% for s in g.skills %}'{{ s.name }}': {{ s.points }},{% endfor %}{% endfor %} })">
+  <div class="row" style="margin-bottom:10px"><b>Points to place:</b>
+    <div class="pool"><template x-for="(p, i) in pool" :key="i"><span :class="{used: usedIndex(i)}" x-text="p"></span></template></div>
+    <span class="tag" :class="complete ? 'ok' : ''" x-text="complete ? 'All points placed' : 'Not complete'"></span>
+  </div>
+  <div class="skill-alloc">
+    {% for g in groups %}
+      <fieldset><legend>{{ g.attribute }}</legend>
+        {% for s in g.skills %}
+          <div class="skill-row">
+            <span>{{ s.name }}{% if s.total != s.points %} <span class="muted small" title="racial/story bonus">({{ s.total|add:0 }} with bonus: {% stat s.value s.name %})</span>{% endif %}</span>
+            <input type="hidden" name="skill:{{ s.name }}" :value="alloc['{{ s.name }}'] || 0">
+            <span class="seg">
+              <template x-for="v in [0,1,2,3]"><button type="button" :class="{on: (alloc['{{ s.name }}']||0) === v}" :disabled="!can('{{ s.name }}', v)" x-on:click="set('{{ s.name }}', v)" x-text="v"></button></template>
+            </span>
+          </div>
+        {% endfor %}
+      </fieldset>
+    {% endfor %}
+  </div>
+</div>
+<script>
+window.skillAlloc = function (pool, initial) {
+  return {
+    pool, alloc: initial,
+    counts() { const c = {1: 0, 2: 0, 3: 0}; Object.values(this.alloc).forEach(v => { if (v) c[v]++; }); return c; },
+    need() { const c = {1: 0, 2: 0, 3: 0}; this.pool.forEach(p => c[p]++); return c; },
+    can(skill, v) {
+      if (v === 0 || this.alloc[skill] === v) return true;
+      return this.counts()[v] < this.need()[v];
+    },
+    set(skill, v) { if (this.can(skill, v)) this.alloc[skill] = v; },
+    usedIndex(i) {
+      const p = this.pool[i]; const c = this.counts()[p];
+      const idx = this.pool.slice(0, i + 1).filter(x => x === p).length;
+      return idx <= c;
+    },
+    get complete() { const c = this.counts(), n = this.need(); return c[1] === n[1] && c[2] === n[2] && c[3] === n[3]; },
+  };
+};
+</script>
+{% endblock %}

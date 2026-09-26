@@ -1,0 +1,29 @@
+{% load sheet_tags %}
+<div x-data="{q: ''}">
+  <input type="search" x-model="q" placeholder="Filter specialties…" style="width:100%;margin-top:10px" aria-label="Filter specialties">
+  {% for skill, items in groups %}
+    <details class="spec-group" open>
+      <summary>{{ skill }} <span class="muted small">{{ sheet.skills|get:skill|total|default_if_none:"" }}{% if sheet.skills|get:skill %} points{% endif %}</span></summary>
+      {% for o in items %}
+        <div class="spec{% if not o.ok %} off{% endif %}{% if o.owned %} owned{% endif %}" x-show="!q || $el.dataset.name.includes(q.toLowerCase())" data-name="{{ o.spec.name|lower }}">
+          <header>
+            {% if mode == "wizard" %}
+              {% if o.owned %}<span class="tag ok">chosen</span>
+              {% elif o.ok %}<button class="btn small primary" name="action" value="add:{{ o.spec.slug }}" formnovalidate>Choose</button>{% endif %}
+            {% else %}
+              {% if o.ok and not o.owned %}<label><input type="radio" name="specialty" value="{{ o.spec.slug }}" {% if selected == o.spec.slug %}checked{% endif %}> Choose</label>{% elif o.owned %}<span class="tag ok">learned</span>{% endif %}
+            {% endif %}
+            <b>{{ o.spec.name }}</b>
+            {% if o.spec.group %}<span class="tag">{{ o.spec.group }}</span>{% endif %}
+            {% if o.spec.stance %}<span class="tag">stance</span>{% endif %}
+            <span class="cost">{{ o.spec.cost }}</span>
+          </header>
+          <div>{% for k, v in o.spec.bonuses.items %}<span class="pill-bonus">{{ k|upper }} {{ v|signed }}</span>{% endfor %}
+            {% if o.spec.requires_text %}<span class="small">Requires: {{ o.spec.requires_text }}</span>{% endif %}</div>
+          {% if o.reasons and not o.owned %}<div class="why">✗ {{ o.reasons|join:"; " }}</div>{% endif %}
+          <details><summary>Effect</summary><p class="effect">{{ o.spec.effect }}</p></details>
+        </div>
+      {% endfor %}
+    </details>
+  {% endfor %}
+</div>

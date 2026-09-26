@@ -1,0 +1,20 @@
+<form class="stack" hx-post="{% url 'play' character.pk 'effect-add' %}" hx-target="#sheet-body" hx-swap="outerHTML"
+      x-data="{kind: 'status'}">
+  <div class="row">
+    <select name="kind" x-model="kind">
+      <option value="status">Status effect</option>
+      <option value="called">Called-shot effect</option>
+      <option value="wound">Wound effect</option>
+      <option value="fatal">Fatal effect</option>
+    </select>
+    <select name="location">
+      <option value="">No location</option>
+      {% for n, name in location_names.items %}<option value="{{ n }}">{{ n }} – {{ name }}</option>{% endfor %}
+    </select>
+    <input type="text" name="text" list="status-names" placeholder="e.g. Bleeding, Sprained arm" required class="grow">
+    <datalist id="status-names">{% for s in status_effect_names %}<option value="{{ s }}">{% endfor %}</datalist>
+    <label x-show="kind==='fatal'">Max wounds lost <input type="number" name="lost_wounds" min="0" max="6" value="0"></label>
+    <button class="btn small primary" type="submit">Add</button>
+  </div>
+  <p class="muted small">"Fatigued" as a status effect halves max HP automatically. Fatal effects can lower max wounds permanently (eyes, ears, hand, leg −1; arm −2).</p>
+</form>

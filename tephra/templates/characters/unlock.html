@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="paper" style="max-width:420px;margin:40px auto">
+  <h1>{{ character }}</h1>
+  <p class="muted">This character sheet is protected. Enter its password.</p>
+  {% if error %}<ul class="messages"><li class="error">{{ error }}</li></ul>{% endif %}
+  <form method="post" class="stack">{% csrf_token %}
+    <input type="password" name="password" autofocus required aria-label="Password" style="width:100%">
+    <div class="row spread"><a href="{% url 'character_list' %}">← Back</a><button class="btn primary">Open sheet</button></div>
+  </form>
+</div>
+{% endblock %}

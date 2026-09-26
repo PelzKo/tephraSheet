@@ -1,0 +1,44 @@
+[
+ {
+  "slug": "evanglessian",
+  "name": "Evanglessian",
+  "summary": "Young human-led empire (founded by Velkya), steam, railways, elite military, airborne navy; open-minded melting pot; Tailemy is state religion.",
+  "relations": "Dislike Paldoran pirates, oceanic ayodin, Hauds; good with Izedans, Dalvozzeans.",
+  "story_group": "Evangless"
+ },
+ {
+  "slug": "dalvozzean",
+  "name": "Dalvozzean",
+  "summary": "Farishtaa-ruled caste nation in the High Rilausian Forest; capital Daion (white towers above canopy, slums below); ruled by the Nine Wings of Divinity (Day Society).",
+  "relations": "Tension with Hauds (Siyesh) and Izedans; courteous to rare ayodin/Paldorans.",
+  "story_group": "Dalvozzea"
+ },
+ {
+  "slug": "izedan",
+  "name": "Izedan",
+  "summary": "Desert nomad scavengers (the Quist), caravans, ritual scarification, steam crossbows; pale/bleach-white skin, often bald.",
+  "relations": "Bad with Hauds; good with Valdru gnomes, satyrs; fascinated by ayodin.",
+  "story_group": "Izeda"
+ },
+ {
+  "slug": "paldoran-exile",
+  "name": "Paldoran Exile",
+  "summary": "Radiation-ravaged homeland (aether resonators); people live on giant Stormships, raid for supplies; Infernal Jinzium church.",
+  "relations": "Shunned widely; hostile with saltwater ayodin; wary of Zel Hauds; best welcome in Evangless.",
+  "story_group": "Paldorus"
+ },
+ {
+  "slug": "zel-haud",
+  "name": "Zel Haud",
+  "summary": "Industrial Haudi province Zelhost (Archduke Zimarati), matriarchal, very tall people; semi-independent of the Empress in Siyesh.",
+  "relations": "Elitist toward neighbors; legacy of satyr slavery.",
+  "story_group": "Zelhost"
+ },
+ {
+  "slug": "other",
+  "name": "Other",
+  "summary": "Custom nationality (narrator approval).",
+  "relations": "",
+  "story_group": ""
+ }
+]

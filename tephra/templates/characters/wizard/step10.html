@@ -1,0 +1,25 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Finishings{% endblock %}
+{% block intro %}<p class="muted">Choose a name, flavor your character, give them a personality – and set the password that protects this sheet.</p>{% endblock %}
+{% block step %}
+<div class="form-grid">
+  <div class="field"><label for="f-name">Character name</label><input id="f-name" type="text" name="name" value="{{ character.name }}" required></div>
+  <div class="field"><label for="f-player">Player name</label><input id="f-player" type="text" name="player_name" value="{{ character.player_name }}"></div>
+  <div class="field"><label>Age</label><input type="text" name="age" value="{{ character.age }}"></div>
+  <div class="field"><label>Height</label><input type="text" name="height" value="{{ character.height }}"></div>
+  <div class="field"><label>Weight</label><input type="text" name="weight" value="{{ character.weight }}"></div>
+  {% if settings.max_starting_level > 1 %}
+    <div class="field"><label>Starting level</label><select name="target_level">{% for l in levels %}<option {% if l == character.target_level %}selected{% endif %}>{{ l }}</option>{% endfor %}</select>
+      <span class="helptext">Built at level 1, then levelled up one level at a time.</span></div>
+  {% endif %}
+</div>
+<div class="field" style="margin-top:10px"><label>Personality &amp; flavor</label><textarea name="personality" rows="3">{{ character.personality }}</textarea></div>
+<div class="field" style="margin-top:10px"><label>Notes</label><textarea name="notes" rows="3">{{ character.notes }}</textarea></div>
+<h3 style="margin-top:14px">Password {% if character.password %}<span class="tag ok">set</span>{% endif %}</h3>
+<div class="form-grid">
+  <div class="field"><label>Password</label><input type="password" name="password" autocomplete="new-password" {% if not character.password %}required{% endif %}></div>
+  <div class="field"><label>Repeat password</label><input type="password" name="password2" autocomplete="new-password" {% if not character.password %}required{% endif %}></div>
+</div>
+<p class="small muted">Everyone who knows this password can open and play this character. It can be changed later from the sheet.</p>
+{% endblock %}
+{% block next_btn %}<button class="btn primary" name="action" value="finish">Finish character ✓</button>{% endblock %}

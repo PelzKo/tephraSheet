@@ -1,0 +1,7 @@
+{% extends "base.html" %}{% load static %}
+{% block title %}{{ character.name }} – Tephra{% endblock %}
+{% block head %}<link rel="stylesheet" href="{% static 'css/sheet.css' %}">{% endblock %}
+{% block mainclass %}{% endblock %}
+{% block content %}
+  {% include "characters/partials/sheet_body.html" %}
+{% endblock %}

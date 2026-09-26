@@ -1,0 +1,1167 @@
+[
+ {
+  "slug": "human",
+  "name": "Human",
+  "speed": 25,
+  "swim": 15,
+  "climb": 15,
+  "unarmed_dc": 2,
+  "fixed_choose": 2,
+  "random_count": 1,
+  "random_choose": 0,
+  "fixed": [
+   {
+    "name": "Favored Attribute",
+    "text": "Pick 1 attribute: on a natural 1 with that attribute, you still add bonuses (not its skills).",
+    "tags": "[PASSIVE]",
+    "slug": "favored-attribute",
+    "modifiers": [],
+    "choice": "attribute"
+   },
+   {
+    "name": "Innovative",
+    "text": "+1 DIY, +2 Augments (only if starting with a craft).",
+    "tags": "[STAT:DIY +1] [STAT:Aug +2]",
+    "slug": "innovative",
+    "modifiers": [
+     {
+      "stat": "diy",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 1
+     },
+     {
+      "stat": "aug",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 2
+     }
+    ]
+   },
+   {
+    "name": "Peerless",
+    "text": "You win all tied rolls (normally aggressor wins).",
+    "tags": "[PASSIVE]",
+    "slug": "peerless",
+    "modifiers": []
+   },
+   {
+    "name": "Relentless",
+    "text": "+3 HP at start, +1 HP per specialty taken.",
+    "tags": "[STAT:HP +3 +1×specialties]",
+    "slug": "relentless",
+    "modifiers": [
+     {
+      "stat": "hp",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "formula": "3 + specialties"
+     }
+    ]
+   }
+  ],
+  "random": [
+   {
+    "name": "Accustomed to the Dark",
+    "text": "No penalties from poor lighting (blindness still applies).",
+    "tags": "[COND]",
+    "roll": 1,
+    "slug": "accustomed-to-the-dark",
+    "modifiers": []
+   },
+   {
+    "name": "Adaptable",
+    "text": "No penalties from extreme heat/cold/humidity environments.",
+    "tags": "[NARR]",
+    "roll": 2,
+    "slug": "adaptable",
+    "modifiers": []
+   },
+   {
+    "name": "Easily Reoriented",
+    "text": "Re-orienting from disoriented costs 1 AP instead of 3.",
+    "tags": "[PASSIVE]",
+    "roll": 3,
+    "slug": "easily-reoriented",
+    "modifiers": []
+   },
+   {
+    "name": "Emotionally Driven",
+    "text": "Can't start a battle fatigued when a friend is endangered.",
+    "tags": "[COND]",
+    "roll": 4,
+    "slug": "emotionally-driven",
+    "modifiers": []
+   },
+   {
+    "name": "Great Height",
+    "text": "+2 Strike.",
+    "tags": "[STAT:Stk +2]",
+    "roll": 5,
+    "slug": "great-height",
+    "modifiers": [
+     {
+      "stat": "stk",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 2
+     }
+    ]
+   },
+   {
+    "name": "Hardy & Stout",
+    "text": "+6 HP.",
+    "tags": "[STAT:HP +6]",
+    "roll": 6,
+    "slug": "hardy-stout",
+    "modifiers": [
+     {
+      "stat": "hp",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 6
+     }
+    ]
+   },
+   {
+    "name": "Momentum",
+    "text": "+5 Priority when you know a battle is coming (not when ambushed).",
+    "tags": "[COND] [STAT:Pri +5]",
+    "roll": 7,
+    "slug": "momentum",
+    "modifiers": [
+     {
+      "stat": "pri",
+      "op": "add",
+      "when": "toggle",
+      "scope": "character",
+      "value": 5,
+      "label": "battle is expected"
+     }
+    ]
+   },
+   {
+    "name": "Monkey's Uncle",
+    "text": "+10 ft climb speed.",
+    "tags": "[STAT:Climb +10]",
+    "roll": 8,
+    "slug": "monkeys-uncle",
+    "modifiers": [
+     {
+      "stat": "climb",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 10
+     }
+    ]
+   },
+   {
+    "name": "Perceptive",
+    "text": "+4 on Cunning rolls to notice.",
+    "tags": "[COND]",
+    "roll": 9,
+    "slug": "perceptive",
+    "modifiers": []
+   },
+   {
+    "name": "Quick Feet",
+    "text": "Land speed 35 ft instead of 25.",
+    "tags": "[STAT:Spd base 35]",
+    "roll": 10,
+    "slug": "quick-feet",
+    "modifiers": [
+     {
+      "stat": "spd",
+      "op": "base",
+      "when": "always",
+      "scope": "character",
+      "value": 35
+     }
+    ]
+   },
+   {
+    "name": "Reactionary",
+    "text": "+3 on all priority rolls, even off-guard.",
+    "tags": "[STAT:Pri +3]",
+    "roll": 11,
+    "slug": "reactionary",
+    "modifiers": [
+     {
+      "stat": "pri",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 3
+     }
+    ]
+   },
+   {
+    "name": "Ruckus Rowser",
+    "text": "+4 Cunning to intimidate or provoke.",
+    "tags": "[COND]",
+    "roll": 12,
+    "slug": "ruckus-rowser",
+    "modifiers": []
+   }
+  ]
+ },
+ {
+  "slug": "ayodin",
+  "name": "Ayodin",
+  "speed": 25,
+  "swim": 35,
+  "climb": 15,
+  "unarmed_dc": 2,
+  "fixed_choose": null,
+  "random_count": 1,
+  "random_choose": 0,
+  "fixed": [
+   {
+    "name": "Amphibious",
+    "text": "breathes air and water.",
+    "tags": "[NARR]",
+    "slug": "amphibious",
+    "modifiers": []
+   },
+   {
+    "name": "Versatile Wing-Fins",
+    "text": "+1 Evade.",
+    "tags": "[STAT:Eva +1]",
+    "slug": "versatile-wing-fins",
+    "modifiers": [
+     {
+      "stat": "eva",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 1
+     }
+    ]
+   }
+  ],
+  "random": [
+   {
+    "name": "Blindsense",
+    "text": "Echolocation: see regardless of light unless deafened.",
+    "tags": "[COND]",
+    "roll": 1,
+    "slug": "blindsense",
+    "modifiers": []
+   },
+   {
+    "name": "Born in the Seas",
+    "text": "+10 ft swim speed.",
+    "tags": "[STAT:Swim +10]",
+    "roll": 2,
+    "slug": "born-in-the-seas",
+    "modifiers": [
+     {
+      "stat": "swim",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 10
+     }
+    ]
+   },
+   {
+    "name": "Built-in Bulwark",
+    "text": "Fins count as shields for deflections.",
+    "tags": "[GEAR]",
+    "roll": 3,
+    "slug": "built-in-bulwark",
+    "modifiers": []
+   },
+   {
+    "name": "Expressive Flair",
+    "text": "+3 Cunning when convincing/changing emotions.",
+    "tags": "[COND]",
+    "roll": 4,
+    "slug": "expressive-flair",
+    "modifiers": []
+   },
+   {
+    "name": "Inner Silence",
+    "text": "+2 Cunning under duress / when intimidated or provoked.",
+    "tags": "[COND]",
+    "roll": 5,
+    "slug": "inner-silence",
+    "modifiers": []
+   },
+   {
+    "name": "Master Diving",
+    "text": "No falling damage when landing in water.",
+    "tags": "[COND]",
+    "roll": 6,
+    "slug": "master-diving",
+    "modifiers": []
+   },
+   {
+    "name": "Natural Touch",
+    "text": "Unarmed DC 3.",
+    "tags": "[GEAR] unarmed DC=3",
+    "roll": 7,
+    "slug": "natural-touch",
+    "modifiers": [
+     {
+      "stat": "dc",
+      "op": "base",
+      "when": "always",
+      "scope": "unarmed",
+      "value": 3
+     }
+    ]
+   },
+   {
+    "name": "Passive",
+    "text": "+4 Spirit when used as a resist.",
+    "tags": "[COND]",
+    "roll": 8,
+    "slug": "passive",
+    "modifiers": []
+   },
+   {
+    "name": "Powerful Paralysis",
+    "text": "Anyone you touch: −3 on their next evade roll (expires end of their next turn).",
+    "tags": "[COND]",
+    "roll": 9,
+    "slug": "powerful-paralysis",
+    "modifiers": []
+   },
+   {
+    "name": "Terror from the Deep",
+    "text": "+3 Strike vs adjacent foes.",
+    "tags": "[COND] [STAT:Stk +3 melee-adjacent]",
+    "roll": 10,
+    "slug": "terror-from-the-deep",
+    "modifiers": [
+     {
+      "stat": "stk",
+      "op": "add",
+      "when": "toggle",
+      "scope": "melee",
+      "value": 3,
+      "label": "vs adjacent foes"
+     }
+    ]
+   },
+   {
+    "name": "Vanguard",
+    "text": "Adjacent allies +2 Evade (doesn't stack with others having it).",
+    "tags": "[COND] aura",
+    "roll": 11,
+    "slug": "vanguard",
+    "modifiers": []
+   },
+   {
+    "name": "Wings as Arms",
+    "text": "Wings can hold one-handed items (not two-handed).",
+    "tags": "[GEAR]",
+    "roll": 12,
+    "slug": "wings-as-arms",
+    "modifiers": []
+   }
+  ]
+ },
+ {
+  "slug": "elf",
+  "name": "Elf",
+  "speed": 30,
+  "swim": 20,
+  "climb": 30,
+  "unarmed_dc": 2,
+  "fixed_choose": null,
+  "random_count": 1,
+  "random_choose": 0,
+  "fixed": [
+   {
+    "name": "Big Boned",
+    "text": "+2 on all Brute (attribute) rolls.",
+    "tags": "[PASSIVE]",
+    "slug": "big-boned",
+    "modifiers": [
+     {
+      "stat": "roll:Brute",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": 2
+     }
+    ]
+   },
+   {
+    "name": "Tough",
+    "text": "+4 HP.",
+    "tags": "[STAT:HP +4]",
+    "slug": "tough",
+    "modifiers": [
+     {
+      "stat": "hp",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 4
+     }
+    ]
+   },
+   {
+    "name": "Tree-Ripping Strength",
+    "text": "Unarmed & melee weapons +1 DC.",
+    "tags": "[GEAR] melee/unarmed DC +1",
+    "slug": "tree-ripping-strength",
+    "modifiers": [
+     {
+      "stat": "dc",
+      "op": "add",
+      "when": "always",
+      "scope": "melee",
+      "value": 1
+     }
+    ]
+   },
+   {
+    "name": "Weak Souls",
+    "text": "−3 on Spirit attribute rolls (not Spirit skills).",
+    "tags": "[PASSIVE]",
+    "slug": "weak-souls",
+    "modifiers": [
+     {
+      "stat": "roll:Spirit",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": -3,
+      "label": "Spirit attribute rolls"
+     }
+    ]
+   },
+   {
+    "name": "Depleted Essence",
+    "text": "−1 essence manipulation slot (Bio-Flux).",
+    "tags": "[GEAR]",
+    "slug": "depleted-essence",
+    "modifiers": [
+     {
+      "stat": "essence_slots",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": -1
+     }
+    ]
+   }
+  ],
+  "random": [
+   {
+    "name": "Gears of the World",
+    "text": "+6 Cunning to discern non-organic disturbance of an area.",
+    "tags": "[COND]",
+    "roll": 1,
+    "slug": "gears-of-the-world",
+    "modifiers": []
+   },
+   {
+    "name": "Danger Sense",
+    "text": "+3 Priority.",
+    "tags": "[STAT:Pri +3]",
+    "roll": 2,
+    "slug": "danger-sense",
+    "modifiers": [
+     {
+      "stat": "pri",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 3
+     }
+    ]
+   },
+   {
+    "name": "Ears to the Heavens",
+    "text": "Hearing rolls +1 tier.",
+    "tags": "[COND]",
+    "roll": 3,
+    "slug": "ears-to-the-heavens",
+    "modifiers": []
+   },
+   {
+    "name": "Flight without Wings",
+    "text": "+10 ft land speed (→ 40).",
+    "tags": "[STAT:Spd +10]",
+    "roll": 4,
+    "slug": "flight-without-wings",
+    "modifiers": [
+     {
+      "stat": "spd",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 10
+     }
+    ]
+   },
+   {
+    "name": "Fruit of the Fallen",
+    "text": "Negates Weak Souls; +3 Spirit when using Heroics.",
+    "tags": "[PASSIVE]",
+    "roll": 5,
+    "slug": "fruit-of-the-fallen",
+    "modifiers": [
+     {
+      "stat": "roll:Spirit",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": 3,
+      "label": "when using Heroics"
+     }
+    ],
+    "negates": [
+     "elf/weak-souls",
+     "farishtaa/botched-surgery:weak-souls"
+    ]
+   },
+   {
+    "name": "Improperly Typecast",
+    "text": "+2 Cunning to gather information.",
+    "tags": "[COND]",
+    "roll": 6,
+    "slug": "improperly-typecast",
+    "modifiers": []
+   },
+   {
+    "name": "Like the Grave",
+    "text": "After hidden a full turn, +5 to remain unseen.",
+    "tags": "[COND]",
+    "roll": 7,
+    "slug": "like-the-grave",
+    "modifiers": []
+   },
+   {
+    "name": "Noble Creature",
+    "text": "Attack +1 AP: +Strike equal to your level.",
+    "tags": "[ATTACK+1] [SCALE:Level]",
+    "roll": 8,
+    "slug": "noble-creature",
+    "modifiers": [
+     {
+      "stat": "stk",
+      "op": "add",
+      "when": "toggle",
+      "scope": "character",
+      "formula": "level",
+      "label": "attack +1 AP"
+     }
+    ]
+   },
+   {
+    "name": "Raging Loyalty",
+    "text": "When adjacent ally is struck, reflexive melee attack vs assailant in reach.",
+    "tags": "[REFLEX]",
+    "roll": 9,
+    "slug": "raging-loyalty",
+    "modifiers": []
+   },
+   {
+    "name": "Tenacious Grip",
+    "text": "+6 to keep holding on to something.",
+    "tags": "[COND]",
+    "roll": 10,
+    "slug": "tenacious-grip",
+    "modifiers": []
+   },
+   {
+    "name": "Unstoppable",
+    "text": "Speed penalties from wounds/status reduced by 10 ft.",
+    "tags": "[PASSIVE]",
+    "roll": 11,
+    "slug": "unstoppable",
+    "modifiers": []
+   },
+   {
+    "name": "Vaulting Predator",
+    "text": "+10 ft forward leap, +2 ft vertical jump.",
+    "tags": "[NARR]",
+    "roll": 12,
+    "slug": "vaulting-predator",
+    "modifiers": []
+   }
+  ]
+ },
+ {
+  "slug": "farishtaa",
+  "name": "Farishtaa",
+  "speed": 25,
+  "swim": 15,
+  "climb": 15,
+  "unarmed_dc": 2,
+  "fixed_choose": null,
+  "random_count": 1,
+  "random_choose": 0,
+  "fixed": [
+   {
+    "name": "Born to be Airborne",
+    "text": "Start with 2 skill points in Ace (in addition to normal starting points; may add starting points there as normal).",
+    "tags": "[STAT:Ace +2]",
+    "slug": "born-to-be-airborne",
+    "modifiers": [
+     {
+      "stat": "skill:Ace",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 2
+     }
+    ]
+   },
+   {
+    "name": "Piercing Scrutiny",
+    "text": "+1 Accuracy.",
+    "tags": "[STAT:Acc +1]",
+    "slug": "piercing-scrutiny",
+    "modifiers": [
+     {
+      "stat": "acc",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 1
+     }
+    ]
+   },
+   {
+    "name": "Unpredictable",
+    "text": "+2 Cunning when interacting with people.",
+    "tags": "[COND]",
+    "slug": "unpredictable",
+    "modifiers": []
+   }
+  ],
+  "random": [
+   {
+    "name": "Botched Surgery",
+    "text": "Gain elf traits Tree-Ripping Strength and Weak Soul.",
+    "tags": "[GEAR] [PASSIVE]",
+    "roll": 1,
+    "slug": "botched-surgery",
+    "modifiers": [
+     {
+      "stat": "dc",
+      "op": "add",
+      "when": "always",
+      "scope": "melee",
+      "value": 1,
+      "label": "Tree-Ripping Strength"
+     },
+     {
+      "stat": "roll:Spirit",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": -3,
+      "label": "Weak Souls: Spirit attribute rolls"
+     }
+    ]
+   },
+   {
+    "name": "Dancer's Body",
+    "text": "+2 on Dexterity (attribute) rolls.",
+    "tags": "[PASSIVE]",
+    "roll": 2,
+    "slug": "dancers-body",
+    "modifiers": [
+     {
+      "stat": "roll:Dexterity",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": 2
+     }
+    ]
+   },
+   {
+    "name": "Emotional Unavailability",
+    "text": "Fear effects −1 tier (immune to T1 fear).",
+    "tags": "[PASSIVE]",
+    "roll": 3,
+    "slug": "emotional-unavailability",
+    "modifiers": []
+   },
+   {
+    "name": "Instant Motion",
+    "text": "1 AP reflexive at combat start: +8 priority roll.",
+    "tags": "[REFLEX]",
+    "roll": 4,
+    "slug": "instant-motion",
+    "modifiers": []
+   },
+   {
+    "name": "Halo",
+    "text": "10-ft light aura + slight heat, suppressible.",
+    "tags": "[NARR]",
+    "roll": 5,
+    "slug": "halo",
+    "modifiers": []
+   },
+   {
+    "name": "Prominent Host",
+    "text": "Roll on the elf random trait table instead.",
+    "tags": "[RULE]",
+    "roll": 6,
+    "slug": "prominent-host",
+    "modifiers": [],
+    "reroll_on": "elf"
+   },
+   {
+    "name": "Skin-Deep Values",
+    "text": "+2 Evade and resist vs called shots to head, eyes, ears.",
+    "tags": "[COND]",
+    "roll": 7,
+    "slug": "skin-deep-values",
+    "modifiers": []
+   },
+   {
+    "name": "Spirit of the Angels",
+    "text": "Natural 1 on Spirit attribute still adds bonuses.",
+    "tags": "[PASSIVE]",
+    "roll": 8,
+    "slug": "spirit-of-the-angels",
+    "modifiers": []
+   },
+   {
+    "name": "Superiority Complex",
+    "text": "Adjacent foes −2 Defense.",
+    "tags": "[COND] aura",
+    "roll": 9,
+    "slug": "superiority-complex",
+    "modifiers": []
+   },
+   {
+    "name": "Tinge of Insanity",
+    "text": "At 0 HP: +4 Accuracy and +4 Strike.",
+    "tags": "[COND]",
+    "roll": 10,
+    "slug": "tinge-of-insanity",
+    "modifiers": [
+     {
+      "stat": "acc",
+      "op": "add",
+      "when": "toggle",
+      "scope": "character",
+      "value": 4,
+      "label": "at 0 HP"
+     },
+     {
+      "stat": "stk",
+      "op": "add",
+      "when": "toggle",
+      "scope": "character",
+      "value": 4,
+      "label": "at 0 HP"
+     }
+    ]
+   },
+   {
+    "name": "Unexplainable Memories",
+    "text": "+2 on all Cunning rolls.",
+    "tags": "[PASSIVE]",
+    "roll": 11,
+    "slug": "unexplainable-memories",
+    "modifiers": [
+     {
+      "stat": "roll:Cunning",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": 2
+     }
+    ]
+   },
+   {
+    "name": "Undeveloped Wings",
+    "text": "No falling damage unless bound/unconscious/bad weather.",
+    "tags": "[COND]",
+    "roll": 12,
+    "slug": "undeveloped-wings",
+    "modifiers": []
+   }
+  ]
+ },
+ {
+  "slug": "gnome",
+  "name": "Gnome",
+  "speed": 15,
+  "swim": 10,
+  "climb": 10,
+  "unarmed_dc": 1,
+  "fixed_choose": null,
+  "random_count": 2,
+  "random_choose": 1,
+  "fixed": [
+   {
+    "name": "Greater Spirit",
+    "text": "+3 on Spirit rolls.",
+    "tags": "[PASSIVE]",
+    "slug": "greater-spirit",
+    "modifiers": [
+     {
+      "stat": "roll:Spirit",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": 3
+     }
+    ]
+   },
+   {
+    "name": "Light Build",
+    "text": "−2 on Brute rolls.",
+    "tags": "[PASSIVE]",
+    "slug": "light-build",
+    "modifiers": [
+     {
+      "stat": "roll:Brute",
+      "op": "add",
+      "when": "note",
+      "scope": "character",
+      "value": -2
+     }
+    ]
+   },
+   {
+    "name": "Small Stature",
+    "text": "+1 Evade.",
+    "tags": "[STAT:Eva +1]",
+    "slug": "small-stature",
+    "modifiers": [
+     {
+      "stat": "eva",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 1
+     }
+    ]
+   },
+   {
+    "name": "Smaller Weapons",
+    "text": "Can't conceal light weapons; unarmed DC 1.",
+    "tags": "[GEAR] unarmed DC=1",
+    "slug": "smaller-weapons",
+    "modifiers": []
+   },
+   {
+    "name": "Random Racial Traits",
+    "text": "Choose 1 trait and roll 1 (re-roll duplicates) → 2 random traits.",
+    "tags": "[RULE]",
+    "slug": "random-racial-traits",
+    "modifiers": []
+   }
+  ],
+  "random": [
+   {
+    "name": "Bend Sight",
+    "text": "See around corners up to 90°.",
+    "tags": "[NARR]",
+    "roll": 1,
+    "slug": "bend-sight",
+    "modifiers": []
+   },
+   {
+    "name": "Deep Pockets",
+    "text": "Can conceal light and medium items.",
+    "tags": "[NARR]",
+    "roll": 2,
+    "slug": "deep-pockets",
+    "modifiers": []
+   },
+   {
+    "name": "Earthshape",
+    "text": "2 AP: raise/lower earth 5 ft in a 5-ft area.",
+    "tags": "[ACTION]",
+    "roll": 3,
+    "slug": "earthshape",
+    "modifiers": []
+   },
+   {
+    "name": "Feel the Earth",
+    "text": "Sense vibrations within 15 ft when touching ground (opposed Cunning vs sneaking).",
+    "tags": "[COND]",
+    "roll": 4,
+    "slug": "feel-the-earth",
+    "modifiers": []
+   },
+   {
+    "name": "Growth Intensity",
+    "text": "1 AP: switch to elf size — use elf racial traits instead of gnome while large.",
+    "tags": "[ACTION] swaps race traits",
+    "roll": 5,
+    "slug": "growth-intensity",
+    "modifiers": []
+   },
+   {
+    "name": "Noiseless",
+    "text": "Silent footsteps; sneaking +1 tier.",
+    "tags": "[COND]",
+    "roll": 6,
+    "slug": "noiseless",
+    "modifiers": []
+   },
+   {
+    "name": "Parts of Nature",
+    "text": "3 AP: draw a light basic tool/weapon/torch from tree or earth.",
+    "tags": "[ACTION]",
+    "roll": 7,
+    "slug": "parts-of-nature",
+    "modifiers": []
+   },
+   {
+    "name": "Piercing Sight",
+    "text": "Ranged weapons: double range, +2 Accuracy.",
+    "tags": "[GEAR] ranged Acc +2, range ×2",
+    "roll": 8,
+    "slug": "piercing-sight",
+    "modifiers": [
+     {
+      "stat": "acc",
+      "op": "add",
+      "when": "always",
+      "scope": "ranged",
+      "value": 2,
+      "label": "Piercing Sight"
+     }
+    ]
+   },
+   {
+    "name": "Ripcord Muscles",
+    "text": "Negates Light Build; +2 Strike; unarmed DC 2.",
+    "tags": "[STAT:Stk +2] [GEAR] unarmed DC=2",
+    "roll": 9,
+    "slug": "ripcord-muscles",
+    "modifiers": [
+     {
+      "stat": "stk",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 2
+     },
+     {
+      "stat": "dc",
+      "op": "base",
+      "when": "always",
+      "scope": "unarmed",
+      "value": 2
+     }
+    ],
+    "negates": [
+     "gnome/light-build"
+    ]
+   },
+   {
+    "name": "Waterwalk",
+    "text": "1 AP per turn: stand on calm water.",
+    "tags": "[ACTION]",
+    "roll": 10,
+    "slug": "waterwalk",
+    "modifiers": []
+   },
+   {
+    "name": "Windwalk",
+    "text": "1 AP: glide 40 ft in one direction.",
+    "tags": "[ACTION]",
+    "roll": 11,
+    "slug": "windwalk",
+    "modifiers": []
+   },
+   {
+    "name": "Wiry",
+    "text": "+1 additional Evade.",
+    "tags": "[STAT:Eva +1]",
+    "roll": 12,
+    "slug": "wiry",
+    "modifiers": [
+     {
+      "stat": "eva",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 1
+     }
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "satyr",
+  "name": "Satyr",
+  "speed": 35,
+  "swim": 10,
+  "climb": 10,
+  "unarmed_dc": 2,
+  "fixed_choose": null,
+  "random_count": 1,
+  "random_choose": 0,
+  "fixed": [
+   {
+    "name": "Alcohol Immunity",
+    "text": "Not negatively affected by alcohol.",
+    "tags": "[NARR]",
+    "slug": "alcohol-immunity",
+    "modifiers": []
+   },
+   {
+    "name": "Empathetic",
+    "text": "Roll twice, take higher, when detecting lies.",
+    "tags": "[COND]",
+    "slug": "empathetic",
+    "modifiers": []
+   }
+  ],
+  "random": [
+   {
+    "name": "Born Hero",
+    "text": "Heroics (Spirit): roll twice, take higher.",
+    "tags": "[COND]",
+    "roll": 1,
+    "slug": "born-hero",
+    "modifiers": []
+   },
+   {
+    "name": "Brothers-in-Arms",
+    "text": "Adjacent to a satyr ally: both +2 Accuracy (no stacking).",
+    "tags": "[COND]",
+    "roll": 2,
+    "slug": "brothers-in-arms",
+    "modifiers": [
+     {
+      "stat": "acc",
+      "op": "add",
+      "when": "toggle",
+      "scope": "character",
+      "value": 2,
+      "label": "adjacent to a satyr ally"
+     }
+    ]
+   },
+   {
+    "name": "Built to Last",
+    "text": "+6 HP.",
+    "tags": "[STAT:HP +6]",
+    "roll": 3,
+    "slug": "built-to-last",
+    "modifiers": [
+     {
+      "stat": "hp",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 6
+     }
+    ]
+   },
+   {
+    "name": "Expecting the Worst",
+    "text": "+4 Priority rolls.",
+    "tags": "[STAT:Pri +4]",
+    "roll": 4,
+    "slug": "expecting-the-worst",
+    "modifiers": [
+     {
+      "stat": "pri",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 4
+     }
+    ]
+   },
+   {
+    "name": "Fleet of Foot",
+    "text": "+10 ft speed (→ 45).",
+    "tags": "[STAT:Spd +10]",
+    "roll": 5,
+    "slug": "fleet-of-foot",
+    "modifiers": [
+     {
+      "stat": "spd",
+      "op": "add",
+      "when": "always",
+      "scope": "character",
+      "value": 10
+     }
+    ]
+   },
+   {
+    "name": "Frightening Combatant",
+    "text": "Unarmed DC 4 (horns/hooves).",
+    "tags": "[GEAR] unarmed DC=4",
+    "roll": 6,
+    "slug": "frightening-combatant",
+    "modifiers": [
+     {
+      "stat": "dc",
+      "op": "base",
+      "when": "always",
+      "scope": "unarmed",
+      "value": 4
+     }
+    ]
+   },
+   {
+    "name": "Horned & Dangerous",
+    "text": "Unarmed horn attacks deal +1 unsoakable bleeding damage.",
+    "tags": "[GEAR]",
+    "roll": 7,
+    "slug": "horned-dangerous",
+    "modifiers": []
+   },
+   {
+    "name": "Natural High",
+    "text": "Ignore fatigue if drank alcohol in past few hours (not for multi-day fatigue).",
+    "tags": "[COND]",
+    "roll": 8,
+    "slug": "natural-high",
+    "modifiers": []
+   },
+   {
+    "name": "Poison Immunity",
+    "text": "Brute resist vs poison +1 tier.",
+    "tags": "[COND]",
+    "roll": 9,
+    "slug": "poison-immunity",
+    "modifiers": []
+   },
+   {
+    "name": "Protector",
+    "text": "Adjacent allies +2 Defense.",
+    "tags": "[COND] aura",
+    "roll": 10,
+    "slug": "protector",
+    "modifiers": []
+   },
+   {
+    "name": "Stable Hoofing",
+    "text": "Ignore speed penalties of minor & unsteady terrain.",
+    "tags": "[COND]",
+    "roll": 11,
+    "slug": "stable-hoofing",
+    "modifiers": []
+   },
+   {
+    "name": "Unphased by War",
+    "text": "+4 to resist being stunned.",
+    "tags": "[COND]",
+    "roll": 12,
+    "slug": "unphased-by-war",
+    "modifiers": []
+   }
+  ]
+ }
+]

@@ -1,0 +1,13 @@
+{% extends "characters/wizard/base.html" %}{% load sheet_tags %}
+{% block step_title %}Specialties{% endblock %}
+{% block intro %}<p class="muted">Choose three specialties. They must come from skills you placed points in, unless they are general specialties. Their combat statistics are added to your sheet automatically.</p>{% endblock %}
+{% block step %}
+<div class="chosen-bar">
+  <b>Chosen ({{ chosen|length }}/{{ needed }}):</b>
+  {% for s in chosen %}<span class="chip on">{{ s.name }} <button class="val" name="action" value="remove:{{ s.slug }}" formnovalidate title="Remove" style="color:inherit;cursor:pointer">✕</button></span>{% empty %}<span class="muted">none yet</span>{% endfor %}
+  <div class="small" style="margin-top:4px">
+    {% for c in stat_cols %}<span class="pill-bonus">{{ stat_labels|get:c }} {{ sheet.specialty_totals|get:c|signed }}</span>{% endfor %}
+  </div>
+</div>
+{% include "characters/partials/specialty_picker.html" with mode="wizard" %}
+{% endblock %}
