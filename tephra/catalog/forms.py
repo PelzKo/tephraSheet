@@ -90,6 +90,7 @@ def augment_choices_json():
     out = {}
     for kind, lists in AUGMENT_LISTS_BY_KIND.items():
         out[kind] = [{"slug": a["slug"], "name": a["name"], "slots": a.get("slots") or 0,
-                      "marques": a["marques"], "list": "/".join(a["lists"])}
+                      "marques": a["marques"], "list": "/".join(a["lists"]), "notes": a["notes"],
+                      "text": a["text"]}
                      for a in reg.augments.values() if lists.intersection(a["lists"])]
     return out

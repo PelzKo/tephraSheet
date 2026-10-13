@@ -324,7 +324,7 @@ class Command(BaseCommand):
                     "slug": slug, "name": name, "skill": skill, "lists": entry_lists,
                     "section": section.split(" (")[0], "subsection": sub,
                     "slots": int(slots) if slots.isdigit() else (0 if slots in ("0", "–") else None),
-                    "qualifiers": qual_parts, "accessory": accessory, "marques": marques, "notes": notes,
+                    "qualifiers": qual_parts, "accessory": accessory, "marques": expand_marques(marques), "notes": notes,
                     "size": r.get("Size", ""), "price": r.get("Price I/II/III/IV (pr)", ""),
                     "text": text, "modifiers": [],
                 }
@@ -377,6 +377,26 @@ def split_top_level(text, sep):
     if cur.strip():
         parts.append(cur)
     return parts
+
+
+SIGNED_NUM = r"(?<![\w.])[+−-]\d+(?:\.\d+)?"
+UNSIGNED_NUM = r"(?<![\w.+−-])\d+(?:\.\d+)?"
+
+
+def expand_marques(marques):
+    """The book abbreviates mQ II–IV to the bare number: ['+2 Stk', '+4'] -> ['+2 Stk', '+4 Stk']."""
+    out = [marques[0]]
+    for m in marques[1:]:
+        prev = out[-1]
+        if re.fullmatch(r"[+−-]?\d+(?:\.\d+)?", m):
+            signed = m[0] in "+−-"
+            if re.search(SIGNED_NUM if signed else UNSIGNED_NUM, prev):
+                m = re.sub(SIGNED_NUM if signed else UNSIGNED_NUM, m, prev, count=1)
+            elif not signed and (hit := re.search(SIGNED_NUM, prev)):
+                # '+1 HP' then '2' -> '+2 HP' (keep the sign, except for 0)
+                m = prev[:hit.start()] + (m if m == "0" else hit.group()[0] + m) + prev[hit.end():]
+        out.append(m)
+    return out
 
 
 def parse_price(text):

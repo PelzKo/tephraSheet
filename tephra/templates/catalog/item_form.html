@@ -61,18 +61,23 @@
 
   <template x-if="augOptions.length">
     <div style="margin-top:12px">
-      <h3>Augments <span class="tag" :class="usedSlots > slots ? 'bad' : 'ok'" x-text="usedSlots + ' / ' + slots + ' slots'"></span></h3>
+      <h3>Augments <span class="tag" :class="usedSlots > slots ? 'bad' : 'ok'" x-text="usedSlots + ' / ' + slots + ' slots'"></span>
+        <a class="small" href="{% url 'augment_reference' %}" target="_blank">all augments explained ↗</a></h3>
       <template x-for="(a, i) in augs" :key="i">
-        <div class="row" style="margin-bottom:4px">
-          <b x-text="nameOf(a[0])"></b>
-          <select x-model.number="a[1]"><option value="1">mQ I</option><option value="2">mQ II</option><option value="3">mQ III</option><option value="4">mQ IV</option></select>
-          <span class="small muted" x-text="effectOf(a[0], a[1])"></span>
-          <button type="button" class="btn small danger" x-on:click="augs.splice(i, 1)">Remove</button>
+        <div style="margin-bottom:6px">
+          <div class="row">
+            <b x-text="nameOf(a[0])"></b>
+            <select x-model.number="a[1]"><option value="1">mQ I</option><option value="2">mQ II</option><option value="3">mQ III</option><option value="4">mQ IV</option></select>
+            <span class="small muted" x-text="effectOf(a[0], a[1])"></span>
+            <button type="button" class="btn small danger" x-on:click="augs.splice(i, 1)">Remove</button>
+          </div>
+          <details class="small"><summary>Info</summary><div x-html="infoOf(a[0])"></div></details>
         </div>
       </template>
       <div class="row"><select x-model="pick"><option value="">Add augment…</option>
         <template x-for="o in augOptions" :key="o.slug"><option :value="o.slug" x-text="o.name + ' (' + o.slots + ' slot' + (o.slots === 1 ? '' : 's') + ', ' + o.list + ')'"></option></template></select>
         <button type="button" class="btn small" x-on:click="if (pick) { augs.push([pick, 1]); pick=''; }">Add</button></div>
+      <div class="small" x-show="pick" x-html="infoOf(pick)" style="margin-top:4px"></div>
     </div>
   </template>
   <input type="hidden" name="augments_json" :value="JSON.stringify(augs)" value="{{ form.augments_json.value|default:'[]' }}">
@@ -120,6 +125,12 @@ window.itemCreator = function (tables, augChoices) {
     find(slug) { return (this.augOptions || []).find(o => o.slug === slug); },
     nameOf(slug) { const o = this.find(slug); return o ? o.name : slug; },
     effectOf(slug, m) { const o = this.find(slug); return o ? (o.marques[m - 1] || o.marques[0] || "") : ""; },
+    infoOf(slug) {
+      const o = this.find(slug); if (!o) return "";
+      const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"})[c]);
+      const mq = o.marques.map((m, i) => m && m !== "–" ? `<span class="pill-bonus">mQ ${["I", "II", "III", "IV"][i]}: ${esc(m)}</span>` : "").join(" ");
+      return `<div>${mq} ${esc(o.notes || "")}</div>` + (o.text ? `<p class="effect">${esc(o.text).replace(/\n/g, "<br>")}</p>` : "");
+    },
   };
 };
 </script>

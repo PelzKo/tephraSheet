@@ -314,7 +314,8 @@ def save_step6(request, character, action):
             if current:
                 current.delete()
             continue
-        if current and current.template_id and str(current.template_id) == value:
+        # "custom" (or any non-pk) = keep the custom item already in this slot
+        if not value.isdigit() or current and current.template_id and str(current.template_id) == value:
             continue
         tpl = ItemTemplate.objects.filter(pk=value).first()
         if not tpl:

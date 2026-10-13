@@ -6,6 +6,7 @@
     <div class="row">
       <a class="btn primary" href="{% url 'item_create' %}{% if character %}?for={{ character.pk }}{% endif %}">Create item</a>
       <a class="btn" href="{% url 'catalog_import' %}{% if character %}?for={{ character.pk }}{% endif %}">Bulk import</a>
+      <a class="btn" href="{% url 'augment_reference' %}">Augment reference</a>
       {% if character %}<a class="btn" href="{{ character.get_absolute_url }}?tab=inventory">Back to sheet</a>{% endif %}
     </div>
   </div>

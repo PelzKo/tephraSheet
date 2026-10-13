@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from characters import access, services
 from characters.models import Character, InventoryItem
 from rules.engine import tables
+from rules.registry import get_registry
 
 from .forms import ItemForm, augment_choices_json
 from .importer import parse_rows, template_csv
@@ -42,6 +43,16 @@ def catalog_list(request):
         "items": qs[:300], "q": q, "kind": kind, "kinds": KIND_CHOICES, "character": character,
         "is_gm": access.is_gm(request), "slots": InventoryItem._meta.get_field("slot").choices,
     })
+
+
+def augment_reference(request):
+    """All augments with every marque and the book text, grouped like the book."""
+    groups = {}
+    for a in get_registry().augments.values():
+        groups.setdefault(f"{a['skill']} – {a['section']}", []).append(a)
+    lists = sorted({li for a in get_registry().augments.values() for li in a["lists"]})
+    return render(request, "catalog/augments.html", {"groups": list(groups.items()), "lists": lists,
+                                                     "q": request.GET.get("q", "")})
 
 
 def _creator_context(form, character, item=None, inventory_item=None):

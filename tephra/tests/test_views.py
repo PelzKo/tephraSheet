@@ -156,6 +156,12 @@ def test_catalog_pages_and_import(client_char):
     item = InventoryItem.objects.get(character=c, name="Lucky Revolver")
     assert item.slot == "weapon1"
     assert c.compute().weapons[0].acc.total >= 1
+    # wizard step 6 posts "custom" for a custom item already in the slot: keep it
+    Character.objects.filter(pk=c.pk).update(race="human")
+    resp = client.post(reverse("wizard_step", args=[c.pk, 6]), {"action": "save", "weapon1": "custom"})
+    assert resp.status_code in (200, 302)
+    assert c.items.get(slot="weapon1").name == "Lucky Revolver"
+    assert client.get(reverse("augment_reference")).status_code == 200
 
 
 def test_gm_pages(client, catalog):

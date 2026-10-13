@@ -163,9 +163,9 @@
   "accessory": false,
   "marques": [
    "+1 adjacent space",
-   "+2",
-   "+3",
-   "+4"
+   "+2 adjacent space",
+   "+3 adjacent space",
+   "+4 adjacent space"
   ],
   "notes": "",
   "size": "",
@@ -285,9 +285,9 @@
   "accessory": false,
   "marques": [
    "1 turn",
-   "2",
-   "3",
-   "4"
+   "2 turn",
+   "3 turn",
+   "4 turn"
   ],
   "notes": "−4 Acc/Eva in gas; lingers after leaving for listed turns",
   "size": "",
@@ -309,9 +309,9 @@
   "accessory": false,
   "marques": [
    "3 dmg",
-   "6",
-   "9",
-   "12"
+   "6 dmg",
+   "9 dmg",
+   "12 dmg"
   ],
   "notes": "HP damage at end of each turn inside",
   "size": "",
@@ -333,9 +333,9 @@
   "accessory": false,
   "marques": [
    "1 turn",
-   "2",
-   "3",
-   "4"
+   "2 turn",
+   "3 turn",
+   "4 turn"
   ],
   "notes": "auto-1 on Cunning rolls; lasts after leaving",
   "size": "",
@@ -429,9 +429,9 @@
   "accessory": false,
   "marques": [
    "−3 sneak/hide",
-   "−6",
-   "−9",
-   "−12"
+   "−6 sneak/hide",
+   "−9 sneak/hide",
+   "−12 sneak/hide"
   ],
   "notes": "resisted by Dex; washes off (water, 1 turn rain, 12 AP)",
   "size": "",
@@ -453,8 +453,8 @@
   "accessory": false,
   "marques": [
    "attack nearest at −3 Acc/Stk",
-   "−2",
-   "−1",
+   "attack nearest at −2 Acc/Stk",
+   "attack nearest at −1 Acc/Stk",
    "no penalty"
   ],
   "notes": "next AP (or 2) must attack nearest; resist Cunning or Spirit",
@@ -501,9 +501,9 @@
   "accessory": false,
   "marques": [
    "−5 ft speed",
-   "−10",
-   "−15",
-   "−20"
+   "−10 ft speed",
+   "−15 ft speed",
+   "−20 ft speed"
   ],
   "notes": "3 turns, min 5 ft",
   "size": "",
@@ -525,9 +525,9 @@
   "accessory": false,
   "marques": [
    "−1 Evade",
-   "−2",
-   "−3",
-   "−4"
+   "−2 Evade",
+   "−3 Evade",
+   "−4 Evade"
   ],
   "notes": "3 turns",
   "size": "",
@@ -597,9 +597,9 @@
   "accessory": false,
   "marques": [
    "+3 vs poisons",
-   "+6",
-   "+9",
-   "+12"
+   "+6 vs poisons",
+   "+9 vs poisons",
+   "+12 vs poisons"
   ],
   "notes": "1 hour; immediate re-roll vs current poison",
   "size": "",
@@ -647,9 +647,9 @@
   "accessory": false,
   "marques": [
    "+10 HP",
-   "+20",
-   "+30",
-   "+40"
+   "+20 HP",
+   "+30 HP",
+   "+40 HP"
   ],
   "notes": "not above max",
   "size": "",
@@ -671,9 +671,9 @@
   "accessory": false,
   "marques": [
    "heal 1 wound",
-   "2",
-   "3",
-   "4"
+   "heal 2 wound",
+   "heal 3 wound",
+   "heal 4 wound"
   ],
   "notes": "natural 1 on target's d12 → healing becomes damage",
   "size": "",
@@ -695,9 +695,9 @@
   "accessory": false,
   "marques": [
    "ignore 1 wound effect (locations 6–12)",
-   "2",
-   "3",
-   "4"
+   "ignore 2 wound effect (locations 6–12)",
+   "ignore 3 wound effect (locations 6–12)",
+   "ignore 4 wound effect (locations 6–12)"
   ],
   "notes": "until breather",
   "size": "",
@@ -719,9 +719,9 @@
   "accessory": false,
   "marques": [
    "+4 HP",
-   "+8",
-   "+12",
-   "+16"
+   "+8 HP",
+   "+12 HP",
+   "+16 HP"
   ],
   "notes": "not above max",
   "size": "",
@@ -743,9 +743,9 @@
   "accessory": false,
   "marques": [
    "+1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Acc",
+   "+3 Acc",
+   "+4 Acc"
   ],
   "notes": "until breather (optional)",
   "size": "",
@@ -839,9 +839,9 @@
   "accessory": false,
   "marques": [
    "2 turns",
-   "4",
-   "6",
-   "8"
+   "4 turns",
+   "6 turns",
+   "8 turns"
   ],
   "notes": "−4 Acc/Eva",
   "size": "",
@@ -887,9 +887,9 @@
   "accessory": false,
   "marques": [
    "2 turns",
-   "4",
-   "6",
-   "8"
+   "4 turns",
+   "6 turns",
+   "8 turns"
   ],
   "notes": "−1 AP/turn",
   "size": "",
@@ -911,9 +911,9 @@
   "accessory": false,
   "marques": [
    "2 turns",
-   "4",
-   "6",
-   "8"
+   "4 turns",
+   "6 turns",
+   "8 turns"
   ],
   "notes": "speed halved",
   "size": "",
@@ -1007,9 +1007,9 @@
   "accessory": false,
   "marques": [
    "6 HP dmg",
-   "12",
-   "18",
-   "24"
+   "12 HP dmg",
+   "18 HP dmg",
+   "24 HP dmg"
   ],
   "notes": "",
   "size": "",
@@ -1079,9 +1079,9 @@
   "accessory": false,
   "marques": [
    "1 AP",
-   "2",
-   "3",
-   "4"
+   "2 AP",
+   "3 AP",
+   "4 AP"
   ],
   "notes": "",
   "size": "",
@@ -1103,9 +1103,9 @@
   "accessory": false,
   "marques": [
    "−1 Acc/Eva",
-   "−2",
-   "−3",
-   "−4"
+   "−2 Acc/Eva",
+   "−3 Acc/Eva",
+   "−4 Acc/Eva"
   ],
   "notes": "until end of 3 turns",
   "size": "",
@@ -1152,9 +1152,9 @@
   "accessory": false,
   "marques": [
    "+1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Acc",
+   "+3 Acc",
+   "+4 Acc"
   ],
   "notes": "[STAT]",
   "size": "",
@@ -1190,9 +1190,9 @@
   "accessory": false,
   "marques": [
    "−1 AP reload",
-   "−1",
-   "−2",
-   "−2"
+   "−1 AP reload",
+   "−2 AP reload",
+   "−2 AP reload"
   ],
   "notes": "[GEAR]",
   "size": "",
@@ -1215,9 +1215,9 @@
   "accessory": false,
   "marques": [
    "+1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Acc",
+   "+3 Acc",
+   "+4 Acc"
   ],
   "notes": "set up 2 AP, pack 1 AP [COND]",
   "size": "",
@@ -1254,9 +1254,9 @@
   "accessory": false,
   "marques": [
    "1 size smaller (concealment)",
-   "2",
-   "3",
-   "4"
+   "2 size smaller (concealment)",
+   "3 size smaller (concealment)",
+   "4 size smaller (concealment)"
   ],
   "notes": "3 AP to break down / reassemble",
   "size": "",
@@ -1305,9 +1305,9 @@
   "accessory": false,
   "marques": [
    "others −3 Acc & Stk",
-   "−6",
-   "−9",
-   "−12"
+   "others −6 Acc & Stk",
+   "others −9 Acc & Stk",
+   "others −12 Acc & Stk"
   ],
   "notes": "owner designated at crafting",
   "size": "",
@@ -1330,9 +1330,9 @@
   "accessory": false,
   "marques": [
    "+1 DC",
-   "+2",
-   "+3",
-   "+4"
+   "+2 DC",
+   "+3 DC",
+   "+4 DC"
   ],
   "notes": "[STAT]",
   "size": "",
@@ -1392,8 +1392,8 @@
   "accessory": false,
   "marques": [
    "range −75 ft when delivering",
-   "−50",
-   "−25",
+   "range −50 ft when delivering",
+   "range −25 ft when delivering",
    "none"
   ],
   "notes": "shoot potions/explosives/items",
@@ -1496,9 +1496,9 @@
   "accessory": false,
   "marques": [
    "other called-shot locations −8 Acc",
-   "−6",
-   "−4",
-   "−2"
+   "other called-shot locations −6 Acc",
+   "other called-shot locations −4 Acc",
+   "other called-shot locations −2 Acc"
   ],
   "notes": "chosen location's called shots cost no extra AP",
   "size": "",
@@ -1521,9 +1521,9 @@
   "accessory": false,
   "marques": [
    "light 25 ft",
-   "50",
-   "100",
-   "200"
+   "light 50 ft",
+   "light 100 ft",
+   "light 200 ft"
   ],
   "notes": "1 AP toggle",
   "size": "",
@@ -1546,9 +1546,9 @@
   "accessory": false,
   "marques": [
    "+1 size category vs sunder",
-   "+2",
-   "+3",
-   "+4"
+   "+2 size category vs sunder",
+   "+3 size category vs sunder",
+   "+4 size category vs sunder"
   ],
   "notes": "stackable",
   "size": "",
@@ -1570,9 +1570,9 @@
   "accessory": false,
   "marques": [
    "−5 Acc",
-   "−3",
-   "−1",
-   "0"
+   "−3 Acc",
+   "−1 Acc",
+   "0 Acc"
   ],
   "notes": "no reload time; +1 hand (two-handed → firing position); ammo weapons with reload ≤2 AP",
   "size": "",
@@ -1595,9 +1595,9 @@
   "accessory": false,
   "marques": [
    "+50 ft range",
-   "+100",
-   "+200",
-   "+300"
+   "+100 ft range",
+   "+200 ft range",
+   "+300 ft range"
   ],
   "notes": "stackable",
   "size": "",
@@ -1622,9 +1622,9 @@
   "accessory": false,
   "marques": [
    "owner regains 1 HP at refresh",
-   "2",
-   "3",
-   "4"
+   "owner regains 2 HP at refresh",
+   "owner regains 3 HP at refresh",
+   "owner regains 4 HP at refresh"
   ],
   "notes": "",
   "size": "",
@@ -1697,9 +1697,9 @@
   "accessory": true,
   "marques": [
    "+2 resist disarm",
-   "+4",
-   "+6",
-   "+8"
+   "+4 resist disarm",
+   "+6 resist disarm",
+   "+8 resist disarm"
   ],
   "notes": "own price table",
   "size": "",
@@ -1721,9 +1721,9 @@
   "accessory": false,
   "marques": [
    "+1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Acc",
+   "+3 Acc",
+   "+4 Acc"
   ],
   "notes": "[STAT]",
   "size": "",
@@ -1782,9 +1782,9 @@
   "accessory": false,
   "marques": [
    "+1 Stk on all called shots",
-   "+3",
-   "+5",
-   "+7"
+   "+3 Stk on all called shots",
+   "+5 Stk on all called shots",
+   "+7 Stk on all called shots"
   ],
   "notes": "[COND]",
   "size": "",
@@ -1808,9 +1808,9 @@
   "accessory": false,
   "marques": [
    "+1 unsoakable per extra AP after damaging hit",
-   "+2",
-   "+3",
-   "+4"
+   "+2 unsoakable per extra AP after damaging hit",
+   "+3 unsoakable per extra AP after damaging hit",
+   "+4 unsoakable per extra AP after damaging hit"
   ],
   "notes": "repeatable with remaining AP",
   "size": "",
@@ -1832,9 +1832,9 @@
   "accessory": false,
   "marques": [
    "1 size smaller",
-   "2",
-   "3",
-   "4"
+   "2 size smaller",
+   "3 size smaller",
+   "4 size smaller"
   ],
   "notes": "3 AP each way",
   "size": "",
@@ -1856,9 +1856,9 @@
   "accessory": false,
   "marques": [
    "−2 Stk until your next turn",
-   "−4",
-   "−6",
-   "−8"
+   "−4 Stk until your next turn",
+   "−6 Stk until your next turn",
+   "−8 Stk until your next turn"
   ],
   "notes": "1 AP reflexive; Brute resist lowers marque",
   "size": "",
@@ -1880,9 +1880,9 @@
   "accessory": false,
   "marques": [
    "others −3 Acc & Stk",
-   "−6",
-   "−9",
-   "−12"
+   "others −6 Acc & Stk",
+   "others −9 Acc & Stk",
+   "others −12 Acc & Stk"
   ],
   "notes": "",
   "size": "",
@@ -1980,9 +1980,9 @@
   "accessory": false,
   "marques": [
    "+1 AP to extinguish",
-   "+2",
-   "+3",
-   "+4"
+   "+2 AP to extinguish",
+   "+3 AP to extinguish",
+   "+4 AP to extinguish"
   ],
   "notes": "",
   "size": "",
@@ -2004,9 +2004,9 @@
   "accessory": false,
   "marques": [
    "+1 DC",
-   "+2",
-   "+3",
-   "+4"
+   "+2 DC",
+   "+3 DC",
+   "+4 DC"
   ],
   "notes": "[STAT]",
   "size": "",
@@ -2065,9 +2065,9 @@
   "accessory": false,
   "marques": [
    "swap 2 AP",
-   "2",
-   "1",
-   "1"
+   "swap 2 AP",
+   "swap 1 AP",
+   "swap 1 AP"
   ],
   "notes": "req. Interchangeable Parts",
   "size": "",
@@ -2089,9 +2089,9 @@
   "accessory": false,
   "marques": [
    "+1 unsoakable on hit",
-   "+2",
-   "+3",
-   "+4"
+   "+2 unsoakable on hit",
+   "+3 unsoakable on hit",
+   "+4 unsoakable on hit"
   ],
   "notes": "×2 vs metal armor or in water (×4 both)",
   "size": "",
@@ -2141,9 +2141,9 @@
   "accessory": false,
   "marques": [
    "arch range 25 ft",
-   "50",
-   "75",
-   "100"
+   "arch range 50 ft",
+   "arch range 75 ft",
+   "arch range 100 ft"
   ],
   "notes": "",
   "size": "",
@@ -2165,9 +2165,9 @@
   "accessory": false,
   "marques": [
    "holds 1 gas dose",
-   "2",
-   "3",
-   "4"
+   "holds 2 gas dose",
+   "holds 3 gas dose",
+   "holds 4 gas dose"
   ],
   "notes": "1 AP per dose released on hit; refill 3 AP",
   "size": "",
@@ -2239,9 +2239,9 @@
   "accessory": false,
   "marques": [
    "allies seeing it regain 1 HP at your refresh",
-   "2",
-   "2",
-   "3"
+   "allies seeing it regain 2 HP at your refresh",
+   "allies seeing it regain 2 HP at your refresh",
+   "allies seeing it regain 3 HP at your refresh"
   ],
   "notes": "no stacking",
   "size": "",
@@ -2263,9 +2263,9 @@
   "accessory": false,
   "marques": [
    "+2 DC vs automatons/vehicles/clockworks/structures",
-   "+4",
-   "+6",
-   "+8"
+   "+4 DC vs automatons/vehicles/clockworks/structures",
+   "+6 DC vs automatons/vehicles/clockworks/structures",
+   "+8 DC vs automatons/vehicles/clockworks/structures"
   ],
   "notes": "[COND]",
   "size": "",
@@ -2287,9 +2287,9 @@
   "accessory": false,
   "marques": [
    "−8 Acc while on",
-   "−6",
-   "−4",
-   "−2"
+   "−6 Acc while on",
+   "−4 Acc while on",
+   "−2 Acc while on"
   ],
   "notes": "attacks unsoakable vs wet/metal-armored; 1 AP toggle",
   "size": "",
@@ -2311,9 +2311,9 @@
   "accessory": false,
   "marques": [
    "−8 Acc on other locations",
-   "−6",
-   "−4",
-   "−2"
+   "−6 Acc on other locations",
+   "−4 Acc on other locations",
+   "−2 Acc on other locations"
   ],
   "notes": "",
   "size": "",
@@ -2335,9 +2335,9 @@
   "accessory": false,
   "marques": [
    "25 ft",
-   "50",
-   "100",
-   "200"
+   "50 ft",
+   "100 ft",
+   "200 ft"
   ],
   "notes": "",
   "size": "",
@@ -2359,9 +2359,9 @@
   "accessory": false,
   "marques": [
    "+2 Stk",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Stk",
+   "+6 Stk",
+   "+8 Stk"
   ],
   "notes": "[STAT]",
   "size": "",
@@ -2398,9 +2398,9 @@
   "accessory": false,
   "marques": [
    "+20 ft range",
-   "+30",
-   "+40",
-   "+60"
+   "+30 ft range",
+   "+40 ft range",
+   "+60 ft range"
   ],
   "notes": "",
   "size": "",
@@ -2422,9 +2422,9 @@
   "accessory": false,
   "marques": [
    "+5 ft reach",
-   "+5",
-   "+10",
-   "+10"
+   "+5 ft reach",
+   "+10 ft reach",
+   "+10 ft reach"
   ],
   "notes": "[GEAR]",
   "size": "",
@@ -2446,9 +2446,9 @@
   "accessory": false,
   "marques": [
    "+1 size vs sunder",
-   "+2",
-   "+3",
-   "+4"
+   "+2 size vs sunder",
+   "+3 size vs sunder",
+   "+4 size vs sunder"
   ],
   "notes": "",
   "size": "",
@@ -2472,8 +2472,8 @@
   "accessory": false,
   "marques": [
    "−30 ft range",
-   "−20",
-   "−10",
+   "−20 ft range",
+   "−10 ft range",
    "none"
   ],
   "notes": "returns to you",
@@ -2498,9 +2498,9 @@
   "accessory": false,
   "marques": [
    "owner +1 HP per refresh",
-   "2",
-   "3",
-   "4"
+   "owner +2 HP per refresh",
+   "owner +3 HP per refresh",
+   "owner +4 HP per refresh"
   ],
   "notes": "",
   "size": "",
@@ -2522,9 +2522,9 @@
   "accessory": false,
   "marques": [
    "+2 Stk on head/eye called shots",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Stk on head/eye called shots",
+   "+6 Stk on head/eye called shots",
+   "+8 Stk on head/eye called shots"
   ],
   "notes": "",
   "size": "",
@@ -2548,9 +2548,9 @@
   "accessory": false,
   "marques": [
    "non-owner takes 2 unsoakable per use",
-   "4",
-   "6",
-   "8"
+   "non-owner takes 4 unsoakable per use",
+   "non-owner takes 6 unsoakable per use",
+   "non-owner takes 8 unsoakable per use"
   ],
   "notes": "",
   "size": "",
@@ -2572,9 +2572,9 @@
   "accessory": false,
   "marques": [
    "−1 Eva until your next turn",
-   "−2",
-   "−3",
-   "−4"
+   "−2 Eva until your next turn",
+   "−3 Eva until your next turn",
+   "−4 Eva until your next turn"
   ],
   "notes": "1 AP reflexive; Brute resist",
   "size": "",
@@ -2624,9 +2624,9 @@
   "accessory": false,
   "marques": [
    "+2 on rolls to keep grab",
-   "+4",
-   "+6",
-   "+8"
+   "+4 on rolls to keep grab",
+   "+6 on rolls to keep grab",
+   "+8 on rolls to keep grab"
   ],
   "notes": "",
   "size": "",
@@ -2672,9 +2672,9 @@
   "accessory": true,
   "marques": [
    "+2 resist disarm",
-   "+4",
-   "+6",
-   "+8"
+   "+4 resist disarm",
+   "+6 resist disarm",
+   "+8 resist disarm"
   ],
   "notes": "",
   "size": "",
@@ -2696,9 +2696,9 @@
   "accessory": false,
   "marques": [
    "+1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Acc",
+   "+3 Acc",
+   "+4 Acc"
   ],
   "notes": "",
   "size": "",
@@ -2720,9 +2720,9 @@
   "accessory": false,
   "marques": [
    "1 size smaller",
-   "2",
-   "3",
-   "4"
+   "2 size smaller",
+   "3 size smaller",
+   "4 size smaller"
   ],
   "notes": "",
   "size": "",
@@ -2744,9 +2744,9 @@
   "accessory": false,
   "marques": [
    "others −3",
-   "−6",
-   "−9",
-   "−12"
+   "others −6",
+   "others −9",
+   "others −12"
   ],
   "notes": "",
   "size": "",
@@ -2768,9 +2768,9 @@
   "accessory": false,
   "marques": [
    "+1 DC",
-   "+2",
-   "+3",
-   "+4"
+   "+2 DC",
+   "+3 DC",
+   "+4 DC"
   ],
   "notes": "",
   "size": "",
@@ -2792,9 +2792,9 @@
   "accessory": false,
   "marques": [
    "+1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Acc",
+   "+3 Acc",
+   "+4 Acc"
   ],
   "notes": "set 2 AP, pack 1 AP",
   "size": "",
@@ -2840,9 +2840,9 @@
   "accessory": false,
   "marques": [
    "2 AP",
-   "2",
-   "1",
-   "1"
+   "2 AP",
+   "1 AP",
+   "1 AP"
   ],
   "notes": "",
   "size": "",
@@ -2864,9 +2864,9 @@
   "accessory": false,
   "marques": [
    "+2 Stk",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Stk",
+   "+6 Stk",
+   "+8 Stk"
   ],
   "notes": "",
   "size": "",
@@ -2888,9 +2888,9 @@
   "accessory": false,
   "marques": [
    "+2 Stk (torso called-shot effect only)",
-   "+4",
-   "+6",
-   "+10"
+   "+4 Stk (torso called-shot effect only)",
+   "+6 Stk (torso called-shot effect only)",
+   "+10 Stk (torso called-shot effect only)"
   ],
   "notes": "",
   "size": "",
@@ -2912,9 +2912,9 @@
   "accessory": false,
   "marques": [
    "+1 size",
-   "+2",
-   "+3",
-   "+4"
+   "+2 size",
+   "+3 size",
+   "+4 size"
   ],
   "notes": "",
   "size": "",
@@ -2936,9 +2936,9 @@
   "accessory": false,
   "marques": [
    "+50 ft",
-   "+100",
-   "+200",
-   "+300"
+   "+100 ft",
+   "+200 ft",
+   "+300 ft"
   ],
   "notes": "",
   "size": "",
@@ -3056,9 +3056,9 @@
   "accessory": false,
   "marques": [
    "2 heat dmg within 5 ft (you take half)",
-   "4",
-   "6",
-   "8"
+   "4 heat dmg within 5 ft (you take half)",
+   "6 heat dmg within 5 ft (you take half)",
+   "8 heat dmg within 5 ft (you take half)"
   ],
   "notes": "1 AP",
   "size": "",
@@ -3104,9 +3104,9 @@
   "accessory": false,
   "marques": [
    "+2 Def vs firearms",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Def vs firearms",
+   "+6 Def vs firearms",
+   "+8 Def vs firearms"
   ],
   "notes": "[COND]",
   "size": "",
@@ -3142,9 +3142,9 @@
   "accessory": false,
   "marques": [
    "+2 Cunning to hide outdoors",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Cunning to hide outdoors",
+   "+6 Cunning to hide outdoors",
+   "+8 Cunning to hide outdoors"
   ],
   "notes": "",
   "size": "",
@@ -3190,9 +3190,9 @@
   "accessory": false,
   "marques": [
    "+1 soak class",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak class",
+   "+3 soak class",
+   "+4 soak class"
   ],
   "notes": "[STAT:Soak]",
   "size": "",
@@ -3227,9 +3227,9 @@
   "accessory": false,
   "marques": [
    "+2 Def",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Def",
+   "+6 Def",
+   "+8 Def"
   ],
   "notes": "[STAT:Def]",
   "size": "",
@@ -3264,9 +3264,9 @@
   "accessory": false,
   "marques": [
    "+2 soak vs electrical",
-   "+4",
-   "+6",
-   "+8"
+   "+4 soak vs electrical",
+   "+6 soak vs electrical",
+   "+8 soak vs electrical"
   ],
   "notes": "electricity becomes soakable",
   "size": "",
@@ -3288,9 +3288,9 @@
   "accessory": false,
   "marques": [
    "+1 soak vs fire",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak vs fire",
+   "+3 soak vs fire",
+   "+4 soak vs fire"
   ],
   "notes": "fire soakable; fully soaked → no burns/fire",
   "size": "",
@@ -3336,9 +3336,9 @@
   "accessory": false,
   "marques": [
    "4 unsoakable to grabber",
-   "8",
-   "12",
-   "16"
+   "8 unsoakable to grabber",
+   "12 unsoakable to grabber",
+   "16 unsoakable to grabber"
   ],
   "notes": "1 AP",
   "size": "",
@@ -3360,9 +3360,9 @@
   "accessory": false,
   "marques": [
    "holds 1 potion",
-   "2",
-   "3",
-   "4"
+   "holds 2 potion",
+   "holds 3 potion",
+   "holds 4 potion"
   ],
   "notes": "inject 0 AP, reload 5 AP",
   "size": "",
@@ -3384,9 +3384,9 @@
   "accessory": false,
   "marques": [
    "+5 ft speed",
-   "+10",
-   "+10",
-   "+15"
+   "+10 ft speed",
+   "+10 ft speed",
+   "+15 ft speed"
   ],
   "notes": "[STAT:Spd]",
   "size": "",
@@ -3445,9 +3445,9 @@
   "accessory": false,
   "marques": [
    "grabber takes 3 unsoakable (again each turn)",
-   "6",
-   "9",
-   "12"
+   "grabber takes 6 unsoakable (again each turn)",
+   "grabber takes 9 unsoakable (again each turn)",
+   "grabber takes 12 unsoakable (again each turn)"
   ],
   "notes": "",
   "size": "",
@@ -3469,9 +3469,9 @@
   "accessory": false,
   "marques": [
    "+2 resist called shots to one chosen area",
-   "+4",
-   "+6",
-   "+8"
+   "+4 resist called shots to one chosen area",
+   "+6 resist called shots to one chosen area",
+   "+8 resist called shots to one chosen area"
   ],
   "notes": "",
   "size": "",
@@ -3517,9 +3517,9 @@
   "accessory": false,
   "marques": [
    "+2 to evade/resist grabs",
-   "+4",
-   "+6",
-   "+8"
+   "+4 to evade/resist grabs",
+   "+6 to evade/resist grabs",
+   "+8 to evade/resist grabs"
   ],
   "notes": "",
   "size": "",
@@ -3541,9 +3541,9 @@
   "accessory": false,
   "marques": [
    "poor vision (−2 Acc/Eva) within 5 ft",
-   "10",
-   "15",
-   "20"
+   "poor vision (−2 Acc/Eva) within 10 ft",
+   "poor vision (−2 Acc/Eva) within 15 ft",
+   "poor vision (−2 Acc/Eva) within 20 ft"
   ],
   "notes": "1 AP toggle off",
   "size": "",
@@ -3589,9 +3589,9 @@
   "accessory": false,
   "marques": [
    "+1 soak",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak",
+   "+3 soak",
+   "+4 soak"
   ],
   "notes": "stacks with Brickhouse",
   "size": "",
@@ -3613,9 +3613,9 @@
   "accessory": false,
   "marques": [
    "repairs 1 wound/turn",
-   "2",
-   "3",
-   "4"
+   "repairs 2 wound/turn",
+   "repairs 3 wound/turn",
+   "repairs 4 wound/turn"
   ],
   "notes": "",
   "size": "",
@@ -3637,9 +3637,9 @@
   "accessory": false,
   "marques": [
    "+1 soak",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak",
+   "+3 soak",
+   "+4 soak"
   ],
   "notes": "",
   "size": "",
@@ -3685,9 +3685,9 @@
   "accessory": false,
   "marques": [
    "+3 on Automaton Repairs rolls",
-   "+6",
-   "+9",
-   "+12"
+   "+6 on Automaton Repairs rolls",
+   "+9 on Automaton Repairs rolls",
+   "+12 on Automaton Repairs rolls"
   ],
   "notes": "",
   "size": "",
@@ -3709,9 +3709,9 @@
   "accessory": false,
   "marques": [
    "fly 5 ft per AP",
-   "10",
-   "15",
-   "25"
+   "fly 10 ft per AP",
+   "fly 15 ft per AP",
+   "fly 25 ft per AP"
   ],
   "notes": "armor penalties apply",
   "size": "",
@@ -3757,9 +3757,9 @@
   "accessory": false,
   "marques": [
    "enter/exit 4 AP",
-   "3",
-   "2",
-   "1"
+   "enter/exit 3 AP",
+   "enter/exit 2 AP",
+   "enter/exit 1 AP"
   ],
   "notes": "capacity = spaces occupied; passengers untargetable",
   "size": "",
@@ -3781,9 +3781,9 @@
   "accessory": false,
   "marques": [
    "rebuilt to 10 wounds after defeat (next breather)",
-   "20",
-   "30",
-   "40"
+   "rebuilt to 20 wounds after defeat (next breather)",
+   "rebuilt to 30 wounds after defeat (next breather)",
+   "rebuilt to 40 wounds after defeat (next breather)"
   ],
   "notes": "",
   "size": "",
@@ -3805,9 +3805,9 @@
   "accessory": false,
   "marques": [
    "+5 to fool Cunning",
-   "+10",
-   "+15",
-   "+20"
+   "+10 to fool Cunning",
+   "+15 to fool Cunning",
+   "+20 to fool Cunning"
   ],
   "notes": "",
   "size": "",
@@ -3829,9 +3829,9 @@
   "accessory": false,
   "marques": [
    "+10 wounds",
-   "+20",
-   "+30",
-   "+40"
+   "+20 wounds",
+   "+30 wounds",
+   "+40 wounds"
   ],
   "notes": "",
   "size": "",
@@ -3853,9 +3853,9 @@
   "accessory": false,
   "marques": [
    "+10 wounds",
-   "+20",
-   "+30",
-   "+40"
+   "+20 wounds",
+   "+30 wounds",
+   "+40 wounds"
   ],
   "notes": "",
   "size": "",
@@ -3901,9 +3901,9 @@
   "accessory": false,
   "marques": [
    "+1 soak while hunkered",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak while hunkered",
+   "+3 soak while hunkered",
+   "+4 soak while hunkered"
   ],
   "notes": "2 AP; acts as medium cover (+6 Eva vs ranged)",
   "size": "",
@@ -4021,9 +4021,9 @@
   "accessory": false,
   "marques": [
    "+3 Brute",
-   "+12",
-   "+31",
-   "+47"
+   "+12 Brute",
+   "+31 Brute",
+   "+47 Brute"
   ],
   "notes": "",
   "size": "",
@@ -4045,9 +4045,9 @@
   "accessory": false,
   "marques": [
    "+3 Dex",
-   "+12",
-   "+31",
-   "+47"
+   "+12 Dex",
+   "+31 Dex",
+   "+47 Dex"
   ],
   "notes": "",
   "size": "",
@@ -4093,9 +4093,9 @@
   "accessory": false,
   "marques": [
    "specialties use 2 skill pts",
-   "4",
-   "10",
-   "18"
+   "specialties use 4 skill pts",
+   "specialties use 10 skill pts",
+   "specialties use 18 skill pts"
   ],
   "notes": "",
   "size": "",
@@ -4143,9 +4143,9 @@
   "accessory": false,
   "marques": [
    "fly 5 ft/AP",
-   "10",
-   "15",
-   "20"
+   "fly 10 ft/AP",
+   "fly 15 ft/AP",
+   "fly 20 ft/AP"
   ],
   "notes": "",
   "size": "",
@@ -4167,9 +4167,9 @@
   "accessory": false,
   "marques": [
    "+3 Cunning",
-   "+12",
-   "+31",
-   "+47"
+   "+12 Cunning",
+   "+31 Cunning",
+   "+47 Cunning"
   ],
   "notes": "",
   "size": "",
@@ -4191,9 +4191,9 @@
   "accessory": false,
   "marques": [
    "8 electric dmg to anyone within 20 ft dealing it bleed",
-   "16",
-   "24",
-   "32"
+   "16 electric dmg to anyone within 20 ft dealing it bleed",
+   "24 electric dmg to anyone within 20 ft dealing it bleed",
+   "32 electric dmg to anyone within 20 ft dealing it bleed"
   ],
   "notes": "no evade",
   "size": "",
@@ -4239,9 +4239,9 @@
   "accessory": false,
   "marques": [
    "+2 Acc",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Acc",
+   "+6 Acc",
+   "+8 Acc"
   ],
   "notes": "",
   "size": "",
@@ -4263,9 +4263,9 @@
   "accessory": false,
   "marques": [
    "4 AP",
-   "3",
-   "2",
-   "1"
+   "3 AP",
+   "2 AP",
+   "1 AP"
   ],
   "notes": "",
   "size": "",
@@ -4287,9 +4287,9 @@
   "accessory": false,
   "marques": [
    "10 wounds",
-   "20",
-   "30",
-   "40"
+   "20 wounds",
+   "30 wounds",
+   "40 wounds"
   ],
   "notes": "",
   "size": "",
@@ -4335,9 +4335,9 @@
   "accessory": false,
   "marques": [
    "+3 Sciences",
-   "+12",
-   "+31",
-   "+47"
+   "+12 Sciences",
+   "+31 Sciences",
+   "+47 Sciences"
   ],
   "notes": "",
   "size": "",
@@ -4383,9 +4383,9 @@
   "accessory": false,
   "marques": [
    "+2 Eva",
-   "+3",
-   "+4",
-   "+5"
+   "+3 Eva",
+   "+4 Eva",
+   "+5 Eva"
   ],
   "notes": "",
   "size": "",
@@ -4409,9 +4409,9 @@
   "accessory": false,
   "marques": [
    "+3 Spirit",
-   "+12",
-   "+31",
-   "+47"
+   "+12 Spirit",
+   "+31 Spirit",
+   "+47 Spirit"
   ],
   "notes": "",
   "size": "",
@@ -4433,9 +4433,9 @@
   "accessory": false,
   "marques": [
    "+2 Acc",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Acc",
+   "+6 Acc",
+   "+8 Acc"
   ],
   "notes": "",
   "size": "",
@@ -4483,9 +4483,9 @@
   "accessory": false,
   "marques": [
    "+3 Acc",
-   "+6",
-   "+9",
-   "+12"
+   "+6 Acc",
+   "+9 Acc",
+   "+12 Acc"
   ],
   "notes": "while avenging",
   "size": "",
@@ -4509,9 +4509,9 @@
   "accessory": false,
   "marques": [
    "+4 Stk",
-   "+8",
-   "+12",
-   "+16"
+   "+8 Stk",
+   "+12 Stk",
+   "+16 Stk"
   ],
   "notes": "",
   "size": "",
@@ -4557,9 +4557,9 @@
   "accessory": false,
   "marques": [
    "+3 Acc",
-   "+6",
-   "+9",
-   "+12"
+   "+6 Acc",
+   "+9 Acc",
+   "+12 Acc"
   ],
   "notes": "",
   "size": "",
@@ -4581,9 +4581,9 @@
   "accessory": false,
   "marques": [
    "+4 Stk",
-   "+8",
-   "+12",
-   "+16"
+   "+8 Stk",
+   "+12 Stk",
+   "+16 Stk"
   ],
   "notes": "",
   "size": "",
@@ -4653,9 +4653,9 @@
   "accessory": false,
   "marques": [
    "+10 ft per move",
-   "+20",
-   "+30",
-   "+40"
+   "+20 ft per move",
+   "+30 ft per move",
+   "+40 ft per move"
   ],
   "notes": "",
   "size": "",
@@ -4727,9 +4727,9 @@
   "accessory": false,
   "marques": [
    "+1 additional guide",
-   "+2",
-   "+3",
-   "+4"
+   "+2 additional guide",
+   "+3 additional guide",
+   "+4 additional guide"
   ],
   "notes": "",
   "size": "",
@@ -4751,9 +4751,9 @@
   "accessory": false,
   "marques": [
    "+5 ft",
-   "+10",
-   "+15",
-   "+25"
+   "+10 ft",
+   "+15 ft",
+   "+25 ft"
   ],
   "notes": "",
   "size": "",
@@ -4799,9 +4799,9 @@
   "accessory": false,
   "marques": [
    "+1 protectee",
-   "+2",
-   "+3",
-   "+4"
+   "+2 protectee",
+   "+3 protectee",
+   "+4 protectee"
   ],
   "notes": "",
   "size": "",
@@ -4823,9 +4823,9 @@
   "accessory": false,
   "marques": [
    "+4 Def while protecting",
-   "+8",
-   "+12",
-   "+16"
+   "+8 Def while protecting",
+   "+12 Def while protecting",
+   "+16 Def while protecting"
   ],
   "notes": "",
   "size": "",
@@ -4847,9 +4847,9 @@
   "accessory": false,
   "marques": [
    "+1 soak while protecting",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak while protecting",
+   "+3 soak while protecting",
+   "+4 soak while protecting"
   ],
   "notes": "",
   "size": "",
@@ -4871,9 +4871,9 @@
   "accessory": false,
   "marques": [
    "+10 wounds",
-   "+20",
-   "+30",
-   "+40"
+   "+20 wounds",
+   "+30 wounds",
+   "+40 wounds"
   ],
   "notes": "",
   "size": "",
@@ -4895,9 +4895,9 @@
   "accessory": false,
   "marques": [
    "+10 wounds",
-   "+20",
-   "+30",
-   "+40"
+   "+20 wounds",
+   "+30 wounds",
+   "+40 wounds"
   ],
   "notes": "",
   "size": "",
@@ -4919,9 +4919,9 @@
   "accessory": false,
   "marques": [
    "8 dmg to whoever makes it bleed (10 ft, no evade)",
-   "16",
-   "24",
-   "32"
+   "16 dmg to whoever makes it bleed (10 ft, no evade)",
+   "24 dmg to whoever makes it bleed (10 ft, no evade)",
+   "32 dmg to whoever makes it bleed (10 ft, no evade)"
   ],
   "notes": "",
   "size": "",
@@ -4967,9 +4967,9 @@
   "accessory": false,
   "marques": [
    "5 ft/AP",
-   "10",
-   "15",
-   "20"
+   "10 ft/AP",
+   "15 ft/AP",
+   "20 ft/AP"
   ],
   "notes": "",
   "size": "",
@@ -5015,9 +5015,9 @@
   "accessory": false,
   "marques": [
    "4 AP",
-   "3",
-   "2",
-   "1"
+   "3 AP",
+   "2 AP",
+   "1 AP"
   ],
   "notes": "",
   "size": "",
@@ -5087,9 +5087,9 @@
   "accessory": false,
   "marques": [
    "holds 2 acid doses",
-   "3",
-   "4",
-   "6"
+   "holds 3 acid doses",
+   "holds 4 acid doses",
+   "holds 6 acid doses"
   ],
   "notes": "unarmed attack sprays 1 dose; refill 3 AP",
   "size": "",
@@ -5111,9 +5111,9 @@
   "accessory": false,
   "marques": [
    "push 5 ft (25 ft range, no evade)",
-   "5",
-   "10",
-   "15"
+   "push 5 ft (25 ft range, no evade)",
+   "push 10 ft (25 ft range, no evade)",
+   "push 15 ft (25 ft range, no evade)"
   ],
   "notes": "1 AP; Brute resist",
   "size": "",
@@ -5137,9 +5137,9 @@
   "accessory": false,
   "marques": [
    "+2 heat/cold dmg",
-   "4",
-   "6",
-   "8"
+   "+4 heat/cold dmg",
+   "+6 heat/cold dmg",
+   "+8 heat/cold dmg"
   ],
   "notes": "1 AP toggle",
   "size": "",
@@ -5163,9 +5163,9 @@
   "accessory": false,
   "marques": [
    "+5 ft range (+5 ft push)",
-   "+10",
-   "+15",
-   "+20"
+   "+10 ft range (+5 ft push)",
+   "+15 ft range (+5 ft push)",
+   "+20 ft range (+5 ft push)"
   ],
   "notes": "",
   "size": "",
@@ -5187,9 +5187,9 @@
   "accessory": false,
   "marques": [
    "+2 evade vs grabs on it",
-   "+4",
-   "+6",
-   "+8"
+   "+4 evade vs grabs on it",
+   "+6 evade vs grabs on it",
+   "+8 evade vs grabs on it"
   ],
   "notes": "",
   "size": "",
@@ -5211,9 +5211,9 @@
   "accessory": false,
   "marques": [
    "+2 Brute (rolls using it)",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Brute (rolls using it)",
+   "+6 Brute (rolls using it)",
+   "+8 Brute (rolls using it)"
   ],
   "notes": "",
   "size": "",
@@ -5238,9 +5238,9 @@
   "accessory": false,
   "marques": [
    "toucher −3 resist vs heat/cold effects",
-   "−6",
-   "−9",
-   "−12"
+   "toucher −6 resist vs heat/cold effects",
+   "toucher −9 resist vs heat/cold effects",
+   "toucher −12 resist vs heat/cold effects"
   ],
   "notes": "until breather",
   "size": "",
@@ -5338,9 +5338,9 @@
   "accessory": false,
   "marques": [
    "adjacent −2 Eva",
-   "−4",
-   "−6",
-   "−8"
+   "adjacent −4 Eva",
+   "adjacent −6 Eva",
+   "adjacent −8 Eva"
   ],
   "notes": "3 AP; Brute resist",
   "size": "",
@@ -5386,8 +5386,8 @@
   "accessory": false,
   "marques": [
    "reactivate 2 AP",
-   "1",
-   "0",
+   "reactivate 1 AP",
+   "reactivate 0 AP",
    "0 reflexive"
   ],
   "notes": "no sub-zero penalties; extinguished by water; not wood",
@@ -5489,9 +5489,9 @@
   "accessory": false,
   "marques": [
    "2 heat dmg on contact",
-   "4",
-   "6",
-   "8"
+   "4 heat dmg on contact",
+   "6 heat dmg on contact",
+   "8 heat dmg on contact"
   ],
   "notes": "",
   "size": "",
@@ -5515,9 +5515,9 @@
   "accessory": false,
   "marques": [
    "blind 1 turn (25 ft)",
-   "2",
-   "3",
-   "4"
+   "blind 2 turn (25 ft)",
+   "blind 3 turn (25 ft)",
+   "blind 4 turn (25 ft)"
   ],
   "notes": "1 AP; Cunning resist",
   "size": "",
@@ -5539,9 +5539,9 @@
   "accessory": false,
   "marques": [
    "holds 1 poison dose",
-   "2",
-   "3",
-   "4"
+   "holds 2 poison dose",
+   "holds 3 poison dose",
+   "holds 4 poison dose"
   ],
   "notes": "unarmed attack injects; refill 3 AP",
   "size": "",
@@ -5563,9 +5563,9 @@
   "accessory": false,
   "marques": [
    "+2 Dex (rolls using it)",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Dex (rolls using it)",
+   "+6 Dex (rolls using it)",
+   "+8 Dex (rolls using it)"
   ],
   "notes": "",
   "size": "",
@@ -5587,9 +5587,9 @@
   "accessory": false,
   "marques": [
    "+4 resist called shots on it",
-   "+8",
-   "+12",
-   "+16"
+   "+8 resist called shots on it",
+   "+12 resist called shots on it",
+   "+16 resist called shots on it"
   ],
   "notes": "",
   "size": "",
@@ -5611,9 +5611,9 @@
   "accessory": false,
   "marques": [
    "remove in 4 AP",
-   "3",
-   "2",
-   "1"
+   "remove in 3 AP",
+   "remove in 2 AP",
+   "remove in 1 AP"
   ],
   "notes": "",
   "size": "",
@@ -5685,9 +5685,9 @@
   "accessory": false,
   "marques": [
    "+5 speed",
-   "+10",
-   "+10",
-   "+15"
+   "+10 speed",
+   "+10 speed",
+   "+15 speed"
   ],
   "notes": "[STAT:Spd]",
   "size": "",
@@ -5794,9 +5794,9 @@
   "accessory": false,
   "marques": [
    "grabbed/grabbing victims 1 heat/turn",
-   "2",
-   "3",
-   "4"
+   "grabbed/grabbing victims 2 heat/turn",
+   "grabbed/grabbing victims 3 heat/turn",
+   "grabbed/grabbing victims 4 heat/turn"
   ],
   "notes": "",
   "size": "",
@@ -5818,9 +5818,9 @@
   "accessory": false,
   "marques": [
    "+2 Cunning hiding (unclothed)/disguise",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Cunning hiding (unclothed)/disguise",
+   "+6 Cunning hiding (unclothed)/disguise",
+   "+8 Cunning hiding (unclothed)/disguise"
   ],
   "notes": "1 AP to change",
   "size": "",
@@ -5890,9 +5890,9 @@
   "accessory": false,
   "marques": [
    "+3 HP",
-   "+6",
-   "+9",
-   "+12"
+   "+6 HP",
+   "+9 HP",
+   "+12 HP"
   ],
   "notes": "[STAT:HP]",
   "size": "",
@@ -5928,8 +5928,8 @@
   "marques": [
    "gain 1 extra AP (stunned equally next refresh)",
    "up to 2",
-   "2",
-   "3"
+   "up to 2",
+   "up to 3"
   ],
   "notes": "",
   "size": "",
@@ -5951,9 +5951,9 @@
   "accessory": false,
   "marques": [
    "+2 Brute vs called shots",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Brute vs called shots",
+   "+6 Brute vs called shots",
+   "+8 Brute vs called shots"
   ],
   "notes": "[COND]",
   "size": "",
@@ -5975,9 +5975,9 @@
   "accessory": false,
   "marques": [
    "+2 soak vs fire, never denied defense on fire",
-   "+3",
-   "+4",
-   "+5"
+   "+3 soak vs fire, never denied defense on fire",
+   "+4 soak vs fire, never denied defense on fire",
+   "+5 soak vs fire, never denied defense on fire"
   ],
   "notes": "[COND]",
   "size": "",
@@ -6023,9 +6023,9 @@
   "accessory": false,
   "marques": [
    "+4 resist bio-zappers; negates cosmetic changes",
-   "+8",
-   "+12",
-   "+16"
+   "+8 resist bio-zappers; negates cosmetic changes",
+   "+12 resist bio-zappers; negates cosmetic changes",
+   "+16 resist bio-zappers; negates cosmetic changes"
   ],
   "notes": "",
   "size": "",
@@ -6047,9 +6047,9 @@
   "accessory": false,
   "marques": [
    "+4 Brute vs inhaled things",
-   "+8",
-   "+12",
-   "+16"
+   "+8 Brute vs inhaled things",
+   "+12 Brute vs inhaled things",
+   "+16 Brute vs inhaled things"
   ],
   "notes": "",
   "size": "",
@@ -6071,9 +6071,9 @@
   "accessory": false,
   "marques": [
    "+3 disguise",
-   "+5",
-   "+7",
-   "+9"
+   "+5 disguise",
+   "+7 disguise",
+   "+9 disguise"
   ],
   "notes": "dents when hit",
   "size": "",
@@ -6095,9 +6095,9 @@
   "accessory": false,
   "marques": [
    "blood as ammo at −3 Acc",
-   "−2",
-   "−1",
-   "0"
+   "blood as ammo at −2 Acc",
+   "blood as ammo at −1 Acc",
+   "blood as ammo at 0 Acc"
   ],
   "notes": "",
   "size": "",
@@ -6119,9 +6119,9 @@
   "accessory": false,
   "marques": [
    "+3 Sciences attribute",
-   "+6",
-   "+9",
-   "+12"
+   "+6 Sciences attribute",
+   "+9 Sciences attribute",
+   "+12 Sciences attribute"
   ],
   "notes": "[STAT:Sciences]",
   "size": "",
@@ -6180,9 +6180,9 @@
   "accessory": false,
   "marques": [
    "+1 max wounds",
-   "+2",
-   "+3",
-   "+4"
+   "+2 max wounds",
+   "+3 max wounds",
+   "+4 max wounds"
   ],
   "notes": "[STAT:Wnd]",
   "size": "",
@@ -6243,9 +6243,9 @@
   "accessory": false,
   "marques": [
    "throw needles (light throwing attack, DC 3), 10 ft",
-   "15",
-   "20",
-   "25"
+   "throw needles (light throwing attack, DC 15), 10 ft",
+   "throw needles (light throwing attack, DC 20), 10 ft",
+   "throw needles (light throwing attack, DC 25), 10 ft"
   ],
   "notes": "no draw needed",
   "size": "",
@@ -6267,9 +6267,9 @@
   "accessory": false,
   "marques": [
    "+5 Cunning to pass as a robot",
-   "+10",
-   "+15",
-   "+20"
+   "+10 Cunning to pass as a robot",
+   "+15 Cunning to pass as a robot",
+   "+20 Cunning to pass as a robot"
   ],
   "notes": "",
   "size": "",
@@ -6293,9 +6293,9 @@
   "accessory": false,
   "marques": [
    "grabbed/grappled foe takes 2 unsoakable/turn",
-   "3",
-   "4",
-   "5"
+   "grabbed/grappled foe takes 3 unsoakable/turn",
+   "grabbed/grappled foe takes 4 unsoakable/turn",
+   "grabbed/grappled foe takes 5 unsoakable/turn"
   ],
   "notes": "",
   "size": "",
@@ -6317,9 +6317,9 @@
   "accessory": false,
   "marques": [
    "+2 on all Spirit resists",
-   "+4",
-   "+6",
-   "+8"
+   "+4 on all Spirit resists",
+   "+6 on all Spirit resists",
+   "+8 on all Spirit resists"
   ],
   "notes": "[COND]",
   "size": "",
@@ -6341,9 +6341,9 @@
   "accessory": false,
   "marques": [
    "+1 Brute",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Brute",
+   "+3 Brute",
+   "+4 Brute"
   ],
   "notes": "[STAT:Brute]",
   "size": "",
@@ -6378,9 +6378,9 @@
   "accessory": false,
   "marques": [
    "+1 wound recovered/day; wound effects heal 2× faster",
-   "+2",
-   "+3",
-   "+4"
+   "+2 wound recovered/day; wound effects heal 2× faster",
+   "+3 wound recovered/day; wound effects heal 2× faster",
+   "+4 wound recovered/day; wound effects heal 2× faster"
   ],
   "notes": "",
   "size": "",
@@ -6402,9 +6402,9 @@
   "accessory": false,
   "marques": [
    "+1 soak class (natural)",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak class (natural)",
+   "+3 soak class (natural)",
+   "+4 soak class (natural)"
   ],
   "notes": "[STAT:Soak]",
   "size": "",
@@ -6439,9 +6439,9 @@
   "accessory": false,
   "marques": [
    "+4 Notice",
-   "+8",
-   "+12",
-   "+16"
+   "+8 Notice",
+   "+12 Notice",
+   "+16 Notice"
   ],
   "notes": "[COND]",
   "size": "",
@@ -6463,9 +6463,9 @@
   "accessory": false,
   "marques": [
    "+4 for others diagnosing you",
-   "+8",
-   "+12",
-   "+16"
+   "+8 for others diagnosing you",
+   "+12 for others diagnosing you",
+   "+16 for others diagnosing you"
   ],
   "notes": "",
   "size": "",
@@ -6487,9 +6487,9 @@
   "accessory": false,
   "marques": [
    "+2 Priority",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Priority",
+   "+6 Priority",
+   "+8 Priority"
   ],
   "notes": "[STAT:Pri]",
   "size": "",
@@ -6548,9 +6548,9 @@
   "accessory": false,
   "marques": [
    "+4 Dex to break grabs",
-   "+8",
-   "+12",
-   "+16"
+   "+8 Dex to break grabs",
+   "+12 Dex to break grabs",
+   "+16 Dex to break grabs"
   ],
   "notes": "",
   "size": "",
@@ -6572,9 +6572,9 @@
   "accessory": false,
   "marques": [
    "limbs can't be severed/broken; −10 speed",
-   "−10",
-   "−5",
-   "0"
+   "limbs can't be severed/broken; −10 speed",
+   "limbs can't be severed/broken; −5 speed",
+   "limbs can't be severed/broken; 0 speed"
   ],
   "notes": "[STAT:Spd]",
   "size": "",
@@ -6657,9 +6657,9 @@
   "accessory": false,
   "marques": [
    "+1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Acc",
+   "+3 Acc",
+   "+4 Acc"
   ],
   "notes": "",
   "size": "",
@@ -6705,8 +6705,8 @@
   "accessory": false,
   "marques": [
    "patching stops only 3 bleed",
-   "2",
-   "1",
+   "patching stops only 2 bleed",
+   "patching stops only 1 bleed",
    "only at breather"
   ],
   "notes": "",
@@ -6729,9 +6729,9 @@
   "accessory": false,
   "marques": [
    "1 unsoakable per AP spent",
-   "1",
-   "2",
-   "2"
+   "1 unsoakable per AP spent",
+   "2 unsoakable per AP spent",
+   "2 unsoakable per AP spent"
   ],
   "notes": "",
   "size": "",
@@ -6753,9 +6753,9 @@
   "accessory": false,
   "marques": [
    "1 size smaller",
-   "2",
-   "3",
-   "4"
+   "2 size smaller",
+   "3 size smaller",
+   "4 size smaller"
   ],
   "notes": "",
   "size": "",
@@ -6777,9 +6777,9 @@
   "accessory": false,
   "marques": [
    "−3 Brute rolls",
-   "−6",
-   "−9",
-   "−12"
+   "−6 Brute rolls",
+   "−9 Brute rolls",
+   "−12 Brute rolls"
   ],
   "notes": "",
   "size": "",
@@ -6801,9 +6801,9 @@
   "accessory": false,
   "marques": [
    "others −3 Acc",
-   "−6",
-   "−9",
-   "−12"
+   "others −6 Acc",
+   "others −9 Acc",
+   "others −12 Acc"
   ],
   "notes": "",
   "size": "",
@@ -6849,9 +6849,9 @@
   "accessory": false,
   "marques": [
    "−2 Stk",
-   "−4",
-   "−6",
-   "−8"
+   "−4 Stk",
+   "−6 Stk",
+   "−8 Stk"
   ],
   "notes": "",
   "size": "",
@@ -6873,9 +6873,9 @@
   "accessory": false,
   "marques": [
    "−2 Spirit rolls",
-   "−4",
-   "−6",
-   "−8"
+   "−4 Spirit rolls",
+   "−6 Spirit rolls",
+   "−8 Spirit rolls"
   ],
   "notes": "",
   "size": "",
@@ -6921,9 +6921,9 @@
   "accessory": false,
   "marques": [
    "1 essence slot off",
-   "2",
-   "3",
-   "4"
+   "2 essence slot off",
+   "3 essence slot off",
+   "4 essence slot off"
   ],
   "notes": "",
   "size": "",
@@ -6945,9 +6945,9 @@
   "accessory": false,
   "marques": [
    "max HP −5",
-   "−10",
-   "−15",
-   "−20"
+   "max HP −10",
+   "max HP −15",
+   "max HP −20"
   ],
   "notes": "",
   "size": "",
@@ -6969,9 +6969,9 @@
   "accessory": false,
   "marques": [
    "range 50 ft",
-   "75",
-   "100",
-   "150"
+   "range 75 ft",
+   "range 100 ft",
+   "range 150 ft"
   ],
   "notes": "",
   "size": "",
@@ -7017,9 +7017,9 @@
   "accessory": false,
   "marques": [
    "soak class −1 (min 0)",
-   "−2",
-   "−3",
-   "−4"
+   "soak class −2 (min 0)",
+   "soak class −3 (min 0)",
+   "soak class −4 (min 0)"
   ],
   "notes": "",
   "size": "",
@@ -7041,9 +7041,9 @@
   "accessory": false,
   "marques": [
    "−2 Def (armored targets only)",
-   "−4",
-   "−6",
-   "−8"
+   "−4 Def (armored targets only)",
+   "−6 Def (armored targets only)",
+   "−8 Def (armored targets only)"
   ],
   "notes": "",
   "size": "",
@@ -7065,9 +7065,9 @@
   "accessory": false,
   "marques": [
    "dropped 1 priority slot",
-   "2",
-   "3",
-   "4"
+   "dropped 2 priority slot",
+   "dropped 3 priority slot",
+   "dropped 4 priority slot"
   ],
   "notes": "",
   "size": "",
@@ -7113,9 +7113,9 @@
   "accessory": false,
   "marques": [
    "−2 Dex rolls",
-   "−4",
-   "−6",
-   "−8"
+   "−4 Dex rolls",
+   "−6 Dex rolls",
+   "−8 Dex rolls"
   ],
   "notes": "",
   "size": "",
@@ -7137,9 +7137,9 @@
   "accessory": false,
   "marques": [
    "target −2 to resist",
-   "−4",
-   "−6",
-   "−8"
+   "target −4 to resist",
+   "target −6 to resist",
+   "target −8 to resist"
   ],
   "notes": "",
   "size": "",
@@ -7209,9 +7209,9 @@
   "accessory": false,
   "marques": [
    "2 settings ready",
-   "3",
-   "4",
-   "5"
+   "3 settings ready",
+   "4 settings ready",
+   "5 settings ready"
   ],
   "notes": "",
   "size": "",
@@ -7233,9 +7233,9 @@
   "accessory": false,
   "marques": [
    "−2 Acc with firearms/crossbows",
-   "−4",
-   "−6",
-   "−8"
+   "−4 Acc with firearms/crossbows",
+   "−6 Acc with firearms/crossbows",
+   "−8 Acc with firearms/crossbows"
   ],
   "notes": "",
   "size": "",
@@ -7281,9 +7281,9 @@
   "accessory": false,
   "marques": [
    "−2 disarm resists & keeping grabs",
-   "−4",
-   "−6",
-   "−8"
+   "−4 disarm resists & keeping grabs",
+   "−6 disarm resists & keeping grabs",
+   "−8 disarm resists & keeping grabs"
   ],
   "notes": "",
   "size": "",
@@ -7305,9 +7305,9 @@
   "accessory": false,
   "marques": [
    "−2 resist vs leg called shots",
-   "−4",
-   "−6",
-   "−8"
+   "−4 resist vs leg called shots",
+   "−6 resist vs leg called shots",
+   "−8 resist vs leg called shots"
   ],
   "notes": "",
   "size": "",
@@ -7329,9 +7329,9 @@
   "accessory": false,
   "marques": [
    "+1 size vs sunder",
-   "+2",
-   "+3",
-   "+4"
+   "+2 size vs sunder",
+   "+3 size vs sunder",
+   "+4 size vs sunder"
   ],
   "notes": "",
   "size": "",
@@ -7353,9 +7353,9 @@
   "accessory": false,
   "marques": [
    "−4 resist burns",
-   "−8",
-   "−12",
-   "−16"
+   "−8 resist burns",
+   "−12 resist burns",
+   "−16 resist burns"
   ],
   "notes": "",
   "size": "",
@@ -7377,9 +7377,9 @@
   "accessory": false,
   "marques": [
    "−3 resist catching fire",
-   "−6",
-   "−9",
-   "−12"
+   "−6 resist catching fire",
+   "−9 resist catching fire",
+   "−12 resist catching fire"
   ],
   "notes": "",
   "size": "",
@@ -7449,9 +7449,9 @@
   "accessory": false,
   "marques": [
    "−5 speed",
-   "−10",
-   "−15",
-   "−20"
+   "−10 speed",
+   "−15 speed",
+   "−20 speed"
   ],
   "notes": "",
   "size": "",
@@ -7473,9 +7473,9 @@
   "accessory": false,
   "marques": [
    "−3 Cunning rolls",
-   "−6",
-   "−9",
-   "−12"
+   "−6 Cunning rolls",
+   "−9 Cunning rolls",
+   "−12 Cunning rolls"
   ],
   "notes": "",
   "size": "",
@@ -7497,9 +7497,9 @@
   "accessory": false,
   "marques": [
    "+2 Acc vs chosen location",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Acc vs chosen location",
+   "+6 Acc vs chosen location",
+   "+8 Acc vs chosen location"
   ],
   "notes": "",
   "size": "",
@@ -7521,9 +7521,9 @@
   "accessory": false,
   "marques": [
    "melee DC −1",
-   "−2",
-   "−3",
-   "−4"
+   "melee DC −2",
+   "melee DC −3",
+   "melee DC −4"
   ],
   "notes": "",
   "size": "",
@@ -7570,9 +7570,9 @@
   "accessory": false,
   "marques": [
    "refill 1 potion per breather",
-   "2",
-   "3",
-   "4"
+   "refill 2 potion per breather",
+   "refill 3 potion per breather",
+   "refill 4 potion per breather"
   ],
   "notes": "",
   "size": "",
@@ -7620,9 +7620,9 @@
   "accessory": false,
   "marques": [
    "repair gear at breather; swap 1 armsmith augment",
-   "2",
-   "3",
-   "4"
+   "repair gear at breather; swap 2 armsmith augment",
+   "repair gear at breather; swap 3 armsmith augment",
+   "repair gear at breather; swap 4 armsmith augment"
   ],
   "notes": "",
   "size": "",
@@ -7646,9 +7646,9 @@
   "accessory": false,
   "marques": [
    "+50 speed",
-   "+100",
-   "+150",
-   "+200"
+   "+100 speed",
+   "+150 speed",
+   "+200 speed"
   ],
   "notes": "",
   "size": "",
@@ -7670,9 +7670,9 @@
   "accessory": false,
   "marques": [
    "+3 Eva at top speed",
-   "+4",
-   "+5",
-   "+6"
+   "+4 Eva at top speed",
+   "+5 Eva at top speed",
+   "+6 Eva at top speed"
   ],
   "notes": "",
   "size": "",
@@ -7695,9 +7695,9 @@
   "accessory": false,
   "marques": [
    "1 AP reflexive: stay afloat; device 6 wounds",
-   "12",
-   "18",
-   "24"
+   "12 AP reflexive: stay afloat; device 6 wounds",
+   "18 AP reflexive: stay afloat; device 6 wounds",
+   "24 AP reflexive: stay afloat; device 6 wounds"
   ],
   "notes": "",
   "size": "",
@@ -7745,9 +7745,9 @@
   "accessory": false,
   "marques": [
    "others +1 AP to pilot",
-   "+2",
-   "+3",
-   "+4"
+   "others +2 AP to pilot",
+   "others +3 AP to pilot",
+   "others +4 AP to pilot"
   ],
   "notes": "one designee exempt",
   "size": "",
@@ -7795,9 +7795,9 @@
   "accessory": false,
   "marques": [
    "+2 on Vehicle Repairs/Maintenance",
-   "+4",
-   "+6",
-   "+8"
+   "+4 on Vehicle Repairs/Maintenance",
+   "+6 on Vehicle Repairs/Maintenance",
+   "+8 on Vehicle Repairs/Maintenance"
   ],
   "notes": "",
   "size": "",
@@ -7819,9 +7819,9 @@
   "accessory": false,
   "marques": [
    "+20 speed",
-   "+40",
-   "+60",
-   "+80"
+   "+40 speed",
+   "+60 speed",
+   "+80 speed"
   ],
   "notes": "",
   "size": "",
@@ -7844,9 +7844,9 @@
   "accessory": false,
   "marques": [
    "1 AP reflexive: descend 10 ft/turn; 3 wounds",
-   "6",
-   "9",
-   "12"
+   "6 AP reflexive: descend 10 ft/turn; 3 wounds",
+   "9 AP reflexive: descend 10 ft/turn; 3 wounds",
+   "12 AP reflexive: descend 10 ft/turn; 3 wounds"
   ],
   "notes": "",
   "size": "",
@@ -7871,9 +7871,9 @@
   "accessory": false,
   "marques": [
    "+1 passenger",
-   "+2",
-   "+3",
-   "+4"
+   "+2 passenger",
+   "+3 passenger",
+   "+4 passenger"
   ],
   "notes": "",
   "size": "",
@@ -7920,9 +7920,9 @@
   "accessory": false,
   "marques": [
    "glide 2 turns after stopping (−10 ft alt/turn)",
-   "4",
-   "6",
-   "8"
+   "glide 4 turns after stopping (−10 ft alt/turn)",
+   "glide 6 turns after stopping (−10 ft alt/turn)",
+   "glide 8 turns after stopping (−10 ft alt/turn)"
   ],
   "notes": "",
   "size": "",
@@ -7945,9 +7945,9 @@
   "accessory": false,
   "marques": [
    "+12 wounds",
-   "+24",
-   "+36",
-   "+48"
+   "+24 wounds",
+   "+36 wounds",
+   "+48 wounds"
   ],
   "notes": "",
   "size": "",
@@ -7969,9 +7969,9 @@
   "accessory": false,
   "marques": [
    "+50 speed",
-   "+100",
-   "+150",
-   "+200"
+   "+100 speed",
+   "+150 speed",
+   "+200 speed"
   ],
   "notes": "",
   "size": "",
@@ -7993,9 +7993,9 @@
   "accessory": false,
   "marques": [
    "20 ft vertical",
-   "40",
-   "60",
-   "80"
+   "40 ft vertical",
+   "60 ft vertical",
+   "80 ft vertical"
   ],
   "notes": "1 AP to change lift",
   "size": "",
@@ -8042,9 +8042,9 @@
   "accessory": false,
   "marques": [
    "+100 beyond max speed (−1 wound/turn)",
-   "+200",
-   "+300",
-   "+400"
+   "+200 beyond max speed (−1 wound/turn)",
+   "+300 beyond max speed (−1 wound/turn)",
+   "+400 beyond max speed (−1 wound/turn)"
   ],
   "notes": "",
   "size": "",
@@ -8067,9 +8067,9 @@
   "accessory": false,
   "marques": [
    "1 AP reflexive dodge up to 20 ft",
-   "40",
-   "60",
-   "80"
+   "40 AP reflexive dodge up to 20 ft",
+   "60 AP reflexive dodge up to 20 ft",
+   "80 AP reflexive dodge up to 20 ft"
   ],
   "notes": "",
   "size": "",
@@ -8117,9 +8117,9 @@
   "accessory": false,
   "marques": [
    "speed only drops after 3 wounds in one attack",
-   "6",
-   "9",
-   "12"
+   "speed only drops after 6 wounds in one attack",
+   "speed only drops after 9 wounds in one attack",
+   "speed only drops after 12 wounds in one attack"
   ],
   "notes": "",
   "size": "",
@@ -8142,9 +8142,9 @@
   "accessory": false,
   "marques": [
    "+1 base soak",
-   "+2",
-   "+3",
-   "+4"
+   "+2 base soak",
+   "+3 base soak",
+   "+4 base soak"
   ],
   "notes": "not sunderable",
   "size": "",
@@ -8167,9 +8167,9 @@
   "accessory": false,
   "marques": [
    "+1 Eva",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Eva",
+   "+3 Eva",
+   "+4 Eva"
   ],
   "notes": "",
   "size": "",
@@ -8217,8 +8217,8 @@
   "accessory": false,
   "marques": [
    "turret; detach/attach 3 AP",
-   "2",
-   "1",
+   "turret; detach/attach 2 AP",
+   "turret; detach/attach 1 AP",
    "1 reflexive"
   ],
   "notes": "always in firing position",
@@ -8265,9 +8265,9 @@
   "accessory": false,
   "marques": [
    "+2 Def",
-   "+4",
-   "+6",
-   "+8"
+   "+4 Def",
+   "+6 Def",
+   "+8 Def"
   ],
   "notes": "",
   "size": "",
@@ -8289,9 +8289,9 @@
   "accessory": false,
   "marques": [
    "+2 soak vs electricity (fully soakable)",
-   "+4",
-   "+6",
-   "+8"
+   "+4 soak vs electricity (fully soakable)",
+   "+6 soak vs electricity (fully soakable)",
+   "+8 soak vs electricity (fully soakable)"
   ],
   "notes": "",
   "size": "",
@@ -8313,9 +8313,9 @@
   "accessory": false,
   "marques": [
    "hull soaks 10 crash dmg",
-   "50",
-   "100",
-   "250"
+   "hull soaks 50 crash dmg",
+   "hull soaks 100 crash dmg",
+   "hull soaks 250 crash dmg"
   ],
   "notes": "",
   "size": "",
@@ -8339,9 +8339,9 @@
   "accessory": false,
   "marques": [
    "+20 HP",
-   "+40",
-   "+60",
-   "+80"
+   "+40 HP",
+   "+60 HP",
+   "+80 HP"
   ],
   "notes": "",
   "size": "",
@@ -8363,9 +8363,9 @@
   "accessory": false,
   "marques": [
    "+1 soak vs fire",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak vs fire",
+   "+3 soak vs fire",
+   "+4 soak vs fire"
   ],
   "notes": "",
   "size": "",
@@ -8411,9 +8411,9 @@
   "accessory": false,
   "marques": [
    "cover +1 degree",
-   "+2",
-   "+3",
-   "+4"
+   "cover +2 degree",
+   "cover +3 degree",
+   "cover +4 degree"
   ],
   "notes": "",
   "size": "",
@@ -8435,9 +8435,9 @@
   "accessory": false,
   "marques": [
    "speed penalty 1 degree lighter",
-   "2",
-   "3",
-   "4"
+   "speed penalty 2 degree lighter",
+   "speed penalty 3 degree lighter",
+   "speed penalty 4 degree lighter"
   ],
   "notes": "",
   "size": "",
@@ -8483,9 +8483,9 @@
   "accessory": false,
   "marques": [
    "+10 vehicle HP",
-   "+20",
-   "+30",
-   "+40"
+   "+20 vehicle HP",
+   "+30 vehicle HP",
+   "+40 vehicle HP"
   ],
   "notes": "",
   "size": "",
@@ -8507,9 +8507,9 @@
   "accessory": false,
   "marques": [
    "+1 soak",
-   "+2",
-   "+3",
-   "+4"
+   "+2 soak",
+   "+3 soak",
+   "+4 soak"
   ],
   "notes": "",
   "size": "",
@@ -8531,9 +8531,9 @@
   "accessory": false,
   "marques": [
    "deafened 1 turn",
-   "2",
-   "3",
-   "4"
+   "deafened 2 turn",
+   "deafened 3 turn",
+   "deafened 4 turn"
   ],
   "notes": "",
   "size": "",
@@ -8555,9 +8555,9 @@
   "accessory": false,
   "marques": [
    "+3 Cunning to hide it",
-   "+6",
-   "+9",
-   "+12"
+   "+6 Cunning to hide it",
+   "+9 Cunning to hide it",
+   "+12 Cunning to hide it"
   ],
   "notes": "",
   "size": "",
@@ -8579,9 +8579,9 @@
   "accessory": false,
   "marques": [
    "disoriented 1 turn",
-   "2",
-   "3",
-   "4"
+   "disoriented 2 turn",
+   "disoriented 3 turn",
+   "disoriented 4 turn"
   ],
   "notes": "",
   "size": "",
@@ -8603,9 +8603,9 @@
   "accessory": false,
   "marques": [
    "11 dmg per marque",
-   "12",
-   "13",
-   "14"
+   "12 dmg per marque",
+   "13 dmg per marque",
+   "14 dmg per marque"
   ],
   "notes": "",
   "size": "",
@@ -8653,9 +8653,9 @@
   "accessory": false,
   "marques": [
    "+5 ft (at one marque lower damage)",
-   "+10",
-   "+15",
-   "+20"
+   "+10 ft (at one marque lower damage)",
+   "+15 ft (at one marque lower damage)",
+   "+20 ft (at one marque lower damage)"
   ],
   "notes": "",
   "size": "",
@@ -8677,9 +8677,9 @@
   "accessory": false,
   "marques": [
    "light 25 ft (+25 dim) for 2 turns",
-   "4",
-   "6",
-   "8"
+   "light 4 ft (+25 dim) for 2 turns",
+   "light 6 ft (+25 dim) for 2 turns",
+   "light 8 ft (+25 dim) for 2 turns"
   ],
   "notes": "",
   "size": "",
@@ -8701,9 +8701,9 @@
   "accessory": false,
   "marques": [
    "blinded 1 turn",
-   "2",
-   "3",
-   "4"
+   "blinded 2 turn",
+   "blinded 3 turn",
+   "blinded 4 turn"
   ],
   "notes": "",
   "size": "",
@@ -8749,9 +8749,9 @@
   "accessory": false,
   "marques": [
    "automaton stunned 1 AP / vehicle uncontrollable 1 AP",
-   "2",
-   "3",
-   "4"
+   "automaton stunned 2 AP / vehicle uncontrollable 1 AP",
+   "automaton stunned 3 AP / vehicle uncontrollable 1 AP",
+   "automaton stunned 4 AP / vehicle uncontrollable 1 AP"
   ],
   "notes": "",
   "size": "",
@@ -8773,9 +8773,9 @@
   "accessory": false,
   "marques": [
    "pulled 5 ft to center",
-   "10",
-   "10",
-   "15"
+   "pulled 10 ft to center",
+   "pulled 10 ft to center",
+   "pulled 15 ft to center"
   ],
   "notes": "",
   "size": "",
@@ -8797,7 +8797,7 @@
   "accessory": false,
   "marques": [
    "pushed 5 ft",
-   "10",
+   "pushed 10 ft",
    "10 + prone",
    "15 + prone"
   ],
@@ -8845,9 +8845,9 @@
   "accessory": false,
   "marques": [
    "+10 ft range",
-   "+20",
-   "+30",
-   "+40"
+   "+20 ft range",
+   "+30 ft range",
+   "+40 ft range"
   ],
   "notes": "",
   "size": "",
@@ -8893,9 +8893,9 @@
   "accessory": false,
   "marques": [
    "−1 soak class (until breather)",
-   "−1",
-   "−2",
-   "−2"
+   "−1 soak class (until breather)",
+   "−2 soak class (until breather)",
+   "−2 soak class (until breather)"
   ],
   "notes": "",
   "size": "",
@@ -8989,9 +8989,9 @@
   "accessory": false,
   "marques": [
    "remote trigger 25 ft",
-   "50",
-   "75",
-   "100"
+   "remote trigger 50 ft",
+   "remote trigger 75 ft",
+   "remote trigger 100 ft"
   ],
   "notes": "1 AP to trigger",
   "size": "",
@@ -9061,9 +9061,9 @@
   "accessory": false,
   "marques": [
    "blinding smoke for 1 turn",
-   "2",
-   "3",
-   "4"
+   "blinding smoke for 2 turn",
+   "blinding smoke for 3 turn",
+   "blinding smoke for 4 turn"
   ],
   "notes": "",
   "size": "",
@@ -9085,9 +9085,9 @@
   "accessory": false,
   "marques": [
    "+1 Evade",
-   "+2",
-   "+3",
-   "+4"
+   "+2 Evade",
+   "+3 Evade",
+   "+4 Evade"
   ],
   "notes": "[STAT:Eva]",
   "size": "",
@@ -9157,9 +9157,9 @@
   "accessory": false,
   "marques": [
    "+2 Cunning intimidation",
-   "+4",
-   "+8",
-   "+16"
+   "+4 Cunning intimidation",
+   "+8 Cunning intimidation",
+   "+16 Cunning intimidation"
   ],
   "notes": "",
   "size": "",
@@ -9253,9 +9253,9 @@
   "accessory": false,
   "marques": [
    "1 AP before firing: +1 Acc",
-   "+2",
-   "+3",
-   "+4"
+   "1 AP before firing: +2 Acc",
+   "1 AP before firing: +3 Acc",
+   "1 AP before firing: +4 Acc"
   ],
   "notes": "[COND]",
   "size": "",
@@ -9277,9 +9277,9 @@
   "accessory": false,
   "marques": [
    "+3 notice poisons",
-   "+6",
-   "+9",
-   "+12"
+   "+6 notice poisons",
+   "+9 notice poisons",
+   "+12 notice poisons"
   ],
   "notes": "",
   "size": "",
@@ -9325,9 +9325,9 @@
   "accessory": false,
   "marques": [
    "+3 resist flash-blinding",
-   "+6",
-   "+9",
-   "+12"
+   "+6 resist flash-blinding",
+   "+9 resist flash-blinding",
+   "+12 resist flash-blinding"
   ],
   "notes": "",
   "size": "",
@@ -9373,9 +9373,9 @@
   "accessory": false,
   "marques": [
    "1 AP: +50 ft range (non-thrown ranged)",
-   "+100",
-   "+150",
-   "+200"
+   "1 AP: +100 ft range (non-thrown ranged)",
+   "1 AP: +150 ft range (non-thrown ranged)",
+   "1 AP: +200 ft range (non-thrown ranged)"
   ],
   "notes": "",
   "size": "",
@@ -9398,8 +9398,8 @@
   "marques": [
    "blurry −2 Acc/Eva to end of next turn",
    "2 turns",
-   "3",
-   "4"
+   "3 turns",
+   "4 turns"
   ],
   "notes": "2 AP, Acc vs Eva, Cunning resist",
   "size": "L",
@@ -9421,9 +9421,9 @@
   "accessory": false,
   "marques": [
    "approacher deafened 1 turn",
-   "2",
-   "3",
-   "4"
+   "approacher deafened 2 turn",
+   "approacher deafened 3 turn",
+   "approacher deafened 4 turn"
   ],
   "notes": "1 AP arm; Cunning resist",
   "size": "L",
@@ -9493,9 +9493,9 @@
   "accessory": false,
   "marques": [
    "+4 wounds (temp)",
-   "8",
-   "12",
-   "16"
+   "+8 wounds (temp)",
+   "+12 wounds (temp)",
+   "+16 wounds (temp)"
   ],
   "notes": "2 AP on vehicle/automaton",
   "size": "M",
@@ -9517,9 +9517,9 @@
   "accessory": false,
   "marques": [
    "20 ft",
-   "40",
-   "60",
-   "80"
+   "40 ft",
+   "60 ft",
+   "80 ft"
   ],
   "notes": "1 AP per 5 ft",
   "size": "M",
@@ -9541,9 +9541,9 @@
   "accessory": false,
   "marques": [
    "+4 resist gases",
-   "+8",
-   "+12",
-   "+16"
+   "+8 resist gases",
+   "+12 resist gases",
+   "+16 resist gases"
   ],
   "notes": "3 AP to put on",
   "size": "L",
@@ -9565,9 +9565,9 @@
   "accessory": false,
   "marques": [
    "1 AP to remove",
-   "2",
-   "3",
-   "4"
+   "2 AP to remove",
+   "3 AP to remove",
+   "4 AP to remove"
   ],
   "notes": "thrown attack; target grabbed & can only remove net",
   "size": "M",
@@ -9589,9 +9589,9 @@
   "accessory": false,
   "marques": [
    "climb 20 ft per AP",
-   "30",
-   "40",
-   "50"
+   "climb 30 ft per AP",
+   "climb 40 ft per AP",
+   "climb 50 ft per AP"
   ],
   "notes": "1 AP launch/unlatch/retract, 50 ft line",
   "size": "M",
@@ -9661,9 +9661,9 @@
   "accessory": false,
   "marques": [
    "vertical 5 ft per move",
-   "10",
-   "15",
-   "20"
+   "vertical 10 ft per move",
+   "vertical 15 ft per move",
+   "vertical 20 ft per move"
   ],
   "notes": "–",
   "size": "H",
@@ -9685,9 +9685,9 @@
   "accessory": false,
   "marques": [
    "light 25 ft",
-   "50",
-   "75",
-   "100"
+   "light 50 ft",
+   "light 75 ft",
+   "light 100 ft"
   ],
   "notes": "1 AP",
   "size": "L",
@@ -9709,9 +9709,9 @@
   "accessory": false,
   "marques": [
    "max 25 ft",
-   "50",
-   "75",
-   "100"
+   "max 50 ft",
+   "max 75 ft",
+   "max 100 ft"
   ],
   "notes": "1 AP per 10 ft cranked, 5 ft wide",
   "size": "M",
@@ -9733,9 +9733,9 @@
   "accessory": false,
   "marques": [
    "+4 Brute",
-   "+8",
-   "+12",
-   "+16"
+   "+8 Brute",
+   "+12 Brute",
+   "+16 Brute"
   ],
   "notes": "2 AP prying",
   "size": "M",
@@ -9781,9 +9781,9 @@
   "accessory": false,
   "marques": [
    "185 ft/turn (~500 mi/day)",
-   "370",
-   "555",
-   "925"
+   "370 ft/turn (~500 mi/day)",
+   "555 ft/turn (~500 mi/day)",
+   "925 ft/turn (~500 mi/day)"
   ],
   "notes": "2 AP load, 3 AP launch",
   "size": "L",
@@ -9829,9 +9829,9 @@
   "accessory": false,
   "marques": [
    "3 AP to pick",
-   "5",
-   "7",
-   "10"
+   "5 AP to pick",
+   "7 AP to pick",
+   "10 AP to pick"
   ],
   "notes": "1 AP lock / ranged called shot throw",
   "size": "L",
@@ -9853,9 +9853,9 @@
   "accessory": false,
   "marques": [
    "combines 2 trinkets",
-   "4",
-   "6",
-   "10"
+   "combines 4 trinkets",
+   "combines 6 trinkets",
+   "combines 10 trinkets"
   ],
   "notes": "swap at breather",
   "size": "L+",
@@ -9877,9 +9877,9 @@
   "accessory": false,
   "marques": [
    "reload 4 AP",
-   "3",
-   "2",
-   "1"
+   "reload 3 AP",
+   "reload 2 AP",
+   "reload 1 AP"
   ],
   "notes": "0 AP inject",
   "size": "L",
@@ -9901,9 +9901,9 @@
   "accessory": false,
   "marques": [
    "no fall damage, hover 1 turn",
-   "2",
-   "5",
-   "10"
+   "no fall damage, hover 2 turn",
+   "no fall damage, hover 5 turn",
+   "no fall damage, hover 10 turn"
   ],
   "notes": "1 AP (reflexive)",
   "size": "M",
@@ -9973,9 +9973,9 @@
   "accessory": false,
   "marques": [
    "lowers cover 1 degree",
-   "2",
-   "3",
-   "4"
+   "lowers cover 2 degree",
+   "lowers cover 3 degree",
+   "lowers cover 4 degree"
   ],
   "notes": "3 AP, throw 50 ft",
   "size": "L",
@@ -9997,9 +9997,9 @@
   "accessory": false,
   "marques": [
    "+5 swim",
-   "+10",
-   "+15",
-   "+20"
+   "+10 swim",
+   "+15 swim",
+   "+20 swim"
   ],
   "notes": "2 AP activate",
   "size": "M",
@@ -10021,9 +10021,9 @@
   "accessory": false,
   "marques": [
    "heartbeats 25 ft",
-   "50",
-   "75",
-   "100"
+   "heartbeats 50 ft",
+   "heartbeats 75 ft",
+   "heartbeats 100 ft"
   ],
   "notes": "2 AP; Cunning/Spirit resist ≥ marque",
   "size": "L",
@@ -10045,9 +10045,9 @@
   "accessory": false,
   "marques": [
    "picks 1 AP per turn",
-   "2",
-   "3",
-   "4"
+   "picks 2 AP per turn",
+   "picks 3 AP per turn",
+   "picks 4 AP per turn"
   ],
   "notes": "1 AP place / 2 AP throw",
   "size": "L",
@@ -10069,8 +10069,8 @@
   "accessory": false,
   "marques": [
    "retract 2 AP",
-   "1",
-   "0",
+   "retract 1 AP",
+   "retract 0 AP",
    "0 reflexive"
   ],
   "notes": "0 AP release to hand",
@@ -10093,9 +10093,9 @@
   "accessory": false,
   "marques": [
    "2 light items",
-   "4",
-   "6",
-   "8"
+   "4 light items",
+   "6 light items",
+   "8 light items"
   ],
   "notes": "items count as drawn (0 AP swap), unconcealable, −8 vs sunder",
   "size": "M",
@@ -10117,9 +10117,9 @@
   "accessory": false,
   "marques": [
    "−1 AP to extinguish (min 1)",
-   "−2",
-   "−3",
-   "−4"
+   "−2 AP to extinguish (min 1)",
+   "−3 AP to extinguish (min 1)",
+   "−4 AP to extinguish (min 1)"
   ],
   "notes": "2 AP release fire (10 ft)",
   "size": "M",
@@ -10141,9 +10141,9 @@
   "accessory": false,
   "marques": [
    "10 dmg to break",
-   "20",
-   "30",
-   "40"
+   "20 dmg to break",
+   "30 dmg to break",
+   "40 dmg to break"
   ],
   "notes": "1 AP, walks 20 ft/turn, triggers traps",
   "size": "M",
@@ -10165,9 +10165,9 @@
   "accessory": false,
   "marques": [
    "climbs 10 ft/turn",
-   "20",
-   "30",
-   "40"
+   "climbs 20 ft/turn",
+   "climbs 30 ft/turn",
+   "climbs 40 ft/turn"
   ],
   "notes": "one hand",
   "size": "L",
@@ -10189,9 +10189,9 @@
   "accessory": false,
   "marques": [
    "3 uses",
-   "15",
-   "75",
-   "500"
+   "15 uses",
+   "75 uses",
+   "500 uses"
   ],
   "notes": "2 AP per vial",
   "size": "L",
