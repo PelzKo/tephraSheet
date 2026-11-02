@@ -1,0 +1,21 @@
+{
+ "1 AP": "1 AP",
+ "{n} AP": "{n} AP",
+ "Continue": "Weiter",
+ "Upkeep": "Unterhalt",
+ "Upkeep: {n} AP for {items}.": "Unterhalt: {n} AP für {items}.",
+ "Ended (no AP for the upkeep): {items}.": "Beendet (keine AP für den Unterhalt): {items}.",
+ "Ended: {items}.": "Beendet: {items}.",
+ "Not enough AP: {label} needs {n} AP, you have {ap} left.": "Nicht genug AP: {label} braucht {n} AP, du hast noch {ap}.",
+ "Stopping {label} costs {n} AP.": "{label} zu beenden kostet {n} AP.",
+ "That needs more AP than you have left.": "Dafür brauchst du mehr AP, als du noch hast.",
+ "You have {ap} AP, not enough to keep everything going. Choose what to continue – everything else ends.": "Du hast {ap} AP – nicht genug, um alles aufrechtzuerhalten. Wähle, was weiterläuft; alles andere endet.",
+ "none chosen yet": "noch keine gewählt",
+ "{label}: {n} AP spent.": "{label}: {n} AP ausgegeben.",
+ "{label}: {n} AP to start.": "{label}: {n} AP zum Starten.",
+ "{label}: {n} AP upkeep at the start of each further turn.": "{label}: {n} AP Unterhalt zu Beginn jedes weiteren Zuges.",
+ "{n} AP each further turn": "{n} AP jeden weiteren Zug",
+ "{n} AP to start": "{n} AP zum Starten",
+ "{n} AP to stop": "{n} AP zum Beenden",
+ "Sheet & specialties": "Bogen & Spezialisierungen"
+}

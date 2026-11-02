@@ -26,7 +26,7 @@
           <div><b>{{ card.sheet.stats.spd.total }}</b><span>{% t "Speed" %}</span></div>
         </div>
         <div class="hpbar" title="{% t "Hit points" %}"><i style="width:{% if card.sheet.max_hp %}{% widthratio card.hp card.sheet.max_hp 100 %}{% else %}0{% endif %}%"></i></div>
-        <div class="weapon">⚔ <b>{{ card.weapon.name }}</b> · {% t "Acc" %} {{ card.weapon.acc.total|signed }}{% if card.weapon.stk %} · {% t "Stk" %} {{ card.weapon.stk.total|signed }}{% endif %} · {% t "DC" %} {{ card.weapon.dc.total }}</div>
+        <div class="weapon">⚔ <b>{{ card.weapon.name|item_name }}</b> · {% t "Acc" %} {{ card.weapon.acc.total|signed }}{% if card.weapon.stk %} · {% t "Stk" %} {{ card.weapon.stk.total|signed }}{% endif %} · {% t "DC" %} {{ card.weapon.dc.total }}</div>
       {% endif %}
     </a>
   {% endwith %}{% empty %}

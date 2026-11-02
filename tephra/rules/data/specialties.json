@@ -1002,11 +1002,16 @@
    }
   ],
   "tags": "[STANCE] [REQ] [SCALE:enemies]",
-  "stance": true,
+  "stance": false,
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: Berserker specialty & 6 skill points in Frenzy Cost: 1 AP\nIn the whirling chaos of battle you are a singular force of destruction - relentless and unstoppable. When you enter into berserker stance, you may spend an additional action point to upgrade your stance and start bloodlusting. While bloodlusting, your damage class with melee weapons increases by 1 for every enemy within\n25 feet of you.\nThis bonus replaces the normal bonus you would get from your berzerker stance. It is automatically added to all melee weapon attacks, regardless of whether you have attacked the foe before or not.\nIf you are knocked out of berserker stance, you must reenter the stance and spend the extra action point to begin bloodlusting again.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 1,
+   "upkeep": 0,
+   "requires_stance": "Berserker"
+  }
  },
  {
   "slug": "frenzy-unquenchable-thirst",
@@ -1054,11 +1059,17 @@
    }
   ],
   "tags": "[STANCE] [REQ] [GEAR] melee AP=1",
-  "stance": true,
+  "stance": false,
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: Berserker & Bloodlust specialties & 12 skill points in Frenzy\nCost: 1 AP\nYour unquenchable thirst for blood has become a full-fledged obsession. After you have entered your berserker stance and started bloodlusting, you may spend another action point to upgrade to unquenchable thirst. Now, everybody within 25 feet of you acts as an enemy (including allies) for the purpose of determining your bloodlust bonus. You may now make normal melee attacks (with a heavy weapon or smaller) for just 1 action point, but if anybody comes near you, enemy or ally, you are forced to make a reflexive melee attack against them, if at all possible.\nIf you are knocked out of berserker stance, you must re-enter the stance and spend the extra actions point to begin bloodlusting and enter unquenchable thirst again.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 1,
+   "upkeep": 0,
+   "requires_stance": "Berserker",
+   "requires_toggle": "Bloodlust"
+  }
  },
  {
   "slug": "frenzy-laugh-like-youre-crazy",
@@ -2030,7 +2041,7 @@
    }
   ],
   "tags": "[STANCE] [REQ]",
-  "stance": true,
+  "stance": false,
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: 2 or more stances known from the Resilience skill You are the ultimate sentinel, transforming yourself into an impregnable barrier. When you enter into one of your stances from the resilience skill, you may simultaneously enter all of your known resilience stances and keep all of them active (as long as they don’t negate each other for any reason). They all act as one stance, so if you get knocked out of your stance, you get knocked out of all of your stances.",
@@ -3674,7 +3685,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Cost: 2 AP to begin, 1 AP to continue during subsequent turns Large hand gestures and loud noises keep your opponent focused in a direction of your choosing, allowing you to make them blind to everything in the opposite direction. The target must be within\n25 feet of you. The opponent acts blind and deaf toward anything from that direction until something attacks them from that direction, at which time your Blindside is cancelled and must be restarted. You may have blindside activated on multiple people at once, but a single opponent can only be the target of one blindside.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "showmanship-captive-audience",
@@ -4012,7 +4027,10 @@
     "formula": "3 + showmanship // 5"
    }
   ],
-  "ongoing": true
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "showmanship-never-stop-the-dance",
@@ -4082,7 +4100,10 @@
     "formula": "3 + showmanship // 5"
    }
   ],
-  "ongoing": true,
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  },
   "options": {
    "label": "How do you perform?",
    "options": {
@@ -4532,7 +4553,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: 7 skill points in Tactical\nCost: 2 AP to begin, 1 AP to continue during subsequent turns You can build a bond with another that pushes them to greatness. When you begin your focused support, you choose an ally within\n25 feet. That ally gains 1 additional action point per turn for as long as you are within 25 feet and continue focusing your support. If you want to change the beneficiary of your focused support, you must begin anew. You can only have one focused support active at any given time.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "tactical-lead-the-march",
@@ -5005,7 +5030,11 @@
     "formula": "ace // 2",
     "label": "vehicle Defense bonus"
    }
-  ]
+  ],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "ace-hold-together",
@@ -5083,7 +5112,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: 5 skill points in Ace\nCost: 2 AP to begin, 1 AP to continue during subsequent turns You move wrecklessly close to an opponent’s vehicle in an all out siege. While using Hostile Maneuvers, your vehicle suffers -4 defense; however, all attacks made by allies on your vehicle hit for 1 damage class higher for every 5 points you have in Ace.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "ace-level-flying",
@@ -6697,7 +6730,7 @@
    }
   ],
   "tags": "[STANCE] [REQ]",
-  "stance": true,
+  "stance": false,
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: 2 stances known\nYour footwork is solid, your training and familiarity perfect, and your stances have become second nature. You can always keep one stance active and you cannot be forcibly removed from that stance. When you enter a stance, you can designate it as your background stance. By designating one as your background stance, you can have two stances going at the same time, one as your background stance and one as your normal stance. If you have two stances active, they cannot be mutually exclusive in any way.",
@@ -8216,7 +8249,7 @@
    }
   ],
   "tags": "[STANCE] [REQ] [SCALE:Grace]",
-  "stance": true,
+  "stance": false,
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: 6 skill points in Grace & 2 stances known You can enter multiple stances, gaining all of their effects. You can have one stance active per 3 skill points you have in grace. You must enter each one separately (spending 1 action point for each stance). Of course, you cannot enter two mutually-exclusive stances. For instance, if a stance says that you cannot move while in that stance, you cannot be in another stance that requires you to move every turn.",
@@ -8989,7 +9022,7 @@
    }
   ],
   "tags": "[STANCE] [REQ]",
-  "stance": true,
+  "stance": false,
   "repeatable": false,
   "crafts": [],
   "effect": "Requires: Lucky Number 7 specialty & 16 skill points in Luck Not only are natural 7s lucky for you, they are overwhelmingly lucky. Now, when you are in your Lucky Number 7 stance and roll a 7, you can pick up the 7 and put it down as a 12. 7s equal 12s. And then you can re-roll them.",
@@ -9308,7 +9341,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Resist: Brute (tiers down)\nCost: 2 AP to begin, 1 AP to continue during subsequent turns By stomping in constant rythm, you draw out nearby insect colonies to assault an opponent within 25 feet. On the turn the swarm attacks, and every turn thereafter, roll on the called shot chart. The victim must roll to resist against your shamanism or suffer the effects of this called shot.\nAnything that would effect an area disrupts the swarm and it must be reformed (for 2 action points). If at any point you lose the ability to move your legs or are knocked prone, the swarm is disrupted.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "shamanism-still-as-stone",
@@ -9396,7 +9433,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Cost: 2 AP to begin, 1 AP to continue during subsequent turns Raising your hands above you and whistling, you call down death from above. Native animals dive down and attack your victim, a victim who can be up to 50 feet away. Depending on your surroundings, these creatures might be fish, bats, birds, or even insects, though they’re never larger than a human’s fist. When you first call the animals, you must make an accuracy roll against the target’s evade (just like a normal attack). If you hit them with your summoned avians, they deal damage as per the tiers below. This damage can be soaked.\nAnything that would affect an area (such as an explosion or gas) disrupts the swarm (forcing you to start over, if you so desire). If at any point you lose the ability to speak, the swarm is disrupted. You may not talk while continuing an avian wrath or use any specialties requiring the use of your voice. Animals deal 6 inital damage, 3 damage when continued Animals deal 12 inital damage, 6 damage when continued Animals deal 18 inital damage, 9 damage when continued Animals deal 24 inital damage, 12 damage when continued",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "shamanism-blacken-the-sky",
@@ -9533,7 +9574,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Cost: 2 AP to begin, 1 AP to continue during subsequent turns By vibrating your vocal cords, you trgger a defense mechanism in nearby creatures that swarm you, protecting you from harm. As with all swarms, these are creatures native to the terrain ranging from fishes to small woodland creatures and even insects, though they are never larger than a fist.\nAnything that would affect an area disrupts the swarm and it must be reformed again (costing 2 action points). If at any point you lose the ability to speak, the swarm is disrupted. You may not talk while continuing a protect the monarch or use any specialties requiring you to use your voice. You may only be covered in one swarm at a time.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "shamanism-devoted-drones",
@@ -9613,7 +9658,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Resist: Brute or Dexterity (negates, as per a grab) Cost: 2 AP to begin, 1 AP to continue during subsequent turns By humming at a very low frequency, you are able to call a swarm of native insects or animals to overwhelm your victim and hold them in place. These creatures can be anything smaller than your fist and native to the area. The swarm uses your accuracy when making a grab against its target no farther then 50 feet away. In order for the victim to break free they must roll resist against your skill in shamanism (using their brute or dexterity). Anything that would affect an area (such as an explosion or gas) disrupts the swarm (forcing you to start over, if you so desire). If at any point you lose the ability to speak, the swarm is disrupted. You may not talk while continuing a colony of one or use any specialties requiring the use of your voice. The swarm grabs one called shot location\nThe swarm grabs one called shot location\nThe swarm grabs two called shot locations\nThe swarm grabs two called shot locations",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "shamanism-drag-down",
@@ -10362,7 +10411,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Cost: 2 AP to begin, 1 AP to continue during subsequent turns You can feed in ammunition, allowing an adjacent gunman to keep firing without interuption. When you begin belt feeding, you select an adjacent ally. For that turn and every subsequent turn that you continue belt feeding (at the cost of 1 action point per turn), the targeted ally does not have to spend action points to ready their firearm. This only works on firearms that have a readying cost of 4 or less. If either you or your adjacent ally become separated, you must re-begin the belt feeding.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1
+  }
  },
  {
   "slug": "armsmith-interchangeable-parts",
@@ -12124,7 +12177,11 @@
   "repeatable": false,
   "crafts": [],
   "effect": "Cost: Bio-Zapper Attack to initiate and 1 AP to continue in subsequent turns\nYou lock your weapon onto your target, pull the trigger, and don’t let go. After successfully hitting a target with a bio-zapper, all subsequent attacks with that bio-zapper automatically hit. You must spend one action point each turn to continue your ray. If at any point you do not have a clear line of site to your target or either of you moves out of the range of the bio-zapper, this effect is broken.",
-  "modifiers": []
+  "modifiers": [],
+  "ongoing": {
+   "start": 0,
+   "upkeep": 1
+  }
  },
  {
   "slug": "bio-flux-extra-settings",

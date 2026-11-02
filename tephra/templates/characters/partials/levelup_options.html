@@ -8,5 +8,18 @@
       <select name="opt:{{ s.slug }}"><option value="">–</option>{% for k, v in s.options.options.items %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
   {% endif %}{% endfor %}
 {% endif %}
-<h2 style="margin-top:14px">{% t "New specialty" %}</h2>
-{% include "characters/partials/specialty_picker.html" with mode="levelup" %}
+{{ spec_info|json_script:"lvl-spec-info" }}
+<div x-data="{sel: '{{ selected }}', info() { try { return JSON.parse(document.getElementById('lvl-spec-info').textContent)[this.sel] || null } catch (e) { return null } }}"
+     x-on:change="if ($event.target.name === 'specialty') sel = $event.target.value">
+  <div class="chosen-bar" style="margin-top:14px">
+    <h2 style="margin:0 0 4px">{% t "New specialty" %}</h2>
+    <template x-if="info()">
+      <span class="chip on"><b x-text="info().name"></b> <small x-text="info().skill + ' · ' + info().cost"></small>
+        <button type="button" class="val" style="color:inherit;cursor:pointer" title="{% t "Remove" %}"
+          x-on:click="$root.querySelectorAll('input[name=specialty]').forEach(r => r.checked = false); sel = ''">✕</button></span>
+    </template>
+    <template x-if="info()"><div class="small" style="margin-top:4px"><span class="pill-bonus" x-text="info().bonuses"></span></div></template>
+    <span class="muted" x-show="!info()">{% t "none chosen yet" %}</span>
+  </div>
+  {% include "characters/partials/specialty_picker.html" with mode="levelup" %}
+</div>

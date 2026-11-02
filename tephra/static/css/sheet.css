@@ -44,8 +44,11 @@
   .pages.has-wings { --pw: min(calc((100% - 36px) / (2 + 300 / 952)), calc((100vh - 130px) * 952 / 1232)); }
   .page-wings { margin-top: calc(var(--pw) * 185 / 952); }  /* level with Weapon (Left) */
   .sheet-tabs .tab-page2 { display: none; }
-  .sheet-tabs .tab-page1::after { content: " & specialties"; }
+  .sheet-tabs .tab-page1 span.narrow { display: none; }
+  .sheet-tabs .tab-page1 span.wide { display: inline; }
 }
+
+.sheet-tabs .tab-page1 .wide { display: none; }
 
 /* Wings as Arms: a small page holding only the Weapon (Wings) box, same scale as the sheets. */
 .page-wings {
@@ -178,7 +181,7 @@ button.val { cursor: help; }
 .attr-label { font-family: var(--font-head); font-size: calc(30 * var(--u)); line-height: 1; border-bottom: calc(2 * var(--u)) solid var(--ink); padding-bottom: calc(2 * var(--u)); }
 .attr-circle .face .val { font-size: calc(22 * var(--u)); }
 .misc-circle .face .val { font-size: calc(16 * var(--u)); }
-.misc-lbl { font-size: calc(11 * var(--u)); }
+.misc-lbl { font-size: calc(11 * var(--u)); width: calc(40 * var(--u)); text-align: right; }
 .admin-adj { display: inline-flex; gap: calc(2 * var(--u)); }
 .admin-adj button {
   width: calc(22 * var(--u)); height: calc(22 * var(--u)); min-width: 18px; min-height: 18px; border-radius: 50%;
@@ -236,7 +239,7 @@ button.val { cursor: help; }
 .play-bar .grp { display: flex; gap: 5px; align-items: center; flex-wrap: wrap; padding: 2px 8px; border-right: 1px solid #cfc5b3; }
 .play-bar .grp:last-child { border-right: 0; }
 .play-bar .grp > b { font-family: var(--font-head); font-weight: 400; font-size: 15px; margin-right: 2px; }
-.play-bar input[type=number] { width: 4.2em; min-height: 32px; padding: 3px 6px; }
+.play-bar input[type=number] { width: 6.5em; min-height: 32px; padding: 3px 6px; }
 .chip {
   border: 1.5px solid var(--ink-soft); border-radius: 99px; padding: 3px 10px; background: #fffdf7; cursor: pointer; font-size: 13px; min-height: 30px;
 }
@@ -286,3 +289,12 @@ button.val { cursor: help; }
 /* modal panels */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(0, 0, 0, .55); z-index: 50; display: grid; place-items: center; padding: 16px; }
 .modal { width: min(640px, 100%); max-height: calc(100vh - 32px); overflow: auto; }
+
+/* German words are longer: a little smaller type where the fixed sheet canvas is tight. */
+:lang(de) .gear .face .lbl { font-size: calc(max(9, var(--r) * .21) * var(--u)); hyphens: auto; text-align: center; max-width: 80%; min-width: 0; }
+:lang(de) .kv, :lang(de) .dmg { font-size: calc(12.5 * var(--u)); gap: calc(4 * var(--u)); }
+:lang(de) .frame .cap, :lang(de) .trio .l, :lang(de) .line-field .l, :lang(de) .level-box .l { font-size: calc(12.5 * var(--u)); hyphens: auto; }
+:lang(de) .attr-label { font-size: calc(25 * var(--u)); }
+:lang(de) .spec-title { font-size: calc(24 * var(--u)); }
+:lang(de) .spec-table th.col span { font-size: calc(11 * var(--u)); }
+:lang(de) .frame h3, :lang(de) .barrel h3 { font-size: calc(16 * var(--u)); }

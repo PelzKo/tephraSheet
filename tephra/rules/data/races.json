@@ -902,7 +902,13 @@
     "tags": "[ACTION] swaps race traits",
     "roll": 5,
     "slug": "growth-intensity",
-    "modifiers": []
+    "modifiers": [],
+    "ongoing": {
+     "start": 1,
+     "upkeep": 0,
+     "stop": 1,
+     "body_race": "elf"
+    }
    },
    {
     "name": "Noiseless",

@@ -1,6 +1,7 @@
 """List UI texts that have no translation: every {% t "…" %} in templates and every
 _("…") / gettext("…") in Python, checked against locale/<code>/*.json."""
 
+import json
 import re
 from pathlib import Path
 
@@ -39,6 +40,13 @@ class Command(BaseCommand):
             if code == lang.DEFAULT or (opts.get("lang") and code != opts["lang"]):
                 continue
             cat = lang.catalog(code)
+            seen = {}
+            for path in sorted((lang.LOCALE_DIR / code).glob("*.json")):
+                for k, v in json.loads(path.read_text(encoding="utf8")).items():
+                    if k in seen and seen[k][0] != v:
+                        missing_total += 1
+                        self.stdout.write(f"  conflict: {k!r} = {seen[k][0]!r} ({seen[k][1]}) vs {v!r} ({path.name})")
+                    seen.setdefault(k, (v, path.name))
             missing = sorted((t, f) for t, f in texts.items() if t not in cat)
             missing_total += len(missing)
             self.stdout.write(f"{code}: {len(texts) - len(missing)}/{len(texts)} translated")

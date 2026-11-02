@@ -400,6 +400,73 @@ def test_planner_preview_and_levelup_prefill(client_char):
     c.save()
     resp = client.get(reverse("levelup", args=[c.pk]))
     assert b"two: 'Brawl'" in resp.content and b"punchy" in resp.content
+    opts = client.post(reverse("levelup_options", args=[c.pk]), {"skill_two": "Brawl", "skill_one_a": "Faith",
+                                                                 "skill_one_b": "Luck"})
+    assert f"sel: '{spec['slug']}'".encode() in opts.content and spec["slug"].encode() in opts.content
     client.post(url, {"action": "remove", "level": "2"})
     c.refresh_from_db()
     assert c.plan == []
+
+
+def test_switch_costs_upkeep_and_choice(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(10))
+    services.finish_creation(c)
+    reg = get_registry()
+    bt, bs = reg.specialties_by_name["Battle Theme"]["slug"], reg.specialties_by_name["Blindside"]["slug"]
+    c.specialties = list(c.specialties) + [[bt, 1], [bs, 1]]
+    c.specialty_choices = {bt: "singing"}
+    c.level = 12  # enough AP for two starts and a stance
+    c.save()
+    play = lambda a, **d: client.post(reverse("play", args=[c.pk, a]), d, HTTP_HX_REQUEST="true")  # noqa: E731
+    max_ap = c.compute().stats["ap"].total
+    # Outside fight mode: only an info bar.
+    resp = play("toggle", key=f"spec:{bt}")
+    assert b"2 AP" in resp.content and b"Heads up" not in resp.content
+    play("toggle", key=f"spec:{bt}")  # off again
+    play("fight-start")
+    play("toggle", key=f"spec:{bt}")
+    play("toggle", key=f"spec:{bs}")
+    c.refresh_from_db()
+    assert c.fight["ap"] == max_ap - 4 and set(c.toggles) == {f"spec:{bt}", f"spec:{bs}"}
+    # Stance: 1 AP to enter.
+    stance = c.compute().stances[0]["slug"]
+    play("stance", stance=stance)
+    c.refresh_from_db()
+    assert c.stance == stance and c.fight["ap"] == max_ap - 5
+    # Next turn: AP refreshed, 1 spent reflexively → enough for both upkeeps only if max_ap - 1 >= 2.
+    play("fight-end-turn")
+    play("fight-spend", amount=str(max_ap - 1))  # 1 AP left: room for one of the two
+    resp = play("fight-turn")
+    c.refresh_from_db()
+    assert c.fight.get("upkeep_choice") and b'name="keep"' in resp.content
+    assert b"more AP" in play("fight-upkeep", keep=[f"spec:{bt}", f"spec:{bs}"]).content
+    play("fight-upkeep", keep=[f"spec:{bs}"])
+    c.refresh_from_db()
+    assert c.toggles == [f"spec:{bs}"] and c.fight["ap"] == 0 and "upkeep_choice" not in c.fight
+    # Only one thing and no AP: it simply ends.
+    play("fight-end-turn")
+    play("fight-spend", amount=str(max_ap))
+    resp = play("fight-turn")
+    c.refresh_from_db()
+    assert c.toggles == [] and b"Ended" in resp.content
+
+
+def test_bloodlust_needs_berserker_and_growth_intensity():
+    from rules.engine.state import CharacterState
+    from rules.engine.stats import compute
+
+    reg = get_registry()
+    ber, bl = reg.specialties_by_name["Berserker"]["slug"], reg.specialties_by_name["Bloodlust"]["slug"]
+    st = CharacterState(race="human", specialties=[(ber, 1), (bl, 2)], skills={"Frenzy": 6})
+    entry = next(o for o in compute(st).ongoing if o["key"] == f"spec:{bl}")
+    assert not entry["available"] and entry["start"] == 1
+    st.stance = ber
+    assert next(o for o in compute(st).ongoing if o["key"] == f"spec:{bl}")["available"]
+    gnome = CharacterState(race="gnome", random_traits=["gnome/growth-intensity"])
+    small = compute(gnome)
+    gi = next(o for o in small.ongoing if o["key"] == "trait:gnome/growth-intensity")
+    assert (gi["start"], gi["stop"]) == (1, 1) and small.stats["spd"].total == 15
+    gnome.toggles = {"trait:gnome/growth-intensity"}
+    big = compute(gnome)
+    assert big.stats["spd"].total == 30 and any(t["key"].startswith("elf/") for t in big.traits)

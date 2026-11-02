@@ -269,3 +269,8 @@ tr.fb-closed td { opacity: .55; }
 .wiki-body table { border-collapse: collapse; margin: 8px 0; font-size: 14px; display: block; overflow-x: auto; }
 .wiki-body th, .wiki-body td { border: 1px solid #c9bfa8; padding: 3px 6px; vertical-align: top; }
 .wiki-page .toc { columns: 2 220px; }
+/* Character tiles: long (German) stat labels wrap inside their box instead of overflowing. */
+.card .stats div { min-width: 0; }
+.card .stats span { display: block; font-size: 10px; letter-spacing: 0; line-height: 1.15; hyphens: auto; overflow-wrap: anywhere; }
+.card .stats b { white-space: nowrap; font-size: 18px; }
+.card h2 { padding-right: 22px; overflow-wrap: anywhere; }

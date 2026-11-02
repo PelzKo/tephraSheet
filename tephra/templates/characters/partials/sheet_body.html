@@ -12,6 +12,23 @@
     {% endif %}{% endfor %}
     <ul class="messages" style="max-width:1400px;margin:0 auto 10px">{% for m in messages %}{% if "popup" not in m.tags %}<li class="{{ m.tags }}">{{ m }}</li>{% endif %}{% endfor %}</ul>
   {% endif %}
+  {% if character.fight.upkeep_choice %}
+    {# Not enough AP for every upkeep: choose what to keep (sum of the checked costs ≤ AP left). #}
+    <div class="modal-backdrop" role="dialog" aria-modal="true" aria-labelledby="upkeep-title">
+      <form class="paper modal" hx-post="{% url 'play' character.pk 'fight-upkeep' %}" hx-target="#sheet-body" hx-swap="outerHTML"
+            x-data="{ap: {{ character.fight.ap }}, sum() { return [...$el.querySelectorAll('input[name=keep]:checked')].reduce((s, c) => s + Number(c.dataset.ap), 0) }, used: 0}"
+            x-on:change="used = sum()">
+        <h2 id="upkeep-title">{% t "Upkeep" %}</h2>
+        <p>{% t "You have {ap} AP, not enough to keep everything going. Choose what to continue – everything else ends." ap=character.fight.ap %}</p>
+        {% for o in sheet.ongoing %}{% if o.active and o.upkeep %}
+          <label class="choice"><input type="checkbox" name="keep" value="{{ o.key }}" data-ap="{{ o.upkeep }}"
+              :disabled="!$el.checked && used + {{ o.upkeep }} > ap"> <b>{{ o.label }}</b> – {% t "{n} AP" n=o.upkeep %}</label>
+        {% endif %}{% endfor %}
+        <p class="small"><span x-text="used"></span> / {{ character.fight.ap }} AP</p>
+        <div class="row" style="justify-content:flex-end"><button class="btn primary">{% t "Continue" %}</button></div>
+      </form>
+    </div>
+  {% endif %}
   {% if missing_options %}
     <div class="warn-banner" role="alert"><b>{% t "Choice needed:" %}</b>
       {% for sp in missing_options %}<button type="button" class="linkish" x-on:click="showSpec('{{ sp.slug }}')">{{ sp.name }} – {{ sp.options.label }}</button>{% endfor %}</div>
@@ -64,14 +81,14 @@
     </div>
     <div class="grp"><b>{% t "Stance" %}</b>
       {% for s in sheet.stances %}
-        <button class="chip{% if s.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'stance' %}" hx-vals='{"stance": "{{ s.slug }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ s.detail|t }}">{{ s.label|t }}{% if s.detail %} <small>{{ s.detail|t|truncatechars:28 }}</small>{% endif %}</button>
+        <button class="chip{% if s.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'stance' %}" hx-vals='{"stance": "{{ s.slug }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ s.detail|t }}">{{ s.label|t }}{% if s.detail %} <small>{{ s.detail|t|truncatechars:28 }}</small>{% endif %}{% if not s.active %} <small>· {% t "1 AP" %}</small>{% endif %}</button>
       {% endfor %}
     </div>
     {% if sheet.ongoing %}
       <div class="grp"><b>{% t "Other" %}</b>
-        {% for t in sheet.ongoing %}
-          <button class="chip{% if t.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'toggle' %}" hx-vals='{"key": "{{ t.key }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ t.cost|t }}: {{ t.detail|t }}">{{ t.label|t }} <small>{{ t.detail|t|truncatechars:34 }}</small></button>
-        {% endfor %}
+        {% for t in sheet.ongoing %}{% if t.available %}
+          <button class="chip{% if t.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'toggle' %}" hx-vals='{"key": "{{ t.key }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ t.cost }}{% if t.detail %} – {{ t.detail }}{% endif %}">{{ t.label }} <small>{% if t.detail %}{{ t.detail|truncatechars:30 }} · {% endif %}{{ t.cost }}</small></button>
+        {% endif %}{% endfor %}
         {% if battle_theme and battle_theme.2 and battle_theme.1 == "instrument" %}
           <button class="btn small danger" hx-post="{% url 'play' character.pk 'theme-sundered' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "A sunder or disarm of your instrument cancels the Battle Theme" %}">{% t "Instrument sundered / disarmed" %}</button>
         {% endif %}
@@ -100,7 +117,7 @@
   </div>
 
   <nav class="sheet-tabs" role="tablist">
-    <button type="button" class="tab-page1" :class="{on: tab==='page1' || tab==='page2' && window.matchMedia('(orientation: landscape) and (min-width: 901px)').matches}" x-on:click="setTab('page1')">{% t "Sheet" %}</button>
+    <button type="button" class="tab-page1" :class="{on: tab==='page1' || tab==='page2' && window.matchMedia('(orientation: landscape) and (min-width: 901px)').matches}" x-on:click="setTab('page1')"><span class="narrow">{% t "Sheet" %}</span><span class="wide">{% t "Sheet & specialties" %}</span></button>
     <button type="button" class="tab-page2" :class="{on: tab==='page2'}" x-on:click="setTab('page2')">{% t "Specialties & Gear" %}</button>
     <button type="button" :class="{on: tab==='inventory'}" x-on:click="setTab('inventory')">{% t "Inventory & Effects" %}</button>
     <button type="button" :class="{on: tab==='story'}" x-on:click="setTab('story')">{% t "Story" %}</button>

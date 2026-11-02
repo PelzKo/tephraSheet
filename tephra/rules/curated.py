@@ -13,8 +13,10 @@ Modifier schema (see rules/engine/modifiers.py):
     when     always (default) | stance | toggle | note
     toggle_key  with when=toggle: the toggle that switches it (default: its own source key), e.g.
              Victory Theme follows "spec:showmanship-battle-theme" and has no button of its own
-    ongoing  (specialty flag) a performance kept up each round (Battle Theme, Epic Dance): a toggle
-             under "Other", not a stance; costs 2 AP to begin and 1 AP per further round
+    ongoing  (specialty/trait data, see ONGOING) something switched on and kept up (Battle Theme,
+             Blindside, Bloodlust, Growth Intensity …): a toggle under "Other", not a stance.
+             {"start": AP to switch on, "upkeep": AP at the start of each further turn of yours,
+              "stop": AP to switch off, "requires_stance": specialty name, "requires_toggle": name}
     scope    character (default) | weapon (the item it is on) | melee (incl. unarmed)
              | unarmed | ranged
     label    optional short explanation shown in the breakdown
@@ -63,12 +65,12 @@ SPECIALTIES = {
                                          label="impromptu weapon")]},
     "Demoman": {"modifiers": [mod("note", formula="expertise // 3", when="note", label="explosive DC bonus")]},
     "Chime In": {"modifiers": [mod("note", formula="showmanship // 2", when="note", label="bonus")]},
-    "Epic Dance": {"stance": False, "ongoing": True,
+    "Epic Dance": {"stance": False,
                    "modifiers": [mod("eva", formula="3 + showmanship // 5", when="toggle")]},
     "Never Stop the Dance": {"modifiers": [mod("def", formula="3 + showmanship // 5", when="toggle",
                                                toggle_key="spec:showmanship-epic-dance",
                                                label="Never Stop the Dance")]},
-    "Battle Theme": {"stance": False, "ongoing": True,
+    "Battle Theme": {"stance": False,
                      "modifiers": [mod("acc", formula="3 + showmanship // 5", when="toggle")]},
     "Victory Theme": {"modifiers": [mod("stk", formula="3 + showmanship // 5", when="toggle",
                                         toggle_key="spec:showmanship-battle-theme", label="Victory Theme")]},
@@ -394,4 +396,24 @@ CATALOG_BRAND_OVERRIDES = {
     "The Lawn-Deformer (chainsaw)": {"kind": "melee", "size": "medium", "material": "metal"},
     "The Fashionable Arrival (flight pack)": {"modifiers": [mod("fly", 40, op="base")]},
     "Grapple Gun": {"modifiers": [mod("climb", 20, when="toggle", label="retracting the cord")]},
+}
+
+
+# --------------------------------------------------------------------------- AP costs of switchable things
+# Book p.88: "2 AP to begin, 1 AP/turn" = a maintained effect; stances cost 1 AP to enter (handled in the
+# sheet view, free when the fight starts). Flowing Vigor is not here: its 1 AP is a heal action, not upkeep.
+_MAINTAINED = {"start": 2, "upkeep": 1}
+ONGOING = {
+    "Battle Theme": _MAINTAINED, "Epic Dance": _MAINTAINED, "Blindside": _MAINTAINED,
+    "Focused Support": _MAINTAINED, "Flying Fortress": _MAINTAINED, "Hostile Maneuvers": _MAINTAINED,
+    "Parasite": _MAINTAINED, "Avian Wrath": _MAINTAINED, "Protect the Monarch": _MAINTAINED,
+    "Colony of One": _MAINTAINED, "Belt Feeder": _MAINTAINED,
+    "Concentrated Stream": {"start": 0, "upkeep": 1},  # started by a bio-zapper attack
+    "Bloodlust": {"start": 1, "upkeep": 0, "requires_stance": "Berserker"},
+    "Unquenchable Thirst": {"start": 1, "upkeep": 0, "requires_stance": "Berserker", "requires_toggle": "Bloodlust"},
+}
+# Racial traits with an AP cost to switch (key -> same schema).
+ONGOING_TRAITS = {
+    # Gnome: grow to elf size and use the elf's racial traits and speeds; 1 AP each way (narrator ruling).
+    "gnome/growth-intensity": {"start": 1, "upkeep": 0, "stop": 1, "body_race": "elf"},
 }

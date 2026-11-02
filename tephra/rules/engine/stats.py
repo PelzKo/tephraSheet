@@ -56,11 +56,24 @@ class Sheet:
         return self.stats["wnd"].total
 
 
+def body_race(state):
+    """The race whose body the character currently has: a gnome with Growth Intensity switched on
+    is elf-sized and uses the elf's fixed traits, speeds and unarmed damage."""
+    reg = get_registry()
+    for key in state.random_traits:
+        other = (reg.traits.get(key) or {}).get("ongoing", {}).get("body_race")
+        if other and f"trait:{key}" in state.toggles:
+            return reg.races[other]
+    return reg.races[state.race]
+
+
 def active_trait_keys(state):
     """Fixed + random trait keys actually in effect (negations applied)."""
     reg = get_registry()
-    race = reg.races[state.race]
-    if race.get("fixed_choose"):
+    race = body_race(state)
+    if race["slug"] != state.race:
+        fixed = [f"{race['slug']}/{t['slug']}" for t in race["fixed"] if not race.get("fixed_choose")]
+    elif race.get("fixed_choose"):
         fixed = [k for k in state.fixed_traits if k in reg.traits]
     else:
         fixed = [f"{race['slug']}/{t['slug']}" for t in race["fixed"]]
@@ -183,9 +196,10 @@ def compute(state: CharacterState) -> Sheet:
 
     # --- combat stats -------------------------------------------------------
     stats = {s: Value() for s in CHARACTER_STATS}
-    stats["spd"].set_base(_("Base ({name})", name=race["name"]), race["speed"])
-    stats["swim"].set_base(_("Base ({name})", name=race["name"]), race["swim"])
-    stats["climb"].set_base(_("Base ({name})", name=race["name"]), race["climb"])
+    body = body_race(state)
+    stats["spd"].set_base(_("Base ({name})", name=body["name"]), body["speed"])
+    stats["swim"].set_base(_("Base ({name})", name=body["name"]), body["swim"])
+    stats["climb"].set_base(_("Base ({name})", name=body["name"]), body["climb"])
     stats["wnd"].set_base(_("Base wounds"), tables.BASE_WOUNDS)
     stats["ap"].set_base(_("Level {level}", level=state.level), tables.action_points(state.level))
     stats["essence_slots"].set_base(_("Base"), 0)
@@ -307,19 +321,22 @@ def compute(state: CharacterState) -> Sheet:
                 linked.setdefault(m["toggle_key"], []).append(m)
     for src in sources:
         toggle_mods = [m for m in src.modifiers if m.get("when") == "toggle" and m.get("toggle_key", src.key) == src.key]
-        if toggle_mods:
-            mods = toggle_mods + linked.get(src.key, [])
-            entry = {"key": src.key, "label": src.label,
-                     "detail": ", ".join(describe_mod(m, variables) for m in mods),
-                     "active": src.key in state.toggles}
-            spec = reg.specialties.get(src.key[5:]) if src.key.startswith("spec:") else None
-            if spec and spec.get("ongoing"):
-                entry.update(label=spec["name"], cost=spec["cost"])
-                sheet.ongoing.append(entry)
-                if entry["active"]:
-                    sheet.notes.append((spec["name"], _("active – {detail}", detail=entry["detail"])))
-            else:
-                sheet.toggles.append(entry)
+        mods = toggle_mods + linked.get(src.key, [])
+        entry = {"key": src.key, "label": src.label, "detail": ", ".join(describe_mod(m, variables) for m in mods),
+                 "active": src.key in state.toggles}
+        data = ongoing_data(src.key)
+        if data:
+            name = data["name"]
+            costs = data["ongoing"]
+            entry.update(label=name, start=costs.get("start", 0), upkeep=costs.get("upkeep", 0),
+                         stop=costs.get("stop", 0), available=ongoing_available(costs, state),
+                         cost=ongoing_cost_text(costs))
+            sheet.ongoing.append(entry)
+            if entry["active"]:
+                sheet.notes.append((name, _("active – {detail}", detail=entry["detail"]) if entry["detail"]
+                                    else _("active")))
+        elif toggle_mods:
+            sheet.toggles.append(entry)
         if src.stance_slug:
             stance_mods = [m for m in src.modifiers if m.get("when") == "stance"]
             sheet.stances.append({"slug": src.stance_slug, "label": reg.specialties[src.stance_slug]["name"],
@@ -338,6 +355,41 @@ def compute(state: CharacterState) -> Sheet:
         layout[f"{side}_block"] = weapon_block(sheet, item) if item is not None and item in state.weapons else None
     sheet.unarmed = unarmed_block(sheet)
     return sheet
+
+
+def ongoing_data(key):
+    """{"name", "ongoing"} for a toggle key whose specialty/trait costs AP to switch, else None."""
+    reg = get_registry()
+    if key.startswith("spec:"):
+        d = reg.specialties.get(key[5:])
+    elif key.startswith("trait:"):
+        d = reg.traits.get(key[6:])
+    else:
+        return None
+    return d if d and d.get("ongoing") else None
+
+
+def ongoing_available(costs, state):
+    """Bloodlust needs the Berserker stance, Unquenchable Thirst also Bloodlust switched on."""
+    reg = get_registry()
+    need = costs.get("requires_stance")
+    if need and (reg.specialties_by_name.get(need) or {}).get("slug") != state.stance:
+        return False
+    need = costs.get("requires_toggle")
+    if need and f"spec:{(reg.specialties_by_name.get(need) or {}).get('slug')}" not in state.toggles:
+        return False
+    return True
+
+
+def ongoing_cost_text(costs):
+    parts = []
+    if costs.get("start"):
+        parts.append(_("{n} AP to start", n=costs["start"]))
+    if costs.get("upkeep"):
+        parts.append(_("{n} AP each further turn", n=costs["upkeep"]))
+    if costs.get("stop"):
+        parts.append(_("{n} AP to stop", n=costs["stop"]))
+    return ", ".join(parts)
 
 
 STAT_SHORT = {"acc": "Acc", "eva": "Eva", "stk": "Stk", "def": "Def", "pri": "Pri", "spd": "Speed",

@@ -192,7 +192,10 @@ def unarmed_block(sheet) -> WeaponBlock:
     acc = sheet.stats["acc"].inherited(_("Accuracy (character)"))
     stk = sheet.stats["stk"].inherited(_("Strike (character)"))
     dc = Value()
-    dc.set_base(_("Base ({name})", name=sheet.race["name"]), sheet.race.get("unarmed_dc", 2))
+    from .stats import body_race
+
+    body = body_race(sheet.state)
+    dc.set_base(_("Base ({name})", name=body["name"]), body.get("unarmed_dc", 2))
     _apply_scoped(sheet, item, "unarmed", acc, stk, dc, [])
     dc.floor = 0
     ap_use = Value()

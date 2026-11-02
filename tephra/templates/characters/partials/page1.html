@@ -1,4 +1,5 @@
-{% load sheet_tags static %}
+{% load l10n sheet_tags static %}
+{% localize off %}{# design-unit numbers must keep the "." decimal point in every language #}
 <section class="page page1" aria-label="{% t "Character sheet page 1" %}">
   <svg class="deco" viewBox="0 0 952 1232" aria-hidden="true">
     <!-- header band with teeth -->
@@ -214,3 +215,4 @@
     <span class="v">{{ character.level }}</span><span class="l">{% t "Level" %}</span>
   </div>
 </section>
+{% endlocalize %}

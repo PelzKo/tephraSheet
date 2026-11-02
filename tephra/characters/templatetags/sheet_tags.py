@@ -104,7 +104,8 @@ def xp_pos(i, radius=140, cy=1178, cx=475):
     import math
 
     theta = math.radians(180 - (i - 1) * 180 / 11)
-    return {"x": round(cx + radius * math.cos(theta), 1), "y": round(cy - radius * math.sin(theta), 1)}
+    # Strings, not floats: a German locale would render 475.3 as "475,3" and break the SVG.
+    return {"x": f"{cx + radius * math.cos(theta):.1f}", "y": f"{cy - radius * math.sin(theta):.1f}"}
 
 
 TIER_RANGES = ["1–9", "10–19", "20–29", "30+"]

@@ -86,7 +86,9 @@ class Command(BaseCommand):
                 "requires_text": "" if d["r"] in ("", "—") else d["r"],
                 "requires": self.parse_requirements(d["r"], names, d),
                 "tags": tags,
-                "stance": "[STANCE" in tags or d["c"].lower().startswith("stance"),
+                # Only "Stance …" costs are stances; "[STANCE-like]" maintained effects and passive
+                # specialties that mention stances (Resolute, Adaptable …) are not.
+                "stance": d["c"].lower().startswith("stance"),
                 "repeatable": "[REPEATABLE]" in tags,
                 "crafts": re.findall(r"\[CRAFT:([^\]]+)\]", tags),
                 "effect": effect,
@@ -98,6 +100,8 @@ class Command(BaseCommand):
             entry["requires"] += [dict(c, soft=True) for c in curated.USAGE_CONDITIONS.get(d["n"], [])]
             if d["n"] in curated.USAGE_NOTES:
                 entry["usage_note"] = curated.USAGE_NOTES[d["n"]]
+            if d["n"] in curated.ONGOING:
+                entry["ongoing"] = dict(curated.ONGOING[d["n"]])
             if d["n"] in curated.SPECIALTY_OPTIONS:
                 entry["options"] = curated.SPECIALTY_OPTIONS[d["n"]]
             result.append(entry)
@@ -220,6 +224,8 @@ class Command(BaseCommand):
                     t["slug"] = tslug
                     t["modifiers"] = []
                     t.update(curated.RACIAL_TRAITS.get(f"{slug}/{tslug}", {}))
+                    if f"{slug}/{tslug}" in curated.ONGOING_TRAITS:
+                        t["ongoing"] = dict(curated.ONGOING_TRAITS[f"{slug}/{tslug}"])
                     race[kind].append(t)
             races.append(race)
         return races

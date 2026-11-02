@@ -106,8 +106,14 @@ def levelup_options(request, character):
         attr = reg.specialties[old]["attribute"]
         retrofit_targets = sorted((s for s in reg.specialties.values() if s["attribute"] == attr),
                                   key=lambda s: (s["skill"] or "", s["name"]))
+    # Info shown next to "New specialty" once one is picked (Alpine in levelup_options.html).
+    spec_info = {o["spec"]["slug"]: {"name": o["spec"]["name"], "cost": o["spec"]["cost"],
+                                     "skill": _(o["spec"]["skill"] or "General"),
+                                     "bonuses": ", ".join(f"{_(tables.COMBAT_STAT_LABELS[k])} {v:+d}"
+                                                          for k, v in o["spec"]["bonuses"].items())}
+                 for _skill, items in groups for o in items if o["ok"] and not o["owned"]}
     return render(request, "characters/partials/levelup_options.html", {
-        "character": character, "groups": groups, "errors": errors, "sheet": sheet,
+        "character": character, "groups": groups, "spec_info": spec_info, "errors": errors, "sheet": sheet,
         "selected": request.POST.get("specialty") or (planned_for(character, character.level + 1) or {}).get("specialty", ""), "retrofit_targets": retrofit_targets,
         "retrofit_new": request.POST.get("retrofit_new", ""), "stat_cols": tables.COMBAT_STATS,
     })

@@ -198,24 +198,29 @@ def play_action(request, character, action):
             setattr(character, other, getattr(character, other) - delta)
     elif action == "stance":
         slug = p.get("stance", "")
-        valid = {s["slug"] for s in sheet.stances}
-        character.stance = slug if slug in valid and slug != character.stance else ""
+        stances = {s["slug"]: s for s in sheet.stances}
+        if slug in stances and slug != character.stance:
+            # Entering a stance costs 1 AP (book p.12); leaving one is free.
+            if pay_ap(request, character, STANCE_AP, stances[slug]["label"]):
+                character.stance = slug
+        else:
+            character.stance = ""
     elif action == "toggle":
         key = p.get("key", "")
         toggles = set(character.toggles)
-        ongoing = {t["key"]: t for t in sheet.ongoing}
+        ongoing = {t["key"]: t for t in sheet.ongoing if t["available"]}
         if key in toggles:
-            toggles.discard(key)
-        elif key in {t["key"] for t in sheet.toggles} or key in ongoing:
+            if key not in ongoing or pay_ap(request, character, ongoing[key]["stop"], ongoing[key]["label"], stop=True):
+                toggles.discard(key)
+        elif key in ongoing:
+            o = ongoing[key]
+            if pay_ap(request, character, o["start"], o["label"]):
+                toggles.add(key)
+                if o["upkeep"]:
+                    messages.info(request, _("{label}: {n} AP upkeep at the start of each further turn.",
+                                             label=o["label"], n=o["upkeep"]))
+        elif key in {t["key"] for t in sheet.toggles}:
             toggles.add(key)
-            if key in ongoing:
-                if character.fight.get("active"):
-                    character.fight = dict(character.fight, ap=max(0, character.fight.get("ap", 0) - 2))
-                    messages.info(request, _("{label} started: 2 AP spent. It costs 1 AP at the start of each further turn.",
-                                         label=ongoing[key]["label"]), extra_tags="popup")
-                else:
-                    messages.info(request, _("{label} started: pay 2 AP now and 1 AP at the start of each further turn to keep it going.",
-                                         label=ongoing[key]["label"]), extra_tags="popup")
         character.toggles = sorted(toggles)
     elif action.startswith("fight_"):
         fight_action(request, character, sheet, action[6:], p)
@@ -267,6 +272,8 @@ def play_action(request, character, action):
         character.story_notes = p.get("story_notes", "")
     elif action == "notes":
         character.notes = p.get("notes", "")
+    if action in ("stance", "toggle", "effect_add"):
+        end_unavailable(request, character)
     character.save()
     # Clamp current values if max values changed (e.g. armor, fatigue).
     new = character.compute()
@@ -278,6 +285,56 @@ def play_action(request, character, action):
     if changed:
         character.save(update_fields=["current_hp", "wounds_taken"])
     return _respond(request, character)
+
+
+STANCE_AP = 1
+
+
+def end_unavailable(request, character):
+    """Switch off what lost its precondition (leaving Berserker ends Bloodlust and Unquenchable Thirst)."""
+    for _round in range(3):  # chains: Unquenchable Thirst needs Bloodlust needs Berserker
+        stale = [o for o in character.compute().ongoing if o["active"] and not o["available"]]
+        if not stale:
+            return
+        character.toggles = [k for k in character.toggles if k not in {o["key"] for o in stale}]
+        messages.info(request, _("Ended: {items}.", items=", ".join(o["label"] for o in stale)))
+
+
+def pay_ap(request, character, cost, label, stop=False):
+    """Switching something that costs AP. In fight mode the AP are taken from this round's pool
+    (refused if too few are left); outside fight mode only an info bar says what it costs."""
+    if not cost:
+        return True
+    f = character.fight
+    if f.get("active"):
+        if f.get("ap", 0) < cost:
+            messages.error(request, _("Not enough AP: {label} needs {n} AP, you have {ap} left.",
+                                      label=label, n=cost, ap=f.get("ap", 0)))
+            return False
+        character.fight = dict(f, ap=f["ap"] - cost)
+        messages.info(request, _("{label}: {n} AP spent.", label=label, n=cost))
+    else:
+        text = _("Stopping {label} costs {n} AP.", label=label, n=cost) if stop else \
+            _("{label}: {n} AP to start.", label=label, n=cost)
+        messages.info(request, text)
+    return True
+
+
+def pay_upkeep(request, character, items, keep):
+    """Pay the upkeep of the ``keep`` keys among ``items`` (ongoing entries) and switch off the rest."""
+    f = dict(character.fight)
+    paid = [o for o in items if o["key"] in keep]
+    dropped = [o for o in items if o["key"] not in keep]
+    f["ap"] = f.get("ap", 0) - sum(o["upkeep"] for o in paid)
+    f.pop("upkeep_choice", None)
+    character.fight = f
+    character.toggles = [k for k in character.toggles if k not in {o["key"] for o in dropped}]
+    if paid:
+        messages.info(request, _("Upkeep: {n} AP for {items}.", n=sum(o["upkeep"] for o in paid),
+                                 items=", ".join(o["label"] for o in paid)))
+    if dropped:
+        messages.warning(request, _("Ended (no AP for the upkeep): {items}.",
+                                    items=", ".join(o["label"] for o in dropped)))
 
 
 def fight_action(request, character, sheet, what, p):
@@ -301,11 +358,25 @@ def fight_action(request, character, sheet, what, p):
         f["ap"] = min(max_ap, f.get("ap", 0) + 1)
     elif what == "turn":
         f["my_turn"] = True
-        upkeep = [o["label"] for o in sheet.ongoing if o["active"]]
-        if upkeep:
-            paid = min(len(upkeep), f.get("ap", 0))
-            f["ap"] -= paid
-            messages.info(request, _("Upkeep: {paid} AP for {items}.", paid=paid, items=", ".join(upkeep)))
+        character.fight = f
+        items = [o for o in sheet.ongoing if o["active"] and o["upkeep"]]
+        ap = f.get("ap", 0)
+        if sum(o["upkeep"] for o in items) <= ap:
+            pay_upkeep(request, character, items, {o["key"] for o in items})
+        elif len(items) == 1 or ap < min(o["upkeep"] for o in items):
+            pay_upkeep(request, character, items, set())
+        else:
+            # Not enough AP for everything: the player picks what to keep (dialog in sheet_body.html).
+            character.fight = dict(f, upkeep_choice=True)
+        return
+    elif what == "upkeep":
+        items = [o for o in sheet.ongoing if o["active"] and o["upkeep"]]
+        keep = set(p.getlist("keep")) & {o["key"] for o in items}
+        if sum(o["upkeep"] for o in items if o["key"] in keep) > f.get("ap", 0):
+            messages.error(request, _("That needs more AP than you have left."))
+            return
+        pay_upkeep(request, character, items, keep)
+        return
     elif what == "end_turn":
         f.update(ap=max_ap, my_turn=False, round=f.get("round", 1) + 1)
     character.fight = f

@@ -3,7 +3,7 @@
 <div class="gear plain misc-circle" style="--cx:{{ mx }};--cy:{{ my }};--r:18">
   <div class="face">{% with mv=sheet.attr_misc|get:attr %}{% if mv.parts %}{% stat mv "Misc"|t signed=True %}{% endif %}{% endwith %}</div>
 </div>
-<div class="at misc-lbl" style="--x:{{ mx|add:-40 }};--y:{{ my|add:-6 }}">{% t "Misc" %}</div>
+<div class="at misc-lbl" style="--x:{{ mx|add:-62 }};--y:{{ my|add:-6 }}">{% t "Misc" %}</div>
 {% if admin_mode %}
   <div class="at admin-adj" style="--x:{{ mx|add:-22 }};--y:{{ my|add:20 }}">
     {% with m="attr:"|add:attr %}
