@@ -9,6 +9,7 @@ from catalog.models import ItemTemplate
 from rules.engine import creation, tables
 from rules.engine.requirements import augment_lists, check_augment, check_specialty, specialty_warnings
 from rules.engine.stats import compute
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .. import access, services
@@ -48,7 +49,7 @@ def wizard(request, character, step=None):
         character.wizard_step = step
         character.save(update_fields=["wizard_step"])
     ctx = {"character": character, "step": step, "steps": [
-        {"n": n, "label": label, "done": step_done(character, n), "current": n == step}
+        {"n": n, "label": _(label), "done": step_done(character, n), "current": n == step}
         for n, label in creation.STEPS]}
     ctx.update(STEP_CONTEXT[step](request, character))
     return render(request, STEP_TEMPLATES[step], ctx)
@@ -57,7 +58,7 @@ def wizard(request, character, step=None):
 def handle_post(request, character, step):
     action = request.POST.get("action", "save")
     # Per-item buttons encode their argument: name="action" value="add:<slug>".
-    action, _, arg = action.partition(":")
+    action, _sep, arg = action.partition(":")
     if arg:
         post = request.POST.copy()
         post["slug"] = arg
@@ -65,11 +66,11 @@ def handle_post(request, character, step):
     rng = random.Random()
     if action == "random_all":
         services.random_all(character, rng)
-        messages.success(request, "Random character rolled. Check each step, then set a name and password.")
+        messages.success(request, _("Random character rolled. Check each step, then set a name and password."))
         return _redirect(character, 10)
     if action == "random":
         services.random_step(character, step, rng)
-        messages.info(request, f"Step {step} filled randomly.")
+        messages.info(request, _("Step {step} filled randomly.", step=step))
         return _redirect(character, step)
     errors = STEP_SAVE[step](request, character, action) or []
     for e in errors:
@@ -107,6 +108,16 @@ def ctx_step1(request, character):
         ctx["choice_traits"] = [reg.traits[k] | {"key": k} for k in character.fixed_traits + character.random_traits
                                 if k in reg.traits and reg.traits[k].get("choice")]
         ctx["can_roll"] = not character.random_traits or settings.allow_reroll_random_trait
+        ctx["choose_max"] = slots["random_count"] if settings.allow_choose_random_trait else slots["random_choose"]
+        ctx["chosen_keys"] = [k for k in character.random_traits if k.startswith(f"{race['slug']}/")][: ctx["choose_max"] or 0]
+        # Farishtaa "Prominent Host": that trait comes with one from the elf table instead.
+        host = next((t for t in race["random"] if t.get("reroll_on")), None)
+        if host:
+            other = host["reroll_on"]
+            ctx["host"] = {"key": f"{race['slug']}/{host['slug']}", "name": host["name"],
+                           "race": reg.races[other]["name"],
+                           "table": [dict(t, key=f"{other}/{t['slug']}") for t in reg.races[other]["random"]],
+                           "chosen": next((k for k in character.random_traits if k.startswith(f"{other}/")), "")}
     return ctx
 
 
@@ -125,21 +136,39 @@ def save_step1(request, character, action):
     if slots.get("fixed_choose"):
         picked = [k for k in p.getlist("fixed_traits") if k in reg.traits]
         if len(picked) > slots["fixed_choose"]:
-            errors.append(f"Choose only {slots['fixed_choose']} racial traits.")
+            errors.append(_("Choose only {count} racial traits.", count=slots["fixed_choose"]))
             picked = picked[: slots["fixed_choose"]]
         character.fixed_traits = picked
     chosen = [k for k in p.getlist("chosen_random") if k in reg.traits and k.startswith(f"{character.race}/")]
     if "chosen_random_submitted" in p and slots:
+        limit = slots["random_count"] if settings.allow_choose_random_trait else slots.get("random_choose", 0)
+        if len(chosen) > limit:
+            errors.append(_("Choose only {count} random racial traits.", count=limit) if limit != 1 else _("Choose only 1 random racial trait."))
+            chosen = chosen[:limit]
+        # A trait that redirects to another race's table (Prominent Host) brings the trait picked there.
+        extra = []
+        for k in chosen:
+            other = reg.traits[k].get("reroll_on")
+            if other:
+                host = p.get("host_trait", "")
+                if host.startswith(f"{other}/") and host in reg.traits:
+                    extra.append(host)
+                else:
+                    old = [t for t in character.random_traits if t.startswith(f"{other}/")]
+                    extra.extend(old[:1])
+                    if not old:
+                        errors.append(_("{trait}: pick a trait from the {race} table.", trait=reg.traits[k]["name"], race=reg.races[other]["name"]))
         if settings.allow_choose_random_trait:
             # Narrator lets players pick all random traits instead of rolling.
-            character.random_traits = chosen[: slots["random_count"]]
+            character.random_traits = chosen + extra
         elif slots.get("random_choose"):
             # Gnome: choose one, roll the rest (the rolled ones are kept unless they duplicate the choice).
-            rolled = [k for k in character.random_traits[slots["random_choose"]:] if k not in chosen]
-            character.random_traits = chosen[: slots["random_choose"]] + rolled
+            rolled = [k for k in character.random_traits if k not in chosen and k.startswith(f"{character.race}/")]
+            rolled = rolled[-(slots["random_count"] - len(chosen)):] if slots["random_count"] > len(chosen) else []
+            character.random_traits = chosen + extra + rolled
     if action in ("roll", "reroll"):
         if character.random_traits and not settings.allow_reroll_random_trait and action == "reroll":
-            errors.append("The narrator doesn't allow re-rolling racial traits.")
+            errors.append(_("The narrator doesn't allow re-rolling racial traits."))
         else:
             if action == "reroll":
                 keep = character.random_traits[: slots.get("random_choose", 0)] if slots.get("random_choose") else []
@@ -162,17 +191,17 @@ def save_step1(request, character, action):
     character.religion = p.get("religion", character.religion)[:80]
     if action in ("next", "finish"):
         if not character.race:
-            errors.append("Choose a race.")
+            errors.append(_("Choose a race."))
         if slots.get("fixed_choose") and len(character.fixed_traits) != slots["fixed_choose"]:
-            errors.append(f"Choose {slots['fixed_choose']} racial traits.")
+            errors.append(_("Choose {count} racial traits.", count=slots["fixed_choose"]))
         if len([k for k in character.random_traits if k.startswith(character.race + "/")]) < slots.get("random_count", 1):
-            errors.append("Roll your random racial trait.")
+            errors.append(_("Roll your random racial trait."))
         if not character.nationality:
-            errors.append("Choose a nationality.")
+            errors.append(_("Choose a nationality."))
         for key in character.fixed_traits + character.random_traits:
             t = reg.traits.get(key)
             if t and t.get("choice") and not character.trait_choices.get(key):
-                errors.append(f"Choose an attribute for {t['name']}.")
+                errors.append(_("Choose an attribute for {trait}.", trait=t["name"]))
     services.revalidate(character)
     character.save()
     return errors
@@ -246,7 +275,7 @@ def save_step4(request, character, action):
     errors = []
     if action == "add":
         if len(character.specialties) >= tables.CREATION_SPECIALTIES:
-            return [f"You can only choose {tables.CREATION_SPECIALTIES} specialties now; remove one first."]
+            return [_("You can only choose {count} specialties now; remove one first.", count=tables.CREATION_SPECIALTIES)]
         slug = request.POST.get("slug", "")
         errors = services.add_specialties_sequentially(character, [slug], level=1,
                                                        options={slug: request.POST.get(f"opt:{slug}", "")})
@@ -255,7 +284,7 @@ def save_step4(request, character, action):
         character.specialties = [s for s in character.specialties if s[0] != slug]
         services.revalidate(character)
     elif action in ("next", "finish") and len(character.specialties) != tables.CREATION_SPECIALTIES:
-        errors.append(f"Choose exactly {tables.CREATION_SPECIALTIES} specialties.")
+        errors.append(_("Choose exactly {count} specialties.", count=tables.CREATION_SPECIALTIES))
     character.save()
     return errors
 
@@ -385,7 +414,7 @@ def save_step9(request, character, action):
     backgrounds = [s for s in picked if reg.stories[s]["type"] in ("background", "personality")]
     errors = []
     if len(backgrounds) > count:
-        errors.append(f"The narrator allows {count} background/personality stories.")
+        errors.append(_("The narrator allows {count} background/personality stories.", count=count))
         return errors
     services.set_background_stories(character, picked)
     character.save()
@@ -415,31 +444,31 @@ def save_step10(request, character, action):
     pw, pw2 = p.get("password", ""), p.get("password2", "")
     if pw or pw2:
         if pw != pw2:
-            errors.append("Passwords don't match.")
+            errors.append(_("Passwords don't match."))
         elif len(pw) < 3:
-            errors.append("Password needs at least 3 characters.")
+            errors.append(_("Password needs at least 3 characters."))
         else:
             character.set_password(pw)
     if action == "finish":
         if not character.name:
-            errors.append("Give your character a name.")
+            errors.append(_("Give your character a name."))
         if not character.password:
-            errors.append("Set a password for your character.")
+            errors.append(_("Set a password for your character."))
     character.save()
     return errors
 
 
 def finish(request, character):
-    missing = [label for n, label in creation.STEPS if n in (1, 2, 4) and not step_done(character, n)]
+    missing = [_(label) for n, label in creation.STEPS if n in (1, 2, 4) and not step_done(character, n)]
     if missing:
-        messages.error(request, "Incomplete: " + ", ".join(missing))
+        messages.error(request, _("Incomplete: {steps}", steps=", ".join(missing)))
         return _redirect(character, 10)
     services.finish_creation(character)
     access.unlock(request, character)
     if services.needs_catch_up(character):
-        messages.info(request, f"Now level up to level {character.target_level}.")
+        messages.info(request, _("Now level up to level {level}.", level=character.target_level))
         return redirect("levelup", pk=character.pk)
-    messages.success(request, f"{character.name} is ready for adventure!")
+    messages.success(request, _("{name} is ready for adventure!", name=character.name))
     return redirect("sheet", pk=character.pk)
 
 

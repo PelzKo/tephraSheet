@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}{% t "Edit page" %} – {% t "Wiki" %}{% endblock %}
+{% block content %}
+<form method="post" class="paper stack">{% csrf_token %}
+  <h1>{% if page %}{% t "Edit page" %}{% else %}{% t "New page" %}{% endif %}</h1>
+  <label>{% t "Title" %} <input type="text" name="title" value="{{ title }}" maxlength="160" required></label>
+  <label>{% t "Text" %} <span class="muted small">{% t "Markdown: # heading, **bold**, *italic*, - list, [link](https://…), tables with |" %}</span>
+    <textarea name="body" rows="20">{{ body }}</textarea></label>
+  <div class="row">
+    <label>{% t "Your name" %} <input type="text" name="name" value="{{ name }}" maxlength="80"></label>
+    <label>{% t "Show in" %} <select name="language"><option value="">{% t "all languages" %}</option>
+      <option value="{{ current_language }}" {% if page.language %}selected{% endif %}>{% t "only this language" %}</option></select></label>
+  </div>
+  <div class="wizard-actions">
+    {% if page and request.user.is_staff %}<button class="btn danger" name="delete" value="1" onclick="return confirm('{% t "Delete this page?" %}')">{% t "Delete" %}</button>{% else %}<span></span>{% endif %}
+    <div class="row"><a class="btn" href="{% if page %}{{ page.get_absolute_url }}{% else %}{% url 'wiki' %}{% endif %}">{% t "Cancel" %}</a>
+      <button class="btn primary">{% t "Save" %}</button></div>
+  </div>
+</form>
+{% endblock %}

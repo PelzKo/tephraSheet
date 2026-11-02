@@ -40,6 +40,7 @@ class Command(BaseCommand):
             "catalog": self.build_catalog(doc),
         }
         for name, data in out.items():
+            data = fix_smallcaps(data)
             path = DATA_DIR / f"{name}.json"
             path.write_text(json.dumps(data, indent=1, ensure_ascii=False) + "\n", encoding="utf8")
             self.stdout.write(f"{path.name}: {len(data)} entries")
@@ -397,6 +398,35 @@ def expand_marques(marques):
                 m = prev[:hit.start()] + (m if m == "0" else hit.group()[0] + m) + prev[hit.end():]
         out.append(m)
     return out
+
+
+SMALLCAPS_WORD = re.compile(r"\b[A-Za-z]*[a-z][A-Z][A-Za-z]*\b")
+SMALLCAPS_KEEP = {"mQ", "unarmedDC", "fromDirect"}
+PROSE_KEYS = {"name", "text", "effect", "cost", "requires_text", "notes", "marques", "qualifiers", "summary",
+              "relations", "description", "usage_note", "label", "section", "subsection"}
+
+
+def fix_smallcaps(data, key=None):
+    """The book's small caps come out as 'reQuires:' / 'aCtivation Cost' / 'BuiLD'. Lower-case those
+    words in prose fields; a word that started a line (a heading label) is capitalised."""
+    if isinstance(data, dict):
+        return {k: fix_smallcaps(v, k) for k, v in data.items()}
+    if isinstance(data, list):
+        return [fix_smallcaps(v, key) for v in data]
+    if not isinstance(data, str) or key not in PROSE_KEYS:
+        return data
+
+    def fix_line(line):
+        def repl(m):
+            w = m.group()
+            if w in SMALLCAPS_KEEP:
+                return w
+            low = w.lower()
+            return low.capitalize() if m.start() == 0 or w[0].isupper() else low
+        line = SMALLCAPS_WORD.sub(repl, line)
+        return re.sub(r"^([a-z]+)(?=: )", lambda m: m.group(1).capitalize(), line)  # "resist: Brute"
+
+    return "\n".join(fix_line(line) for line in data.split("\n"))
 
 
 def parse_price(text):

@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from rules.engine import tables
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .. import access
@@ -19,11 +20,11 @@ MISC_KEYS = set(tables.COMBAT_STATS) | {"soak", "swim", "climb", "fly", "ap"} | 
 def toggle_admin(request, pk):
     character = get_object_or_404(Character, pk=pk)
     if not access.admin_mode_allowed(request, character):
-        messages.error(request, "Admin mode is not allowed.")
+        messages.error(request, _("Admin mode is not allowed."))
         return redirect("sheet", pk=pk)
     on = request.POST.get("on") == "1"
     access.set_admin_mode(request, character, on)
-    messages.info(request, "Admin mode on: values can be changed freely." if on else "Admin mode off.")
+    messages.info(request, _("Admin mode on: values can be changed freely.") if on else _("Admin mode off."))
     return redirect(request.POST.get("next") or character.get_absolute_url())
 
 
@@ -91,7 +92,7 @@ def edit_choices(request, character):
                     pass
                 specs.append([slug, level])
             character.specialties = specs
-            messages.success(request, "Saved (no rule validation in admin mode).")
+            messages.success(request, _("Saved (no rule validation in admin mode)."))
         elif action == "add_specialty":
             slug = p.get("slug")
             if slug in reg.specialties:
@@ -112,7 +113,7 @@ def edit_choices(request, character):
                                               stat=p.get("stat"), value=int(p.get("value")),
                                               when=p.get("when", "always"), scope=p.get("scope", "character"))
             except (TypeError, ValueError):
-                messages.error(request, "Invalid modifier.")
+                messages.error(request, _("Invalid modifier."))
         elif action == "remove_modifier":
             character.custom_modifiers.filter(pk=p.get("id")).delete()
         elif action == "reset_misc":

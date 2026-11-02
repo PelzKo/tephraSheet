@@ -3,6 +3,7 @@ import json
 from django import forms
 
 from rules.engine.tables import VARIANTS
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .importer import AUGMENT_LISTS_BY_KIND
@@ -10,7 +11,7 @@ from .models import ItemTemplate
 
 FORM_FIELDS = ["name", "kind", "size", "material", "beta", "concealable", "hands", "ap_use", "ap_ready", "dc", "reach",
                "range", "increment", "soak", "eva_penalty", "spd_penalty", "climb_swim_penalty", "deflect_bonus",
-               "deflect_ranged", "deflect_melee", "price_dukes", "description"]
+               "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "price_dukes", "description"]
 
 
 class ItemForm(forms.ModelForm):
@@ -19,7 +20,7 @@ class ItemForm(forms.ModelForm):
     variants = forms.MultipleChoiceField(choices=[(k, v["label"]) for k, v in VARIANTS.items()], required=False,
                                          widget=forms.CheckboxSelectMultiple)
     augments_json = forms.CharField(required=False, widget=forms.HiddenInput)
-    price_princes = forms.DecimalField(required=False, min_value=0, decimal_places=1, label="Price (princes)")
+    price_princes = forms.DecimalField(required=False, min_value=0, decimal_places=1)
 
     class Meta:
         model = ItemTemplate
@@ -31,6 +32,7 @@ class ItemForm(forms.ModelForm):
         if not gm:
             self.fields.pop("is_starting_gear")
         self.fields.pop("price_dukes")
+        self.fields["price_princes"].label = _("Price (princes)")
         inst = self.instance
         if inst and inst.pk or (inst and inst.name):
             self.initial["variants"] = inst.variants
@@ -45,7 +47,7 @@ class ItemForm(forms.ModelForm):
         try:
             data = json.loads(raw)
         except ValueError:
-            raise forms.ValidationError("Invalid augment data.")
+            raise forms.ValidationError(_("Invalid augment data."))
         reg = get_registry()
         out = []
         for entry in data:
@@ -63,14 +65,14 @@ class ItemForm(forms.ModelForm):
         reg = get_registry()
         lists = AUGMENT_LISTS_BY_KIND.get(kind)
         used = 0
-        for slug, _ in augs:
+        for slug, _marque in augs:
             aug = reg.augments[slug]
             if lists and not lists.intersection(aug["lists"]):
-                self.add_error(None, f"{aug['name']} can't be placed on a {kind}.")
+                self.add_error(None, _("{augment} can't be placed on a {kind}.", augment=aug["name"], kind=kind))
             used += aug.get("slots") or 0
         tmp = ItemTemplate(material=data.get("material") or "metal", beta=bool(data.get("beta")))
         if used > tmp.slot_count:
-            self.add_error(None, f"Augments need {used} slots, the item has {tmp.slot_count}.")
+            self.add_error(None, _("Augments need {used} slots, the item has {slots}.", used=used, slots=tmp.slot_count))
         return data
 
     def save(self, commit=True):

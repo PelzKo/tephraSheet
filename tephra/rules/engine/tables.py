@@ -190,11 +190,9 @@ DUKES_PER_KING = 100
 
 
 def format_money(dukes):
+    """150 -> '1 k 5 pr', 7 -> '7 d', 0 -> '0 pr' (1 king = 10 princes = 100 dukes)."""
     dukes = int(dukes or 0)
-    princes, rest = divmod(abs(dukes), DUKES_PER_PRINCE)
-    sign = "-" if dukes < 0 else ""
-    if rest and princes:
-        return f"{sign}{princes} pr {rest} d"
-    if rest:
-        return f"{sign}{rest} d"
-    return f"{sign}{princes} pr"
+    kings, rest = divmod(abs(dukes), DUKES_PER_KING)
+    princes, rest = divmod(rest, DUKES_PER_PRINCE)
+    parts = [f"{n} {unit}" for n, unit in ((kings, "k"), (princes, "pr"), (rest, "d")) if n]
+    return ("-" if dukes < 0 else "") + (" ".join(parts) or "0 pr")

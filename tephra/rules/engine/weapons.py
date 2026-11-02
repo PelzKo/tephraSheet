@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, field
 
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import tables
@@ -12,7 +13,7 @@ from .state import ItemState
 def one_handing(state):
     """One-Handing It: two-handed weapons (except bows) can be wielded in one hand."""
     reg = get_registry()
-    return any(reg.specialties.get(s, {}).get("name") == "One-Handing It" for s, _ in state.specialties)
+    return any(reg.specialties.get(s, {}).get("name_en") == "One-Handing It" for s, _l in state.specialties)
 
 
 WINGS_TRAIT = "ayodin/wings-as-arms"
@@ -36,9 +37,9 @@ def hand_layout(state):
         left, right = right, None
     blocked_by, reason = None, ""
     if left is not None and tables.item_hands(left, oh) == 2:
-        blocked_by, reason = left, f"{left.name} needs both hands"
+        blocked_by, reason = left, _("{name} needs both hands", name=left.name)
     elif defl is not None and tables.item_hands(defl) >= 1:
-        blocked_by, reason = defl, f"holding {defl.name}"
+        blocked_by, reason = defl, _("holding {name}", name=defl.name)
     if blocked_by is not None:
         right = None
     return {"left": left, "right": right, "wings": wings, "has_wings": has_wings(state),
@@ -90,7 +91,7 @@ def _apply_scoped(sheet, item, kind, acc, stk, dc, notes):
         if not _scope_applies(m.get("scope", "character"), kind, src, item):
             continue
         amount = mod_amount(m, sheet.variables, m.get("marque"))
-        label = src.label + (f" ({m['label']})" if m.get("label") else "")
+        label = src.label + (f" ({_(m['label'])})" if m.get("label") else "")
         stat = m["stat"]
         if stat == "dc":
             if m.get("op") == "base":
@@ -115,42 +116,47 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
     state = sheet.state
     notes = []
 
-    acc = stats["acc"].inherited("Accuracy (character)")
+    acc = stats["acc"].inherited(_("Accuracy (character)"))
     uses_acc = kind in tables.ACCURACY_DAMAGE_KINDS
-    stk = None if uses_acc else stats["stk"].inherited("Strike (character)")
+    stk = None if uses_acc else stats["stk"].inherited(_("Strike (character)"))
 
     dc = Value()
     if item.dc is not None:
-        dc.set_base("Item DC", item.dc)
+        dc.set_base(_("Item DC"), item.dc)
     else:
-        dc.set_base(f"{tables.SIZE_LABELS[size]} {kind}", row["dc"])
+        dc.set_base(_("{size} {kind}", size=_(tables.SIZE_LABELS[size]), kind=_(kind)), row["dc"])
     for v in item.variants:
         spec = tables.VARIANTS.get(v)
         if not spec:
             continue
-        dc.add(spec["label"], spec.get("dc", 0))
-        acc.add(spec["label"], spec.get("acc", 0))
+        vlabel = _(spec["label"])
+        dc.add(vlabel, spec.get("dc", 0))
+        acc.add(vlabel, spec.get("acc", 0))
         if stk is not None:
-            stk.add(spec["label"], spec.get("stk", 0))
+            stk.add(vlabel, spec.get("stk", 0))
+    if item.acc_bonus:
+        acc.add(_("Item: {name}", name=item.name), item.acc_bonus)
+    if item.stk_bonus and stk is not None:
+        stk.add(_("Item: {name}", name=item.name), item.stk_bonus)
     if row.get("footing") and state.stance != "footing":
-        acc.add("Super-heavy without Footing", tables.SUPER_HEAVY_NO_FOOTING)
+        acc.add(_("Super-heavy without Footing"), tables.SUPER_HEAVY_NO_FOOTING)
         if stk is not None and kind == "melee":
-            stk.add("Super-heavy without Footing", tables.SUPER_HEAVY_NO_FOOTING)
-        notes.append("Enter the Footing stance to avoid −3.")
+            stk.add(_("Super-heavy without Footing"), tables.SUPER_HEAVY_NO_FOOTING)
+        notes.append(_("Enter the Footing stance to avoid −3."))
 
     reach_bonus = _apply_scoped(sheet, item, kind, acc, stk, dc, notes)
     dc.floor = 0
 
     ap_use = Value()
-    ap_use.set_base("Item" if item.ap_use is not None else "Size table",
+    ap_use.set_base(_("Item") if item.ap_use is not None else _("Size table"),
                     item.ap_use if item.ap_use is not None else row["ap"])
     ap_ready = None
     if kind in tables.RANGED_KINDS:
         ap_ready = Value()
         base_ready = item.ap_ready if item.ap_ready is not None else row.get("ready", 0)
-        ap_ready.set_base("Item" if item.ap_ready is not None else "Size table", base_ready)
+        ap_ready.set_base(_("Item") if item.ap_ready is not None else _("Size table"), base_ready)
         if kind == "firearm" and size == "medium" and item.ap_ready is None:
-            notes.append("Ready 0 AP when held with two hands.")
+            notes.append(_("Ready 0 AP when held with two hands."))
         for label, amount in sheet.ap_ready_mods:
             ap_ready.add(label, amount)
         ap_ready.floor = 0
@@ -158,39 +164,39 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
     if kind in tables.RANGED_KINDS:
         rng = item.range if item.range is not None else row["range"]
         inc = item.increment if item.increment is not None else row["increment"]
-        reach = f"{rng} ft (−1/{inc} ft)"
+        reach = _("{range} ft (−1/{increment} ft)", range=rng, increment=inc)
     else:
         reach_ft = item.reach if item.reach is not None else 5 + (5 if "polearm" in item.variants else 0)
         reach_ft += reach_bonus
-        reach = "Adjacent" if reach_ft <= 5 else f"{reach_ft} ft"
+        reach = _("Adjacent") if reach_ft <= 5 else _("{n} ft", n=reach_ft)
         if "throwing" in item.variants:
-            reach += f" / throw {tables.THROW_RANGE.get(size, 25)} ft"
+            reach = _("{reach} / throw {range} ft", reach=reach, range=tables.THROW_RANGE.get(size, 25))
     if tables.needs_firing_position(item):
-        notes.append("Rotating barrels: fire only from a firing position.")
+        notes.append(_("Rotating barrels: fire only from a firing position."))
     elif tables.ROTATING_BARRELS in {a[0] for a in item.augments} and item.hands is None:
-        notes.append("Rotating barrels: needs one more hand.")
+        notes.append(_("Rotating barrels: needs one more hand."))
     if "double-barreled" in item.variants:
-        notes.append("Double-barreled: fire twice before readying.")
+        notes.append(_("Double-barreled: fire twice before readying."))
     if item.notes:
         notes.append(item.notes)
 
-    variant_labels = [tables.VARIANTS[v]["label"] for v in item.variants if v in tables.VARIANTS]
-    type_label = kind.capitalize() + (f" ({', '.join(variant_labels)})" if variant_labels else "")
-    return WeaponBlock(item=item, name=item.name, kind=kind, size=tables.SIZE_LABELS.get(size, size),
+    variant_labels = [_(tables.VARIANTS[v]["label"]) for v in item.variants if v in tables.VARIANTS]
+    type_label = _(kind.capitalize()) + (f" ({', '.join(variant_labels)})" if variant_labels else "")
+    return WeaponBlock(item=item, name=item.name, kind=kind, size=_(tables.SIZE_LABELS.get(size, size)),
                        type_label=type_label, reach=reach, ap_use=ap_use, ap_ready=ap_ready, acc=acc,
                        stk=stk, dc=dc, notes=notes)
 
 
 def unarmed_block(sheet) -> WeaponBlock:
-    item = ItemState(name="Unarmed", kind="unarmed", size="unarmed", slot="unarmed")
-    acc = sheet.stats["acc"].inherited("Accuracy (character)")
-    stk = sheet.stats["stk"].inherited("Strike (character)")
+    item = ItemState(name=_("Unarmed"), kind="unarmed", size="unarmed", slot="unarmed")
+    acc = sheet.stats["acc"].inherited(_("Accuracy (character)"))
+    stk = sheet.stats["stk"].inherited(_("Strike (character)"))
     dc = Value()
-    dc.set_base(f"Base ({sheet.race['name']})", sheet.race.get("unarmed_dc", 2))
+    dc.set_base(_("Base ({name})", name=sheet.race["name"]), sheet.race.get("unarmed_dc", 2))
     _apply_scoped(sheet, item, "unarmed", acc, stk, dc, [])
     dc.floor = 0
     ap_use = Value()
-    ap_use.set_base("Unarmed", tables.MELEE["unarmed"]["ap"])
-    return WeaponBlock(item=item, name="Unarmed", kind="unarmed", size="Unarmed", type_label="Unarmed",
-                       reach="Adjacent", ap_use=ap_use, ap_ready=None, acc=acc, stk=stk, dc=dc,
-                       notes=["Can't be augmented by armsmiths."])
+    ap_use.set_base(_("Unarmed"), tables.MELEE["unarmed"]["ap"])
+    return WeaponBlock(item=item, name=_("Unarmed"), kind="unarmed", size=_("Unarmed"), type_label=_("Unarmed"),
+                       reach=_("Adjacent"), ap_use=ap_use, ap_ready=None, acc=acc, stk=stk, dc=dc,
+                       notes=[_("Can't be augmented by armsmiths.")])

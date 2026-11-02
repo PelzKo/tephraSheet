@@ -5,6 +5,7 @@ import io
 import re
 
 from rules.engine.tables import VARIANTS
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .models import KIND_CHOICES, MATERIAL_CHOICES, SIZE_CHOICES
@@ -32,12 +33,14 @@ ALIASES = {
     "evade bonus": "deflect_bonus", "deflect": "deflect_bonus", "vs ranged": "deflect_ranged",
     "vs melee": "deflect_melee", "cost": "price", "price (dukes)": "price_dukes", "notes": "description",
     "effect": "description", "starting gear": "is_starting_gear", "qty": "quantity", "amount": "quantity",
-    "augs": "augments", "handed": "hands",
+    "augs": "augments", "handed": "hands", "accuracy bonus": "acc_bonus", "acc bonus": "acc_bonus",
+    "strike bonus": "stk_bonus", "stk bonus": "stk_bonus",
 }
 KIND_ALIASES = {"weapon": "melee", "melee weapon": "melee", "gun": "firearm", "pistol": "firearm", "rifle": "firearm",
-                "shield": "deflection", "equipment": "gear", "item": "gear", "ammunition": "ammo"}
+                "shield": "deflection", "equipment": "gear", "item": "general", "general item": "general", "loot": "general",
+                "ammunition": "ammo"}
 INT_FIELDS = ["dc", "ap_use", "ap_ready", "reach", "range", "increment", "soak", "eva_penalty", "spd_penalty",
-              "climb_swim_penalty", "deflect_bonus", "price_dukes", "quantity"]
+              "climb_swim_penalty", "deflect_bonus", "acc_bonus", "stk_bonus", "price_dukes", "quantity"]
 BOOL_FIELDS = ["deflect_ranged", "deflect_melee", "concealable", "beta", "is_starting_gear"]
 KINDS = {k for k, _ in KIND_CHOICES}
 SIZES = {s for s, _ in SIZE_CHOICES}
@@ -92,7 +95,7 @@ def parse_price(v):
         return 0
     m = re.match(r"^(\d+(?:\.\d+)?)\s*(pr|princes?|p|d|dukes?|k|kings?)?$", v)
     if not m:
-        raise ValueError(f"can't read price '{v}' (use e.g. '5 pr' or '3 d')")
+        raise ValueError(_("can't read price '{value}' (use e.g. '5 pr' or '3 d')", value=v))
     amount = float(m.group(1))
     unit = m.group(2) or "pr"
     if unit.startswith("p"):
@@ -112,10 +115,10 @@ def parse_augments(text, kind, errors):
             continue
         m = re.match(r"^(.*?)\s+(?:mq\s*)?(i{1,3}|iv|[1-4])$", part, re.I)
         name, marque = (m.group(1), ROMAN[m.group(2).lower()]) if m else (part, 1)
-        matches = [a for a in reg.augments.values() if a["name"].lower() == name.strip().lower()
+        matches = [a for a in reg.augments.values() if name.strip().lower() in (a["name"].lower(), a["name_en"].lower())
                    and (not lists or lists.intersection(a["lists"]))]
         if not matches:
-            errors.append(f"unknown augment '{name}' for {kind}")
+            errors.append(_("unknown augment '{name}' for {kind}", name=name, kind=kind))
             continue
         out.append([matches[0]["slug"], marque])
     return out
@@ -125,7 +128,7 @@ def parse_rows(text):
     header, rows = read_table(text)
     fields = [normalize_header(h) for h in header]
     if "name" not in fields:
-        return [{"line": 1, "values": {}, "errors": ["header row needs a 'name' column"]}]
+        return [{"line": 1, "values": {}, "errors": [_("header row needs a 'name' column")]}]
     result = []
     for n, row in enumerate(rows, start=2):
         raw = dict(zip(fields, [c.strip() for c in row]))
@@ -134,31 +137,31 @@ def parse_rows(text):
         errors = []
         values = {"name": raw.get("name", ""), "description": raw.get("description", "")}
         if not values["name"]:
-            errors.append("name is empty")
+            errors.append(_("name is empty"))
         kind = raw.get("kind", "gear").lower() or "gear"
         kind = KIND_ALIASES.get(kind, kind)
         if kind not in KINDS:
-            errors.append(f"unknown kind '{kind}'")
+            errors.append(_("unknown kind '{value}'", value=kind))
         values["kind"] = kind
         size = raw.get("size", "").lower().replace(" ", "-").replace("superheavy", "super-heavy")
         if size not in SIZES:
-            errors.append(f"unknown size '{size}'")
+            errors.append(_("unknown size '{value}'", value=size))
         values["size"] = size
         material = raw.get("material", "").lower() or "metal"
         if material not in MATERIALS:
-            errors.append(f"unknown material '{material}'")
+            errors.append(_("unknown material '{value}'", value=material))
         values["material"] = material
         variants = [v.strip().lower() for v in re.split(r"[/,;+ ]+", raw.get("variants", "")) if v.strip()]
         bad = [v for v in variants if v not in VARIANTS]
         if bad:
-            errors.append(f"unknown variants {', '.join(bad)}")
+            errors.append(_("unknown variants {values}", values=", ".join(bad)))
         values["variants"] = [v for v in variants if v in VARIANTS]
         for f in INT_FIELDS:
             if raw.get(f, "") != "":
                 try:
                     values[f] = int(raw[f].lstrip("+").replace("−", "-"))
                 except ValueError:
-                    errors.append(f"{f} must be a number")
+                    errors.append(_("{field} must be a number", field=f))
         if "price" in raw and "price_dukes" not in values:
             try:
                 values["price_dukes"] = parse_price(raw["price"])
@@ -174,7 +177,7 @@ def parse_rows(text):
             if parsed is not None:
                 values["hands"] = parsed
             else:
-                errors.append(f"hands must be 0, 1 or 2, not '{hands}'")
+                errors.append(_("hands must be 0, 1 or 2, not '{value}'", value=hands))
         if raw.get("augments"):
             values["augments"] = parse_augments(raw["augments"], kind, errors)
         result.append({"line": n, "values": values, "errors": errors})

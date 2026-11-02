@@ -1,0 +1,179 @@
+{
+ "espionage-master-lockpick": {
+  "name": "Meisterdietrich",
+  "cost": "Passiv",
+  "effect": "Türen bereiten dir kaum Mühe; dein Geschick im Schlösserknacken verwandelt massive Barrieren in winzige Unannehmlichkeiten. Diese Spezialisierung verbessert deine Fähigkeit, ein Schloss zu verstehen und zu knacken. Wenn du beginnst, ein Schloss zu knacken, würfle für deinen Meisterdietrich, um die Aktionspunkte, die du zum Knacken des Schlosses brauchst, weiter zu senken. Die AP-Kosten des Schlosses können nie unter Marque I fallen.\nKein Glück. Deine normale List muss mit dem Schloss fertigwerden.\nDu kannst es ansatzweise durchschauen. Die Marque des Schlosses ist für dieses Knacken um 1 gesenkt.\nEine durchschnittliche Herausforderung. Die Marque des Schlosses ist für dieses Knacken um 2 gesenkt.\nAha! Die Marque des Schlosses ist für dieses Knacken um 3 gesenkt."
+ },
+ "espionage-pierce-the-darkness": {
+  "name": "Die Dunkelheit durchdringen",
+  "cost": "Passiv",
+  "requires_text": "4 Spionage",
+  "effect": "Voraussetzung: 4 Fertigkeitspunkte in Spionage\nDu startest deinen Angriff aus dem toten Winkel des Opfers und sicherst dir so den Erfolg. Greifst du aus vollkommener Dunkelheit, bei schlechtem Licht, aus Nebel oder aus allem anderen an, das die Sicht behindert, erhältst du +1 auf deinen Genauigkeitswurf für je 4 Fertigkeitspunkte in Spionage. Hat der Gegner eine Möglichkeit, durch die schlechte Sicht zu sehen, in der du dich verbirgst, erhältst du den Bonus nicht."
+ },
+ "espionage-silent-kill": {
+  "name": "Lautloser Tod",
+  "cost": "Nahkampfangriff +1 AP; Widerstand: List",
+  "effect": "Widerstand: List (siehe unten)\nKosten: Nahkampfangriff +1 AP\nWenn du jemanden angreifst, kannst du versuchen, den Angriff absolut lautlos zu machen. Das geschieht normalerweise bei einem Todesstoß gegen ein ahnungsloses Ziel, um nicht bei der Tat ertappt zu werden.\nVielleicht erstickst du seinen Schrei oder versuchst zu verhindern, dass deine Klinge gegen seine Rüstung klirrt. Versucht das Ziel kein Geräusch zu machen, würfelst du einfach deine Fertigkeit in Spionage gegen jeden, der lauscht.\nSchreit das Ziel jedoch, ruft oder ruft um Hilfe, musst du versuchen, ihm den Mund zuzuhalten oder ihm in die Kehle zu stechen: alles, damit der Laut nicht weit trägt. Geschieht das, kann jeder, der lauscht, einen Listwiderstand würfeln, um den Schrei zu hören."
+ },
+ "espionage-sinister-strike": {
+  "name": "Finsterer Schlag",
+  "cost": "Reflexiver Nahkampfschlag +3 AP",
+  "requires_text": "18 Spionage",
+  "effect": "Voraussetzung: 18 Fertigkeitspunkte in Spionage\nKosten: Reflexiver Nahkampfschlag +3 AP\nDein Verbündeter hat eine Lücke geschaffen, und es ist Zeit für den tödlichen Stoß. Nachdem ein Verbündeter einen angrenzenden Gegner getroffen hat, kannst du reflexiv einen finsteren Schlag machen. Dieser Angriff verursacht Schaden direkt an den Wunden. Erschöpft er die Wunden des Ziels, erleidet es einen Tödlichen Effekt."
+ },
+ "espionage-fighting-blind": {
+  "name": "Blindkampf",
+  "group": "Nachtwandler",
+  "cost": "Passiv",
+  "effect": "Du erleidest keinen Abzug im Nahkampf bei schlechtem Licht oder in absoluter Dunkelheit.\nWeißt du nicht, wo dein Gegner ist, gibt dir diese Spezialisierung keine Möglichkeit, ihn zu orten, und Blindkampf hebt den Fernkampfabzug für Blindheit nicht auf."
+ },
+ "espionage-deep-blind-senses": {
+  "name": "Tiefe Blindsinne",
+  "group": "Nachtwandler",
+  "cost": "Passiv",
+  "requires_text": "Blindkampf; 5 Spionage",
+  "effect": "Voraussetzung: Spezialisierung Blindkampf & 5 Fertigkeitspunkte in Spionage Dein Gehör, dein Gespür für Luftschwingungen oder deine Fähigkeit, Gegner in tiefster Dunkelheit zu orten, erlaubt dir, auch blind präzise auf entfernte Ziele zu feuern. Du darfst Fernangriffe gegen Gegner ohne Abzug ausführen, wenn du blind bist oder bei schlechtem Licht kämpfst, bis zu 5 Fuß Entfernung pro Fertigkeitspunkt in Spionage."
+ },
+ "espionage-cover-expert": {
+  "name": "Deckungsexperte",
+  "group": "Deckungsnutzer",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nDu bist geübt darin, jede verfügbare Deckung auszunutzen. Solange du in dieser Haltung bist, wird jede Deckung, die du einnimmst, behandelt, als wäre sie eine Stufe besser. Übersteigst du schwere Deckung, kannst du nicht mehr von einem Fernangriff anvisiert werden."
+ },
+ "espionage-contort": {
+  "name": "Verrenken",
+  "group": "Deckungsnutzer",
+  "cost": "1 AP",
+  "requires_text": "Deckungsexperte",
+  "effect": "Voraussetzung: Spezialisierung Deckungsexperte\nKosten: 1 AP\nKleine Hindernisse können deinen Körper vollständig verdecken, wenn du dich verrenkst, um dahinterzupassen. In deiner Haltung Deckungsexperte und hinter Deckung darfst du dich so verrenken, dass die Deckung zur vollständigen Deckung wird und du hinter ihr nicht von Fernangriffen anvisiert werden kannst. Du darfst deine Deckung ohne Aktionspunktkosten verlassen. Außerdem finden dich Suchende nicht automatisch, wenn du in einem Versteck bist, jemand aber aktiv diesen Ort durchsucht. Stattdessen müssen sie weiterhin ihre List würfeln, um dich zu bemerken. Misslingt der Wurf, bemerken sie dich nicht, obwohl sie genau deinen Bereich durchsucht haben."
+ },
+ "espionage-critical-hits": {
+  "name": "Kritische Treffer",
+  "group": "Kritisch",
+  "cost": "Passiv",
+  "effect": "Leichte Waffen richten normalerweise weniger Schaden an als andere Waffen, scheinen aber ein Talent dafür zu haben, weiche Stellen in der Verteidigung eines Ziels zu finden. Greifst du im Nahkampf mit einer leichten Waffe an, steigt die Schadensklasse deines Angriffs für je 5 Punkte, um die dein Genauigkeitswurf den Ausweichwurf deines Ziels übersteigt, um 1. Diese zusätzliche Schadensklasse kann deine Fertigkeit in Spionage nicht übersteigen.\nHat dein Gegner also eine 2 auf sein Ausweichen gewürfelt und du eine 12, wäre die Schadensklasse deines Angriffs um 2 höher als normal."
+ },
+ "espionage-hairsplitter": {
+  "name": "Haarspalter",
+  "group": "Kritisch",
+  "cost": "Passiv",
+  "requires_text": "Kritische Treffer; +6 Genauigkeit aus Spezialisierungen",
+  "effect": "Voraussetzung: Spezialisierung Kritische Treffer & +6 Genauigkeit (aus Spezialisierungen) Deine Präzision und Genauigkeit sind unübertroffen. Wenn du einen Nahkampfangriff mit einer leichten Waffe machst, erhältst du für je 3 Punkte, um die dein Genauigkeitswurf den Ausweichwurf deines Ziels übersteigt, eine zusätzliche Schadensklasse. Dieser Bonus ersetzt deinen Bonus aus der Spezialisierung Kritische Treffer. Diese zusätzliche Schadensklasse kann deine Fertigkeit in Spionage nicht übersteigen."
+ },
+ "espionage-pinpoint-shot": {
+  "name": "Punktgenauer Schuss",
+  "group": "Kritisch",
+  "cost": "Passiv",
+  "requires_text": "Kritische Treffer oder Herzsucher",
+  "effect": "Voraussetzung: Spezialisierung Kritische Treffer oder Herzsucher Du bist aus der Ferne genauso treffsicher, als stündest du direkt neben deinem Opfer. Du darfst jede Spezialisierung, die einen Nahkampfangriff mit einer leichten Waffe verlangt, auch mit einer leichten Fernkampfwaffe einsetzen."
+ },
+ "espionage-dirt-in-the-eyes": {
+  "name": "Dreck in die Augen",
+  "group": "Dreck in die Augen",
+  "cost": "2 AP",
+  "effect": "Kosten: 2 AP\nDreck, Blut, Wasser und andere widerliche Substanzen zu werfen ist eine Kunst, die schmutzige Kämpfer seit Jahrhunderten perfektioniert haben. Sie eignet sich perfekt, um Leute auf dem falschen Fuß zu erwischen und kurzzeitig zu blenden. Willst du jemandem Dreck in die Augen werfen, muss er an dich angrenzen, und du musst einen Genauigkeitswurf gegen seinen Ausweichwurf bestehen. (Im Grunde ähnelt das einem gezielten Angriff auf den Kopf.) Schützt er seine Augen mit etwas, etwa einer Schutzbrille, erhält das Ziel +3 auf seinen Ausweichwurf. Gelingt es dir, erleidet der Gegner einen Abzug auf seinen nächsten Ausweichwurf in Höhe deiner Fertigkeit in Spionage. Das Ziel darf, wenn es will, 1 Aktionspunkt ausgeben, um die Substanz abzuwischen, bevor es den Abzug auf sein nächstes Ausweichen erleidet."
+ },
+ "espionage-blind-swing": {
+  "name": "Blenden & Zuschlagen",
+  "group": "Dreck in die Augen",
+  "cost": "Nahkampfangriff +1 AP",
+  "requires_text": "Dreck in die Augen",
+  "effect": "Voraussetzung: Spezialisierung Dreck in die Augen\nKosten: Nahkampfangriff +1 AP\nDu darfst deinen Angriff Dreck in die Augen mit einem Nahkampfangriff verbinden und deine Feinde so effizienter im entscheidenden Moment der Schwäche erwischen. Für die Kosten eines Nahkampfangriffs +1 Aktionspunkt darfst du deinem Gegner Dreck in die Augen werfen und einen Nahkampfangriff machen. Du handelst zuerst deinen Angriff Dreck in die Augen ab (der bei Erfolg einen großen Abzug auf seinen Ausweichwurf bewirkt) und danach deinen Angriff."
+ },
+ "espionage-distracting-attack": {
+  "name": "Ablenkender Angriff",
+  "group": "Desorientierend",
+  "cost": "Nahkampfangriff +1 AP; Widerstand: List (senkt Stufe)",
+  "effect": "Widerstand: List (senkt Stufe)\nKosten: Nahkampfangriff +1 AP\nDeine Angriffe verwirren und verblüffen deinen Gegner. Du kannst einen Nahkampfangriff machen, der bei Erfolg das Ziel für eine Handvoll Züge orientierungslos macht (es verliert 1 Aktionspunkt pro Zug).\n1 Zug\n2 Züge\n3 Züge\n4 Züge"
+ },
+ "espionage-taking-advantage": {
+  "name": "Vorteil nutzen",
+  "group": "Desorientierend",
+  "cost": "Passiv",
+  "requires_text": "Ablenkender Angriff",
+  "effect": "Voraussetzung: Spezialisierung Ablenkender Angriff\nIst dein Gegner orientierungslos, kennst du alle Tricks, um seine momentane Schwäche auszunutzen. Kämpfst du gegen jemanden, der orientierungslos ist, kostet es dich nicht den zusätzlichen Aktionspunkt, gezielte Angriffe gegen die Person zu machen."
+ },
+ "espionage-brain-blowing-attack": {
+  "name": "Hirnsprengender Angriff",
+  "group": "Desorientierend",
+  "cost": "Passiv",
+  "requires_text": "12 Spionage; Ablenkender Angriff",
+  "effect": "Voraussetzung: 12 Fertigkeitspunkte in Spionage & Spezialisierung Ablenkender Angriff Deine ablenkenden Angriffe sitzen perfekt und lassen das Ziel für erheblich längere Zeit völlig orientierungslos zurück. Immer wenn du einen ablenkenden Angriff machst, ist das Ziel doppelt so lange orientierungslos wie üblich."
+ },
+ "expertise-appraisal": {
+  "name": "Schätzung",
+  "cost": "Einmal pro Auszeit",
+  "effect": "Du hast ein scharfes Auge dafür, was etwas genau wert ist. Obwohl du den Preis der meisten Gegenstände im Trust nachschlagen kannst, liegt dein Können darin, den Preis für uralte Schätze, wertvolle Edelsteine und kostbare Kunstwerke zu bestimmen. Du darfst einen Gegenstand nur einmal pro Auszeit schätzen.\nDu kannst den aktuellen Marktwert eines Gegenstands auf 10 % genau bestimmen.\nDu kannst den Marktwert eines Gegenstands bestimmen, fast auf den Duke genau.\nDu kannst nicht nur den Marktwert eines Gegenstands genau bestimmen, sondern auch jede Geschichte oder Überlieferung dazu entschlüsseln.\nDu hast ein Gespür dafür, den genauen Preis eines Gegenstands zu kennen, dazu obskure Informationen darüber und ob er uralte Geheimnisse birgt oder bestimmte Leute ihn suchen."
+ },
+ "expertise-concentrated-focus": {
+  "name": "Konzentrierter Fokus",
+  "cost": "Passiv",
+  "requires_text": "3 Fachwissen",
+  "effect": "Voraussetzung: 3 Fertigkeitspunkte in Fachwissen\nDeine Konzentration ist so intensiv, dass es schwer ist, dich zu betäuben. Bei einem Widerstand gegen Betäubung darfst du dein Fachwissen auf den Widerstand addieren. (Ist der Widerstand ein Listwurf, addiere dein Fachwissen zusätzlich zur Gesamtsumme der List.)"
+ },
+ "expertise-deep-breath": {
+  "name": "Tiefer Atemzug",
+  "cost": "1 AP (einmal pro Zug)",
+  "requires_text": "5 Fachwissen",
+  "effect": "Kosten: 1 AP\nVoraussetzung: 5 Fertigkeitspunkte in Fachwissen\nMit einem tiefen Atemzug überblickst du das Schlachtfeld und analysierst deine Umgebung. Während du ausatmest, kommt die Zeit selbst zum Stillstand. Du erhältst 1 zusätzlichen Aktionspunkt, wenn sich deine Aktionspunkte erneuern. Du darfst das nur einmal pro Zug tun. (Einfach gesagt: Mit dieser Spezialisierung kannst du 1 Aktionspunkt ausgeben, um in deinem nächsten Zug einen zusätzlichen Aktionspunkt zu erhalten und so dein normales Maximum zu übersteigen.)"
+ },
+ "expertise-demoman": {
+  "name": "Sprengmeister",
+  "cost": "Passiv",
+  "requires_text": "3 Fachwissen",
+  "effect": "Voraussetzung: 3 Fertigkeitspunkte in Fachwissen\nDu weißt nicht, wie sie funktionieren, aber du weißt sicher, wie man sie in die Luft jagt! Für je 3 Fertigkeitspunkte in Fachwissen erhältst du +1 Schadensklasse beim Angriff auf Automaten und Fahrzeuge. Das gilt für alles, was du benutzt und das eine Schadensklasse hat, einschließlich Sprengstoffen."
+ },
+ "expertise-efficiency-expert": {
+  "name": "Effizienzexperte",
+  "cost": "Passiv",
+  "requires_text": "3 Fachwissen",
+  "effect": "Voraussetzung: 3 Fertigkeitspunkte in Fachwissen\nWenn du oder deine Freunde Gegenstände herstellen, sorgst du dafür, dass keine Mittel verschwendet werden und keine Schraube zurückbleibt. Nicht nur dein DIY-Wert (Do-it-Yourself) steigt (basierend auf den Boni dieser Spezialisierung), du verbesserst auch den DIY-Wert deiner Verbündeten. Verbringst du deine Auszeit mit deinen Abenteurerkameraden bei der Arbeit an Ausrüstung, steigt ihr DIY-Wert um 3 Punkte. Dieser Bonus kann ihren effektiven DIY-Wert nicht über 12 erhöhen.\nHast du mehrere Effizienzexperten, summieren sich die Boni nicht. Stattdessen erhältst du für jeden weiteren Effizienzexperten in deiner Gruppe zusätzlich +1 DIY."
+ },
+ "expertise-fire-fighter": {
+  "name": "Feuerwehrmann",
+  "cost": "Passiv",
+  "effect": "Du musst als Kind einen Pyromanen zum Freund gehabt haben, denn du lässt das Bekämpfen lodernder Infernos wie Kinderspiel aussehen. Löschst du Feuer, erhältst du 2 zusätzliche Aktionspunkte pro Zug zum Löschen von Feuern. Du kannst nicht selbst Feuer fangen, wenn du ein Feuer an einer anderen Kreatur löschst."
+ },
+ "expertise-hurl": {
+  "name": "Schleudern",
+  "cost": "Passiv",
+  "effect": "Du kannst so ziemlich alles werfen. Auch wenn ein Gegenstand oder eine Waffe nicht als Wurfwaffe eingestuft ist, darfst du sie werfen, als wäre sie eine. Du erleidest keine Abzüge für improvisierte Waffen, und sie fliegt so weit, wie es ihrer Größenkategorie entspricht (leicht: 25 Fuß; mittel: 75 Fuß; und schwer: 50 Fuß)."
+ },
+ "expertise-improv-fighter": {
+  "name": "Improvisationskämpfer",
+  "cost": "Passiv",
+  "requires_text": "3 Fachwissen",
+  "effect": "Voraussetzung: 3 Fertigkeitspunkte in Fachwissen\nDu bist ein Meister darin, aufzuheben, was gerade in der Nähe ist, und es mit größtem Zerstörungspotenzial einzusetzen. Barhocker, Glas, Gemälde oder Leiter, mit allem hast du schon getötet. Benutzt du eine improvisierte Waffe, entfallen deine Abzüge. Kämpfst du mit solchen unkonventionellen Nahkampfgegenständen, erhältst du +1 auf Genauigkeit für je 3 Punkte in Fachwissen, weil Gegner nie erwarten, dass du damit so talentiert bist."
+ },
+ "expertise-mechanic": {
+  "name": "Mechaniker",
+  "cost": "3 AP",
+  "effect": "Kosten: 3 AP\nAuch wenn du nicht der ursprüngliche Erfinder bist, hast du ein Gespür dafür, Probleme zu erkennen und zu beheben. Du darfst einen angrenzenden Automaten, ein Fahrzeug oder jede mechanische Konstruktion mit Wunden oder Trefferpunkten reparieren.\nrepariert 6 Wunden oder Trefferpunkte\nrepariert 12 Wunden oder Trefferpunkte\nrepariert 18 Wunden oder Trefferpunkte\nrepariert 24 Wunden oder Trefferpunkte"
+ },
+ "expertise-patch-the-bleeding": {
+  "name": "Blutung stillen",
+  "cost": "1 AP",
+  "effect": "Kosten: 1 AP\nDu hast genug Wunden behandelt, um zu wissen, wie man sie sehr schnell zum Aufhören bringt. Du kannst 1 Aktionspunkt ausgeben, um\n10 Blutungsschaden zu stoppen (statt der normalen 5). Blutet jemand aus (etwa durch den Verlust eines Glieds), zählt außerdem jeder\n1 Aktionspunkt, den du ausgibst, als 3 Aktionspunkte, um das Verbluten zu verhindern."
+ },
+ "expertise-observance": {
+  "name": "Beobachtung",
+  "cost": "2 AP; Widerstand: List (hebt auf)",
+  "effect": "Widerstand: List (hebt auf)\nKosten: 2 AP\nDu beobachtest den Feind genau, lernst seine Bewegungen und sagst seine Handlungen voraus. Hast du jemanden „beobachtet“ (eine Handlung, die 2 Aktionspunkte kostet), wird der nächste Angriff, den er auf dich macht, in einen normalen Angriff umgewandelt, es sei denn, er besteht den Widerstand gegen dein Fachwissen. Hatte er Spezialisierungen auf den Angriff angewendet oder machte er einen gezielten Angriff, werden all diese Zusätze aufgehoben. Er gibt jedoch trotzdem so viele Aktionspunkte aus, wie er verwendet hätte.\nZum Beispiel will ein Gegner einen Angriff mit einer schweren Waffe ausführen (2 AP), wertet ihn aber zu einem soliden Schlag (+1 AP) und einem gezielten Angriff auf den Kopf (+1 AP) auf. Wurde er beobachtet, wird sein solider Angriff auf den Kopf zu einem normalen Angriff mit seiner schweren Waffe, kostet aber trotzdem die 4 Aktionspunkte, die er verwendet hätte. Macht der beobachtete Gegner als nächsten Angriff einen normalen Angriff mit seiner schweren Waffe, wäre die Beobachtung verschwendet."
+ },
+ "expertise-weak-point": {
+  "name": "Schwachpunkt",
+  "cost": "2 AP",
+  "effect": "Kosten: 2 AP\nNachdem du deinen Feind sorgfältig studiert hast, kannst du seinen Schwachpunkt finden und ausnutzen. Du darfst 2 Aktionspunkte darauf verwenden, einen einzelnen Feind zu studieren und nach einer Schwäche zu suchen.\nDu kannst alle spezifischen Schwächen des Feindes gegenüber gezielten Angriffen erkennen.\nDu kannst bestimmen, gegen welche gezielten Angriffe der Gegner am schwersten widerstehen könnte oder welche Schwächen gegenüber gezielten Angriffen er hat.\nDu kannst alle Schwächen gegenüber gezielten Angriffen bestimmen, welchen gezielten Angriffen er am schwersten widerstehen könnte und, wenn du eine solche Schwäche triffst, wird der Effekt des gezielten Angriffs verdoppelt.\nDu kannst alle Schwächen gegenüber gezielten Angriffen bestimmen, welchen gezielten Angriffen er am schwersten widerstehen könnte, und wenn du eine solche Schwäche triffst, wird der Effekt des gezielten Angriffs verdoppelt. Außerdem kannst du den Todesauslöser einer unsterblichen Kreatur bestimmen."
+ },
+ "expertise-trick-counter": {
+  "name": "Trickkonter",
+  "cost": "1+ AP reflexiv (= Aufwertungskosten); Widerstand: List (hebt auf)",
+  "effect": "Widerstand: List (hebt auf)\nKosten: 1 (oder mehr) AP reflexiv\nDeine Feinde glauben, sie würden ihre Angriffe aufwerten und mit einzigartigen Tricks auf dich losgehen. Du durchschaust sie. Wann immer du mit einem spezialisierten Angriff oder gezielten Angriff angegriffen wirst (einem, der Kosten von Angriff +1 AP oder Angriff +2 AP und so weiter hätte), darfst du so viele Aktionspunkte ausgeben, wie die Aufwertung kostet, um zu versuchen, ihn aufzuheben. Der Gegner kann dann mit einem Listwurf gegen dein Fachwissen widerstehen. Scheitert er, wird sein Angriff in einen normalen umgewandelt, wobei der Gegner trotzdem dieselbe Anzahl Aktionspunkte ausgibt.\nWirst du zum Beispiel mit einem soliden Schlag (Angriff +1 AP) angegriffen, kannst du 1 Aktionspunkt ausgeben, um zu versuchen, ihn zu einem normalen Angriff zu machen. Hat er mehrere Spezialisierungen auf den Angriff angewendet, kannst du wählen, nur einen Teil davon aufzuheben oder alle Spezialisierungen, und der Gegner widersteht dem Verlust jeder Spezialisierung getrennt."
+ },
+ "expertise-poison-finder": {
+  "name": "Giftspürer",
+  "group": "Gegengift",
+  "cost": "Passiv",
+  "effect": "Immer wenn ein Gift in 10 Fuß Entfernung von dir ist, darfst du automatisch List würfeln, um es wahrzunehmen (es sei denn, du bist bewusstlos oder deine Sinne sind anderweitig getrübt), und du addierst deine Fertigkeit in Fachwissen auf den Wurf."
+ }
+}

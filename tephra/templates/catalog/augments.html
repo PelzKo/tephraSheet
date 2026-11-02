@@ -1,12 +1,12 @@
 {% extends "base.html" %}{% load sheet_tags %}
 {% block content %}
 <div class="paper" x-data="{q: '{{ q|escapejs }}', list: '', hit(el) { return (!this.q || el.dataset.s.includes(this.q.toLowerCase())) && (!this.list || el.dataset.lists.includes(' ' + this.list + ' ')); }}">
-  <div class="row spread"><h1>Augment reference</h1>
-    <div class="row"><a class="btn" href="{% url 'item_create' %}">Object creator</a><a class="btn" href="{% url 'catalog' %}">Catalog</a></div></div>
-  <p class="muted small">Every augment with its effect per marque (mQ I–IV), slots and the book text. Slots: how many of the item's augment slots it uses (metal 3, wood/bone 2, … +2 for beta items).</p>
+  <div class="row spread"><h1>{% t "Augment reference" %}</h1>
+    <div class="row"><a class="btn" href="{% url 'item_create' %}">{% t "Object creator" %}</a><a class="btn" href="{% url 'catalog' %}">{% t "Catalog" %}</a></div></div>
+  <p class="muted small">{% t "Every augment with its effect per marque (mQ I–IV), slots and the book text. Slots: how many of the item's augment slots it uses (metal 3, wood/bone 2, … +2 for beta items)." %}</p>
   <div class="row">
-    <input type="search" x-model="q" placeholder="Search name or effect…" style="flex:1">
-    <select x-model="list"><option value="">All lists</option>{% for li in lists %}<option value="{{ li }}">{{ li|capfirst }}</option>{% endfor %}</select>
+    <input type="search" x-model="q" placeholder="{% t "Search name or effect…" %}" style="flex:1">
+    <select x-model="list"><option value="">{% t "All lists" %}</option>{% for li in lists %}<option value="{{ li }}">{{ li|capfirst|t }}</option>{% endfor %}</select>
   </div>
   {% for group, items in groups %}
     <details class="spec-group" open x-show="[...$el.querySelectorAll('.spec')].some(e => hit(e))"><summary>{{ group }}</summary>
@@ -14,14 +14,14 @@
         <div class="spec" x-show="hit($el)" data-lists=" {{ a.lists|join:' ' }} "
              data-s="{{ a.name|lower }} {{ a.marques|join:' '|lower }} {{ a.notes|lower }} {{ a.text|lower }}">
           <header>
-            <b>{{ a.name }}</b> <span class="tag">{{ a.slots|default_if_none:"?" }} slot{{ a.slots|pluralize }}</span>
-            <span class="tag">{{ a.lists|join:"/" }}</span>
-            {% if a.accessory %}<span class="tag">accessory</span>{% endif %}
+            <b>{{ a.name }}</b> <span class="tag">{% if a.slots == 1 %}{% t "{n} slot" n=1 %}{% else %}{% t "{n} slots" n=a.slots|default_if_none:"?" %}{% endif %}</span>
+            <span class="tag">{% for li in a.lists %}{{ li|t }}{% if not forloop.last %}/{% endif %}{% endfor %}</span>
+            {% if a.accessory %}<span class="tag">{% t "accessory" %}</span>{% endif %}
             {% for q in a.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
             {% if a.subsection %}<span class="cost">{{ a.subsection }}</span>{% endif %}
           </header>
-          <div class="small">{% for m in a.marques %}{% if m and m != "–" %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m }}</span>{% endif %}{% endfor %} {{ a.notes }}{% if a.price %} · price {{ a.price }} pr{% endif %}</div>
-          {% if a.text %}<details><summary>Book text</summary><p class="effect">{{ a.text|linebreaksbr }}</p></details>{% endif %}
+          <div class="small">{% for m in a.marques %}{% if m and m != "–" %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m }}</span>{% endif %}{% endfor %} {{ a.notes }}{% if a.price %} · {% t "price {p} pr" p=a.price %}{% endif %}</div>
+          {% if a.text %}<details><summary>{% t "Book text" %}</summary><p class="effect">{{ a.text|linebreaksbr }}</p></details>{% endif %}
         </div>
       {% endfor %}
     </details>

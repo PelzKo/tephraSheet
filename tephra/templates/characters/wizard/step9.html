@@ -1,14 +1,14 @@
 {% extends "characters/wizard/base.html" %}{% load sheet_tags %}
-{% block step_title %}Background Stories{% endblock %}
-{% block intro %}<p class="muted">If your narrator allows it, choose stories according to their guidelines. Most characters choose {{ count }} background stor{{ count|pluralize:"y,ies" }}. Membership and faith stories need the narrator's approval.</p>{% endblock %}
+{% block step_title %}{% t "Background Stories" %}{% endblock %}
+{% block intro %}<p class="muted">{% if count == 1 %}{% t "If your narrator allows it, choose stories according to their guidelines. Most characters choose {n} background story. Membership and faith stories need the narrator's approval." n=count %}{% else %}{% t "If your narrator allows it, choose stories according to their guidelines. Most characters choose {n} background stories. Membership and faith stories need the narrator's approval." n=count %}{% endif %}</p>{% endblock %}
 {% block step %}
 {% for type, stories in by_type.items %}
   <details class="spec-group" {% if type == "background" %}open{% endif %}>
-    <summary>{{ type|capfirst }} stories</summary>
+    <summary>{% if type == "background" %}{% t "Background stories" %}{% elif type == "membership" %}{% t "Membership stories" %}{% elif type == "faith" %}{% t "Faith stories" %}{% elif type == "personality" %}{% t "Personality stories" %}{% elif type == "nationality" %}{% t "Nationality stories" %}{% else %}{{ type|capfirst }}{% endif %}</summary>
     <div class="choice-grid" style="margin-top:8px">
       {% for s in stories %}
         <label class="choice"><input type="checkbox" name="stories" value="{{ s.slug }}" {% if s.slug in selected %}checked{% endif %}>
-          <b>{{ s.name }}</b>{% if s.group %} <span class="tag">{{ s.group }}</span>{% endif %}{% if s.requires %} <span class="tag">req. {{ s.requires }}</span>{% endif %}
+          <b>{{ s.name }}</b>{% if s.group %} <span class="tag">{{ s.group_label }}</span>{% endif %}{% if s.requires %} <span class="tag">{% t "req. {requires}" requires=s.requires_label %}</span>{% endif %}
           <div class="small">{{ s.text }}</div></label>
       {% endfor %}
     </div>

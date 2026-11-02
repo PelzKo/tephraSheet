@@ -2,6 +2,7 @@
 
 import random as _random
 
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import tables
@@ -17,9 +18,9 @@ def validate_levelup_skills(delta):
     points = sorted((p for p in delta.values() if p), reverse=True)
     errors = []
     if points != [2, 1, 1]:
-        errors.append("Place +2 points in one skill and +1 point in two other skills.")
+        errors.append(_("Place +2 points in one skill and +1 point in two other skills."))
     if any(s not in tables.ALL_SKILLS for s in delta):
-        errors.append("Unknown skill.")
+        errors.append(_("Unknown skill."))
     return errors
 
 
@@ -32,9 +33,9 @@ def validate_retrofit(old_slug, new_slug):
     reg = get_registry()
     old, new = reg.specialties.get(old_slug), reg.specialties.get(new_slug)
     if not old or not new:
-        return ["Unknown specialty."]
+        return [_("Unknown specialty.")]
     if old["attribute"] != new["attribute"]:
-        return [f"Retrofitting must stay within the same attribute ({old['attribute']})."]
+        return [_("Retrofitting must stay within the same attribute ({attribute}).", attribute=_(old["attribute"]))]
     return []
 
 

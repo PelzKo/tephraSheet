@@ -1,0 +1,13 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block title %}{{ s.name }} – {% t "Wiki" %}{% endblock %}
+{% block content %}
+<article class="paper wiki-page">
+  <a href="{% url 'wiki' %}">← {% t "Wiki" %}</a>
+  <h1>{{ s.name }}</h1>
+  <p class="muted">{{ s.skill|default:"General (Sciences)"|t }}{% if s.group %} · {{ s.group }}{% endif %} · {{ s.cost }}</p>
+  <div>{% for k, v in s.bonuses.items %}<span class="pill-bonus">{{ k|upper|t }} {{ v|signed }}</span>{% endfor %}</div>
+  {% if s.requires_text %}<p><b>{% t "Requires" %}:</b> {{ s.requires_text }}</p>{% endif %}
+  {% if s.usage_note %}<div class="usage-note">ⓘ {{ s.usage_note }}</div>{% endif %}
+  {{ s.effect|effect_html }}
+</article>
+{% endblock %}

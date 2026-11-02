@@ -1,0 +1,168 @@
+{
+ "brawl-block-with-a-grab": {
+  "name": "Griffblock",
+  "cost": "0 AP reflexiv",
+  "effect": "Kosten: 0 AP reflexiv\nWenn dein Gegner seinen Schlag auf dich wirft, blockst du nicht bloß seine Faust: Du packst sie. Immer wenn du den Angriff eines Gegners in deiner Reichweite erfolgreich ausweichst und ihn greifen kannst, darfst du automatisch (und für 0 Aktionspunkte) versuchen, seine Hand zu greifen (oder, falls er dich mit einem anderen Körperteil angegriffen hat, genau diese Stelle)."
+ },
+ "brawl-dirty-fighting": {
+  "name": "Schmutziger Kampf",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nDu bist ein Meister darin, dort zuzuschlagen, wo es wehtut, und den Gegner zusammenzucken zu lassen. Solange du in dieser Haltung bist, öffnet sich dein Gegner jedes Mal, wenn er den Widerstand gegen einen deiner gezielten Angriffe verfehlt, für reflexive Angriffe der Kämpfer neben ihm. Die reflexiven Angriffe kosten diejenigen, die die Gelegenheit nutzen, die normalen Aktionspunkte. Da du es verursacht hast, kannst du selbst keinen reflexiven Angriff daraus machen."
+ },
+ "brawl-drunken-boxing": {
+  "name": "Trunkenes Boxen",
+  "cost": "Gezielter Angriff +1 AP",
+  "effect": "Kosten: Gezielter Angriff +1 AP\nWenn du einen gezielten Angriff machst, ist er so wild und unberechenbar, dass er schwer auszuweichen ist. Bei einem trunkenen gezielten Angriff (ob du nüchtern bist oder nicht) würfelst du die Trefferzone zufällig mit deinem Würfel aus. Dafür erhältst du einen Bonus auf deine Genauigkeit in Höhe deiner Fertigkeit in Raufen."
+ },
+ "brawl-fisticuffs": {
+  "name": "Faustkampf",
+  "cost": "Haltung (braucht eine freie Hand)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nBlankes Boxen ist deine Stärke. Wenn du diese Haltung einnimmst, bist du bereit, allein mit den Fäusten ernsthaften Schaden anzurichten. Du kannst diese Haltung nur einnehmen, wenn mindestens eine Hand nichts hält. Solange du in dieser Haltung bist, sind deine waffenlosen Angriffe eine Schadensklasse höher, plus eine weitere Schadensklasse je 6 Fertigkeitspunkte in Raufen.\nHast du also 12 Punkte in Raufen, hätte dein waffenloser Angriff in dieser Haltung die Schadensklasse 5 (normal 2, plus 1 für die Haltung, plus weitere 2 für die 12 Punkte in Raufen)."
+ },
+ "brawl-fluid": {
+  "name": "Fließend",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nDu kontrollierst alle, die dich angreifen. Immer wenn ein angrenzender Gegner dich angreift, du aber erfolgreich ausweichst, darfst du 1 Aktionspunkt reflexiv ausgeben, um deinen Angreifer auf ein beliebiges angrenzendes, freies Feld zu bewegen, auf dem er festen, ungefährlichen Boden unter den Füßen hat."
+ },
+ "brawl-grapple": {
+  "name": "Ringkampf",
+  "cost": "Haltung (muss greifen)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nHast du jemanden gegriffen, kannst du daraus einen vollen Ringkampf machen, der seine Beweglichkeit lahmlegt und ihm jede Handlung erschwert. Du musst jemanden greifen, um die Ringkampf-Haltung einzunehmen, und du kannst sie nur halten, solange du diese Person greifst (wehrt sie sich erfolgreich, fliegst du also aus der Haltung). Alles, was ihr erlauben würde, sich aus dem Griff zu befreien, wirft dich automatisch aus dieser Haltung. Wenn du deinen Griff in einen Ringkampf überführst, greifst du nicht mehr eine einzelne Stelle, sondern ringst mit ihrem ganzen Körper. (Für andere Spezialisierungen zählt es dennoch als Griff.) Eine von dir festgehaltene Person kann sich nicht bewegen, genau wie bei einem Griff. Versucht sie eine Handlung, erleidet sie Abzüge auf jeden Wurf. Jedes Mal, wenn ein umklammerter Gegner würfelt (außer bei Zufallswürfen), würfelst du Raufen, bestimmst die Stufe und gibst ihm den entsprechenden Abzug auf seinen Wurf.\n-3 auf den Wurf\n-6 auf den Wurf\n-9 auf den Wurf\n-12 auf den Wurf"
+ },
+ "brawl-heavy-handed": {
+  "name": "Schwere Hand",
+  "cost": "Waffenloser Angriff +1 AP",
+  "effect": "Kosten: Waffenloser Angriff +1 AP\nDie Hiebe deiner waffenlosen Angriffe sind so kraftvoll, als kämen sie von Riesenhämmern. Bei einem schweren Angriff würfelst du Raufen, bevor du Schaden verursachst, aber nachdem dein Genauigkeitswurf gelungen ist, um die verursachte Schadensklasse zu erhöhen.\n+3 Schadensklasse\n+4 Schadensklasse\n+5 Schadensklasse\n+6 Schadensklasse"
+ },
+ "brawl-hold-steady": {
+  "name": "Festhalten",
+  "cost": "Passiv",
+  "effect": "Du packst den Kerl, während deine Freunde ihn windelweich prügeln. Wenn du jemanden greifst, erhält jeder, der diese Person angreift, einen kräftigen Genauigkeitsbonus: +3 auf seinen Genauigkeitswurf, +1 für je 4 Fertigkeitspunkte, die du in Raufen hast (also +4 bei 4 Punkten, +5 bei 8 Punkten und so weiter)."
+ },
+ "brawl-knock-aside": {
+  "name": "Beiseiteschlagen",
+  "cost": "Parieren (1 AP reflexiv)",
+  "effect": "Kosten: Parieren (1 AP reflexiv)\nMit einem schnellen Schlag kannst du einen Angriff allein mit der Wucht deines Körpers beiseitedrücken. Du darfst Angriffe von Nahkampfwaffen, Bögen oder Wurfwaffen reflexiv mit bloßen Händen parieren. Bei einer solchen Parade erhältst du einen Bonus von +3 auf dein Ausweichen, plus +1 je 8 Fertigkeitspunkte in Raufen (also +4 bei 8 Punkten, +5 bei 16 Punkten und +6 bei 24 Punkten)."
+ },
+ "brawl-monkey-wrestler": {
+  "name": "Affenringer",
+  "cost": "Passiv",
+  "requires_text": "5 Raufen",
+  "effect": "Voraussetzung: 5 Fertigkeitspunkte in Raufen\nDu schlingst die Beine um ihren Oberkörper, schlägst die Zähne in ihren Arm, packst ihr Gesicht, legst den Ellbogen um ihre Augen, und du hast immer noch eine Hand frei für deinen Dolch. Für je 5 Punkte in Raufen darfst du eine zusätzliche Stelle an einer Person greifen. Normalerweise kannst du nur zwei Stellen greifen (zwei Hände vorausgesetzt). Du kannst entscheiden, deine Hände nicht für einen Griff zu benutzen, wenn du genug Punkte dafür hast."
+ },
+ "brawl-reversal": {
+  "name": "Umkehrung",
+  "cost": "2 AP reflexiv",
+  "effect": "Kosten: 2 AP reflexiv\nDie einzige Person, die in diesem Kampf greift, bist du. Wenn dich jemand erfolgreich greift, kannst du versuchen, den Griff umzukehren und deinen Angreifer zu fassen. Würfle deinen Widerstand gegen den Griff deines Gegners neu, aber addiere deine Fertigkeit in Raufen auf den Wurf. Gelingt es dir, muss er einen Widerstand gegen dein Raufen würfeln, um nicht an einer gezielten Stelle deiner Wahl gegriffen zu werden."
+ },
+ "brawl-shrug-away": {
+  "name": "Abschütteln",
+  "cost": "Passiv (kostenlos)",
+  "effect": "Sagen wir einfach, du magst es nicht, berührt zu werden. Wirst du erfolgreich gegriffen, darfst du sofort einen weiteren Widerstand würfeln (ohne Aktionspunktkosten), bei dem du deine Fertigkeit Raufen zum verwendeten Attribut addierst."
+ },
+ "brawl-throat-jab": {
+  "name": "Kehlstoß",
+  "cost": "Gezielter Angriff auf den Hals, reflexiv; Widerstand: Kraft (hebt auf)",
+  "effect": "Widerstand: Kraft (hebt auf)\nKosten: Gezielter Angriff auf den Hals reflexiv\nBeginnt jemand neben dir zu sprechen, kannst du reflexiv einen gezielten Angriff auf seinen Hals machen, um ihn zum Schweigen zu bringen. Scheitert sein Widerstand, kann er nicht sprechen oder seine Stimme benutzen (auch keine Spezialisierungen, die Sprechen erfordern, wie Ermutigung), bis er 1 Aktionspunkt ausgibt, um sich zu räuspern, oder bis zum Ende seines nächsten Zuges wartet."
+ },
+ "brawl-bone-breaker": {
+  "name": "Knochenbrecher",
+  "group": "Knochenbrechen",
+  "cost": "Waffenloser gezielter Angriff +1 AP",
+  "effect": "Kosten: Waffenloser gezielter Angriff +1 AP\nDu rammst dem Gegner einen präzisen Schlag in den Leib, der einen gezielten Angriff verursacht, dem man kaum widerstehen kann. Führe deinen gezielten Angriff normal aus. Widersteht er erfolgreich, darfst du deine Schlagkraft erneut würfeln, sodass er erneut widerstehen muss. Der Knochenbrecher verursacht nur Schaden anhand des ursprünglichen Schlags.\n1 Wiederholung\n2 Wiederholungen\n3 Wiederholungen\n4 Wiederholungen"
+ },
+ "brawl-crippling-blow": {
+  "name": "Lähmender Schlag",
+  "group": "Knochenbrechen",
+  "cost": "Knochenbrechender Angriff, +1 AP pro Stelle",
+  "requires_text": "Knochenbrecher; 8 Raufen",
+  "effect": "Voraussetzung: Spezialisierung Knochenbrecher, 8 Fertigkeitspunkte in Raufen Kosten: Knochenbrechender Angriff, +1 AP pro Stelle\nDein knochenbrechender Angriff hallt durch das Opfer und lähmt einen Großteil seines Körpers. Wenn du deinen knochenbrechenden Angriff machst, darfst du einen zusätzlichen Aktionspunkt ausgeben, um denselben Knochenbrecher-Effekt gegen eine weitere gezielte Stelle auszulösen. Du kannst so viele Stellen betreffen, wie du willst; jede kostet 1 zusätzlichen Aktionspunkt.\nSagen wir, du führst einen Knochenbrecher-Angriff gegen den Hals einer Person aus. Du erzielst Stufe 3 auf deinen Knochenbrecher, also muss sie (absurde) 4 Widerstände bestehen, um nicht betroffen zu sein. Zusätzlich gibst du 2 Aktionspunkte aus, um die Effekte der gezielten Angriffe auf Torso und Hand auszulösen, die nun ebenfalls 4 Widerstände zum Vermeiden erfordern."
+ },
+ "brawl-combo-flow": {
+  "name": "Kombofluss",
+  "group": "Kombo",
+  "cost": "Passiv",
+  "requires_text": "4 Raufen",
+  "effect": "Voraussetzung: 4 Fertigkeitspunkte in Raufen\nDu tobst wie Stromschnellen und folgst dem Weg des geringsten Widerstands. Jeder Nahkampfangriff, den du während eines Zuges landest, gibt dir +2 auf Genauigkeits- und Schlagkraftwürfe für den Rest deines Zuges, und dieser Bonus summiert sich mit jedem erfolgreichen Nahkampfangriff bis zum Ende deines Zuges.\nHast du also einen Nahkampfangriff gelandet, hätte dein nächster Angriff +2 auf Genauigkeit und Schlagkraft. Nach deinem zweiten erfolgreichen Angriff hätte der dritte +4 auf Genauigkeit und Schlagkraft. Das wächst mit jedem erfolgreichen Angriff weiter."
+ },
+ "brawl-combo-opener": {
+  "name": "Kombo-Eröffner",
+  "group": "Kombo",
+  "cost": "Waffenloser Angriff +1 AP",
+  "requires_text": "Kombofluss",
+  "effect": "Voraussetzung: Spezialisierung Kombofluss\nKosten: Waffenloser Angriff +1 AP\nDu darfst einen Kombo-Eröffner ausführen, um die Wirkung deines Komboflusses zu steigern. Landest du deinen Kombo-Eröffner erfolgreich (der meistens wie ein normaler waffenloser Angriff aussieht), kann er als mehrere erfolgreiche Angriffe zählen.\nZählt als zwei Angriffe (gibt +4 auf Genauigkeit und Schlagkraft für den nächsten Angriff).\nZählt als drei Angriffe (gibt +6 auf Genauigkeit und Schlagkraft für den nächsten Angriff).\nZählt als vier Angriffe (gibt +8 auf Genauigkeit und Schlagkraft für den nächsten Angriff).\nZählt als fünf Angriffe (gibt +10 auf Genauigkeit und Schlagkraft für den nächsten Angriff)."
+ },
+ "brawl-combo-breaker": {
+  "name": "Kombobrecher",
+  "group": "Kombo",
+  "cost": "Kostenlos",
+  "effect": "Immer wenn ein angrenzender Gegner dich mit zwei getrennten Angriffen in einem Zug erfolgreich verletzt, darfst du einen Kombobrecher ausführen: einen kostenlosen waffenlosen Angriff gegen deinen Angreifer, der statt deiner Genauigkeit deine Fertigkeit in Raufen verwendet."
+ },
+ "brawl-finisher": {
+  "name": "Finisher",
+  "group": "Kombo",
+  "cost": "Kostenlos",
+  "requires_text": "Schwere Hand",
+  "effect": "Voraussetzung: Spezialisierung Schwere Hand\nLandest du in einem Zug zwei waffenlose Angriffe erfolgreich und hast noch einen weiteren Aktionspunkt, kannst du einen Finisher ausführen. Ein Finisher ist wie ein schwerer Angriff, kostet aber den zusätzlichen Aktionspunkt nicht."
+ },
+ "brawl-crushing-grip": {
+  "name": "Quetschgriff",
+  "group": "Griff",
+  "cost": "Passiv",
+  "requires_text": "+4 Schlagkraft",
+  "effect": "Voraussetzung: +4 Schlagkraft\nDeine Griffe sind bösartig und zerquetschen den Gegner. Wenn du greifst, verursachst du zusätzlich Schaden, als würdest du normal angreifen."
+ },
+ "brawl-twist": {
+  "name": "Verdrehen",
+  "group": "Griff",
+  "cost": "1 AP",
+  "requires_text": "Quetschgriff",
+  "effect": "Voraussetzung: Spezialisierung Quetschgriff\nKosten: 1 AP\nHast du eine Person mit einer Hand gegriffen, kannst du diese Stelle verdrehen, um Schmerzen zuzufügen. Für 1 Aktionspunkt verursachst du automatisch Schaden wie bei einem waffenlosen Angriff (ohne Genauigkeit und Ausweichen zu würfeln). Du kannst außerdem für 1 Aktionspunkt den gezielten Angriff auslösen, den du gegriffen hast, wobei du Schlagkraft nur würfelst, um den nötigen Widerstand zu bestimmen, aber sonst keinen Schaden verursachst. Obwohl dies Schaden verursacht, zählt es nicht als Angriff."
+ },
+ "frenzy-adrenaline-surge": {
+  "name": "Adrenalinstoß",
+  "cost": "Passiv",
+  "effect": "Der Tod deiner Gegner jagt einen belebenden Schub durch deinen Körper, der dich weiterkämpfen lässt. Immer wenn du einen Tödlichen Effekt verursachst oder einen Gegner tötest, erhältst du einige deiner Trefferpunkte zurück.\nStelle sofort 3 Trefferpunkte wieder her\nStelle sofort 6 Trefferpunkte wieder her\nStelle sofort 9 Trefferpunkte wieder her\nStelle sofort 12 Trefferpunkte wieder her"
+ },
+ "frenzy-backlash": {
+  "name": "Rückschlag",
+  "cost": "1 AP reflexiv",
+  "requires_text": "7 Raserei",
+  "effect": "Voraussetzung: 7 Fertigkeitspunkte in Raserei\nKosten: 1 AP reflexiv\nGroße Schadensmengen halten dich nicht auf, sie machen dich wütend! Immer wenn du 10 oder mehr Schaden erleidest (nach Schutz), kannst du einen reflexiven Angriff gegen deinen Angreifer machen, wobei du statt deiner Genauigkeit deine Fertigkeit in Raserei verwendest. Dieser reflexive Angriff kostet dich nur 1 Aktionspunkt."
+ },
+ "frenzy-burning-revenge": {
+  "name": "Brennende Rache",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nDein Feind treibt dich zu größerer Stärke. Verletzt dich ein Gegner, darfst du diesen Schaden „sammeln“, um ihn als Bonus auf deinen nächsten Schlagkraftwurf gegen diesen Gegner zu addieren. Wirst du getroffen, kannst du 1 Aktionspunkt reflexiv ausgeben, um den Schaden auszukosten (nach Schutz). Beim nächsten Angriff gegen diesen Gegner erhältst du den Schaden als Bonus auf den Schlagkraftwurf."
+ },
+ "frenzy-carry-through": {
+  "name": "Durchschlagen",
+  "cost": "Nahkampfangriff +1 AP pro weiterem Feind",
+  "effect": "Kosten: Nahkampfangriff +1 AP pro angrenzendem Gegner\nDu führst deinen Hieb durch einen Gegner hindurch in den nächsten. Hast du einen Gegner in deiner Nahkampfreichweite erfolgreich angegriffen, darfst du den Angriff fortsetzen und dich durch weitere Gegner in deiner Reichweite schlagen. Für jeden zusätzlich gewählten Gegner musst du 1 weiteren Aktionspunkt ausgeben. Du darfst nicht zweimal denselben Gegner wählen. Du musst weiterhin Genauigkeit würfeln, um zu sehen, ob du triffst, verursachst aber denselben Schaden wie beim ersten Angriff.\nWenn du andere modifizierende Spezialisierungen benutzt hast (die ihn zu einem „Angriff +1 AP“ machen), gelten sie nur für das erste Ziel."
+ },
+ "frenzy-crimson-weapon": {
+  "name": "Purpurwaffe",
+  "cost": "Nahkampfangriff +1 AP; Widerstand: Kraft (senkt Stufe)",
+  "effect": "Widerstand: Kraft (senkt Stufe)\nKosten: Nahkampfangriff +1 AP\nDu lernst, mit deiner Waffe tief ins Fleisch deiner Feinde zu schneiden. Erleidet ein Gegner Schaden durch deine Purpurwaffe, beginnt er zu Beginn seines nächsten Zuges zu bluten (und in jedem Zug danach). Blutungsschaden ist nicht durch Schutz minderbar, aber der Gegner kann Kraft würfeln, um die Stufe zu senken. Eine Person kann Blutungen im Umfang von 10 Punkten stoppen, indem sie 1 Aktionspunkt für das Verbinden der Wunde ausgibt.\nBlutung mit 2 Schaden pro Zug\nBlutung mit 4 Schaden pro Zug\nBlutung mit 6 Schaden pro Zug\nBlutung mit 8 Schaden pro Zug"
+ },
+ "frenzy-fray-fighter": {
+  "name": "Getümmelkämpfer",
+  "cost": "3 AP",
+  "effect": "Kosten: 3 AP\nEin wütender Mob sabbernder Bestien starrt dich an und will dich Stück für Stück zerreißen. Für dich ist das nur ein weiterer Arbeitstag. Mit einer schweren oder kleineren Nahkampfwaffe kannst du dich ins Getümmel stürzen. Würfle deine Stufe, um zu bestimmen, wie viele Gegner neben dir du triffst. Sie dürfen Verteidigung gegen die Angriffe würfeln.\nSchaden der Stufe 1 an 2 angrenzenden Gegnern\nSchaden der Stufe 1 an 3 angrenzenden Gegnern\nSchaden der Stufe 1 an 4 angrenzenden Gegnern\nSchaden der Stufe 1 an allen angrenzenden Gegnern"
+ },
+ "frenzy-hundred-strikes": {
+  "name": "Hundert Schläge",
+  "cost": "Alle AP des Zuges (muss auf Maximum sein)",
+  "effect": "Kosten: Alle AP, die du in einem einzigen Zug ausgeben kannst Wenn du Hundert Schläge einsetzt, musst du noch deine maximalen Aktionspunkte für den Zug haben und eine schwere oder kleinere Nahkampfwaffe führen. Du bestimmst einen einzelnen angrenzenden Gegner als Ziel deiner Hundert Schläge. Für je einen Aktionspunkt kannst du einen Nahkampfangriff gegen diesen Gegner machen. Nach jedem Angriff bewegen ihr beide, du und das Ziel, euch ein einzelnes Feld. Das Ziel wählt, auf welches Feld es zieht, und du musst entweder folgen oder auf den Rest deines Zuges verzichten."
+ },
+ "frenzy-liberator": {
+  "name": "Befreier",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nDu magst es nicht, berührt, gehalten, gegriffen oder umklammert zu werden. Immer wenn du gegriffen wirst, kannst du einen gezielten Nahkampfangriff gegen die Person machen, die dich greift, und zwar so, dass sie dich loslässt (oft ein gezielter Angriff auf ihre Hand, du kannst aber auch auf ihren Torso zielen, um sie wegzustoßen, oder auf alles andere, womit sie dich festhält). Du kannst das reflexiv tun, wenn sie dich zuerst greift, und scheiterst du, kannst du diese gezielten Nahkampfangriffe für nur 1 Aktionspunkt gegen deinen Angreifer fortsetzen, bis er loslässt."
+ },
+ "frenzy-merciless": {
+  "name": "Gnadenlos",
+  "cost": "Haltung (kann nicht freiwillig verlassen werden)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nHast du diesen Pfad einmal betreten, gibt es kein Zurück. Sobald du deine gnadenlose Haltung einnimmst, kannst du sie nicht freiwillig verlassen. Beim Einnehmen wählst du ein Ziel der Haltung. Solange du das Ziel bemerkst oder glaubst, dass es sich innerhalb von ein paar hundert Fuß befindet, kannst du die Haltung nicht verlassen. In dieser Haltung kannst du nur dein Ziel und Personen angreifen, die dich direkt daran hindern, dein Ziel zu erreichen. Bist du nicht mit deinem Ziel im Nahkampf gebunden, musst du jeden Zug mindestens 1 Aktionspunkt darauf verwenden, dich auf dein Ziel zuzubewegen.\nSolange diese Haltung aktiv ist, darfst du einmal pro Zug deine Fertigkeit in Raserei als Bonus auf einen deiner Kampfwürfe verwenden oder sie auf mehrere aufteilen. Du kannst zum Beispiel deine Fertigkeit in Raserei auf einen Schlagkraftwurf addieren, oder die Hälfte auf einen Genauigkeitswurf und die andere Hälfte auf einen Ausweichwurf geben. Diese Kampfwürfe müssen im Wettstreit mit dem Ziel deiner gnadenlosen Haltung erfolgen."
+ }
+}

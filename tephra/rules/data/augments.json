@@ -98,7 +98,7 @@
   "notes": "vs living/organic; on organic armor lowers soak (not resistable); called shot on organic weapon lowers DC; repair at breather",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the aCiD\nFlesh burning acid damages living people and organic tissue. If used on a person, it deals damage to them. If simply thrown on somebody, it will lower the soak class of the person’s armor (and cannot be resisted). (If thrown on a person wearing organic armor, it will affect the armor first.) If a called shot is made to the person’s organic weapon (or another wielded item), it will lower the damage class of the weapon. If used on an organic trinket or gizmo of any sorts, it will render the item unusable until the item can be hammered out. Normally a weapon or armor can be banged back to its original form during a breather (15 minutes or more).\n6 damage or a -1 to damage or soak class\n12 damage or a -2 to damage or soak class\n18 damage or a -3 to damage or soak class\n24 damage or a -4 to damage or soak class",
+  "text": "takes up 2 augment slots on the acid\nFlesh burning acid damages living people and organic tissue. If used on a person, it deals damage to them. If simply thrown on somebody, it will lower the soak class of the person’s armor (and cannot be resisted). (If thrown on a person wearing organic armor, it will affect the armor first.) If a called shot is made to the person’s organic weapon (or another wielded item), it will lower the damage class of the weapon. If used on an organic trinket or gizmo of any sorts, it will render the item unusable until the item can be hammered out. Normally a weapon or armor can be banged back to its original form during a breather (15 minutes or more).\n6 damage or a -1 to damage or soak class\n12 damage or a -2 to damage or soak class\n18 damage or a -3 to damage or soak class\n24 damage or a -4 to damage or soak class",
   "modifiers": []
  },
  {
@@ -122,7 +122,7 @@
   "notes": "vs automatons/metal vehicles/metal armor & weapons; same rules",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the aCiD\nThis melts away metals, causing them to lose their form and substance. If used on an automaton, metal vehicle, or somebody inexplicably made of metal, it deals damage to them. If simply thrown on somebody wearing armor, it will lower the soak class of the person’s armor (and cannot be resisted). (If thrown on a metal creation wearing armor, it will affect the armor first until the armor is gone.) If a called shot is made to the person’s weapon (or another wielded item), it will lower the damage class of the weapon. If used on a trinket or gizmo of any sorts, it will render the item unusable until the item can be hammered out. Normally a weapon or armor can be banged back to its original form during a breather (15 minutes or more).\n6 damage or a -1 to damage or soak class\n12 damage or a -2 to damage or soak class\n18 damage or a -3 to damage or soak class\n24 damage or a -4 to damage or soak class",
+  "text": "takes up 2 augment slots on the acid\nThis melts away metals, causing them to lose their form and substance. If used on an automaton, metal vehicle, or somebody inexplicably made of metal, it deals damage to them. If simply thrown on somebody wearing armor, it will lower the soak class of the person’s armor (and cannot be resisted). (If thrown on a metal creation wearing armor, it will affect the armor first until the armor is gone.) If a called shot is made to the person’s weapon (or another wielded item), it will lower the damage class of the weapon. If used on a trinket or gizmo of any sorts, it will render the item unusable until the item can be hammered out. Normally a weapon or armor can be banged back to its original form during a breather (15 minutes or more).\n6 damage or a -1 to damage or soak class\n12 damage or a -2 to damage or soak class\n18 damage or a -3 to damage or soak class\n24 damage or a -4 to damage or soak class",
   "modifiers": []
  },
  {
@@ -146,7 +146,7 @@
   "notes": "vs medium+ metal armor; automatons/vehicles: regular speed only",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the aCiD\nThe acid rapidly begins to rust armor and washes out important lubrication, causing the armor to lock up. When an opponent is in medium or heavier metal armor, and is splashed with the acid, it begins to grind on itself, decreasing movement speed.\n-5 speed, -10 swim and climb speeds\n-10 speed, -10 swim and climb speeds\n-10 speed, -15 swim and climb speeds\n-15 speed, -15 swim and climb speeds\nAutomatons and vehicles effected by the rusting augment take the penalty to regular speed only.",
+  "text": "takes up 2 augment slots on the acid\nThe acid rapidly begins to rust armor and washes out important lubrication, causing the armor to lock up. When an opponent is in medium or heavier metal armor, and is splashed with the acid, it begins to grind on itself, decreasing movement speed.\n-5 speed, -10 swim and climb speeds\n-10 speed, -10 swim and climb speeds\n-10 speed, -15 swim and climb speeds\n-15 speed, -15 swim and climb speeds\nAutomatons and vehicles effected by the rusting augment take the penalty to regular speed only.",
   "modifiers": []
  },
  {
@@ -196,7 +196,7 @@
   "notes": "doffing armor costs double AP; cleaned at breather",
   "size": "",
   "price": "",
-  "text": "reQuires: Rusting Augment\nThe acid gets into the finer pieces of the armor, beginning to rust in even the smallest movements. The opponent takes a penalty to dexterity and also must spend twice as many action points to get out of their armor. The armor can be cleaned out during the next breather.\n-3 dexterity\n-6 dexterity\n-9 dexterity\n-12 dexterity",
+  "text": "Requires: Rusting Augment\nThe acid gets into the finer pieces of the armor, beginning to rust in even the smallest movements. The opponent takes a penalty to dexterity and also must spend twice as many action points to get out of their armor. The armor can be cleaned out during the next breather.\n-3 dexterity\n-6 dexterity\n-9 dexterity\n-12 dexterity",
   "modifiers": []
  },
  {
@@ -220,7 +220,7 @@
   "notes": "vs wooden creations/armor/weapons",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the aCiD\nThis melts away wood, causing it to lose its form and substance. If used on a wooden automaton, vehicle, or somebody inexplicably made of wood, it deals damage to them. If simply thrown on somebody wearing wooden armor, it will lower the soak class of the person’s armor (and cannot be resisted). (If thrown on a wooden creation wearing wooden armor, it will affect the armor first, until the armor is gone.) If a called shot is made to the person’s wooden weapon (or another wielded item), it will lower the damage class of the weapon. If used on a wooden trinket or gizmo of any sorts, it will render the item unusable until the item can be hammered out. Normally a weapon or armor can be banged back to its original form during a breather (15 minutes or more).\n6 damage or a -1 to damage or soak class\n12 damage or a -2 to damage or soak class\n18 damage or a -3 to damage or soak class\n24 damage or a -4 to damage or soak class",
+  "text": "takes up 2 augment slots on the acid\nThis melts away wood, causing it to lose its form and substance. If used on a wooden automaton, vehicle, or somebody inexplicably made of wood, it deals damage to them. If simply thrown on somebody wearing wooden armor, it will lower the soak class of the person’s armor (and cannot be resisted). (If thrown on a wooden creation wearing wooden armor, it will affect the armor first, until the armor is gone.) If a called shot is made to the person’s wooden weapon (or another wielded item), it will lower the damage class of the weapon. If used on a wooden trinket or gizmo of any sorts, it will render the item unusable until the item can be hammered out. Normally a weapon or armor can be banged back to its original form during a breather (15 minutes or more).\n6 damage or a -1 to damage or soak class\n12 damage or a -2 to damage or soak class\n18 damage or a -3 to damage or soak class\n24 damage or a -4 to damage or soak class",
   "modifiers": []
  },
  {
@@ -244,7 +244,7 @@
   "notes": "can be made smaller",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the gas\nYour gas affects more areas. You can, at your discretion, make the area of effect smaller than your normal marque allows. within 10 feet of the original space\nwithin 15 feet of the original space\nwithin 20 feet of the original space\nwithin 25 feet of the original space",
+  "text": "takes up 2 augment slots on the gas\nYour gas affects more areas. You can, at your discretion, make the area of effect smaller than your normal marque allows. within 10 feet of the original space\nwithin 15 feet of the original space\nwithin 20 feet of the original space\nwithin 25 feet of the original space",
   "modifiers": []
  },
  {
@@ -292,7 +292,7 @@
   "notes": "−4 Acc/Eva in gas; lingers after leaving for listed turns",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the gas\nA blinding chemical burns the eyes of everyone within the area of the gas, to the point where opening their eyes is painful. Those within the blinding area suffer a -4 on accuracy and evade rolls. People may leave the area of the gas, but they remain blinded for a number of turns afterwards based on the marque of this gas (though this is resistable).\n1 turn\n2 turns\n3 turns\n4 turns",
+  "text": "takes up 2 augment slots on the gas\nA blinding chemical burns the eyes of everyone within the area of the gas, to the point where opening their eyes is painful. Those within the blinding area suffer a -4 on accuracy and evade rolls. People may leave the area of the gas, but they remain blinded for a number of turns afterwards based on the marque of this gas (though this is resistable).\n1 turn\n2 turns\n3 turns\n4 turns",
   "modifiers": []
  },
  {
@@ -460,7 +460,7 @@
   "notes": "next AP (or 2) must attack nearest; resist Cunning or Spirit",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment sLots on the gas\nThis chemical distresses the target and causes them to see things that aren’t there. Any affected by the paranoia must spend their next available action point (or two, if their only attack requires two action points) to attack the person closest to them, regardless of whether they are friend or foe. The paranoia makes the attack wild, however, and the targets suffer a penalty on their accuracy and strike rolls during this attack.\nInstead of the normal brute resist, cunning or spirit can be used for the resist (at the target’s discretion).\n-3 on accuracy and strike rolls for the paranoia attack\n-2 on accuracy and strike rolls for the paranoia attack\n-1 on accuracy and strike rolls for the paranoia attack no penalty on the accuracy or strike rolls for the paranoia attack",
+  "text": "takes up 3 augment slots on the gas\nThis chemical distresses the target and causes them to see things that aren’t there. Any affected by the paranoia must spend their next available action point (or two, if their only attack requires two action points) to attack the person closest to them, regardless of whether they are friend or foe. The paranoia makes the attack wild, however, and the targets suffer a penalty on their accuracy and strike rolls during this attack.\nInstead of the normal brute resist, cunning or spirit can be used for the resist (at the target’s discretion).\n-3 on accuracy and strike rolls for the paranoia attack\n-2 on accuracy and strike rolls for the paranoia attack\n-1 on accuracy and strike rolls for the paranoia attack no penalty on the accuracy or strike rolls for the paranoia attack",
   "modifiers": []
  },
  {
@@ -484,7 +484,7 @@
   "notes": "when someone dies in it; indefinitely",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the gas\nReplicating gases feed on death, spreading further out with each victim it claims. Any time somebody dies in replicating gas, it feeds on the body to create more of itself, spreading out to affect everything within several adjacent areas of the original victim. It will continue to spread indefinitely.\nspreads to adjacent areas\nspreads to adjacent areas within 10 feet\nspreads to adjacent areas within 15 feet\nspreads to adjacent areas within 20 feet",
+  "text": "takes up 2 augment slots on the gas\nReplicating gases feed on death, spreading further out with each victim it claims. Any time somebody dies in replicating gas, it feeds on the body to create more of itself, spreading out to affect everything within several adjacent areas of the original victim. It will continue to spread indefinitely.\nspreads to adjacent areas\nspreads to adjacent areas within 10 feet\nspreads to adjacent areas within 15 feet\nspreads to adjacent areas within 20 feet",
   "modifiers": []
  },
  {
@@ -628,7 +628,7 @@
   "notes": "max 1 extra AP per turn; unused vanish at breather",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment sLots on the meDiCine\nWhile push stimulates the body to help it get over the beating it’s taken, heavy push takes it to a dangerous level. The muscles rip and the body cannot deal with the stress it’s being put under. This causes the heavy push to deal damage to the adminstrator, but gains action points instead. You can only use 1 extra action point per turn, and the damage is unsoakable. Any unused extra action points will go away during your next breather.\n10 backlash damage for each additional action point used, up to 2 extra action points\n9 backlash damage for each additional action point used, up to 3 extra action points\n7 backlash damage for each additional action point used, up to 4 extra action points\n6 backlash damage for each additional action point used, up to 5 extra action points",
+  "text": "takes up 3 augment slots on the medicine\nWhile push stimulates the body to help it get over the beating it’s taken, heavy push takes it to a dangerous level. The muscles rip and the body cannot deal with the stress it’s being put under. This causes the heavy push to deal damage to the adminstrator, but gains action points instead. You can only use 1 extra action point per turn, and the damage is unsoakable. Any unused extra action points will go away during your next breather.\n10 backlash damage for each additional action point used, up to 2 extra action points\n9 backlash damage for each additional action point used, up to 3 extra action points\n7 backlash damage for each additional action point used, up to 4 extra action points\n6 backlash damage for each additional action point used, up to 5 extra action points",
   "modifiers": []
  },
  {
@@ -654,7 +654,7 @@
   "notes": "not above max",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the meDiCine\nreQuires: Push augment known\nImproved push takes your grandpappy’s old style push potions and gives them a jolt of electricity, making them push that much harder. Improved push potions return your hit points to you, though you cannot go over your maximum.\nrestores 10 hit points\nrestores 20 hit points\nrestores 30 hit points\nrestores 40 hit points",
+  "text": "takes up 2 augment slots on the medicine\nRequires: Push augment known\nImproved push takes your grandpappy’s old style push potions and gives them a jolt of electricity, making them push that much harder. Improved push potions return your hit points to you, though you cannot go over your maximum.\nrestores 10 hit points\nrestores 20 hit points\nrestores 30 hit points\nrestores 40 hit points",
   "modifiers": []
  },
  {
@@ -846,7 +846,7 @@
   "notes": "−4 Acc/Eva",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the gas\nA blinding chemical burns the eyes of everyone within the area of the gas, to the point where opening their eyes is painful. Those within the blinding area suffer a -4 on accuracy and evade rolls. People may leave the area of the gas, but they remain blinded for a number of turns afterwards based on the marque of this gas (though this is resistable).\n1 turn\n2 turns\n3 turns\n4 turns",
+  "text": "takes up 2 augment slots on the gas\nA blinding chemical burns the eyes of everyone within the area of the gas, to the point where opening their eyes is painful. Those within the blinding area suffer a -4 on accuracy and evade rolls. People may leave the area of the gas, but they remain blinded for a number of turns afterwards based on the marque of this gas (though this is resistable).\n1 turn\n2 turns\n3 turns\n4 turns",
   "modifiers": []
  },
  {
@@ -867,10 +867,10 @@
    "6 AP",
    "8 AP"
   ],
-  "notes": "prone: −1 combat rolls, 5 ft move",
+  "notes": "Prone: −1 combat rolls, 5 ft move",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment sLots on the poison\nThe target’s body siezes up and they fall to the ground, prone. Whle prone, you suffer a -1 on all combat rolls (accuracy, evade, strike, and defense) and cannot move more than 5 feet per turn. The target cannot willingly stand from prone until the target has used or forgone a specified number of action points, and if somebody lifts them, they immediately fall back down.\n2 action points\n4 action points\n6 action points\n8 action points",
+  "text": "takes up 3 augment slots on the poison\nThe target’s body siezes up and they fall to the ground, prone. Whle prone, you suffer a -1 on all combat rolls (accuracy, evade, strike, and defense) and cannot move more than 5 feet per turn. The target cannot willingly stand from prone until the target has used or forgone a specified number of action points, and if somebody lifts them, they immediately fall back down.\n2 action points\n4 action points\n6 action points\n8 action points",
   "modifiers": []
  },
  {
@@ -942,7 +942,7 @@
   "notes": "fail = 1 AP wandering",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the poison\nA hallucinogenic poison causes the brain to spaz out and see things that are definitely not there (or so we think). A hallucinogenic poison forces the target to make a cunning roll every time he wants to take an action. A failure causes the target to spend one action point moving aimlessly (at the narrator’s discretion).\nTier 2 Cunning results required to move for 1 turn\nTier 2 Cunning results required to make any actions for\n2 turns\nTier 3 Cunning results required to make any actions for\n3 turns\nTier 3 Cunning results required to make any actions for\n4 turns",
+  "text": "takes up 2 augment slots on the poison\nA hallucinogenic poison causes the brain to spaz out and see things that are definitely not there (or so we think). A hallucinogenic poison forces the target to make a cunning roll every time he wants to take an action. A failure causes the target to spend one action point moving aimlessly (at the narrator’s discretion).\nTier 2 Cunning results required to move for 1 turn\nTier 2 Cunning results required to make any actions for\n2 turns\nTier 3 Cunning results required to make any actions for\n3 turns\nTier 3 Cunning results required to make any actions for\n4 turns",
   "modifiers": []
  },
  {
@@ -1038,7 +1038,7 @@
   "notes": "always priced mQ III; Brute-resistable",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on the poison\nPush back is a rather devious poison used specifically to counter enemies who rely on push potions (that is, potions that restore their hit points). For the hour after somebody fails to resist a poison with push-back, any push potion they take will deal damage to them instead of restoring their hit points. The damage dealt is equal to the amount of hit points that would have been restored, but this is now resistable with your Brute.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in alchemy.",
+  "text": "takes up 2 augment slots on the poison\nPush back is a rather devious poison used specifically to counter enemies who rely on push potions (that is, potions that restore their hit points). For the hour after somebody fails to resist a poison with push-back, any push potion they take will deal damage to them instead of restoring their hit points. The damage dealt is equal to the amount of hit points that would have been restored, but this is now resistable with your Brute.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in alchemy.",
   "modifiers": []
  },
  {
@@ -1287,7 +1287,7 @@
   "notes": "always priced mQ II",
   "size": "",
   "price": "",
-  "text": "reQuires: Augmented with Rotating Barrels\nConverting your firearm to be truly automatic, the crank-free firearm no longer increases the need of hands - a one-handed firearm is still one-handed, and a two-handed firearm is still just two-handed.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
+  "text": "Requires: Augmented with Rotating Barrels\nConverting your firearm to be truly automatic, the crank-free firearm no longer increases the need of hands - a one-handed firearm is still one-handed, and a two-handed firearm is still just two-handed.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
   "modifiers": []
  },
  {
@@ -1337,7 +1337,7 @@
   "notes": "[STAT]",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
   "modifiers": [
    {
     "stat": "dc",
@@ -1426,7 +1426,7 @@
   "notes": "permanent",
   "size": "",
   "price": "",
-  "text": "reQuires: Weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
+  "text": "Requires: Weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
   "modifiers": []
  },
  {
@@ -1453,7 +1453,7 @@
   "notes": "always mQ I",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on light weapon\nYou’ve been able to shrink the weapon down so that a gnome will be able to conceal it.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
+  "text": "Requires: placed on light weapon\nYou’ve been able to shrink the weapon down so that a gnome will be able to conceal it.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
   "modifiers": []
  },
  {
@@ -1478,7 +1478,7 @@
   "notes": "once per person per combat",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow The weapon is so twisted and wicked looking that it could strike fear into the heart of even the bravest of warriors. When first seeing the weapon, all enemies must make a spirit resist or suffer from tier 1 fear. At any time a character can spend an action point to attempt another resist roll. A single person can only evoke the effect of one horrifying weapon per combat.\nTier 2 spirit result to resist\nTier 3 spirit result to resist\nTier 4 spirit result to resist\nIrresistable (unless they can get a Tier 5 spirit resist)",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow The weapon is so twisted and wicked looking that it could strike fear into the heart of even the bravest of warriors. When first seeing the weapon, all enemies must make a spirit resist or suffer from tier 1 fear. At any time a character can spend an action point to attempt another resist roll. A single person can only evoke the effect of one horrifying weapon per combat.\nTier 2 spirit result to resist\nTier 3 spirit result to resist\nTier 4 spirit result to resist\nIrresistable (unless they can get a Tier 5 spirit resist)",
   "modifiers": []
  },
  {
@@ -1629,7 +1629,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow reQuires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this weapon was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow requires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this weapon was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
   "modifiers": []
  },
  {
@@ -1815,7 +1815,7 @@
   "notes": "repeatable with remaining AP",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on a melee weapon\nCost: 1 AP (after a successful attack)\nYour weapon has a deadly, barbed spinning edge. If you make a successful attack with a chainsaw weapon that deals damage, you may spend 1 action point (as many times as you have AP left in your turn) to deal additional unsoakable damage as the chainsaw continues to rip into the person.\n1 extra damage\n2 extra damage\n3 extra damage\n4 extra damage",
+  "text": "Requires: placed on a melee weapon\nCost: 1 AP (after a successful attack)\nYour weapon has a deadly, barbed spinning edge. If you make a successful attack with a chainsaw weapon that deals damage, you may spend 1 action point (as many times as you have AP left in your turn) to deal additional unsoakable damage as the chainsaw continues to rip into the person.\n1 extra damage\n2 extra damage\n3 extra damage\n4 extra damage",
   "modifiers": []
  },
  {
@@ -1863,7 +1863,7 @@
   "notes": "1 AP reflexive; Brute resist lowers marque",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nCost: 1 AP reflexively during an attack\nYour weapon leaks a subzero liquid that freezes the opponent upon contact. When you make an attack with a cryothermal weapon, you may spend 1 action point to make the target frosty. Unless your victim can resist the entire effect, they become chilled, making them shiver when they attack.\nVictim suffers a -2 on strike rolls until your next turn Victim suffers a -4 on strike rolls until your next turn Victim suffers a -6 on strike rolls until your next turn Victim suffers a -8 on strike rolls until your next turn",
+  "text": "Resist: Brute (marques down)\nCost: 1 AP reflexively during an attack\nYour weapon leaks a subzero liquid that freezes the opponent upon contact. When you make an attack with a cryothermal weapon, you may spend 1 action point to make the target frosty. Unless your victim can resist the entire effect, they become chilled, making them shiver when they attack.\nVictim suffers a -2 on strike rolls until your next turn Victim suffers a -4 on strike rolls until your next turn Victim suffers a -6 on strike rolls until your next turn Victim suffers a -8 on strike rolls until your next turn",
   "modifiers": []
  },
  {
@@ -1911,7 +1911,7 @@
   "notes": "1 AP reflexive; Brute resist",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nCost to aCtivate: 1 AP reflexively during an attack Your weapon heats up, burning the target. When you attack, you may spend 1 action point to make it pyrothermal. If it hits, the attack burns its target should they fail to resist against your melee attack. These burns last until the victim’s next breather, when they can be treated.\nVictim suffers Tier 1 burns (-1 on defense rolls) Victim suffers Tier 2 burns (-3 on defense rolls) Victim suffers Tier 3 burns (-5 on defense rolls) Victim suffers Tier 4 burns (-7 on defense rolls)",
+  "text": "Resist: Brute (marques down)\nCost to activate: 1 AP reflexively during an attack Your weapon heats up, burning the target. When you attack, you may spend 1 action point to make it pyrothermal. If it hits, the attack burns its target should they fail to resist against your melee attack. These burns last until the victim’s next breather, when they can be treated.\nVictim suffers Tier 1 burns (-1 on defense rolls) Victim suffers Tier 2 burns (-3 on defense rolls) Victim suffers Tier 3 burns (-5 on defense rolls) Victim suffers Tier 4 burns (-7 on defense rolls)",
   "modifiers": []
  },
  {
@@ -1935,7 +1935,7 @@
   "notes": "1 AP reflexive on hit; Dex resist",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment sLots on a weapon\nresist: Dexterity (marques down)\nCost to aCtivate: 1 AP reflexively during an attack Fire lashes out around your weapon, catching those struck with it on fire. When you hit an opponent, you can spend 1 action point in order to attempt to catch them on fire. The target may resist with their dexterity (lowering the marques of the combustion).\nThe victim catches on Tier 1 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 3 fire",
+  "text": "takes up 3 augment slots on a weapon\nResist: Dexterity (marques down)\nCost to activate: 1 AP reflexively during an attack Fire lashes out around your weapon, catching those struck with it on fire. When you hit an opponent, you can spend 1 action point in order to attempt to catch them on fire. The target may resist with their dexterity (lowering the marques of the combustion).\nThe victim catches on Tier 1 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 3 fire",
   "modifiers": []
  },
  {
@@ -1961,7 +1961,7 @@
   "notes": "always mQ III",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on weapon with the Combustion augment Any person attempting to physically aid a victim of your combustion must first make a dexterity resist that equals the marque of your Combusion augment or be set on fire themselves.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
+  "text": "Requires: placed on weapon with the Combustion augment Any person attempting to physically aid a victim of your combustion must first make a dexterity resist that equals the marque of your Combusion augment or be set on fire themselves.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
   "modifiers": []
  },
  {
@@ -1987,7 +1987,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on weapon with the Combustion augment Despite your victim’s best efforts to put themselves out, they seem to continue burning. When catching things on fire through the use of a combustion attack, extra action points are required to put out the fire.\n1 extra AP\n2 extra AP\n3 extra AP\n4 extra AP",
+  "text": "Requires: placed on weapon with the Combustion augment Despite your victim’s best efforts to put themselves out, they seem to continue burning. When catching things on fire through the use of a combustion attack, extra action points are required to put out the fire.\n1 extra AP\n2 extra AP\n3 extra AP\n4 extra AP",
   "modifiers": []
  },
  {
@@ -2011,7 +2011,7 @@
   "notes": "[STAT]",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
   "modifiers": [
    {
     "stat": "dc",
@@ -2072,7 +2072,7 @@
   "notes": "req. Interchangeable Parts",
   "size": "",
   "price": "",
-  "text": "reQuires: Weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
+  "text": "Requires: Weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
   "modifiers": []
  },
  {
@@ -2122,7 +2122,7 @@
   "notes": "stops on miss",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on weapon with the Electrical augment The electricity that runs down your blade now jumps about, hitting multiple victims. Once you’ve hit an opponent, the electricity will arch to another opponent within 10 feet. Roll your accuracy versus their evade. If you meet or exceed it, the second opponent will be hit by the arch (dealing the normal damage for your electricity). The electricity will arch a number of times based on the marque of the augment. If, at any point, you miss a target, the electricity will not continue to jump.\nElectricity jumps once\nElectricity jumps twice\nElectricity jumps thrice\nElectricity jumps quatrice",
+  "text": "Requires: placed on weapon with the Electrical augment The electricity that runs down your blade now jumps about, hitting multiple victims. Once you’ve hit an opponent, the electricity will arch to another opponent within 10 feet. Roll your accuracy versus their evade. If you meet or exceed it, the second opponent will be hit by the arch (dealing the normal damage for your electricity). The electricity will arch a number of times based on the marque of the augment. If, at any point, you miss a target, the electricity will not continue to jump.\nElectricity jumps once\nElectricity jumps twice\nElectricity jumps thrice\nElectricity jumps quatrice",
   "modifiers": []
  },
  {
@@ -2148,7 +2148,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on a weapon with Electrical Archs augment Generally, electrical archs will jump from one target to another at a very small distance. The electricity will simply fizzle out if it goes too far. But with longer archs, your weapon’s electricity will take great leaps across the battlefield.\nCan arch up to 25 feet\nCan arch up to 50 feet\nCan arch up to 75 feet\nCan arch up to 100 feet",
+  "text": "Requires: placed on a weapon with Electrical Archs augment Generally, electrical archs will jump from one target to another at a very small distance. The electricity will simply fizzle out if it goes too far. But with longer archs, your weapon’s electricity will take great leaps across the battlefield.\nCan arch up to 25 feet\nCan arch up to 50 feet\nCan arch up to 75 feet\nCan arch up to 100 feet",
   "modifiers": []
  },
  {
@@ -2172,7 +2172,7 @@
   "notes": "1 AP per dose released on hit; refill 3 AP",
   "size": "",
   "price": "",
-  "text": "Cost to aCtivate: 1 AP reflexively during an attack Your weapon is hollow and covered in pores. You can fill your weapon with deadly gases that you release when you hit your opponent. You may choose to release multiple gases at the same time, but each one costs 1 action point. The augment’s marque determines how many gases it can hold. It costs 3 action points to add refill a single canister of gas.\nHolds up to 1 dose\nHolds up to 2 doses\nHolds up to 3 doses\nHolds up to 4 doses\nNote: Unless you have doses of alchemical gas loaded into the weapon, this augment grants no bonuses. See Alchemy for the crafting of gases.",
+  "text": "Cost to activate: 1 AP reflexively during an attack Your weapon is hollow and covered in pores. You can fill your weapon with deadly gases that you release when you hit your opponent. You may choose to release multiple gases at the same time, but each one costs 1 action point. The augment’s marque determines how many gases it can hold. It costs 3 action points to add refill a single canister of gas.\nHolds up to 1 dose\nHolds up to 2 doses\nHolds up to 3 doses\nHolds up to 4 doses\nNote: Unless you have doses of alchemical gas loaded into the weapon, this augment grants no bonuses. See Alchemy for the crafting of gases.",
   "modifiers": []
  },
  {
@@ -2198,7 +2198,7 @@
   "notes": "always mQ I",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on light weapon\nYou’ve been able to shrink the weapon down so that a gnome will be able to conceal it.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
+  "text": "Requires: placed on light weapon\nYou’ve been able to shrink the weapon down so that a gnome will be able to conceal it.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
   "modifiers": []
  },
  {
@@ -2222,7 +2222,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow The weapon is so twisted and wicked looking that it could strike fear into the heart of even the bravest of warriors. When first seeing the weapon, all enemies must make a spirit resist or suffer from tier 1 fear. At any time a character can spend an action point to attempt another resist roll. A single person can only evoke the effect of one horrifying weapon per combat.\nTier 2 spirit result to resist\nTier 3 spirit result to resist\nTier 4 spirit result to resist\nIrresistable (unless they can get a Tier 5 spirit resist)",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow The weapon is so twisted and wicked looking that it could strike fear into the heart of even the bravest of warriors. When first seeing the weapon, all enemies must make a spirit resist or suffer from tier 1 fear. At any time a character can spend an action point to attempt another resist roll. A single person can only evoke the effect of one horrifying weapon per combat.\nTier 2 spirit result to resist\nTier 3 spirit result to resist\nTier 4 spirit result to resist\nIrresistable (unless they can get a Tier 5 spirit resist)",
   "modifiers": []
  },
  {
@@ -2246,7 +2246,7 @@
   "notes": "no stacking",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a weapon\nThis weapon is symbolic to your allies, inspiring them to fight onwards when it’s in your hand. All allies that can see your weapon recover a small amount of hit points when you’re wielding it and your action points refresh. This does not stack with other inspiring weapons.\nallies recover 1 hit point\nallies recover 2 hit points\nallies recover 2 hit points\nallies recover 3 hit points",
+  "text": "takes up 2 augment slots on a weapon\nThis weapon is symbolic to your allies, inspiring them to fight onwards when it’s in your hand. All allies that can see your weapon recover a small amount of hit points when you’re wielding it and your action points refresh. This does not stack with other inspiring weapons.\nallies recover 1 hit point\nallies recover 2 hit points\nallies recover 2 hit points\nallies recover 3 hit points",
   "modifiers": []
  },
  {
@@ -2270,7 +2270,7 @@
   "notes": "[COND]",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a weapon\nA small, unbalanced sphere spins in the hilt of the weapon, causing it to vibrate wildly. This allows the weapon to deal tremendous damage to machines, vehicles with moving parts, and stationary structures.\n+2 damage class against automatons, vehicles, clockworks, and structures\n+4 damage class against automatons, vehicles, clockworks, and structures\n+6 damage class against automatons, vehicles, clockworks, and structures\n+8 damage class against automatons, vehicles, clockworks, and structures",
+  "text": "takes up 2 augment slots on a weapon\nA small, unbalanced sphere spins in the hilt of the weapon, causing it to vibrate wildly. This allows the weapon to deal tremendous damage to machines, vehicles with moving parts, and stationary structures.\n+2 damage class against automatons, vehicles, clockworks, and structures\n+4 damage class against automatons, vehicles, clockworks, and structures\n+6 damage class against automatons, vehicles, clockworks, and structures\n+8 damage class against automatons, vehicles, clockworks, and structures",
   "modifiers": []
  },
  {
@@ -2294,7 +2294,7 @@
   "notes": "attacks unsoakable vs wet/metal-armored; 1 AP toggle",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a weapon\nCost to aCtivate anD DeaCtivate: 1 AP\nYour weapon pulses with lightning, just looking for a target to vaporize. Lightning is a powerful force that is hard to control. It causes the user to take a penalty on their accuracy roll, but the attack is unsoakable if the opponent is wet or in metal armor. The lightning pulse can be turned on or turned off for 1 action point. While it is on, the penalty is always in effect.\n-8 on the accuracy roll\n-6 on the accuracy roll\n-4 on the accuracy roll\n-2 on the accuracy roll",
+  "text": "takes up 2 augment slots on a weapon\nCost to activate and Deactivate: 1 AP\nYour weapon pulses with lightning, just looking for a target to vaporize. Lightning is a powerful force that is hard to control. It causes the user to take a penalty on their accuracy roll, but the attack is unsoakable if the opponent is wet or in metal armor. The lightning pulse can be turned on or turned off for 1 action point. While it is on, the penalty is always in effect.\n-8 on the accuracy roll\n-6 on the accuracy roll\n-4 on the accuracy roll\n-2 on the accuracy roll",
   "modifiers": []
  },
  {
@@ -2405,7 +2405,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on throwing weapons\nThe weapon sails through the air, being easy to throw and going much further than its mundane counterparts. An easily thrown weapon has a farther range.\n+20 feet\n+30 feet\n+40 feet\n+60 feet",
+  "text": "Requires: placed on throwing weapons\nThe weapon sails through the air, being easy to throw and going much further than its mundane counterparts. An easily thrown weapon has a farther range.\n+20 feet\n+30 feet\n+40 feet\n+60 feet",
   "modifiers": []
  },
  {
@@ -2479,7 +2479,7 @@
   "notes": "returns to you",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on throwing weapon\nYou can throw your weapon, and it will return to you. Due to this, the range you can throw it is decreased, but you will always have the weapon on hand.\n-30 feet\n-20 feet\n-10 feet\nno ranged penalty",
+  "text": "Requires: placed on throwing weapon\nYou can throw your weapon, and it will return to you. Due to this, the range you can throw it is decreased, but you will always have the weapon on hand.\n-30 feet\n-20 feet\n-10 feet\nno ranged penalty",
   "modifiers": []
  },
  {
@@ -2505,7 +2505,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow reQuires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this weapon was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow requires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this weapon was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
   "modifiers": []
  },
  {
@@ -2555,7 +2555,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on weapon with Custom augment\nBe it from pressurized spikes in its grip or an unearthly balance, when a person attempts to wield the weapon, it causes them harm. The person the weapon was customized for is immune to this effect.\nThe weapon causes its user 2 unsoakable damage with each use\nThe weapon causes its user 4 unsoakable damage with each use\nThe weapon causes its user 6 unsoakable damage with each use\nThe weapon causes its user 8 unsoakable damage with each use",
+  "text": "Requires: placed on weapon with Custom augment\nBe it from pressurized spikes in its grip or an unearthly balance, when a person attempts to wield the weapon, it causes them harm. The person the weapon was customized for is immune to this effect.\nThe weapon causes its user 2 unsoakable damage with each use\nThe weapon causes its user 4 unsoakable damage with each use\nThe weapon causes its user 6 unsoakable damage with each use\nThe weapon causes its user 8 unsoakable damage with each use",
   "modifiers": []
  },
  {
@@ -2579,7 +2579,7 @@
   "notes": "1 AP reflexive; Brute resist",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nCost to aCtivate: 1 AP reflexively\nYou can make sparks fly off your weapon as you bring it in to decimate your foe. For 1 action point, you can make your attack full of static, causing the target to lose their ability to react as quickly. Meanwhile, their hair also stands on end. Victim suffers a -1 on evade rolls until your next turn Victim suffers a -2 on evade rolls until your next turn Victim suffers a -3 on evade rolls until your next turn Victim suffers a -4 on evade rolls until your next turn",
+  "text": "Resist: Brute (marques down)\nCost to activate: 1 AP reflexively\nYou can make sparks fly off your weapon as you bring it in to decimate your foe. For 1 action point, you can make your attack full of static, causing the target to lose their ability to react as quickly. Meanwhile, their hair also stands on end. Victim suffers a -1 on evade rolls until your next turn Victim suffers a -2 on evade rolls until your next turn Victim suffers a -3 on evade rolls until your next turn Victim suffers a -4 on evade rolls until your next turn",
   "modifiers": []
  },
  {
@@ -2605,7 +2605,7 @@
   "notes": "[GEAR]",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment sLots on a weapon\nreQuires: placed on light or medium weapon\nMade of only the lightest and highest quality parts, this weapon has feels lighter then air. All attacks made with this weapon cost\n1 action point.\n-3 damage class\n-2 damage class\n-1 damage class\nno damage class penalty",
+  "text": "takes up 3 augment slots on a weapon\nRequires: placed on light or medium weapon\nMade of only the lightest and highest quality parts, this weapon has feels lighter then air. All attacks made with this weapon cost\n1 action point.\n-3 damage class\n-2 damage class\n-1 damage class\nno damage class penalty",
   "modifiers": []
  },
  {
@@ -2631,7 +2631,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: placed on flexible weapon\nThe whip is specially designed to make grabs against the opponent. Whenever used, the whip gains a bonus on all rolls to prevent the target from resisting the grab.\n+2\n+4\n+6\n+8\nWeapon Accessories\nYou can learn weapon accessories just like augments. However, weapon accessories do not take up any augment slots and can only be applied to a weapon once. Each weapon accessory has its own cost associated with it.",
+  "text": "Requires: placed on flexible weapon\nThe whip is specially designed to make grabs against the opponent. Whenever used, the whip gains a bonus on all rolls to prevent the target from resisting the grab.\n+2\n+4\n+6\n+8\nWeapon Accessories\nYou can learn weapon accessories just like augments. However, weapon accessories do not take up any augment slots and can only be applied to a weapon once. Each weapon accessory has its own cost associated with it.",
   "modifiers": []
  },
  {
@@ -2655,7 +2655,7 @@
   "notes": "holds 1 poison/substance",
   "size": "",
   "price": "",
-  "text": "The weapon has a container attached to it and a rivet or channel that allows the weapon to strike with poison or another alchemical substance. The container can hold one usage of the substance. After its use, it takes some action points to snap a new alchemical substance into.\n3 AP\n2 AP\n1 AP\n1 AP reflexively\nmarQue I II III IV\nmarket priCe 15 princes 75 princes 375 princes 1,875 princes",
+  "text": "The weapon has a container attached to it and a rivet or channel that allows the weapon to strike with poison or another alchemical substance. The container can hold one usage of the substance. After its use, it takes some action points to snap a new alchemical substance into.\n3 AP\n2 AP\n1 AP\n1 AP reflexively\nMarque I II III IV\nmarket price 15 princes 75 princes 375 princes 1,875 princes",
   "modifiers": []
  },
  {
@@ -2775,7 +2775,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
   "modifiers": []
  },
  {
@@ -2847,7 +2847,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
+  "text": "Requires: Weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
   "modifiers": []
  },
  {
@@ -3015,7 +3015,7 @@
   "notes": "attack +1 AP; Dex resist",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment sLots on a weapon\nresist: Dexterity (marques down)\nCost to aCtivate: 1 AP reflexively during an attack Fire lashes out around your weapon, catching those struck with it on fire. When you hit an opponent, you can spend 1 action point in order to attempt to catch them on fire. The target may resist with their dexterity (lowering the marques of the combustion).\nThe victim catches on Tier 1 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 3 fire",
+  "text": "takes up 3 augment slots on a weapon\nResist: Dexterity (marques down)\nCost to activate: 1 AP reflexively during an attack Fire lashes out around your weapon, catching those struck with it on fire. When you hit an opponent, you can spend 1 action point in order to attempt to catch them on fire. The target may resist with their dexterity (lowering the marques of the combustion).\nThe victim catches on Tier 1 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 3 fire",
   "modifiers": []
  },
  {
@@ -3063,7 +3063,7 @@
   "notes": "1 AP",
   "size": "",
   "price": "",
-  "text": "aCtivation Cost: 1 AP\nThe armor has numerous exhausts, heat valves, and pipes on it that, when released, super-heat the air around the wearer. If you’re wearing this armor and spend 1 action point to release the exhausts, it heats the air around you. Everyone within 5 feet of you takes heat damage, and you take half that amount (unless you have fireproofing).\n2 damage\n4 damage\n6 damage\n8 damage",
+  "text": "Activation Cost: 1 AP\nThe armor has numerous exhausts, heat valves, and pipes on it that, when released, super-heat the air around the wearer. If you’re wearing this armor and spend 1 action point to release the exhausts, it heats the air around you. Everyone within 5 feet of you takes heat damage, and you take half that amount (unless you have fireproofing).\n2 damage\n4 damage\n6 damage\n8 damage",
   "modifiers": []
  },
  {
@@ -3197,7 +3197,7 @@
   "notes": "[STAT:Soak]",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on armor\nYour armor is so thick that it soaks more damage than normal.\n+1 damage soak class\n+2 damage soak class\n+3 damage soak class\n+4 damage soak class",
+  "text": "takes up 2 augment slots on armor\nYour armor is so thick that it soaks more damage than normal.\n+1 damage soak class\n+2 damage soak class\n+3 damage soak class\n+4 damage soak class",
   "modifiers": [
    {
     "stat": "soak",
@@ -3343,7 +3343,7 @@
   "notes": "1 AP",
   "size": "",
   "price": "",
-  "text": "aCtivation Cost: 1 AP\nWhen people add gears to their armor, it’s not merely steampunkthemed decor. Those gears are designed to tear apart anybody who lays a hand on that armor. If a person is grabbing you while wearing this armor, you may spend 1 action point to activate the spinning gears, the hydraulic spikes, or the built-in flamethrower and deal unsoakable damage to the person touching you.\n4 damage\n8 damage\n12 damage\n16 damage\nNote: As a courtesy, feel free to remind the person grabbing you that they can reflexively let go of you for 0 action points whenever they’d like.",
+  "text": "Activation Cost: 1 AP\nWhen people add gears to their armor, it’s not merely steampunkthemed decor. Those gears are designed to tear apart anybody who lays a hand on that armor. If a person is grabbing you while wearing this armor, you may spend 1 action point to activate the spinning gears, the hydraulic spikes, or the built-in flamethrower and deal unsoakable damage to the person touching you.\n4 damage\n8 damage\n12 damage\n16 damage\nNote: As a courtesy, feel free to remind the person grabbing you that they can reflexively let go of you for 0 action points whenever they’d like.",
   "modifiers": []
  },
  {
@@ -3812,7 +3812,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Cunning (negates)\nYou’ve designed the body of your automaton to look quite real, replicating the appearance of a living or imaginary creature. Any persons who looks upon it will believe it to be real unless they can beat the automaton’s roll with their Cunning. The automaton’s roll gains a bonus based on the marque of this augment.\n+5 to fool target\n+10 to foot target\n+15 to fool target\n+20 to fool target",
+  "text": "Resist: Cunning (negates)\nYou’ve designed the body of your automaton to look quite real, replicating the appearance of a living or imaginary creature. Any persons who looks upon it will believe it to be real unless they can beat the automaton’s roll with their Cunning. The automaton’s roll gains a bonus based on the marque of this augment.\n+5 to fool target\n+10 to foot target\n+15 to fool target\n+20 to fool target",
   "modifiers": []
  },
  {
@@ -3908,7 +3908,7 @@
   "notes": "2 AP; acts as medium cover (+6 Eva vs ranged)",
   "size": "",
   "price": "",
-  "text": "aCtivation Cost: 2 AP (see below)\nYour automaton can hunker down into a solid dense mass for two of its controller’s action points, allowing it to be easily used as medium cover (+6 to evade against ranged attacks) for the same number of spaces it normally takes up. While in shield mode, your automaton cannot move or act. You can command it to exit this form for two action points. It also gains extra soak class while this ability is active.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
+  "text": "Activation Cost: 2 AP (see below)\nYour automaton can hunker down into a solid dense mass for two of its controller’s action points, allowing it to be easily used as medium cover (+6 to evade against ranged attacks) for the same number of spaces it normally takes up. While in shield mode, your automaton cannot move or act. You can command it to exit this form for two action points. It also gains extra soak class while this ability is active.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
   "modifiers": []
  },
  {
@@ -4126,7 +4126,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: fusebox augmented with Fuse Box Specialist augment Your fusebox is a master of using their specialties. They have an additional skill bonus for their specialties and for prerequisites on top of their Fusebox Specialist augment\n+1 skill points for specialties\n+3 skill points for specialties\n+5 skill points for specialties\n+7 skill points for specialties",
+  "text": "Requires: fusebox augmented with Fuse Box Specialist augment Your fusebox is a master of using their specialties. They have an additional skill bonus for their specialties and for prerequisites on top of their Fusebox Specialist augment\n+1 skill points for specialties\n+3 skill points for specialties\n+5 skill points for specialties\n+7 skill points for specialties",
   "modifiers": []
  },
  {
@@ -4318,7 +4318,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Cunning (negates)\nYou’ve designed the body of your automaton to look quite real, replicating the appearance of a living or imaginary creature. Any persons who looks upon it will believe it to be real unless they can beat the automaton’s roll with their Cunning. The automaton’s roll gains a bonus based on the marque of this augment.\n+5 to fool target\n+10 to foot target\n+15 to fool target\n+20 to fool target",
+  "text": "Resist: Cunning (negates)\nYou’ve designed the body of your automaton to look quite real, replicating the appearance of a living or imaginary creature. Any persons who looks upon it will believe it to be real unless they can beat the automaton’s roll with their Cunning. The automaton’s roll gains a bonus based on the marque of this augment.\n+5 to fool target\n+10 to foot target\n+15 to fool target\n+20 to fool target",
   "modifiers": []
  },
  {
@@ -4416,7 +4416,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Brainworks built with Personality\nYour brainworks better understands what it means to be ‘alive’ and has been programmed with the mental fortitude of a monk. This allows the automaton to better replicate and control its Tephran emotions, granting it bonuses to Spirit.\n+3 Spirit\n+12 Spirit\n+31 Spirit\n+47 Spirit",
+  "text": "Requires: Brainworks built with Personality\nYour brainworks better understands what it means to be ‘alive’ and has been programmed with the mental fortitude of a monk. This allows the automaton to better replicate and control its Tephran emotions, granting it bonuses to Spirit.\n+3 Spirit\n+12 Spirit\n+31 Spirit\n+47 Spirit",
   "modifiers": []
  },
  {
@@ -4490,7 +4490,7 @@
   "notes": "while avenging",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Avenge-Me Directive augment When your automaton acts out its Avenge-Me Directive it is accurate about doing so. It gains an accuracy bonus on any attacks made while acting out the Avenge-Me Directive.\n+3 Accuracy\n+6 Accuracy\n+9 Accuracy\n+12 Accuracy",
+  "text": "Requires: Analytics with the Avenge-Me Directive augment When your automaton acts out its Avenge-Me Directive it is accurate about doing so. It gains an accuracy bonus on any attacks made while acting out the Avenge-Me Directive.\n+3 Accuracy\n+6 Accuracy\n+9 Accuracy\n+12 Accuracy",
   "modifiers": []
  },
  {
@@ -4516,7 +4516,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Avenge-Me Directive augment Your analytical engine is designed to mindlessly put all of its strength into dealing more damage whenever it acts out its Avenge-Me Directive. It gains a strike bonus on any attacks made while acting out the Avenge-Me Directive.\n+4 Strike\n+8 Strike\n+12 Strike\n+16 Strike",
+  "text": "Requires: Analytics with the Avenge-Me Directive augment Your analytical engine is designed to mindlessly put all of its strength into dealing more damage whenever it acts out its Avenge-Me Directive. It gains a strike bonus on any attacks made while acting out the Avenge-Me Directive.\n+4 Strike\n+8 Strike\n+12 Strike\n+16 Strike",
   "modifiers": []
  },
  {
@@ -4564,7 +4564,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Defend-Your-Area Directive augment When someone causes your automaton to act out their Defend- Your-Area Directive, your clockwork is pre-programmed to not fail its programmer. It gains an accuracy bonus on any attacks made while acting out the Defend-Your-Area Directive.\n+3 Accuracy\n+6 Accuracy\n+9 Accuracy\n+12 Accuracy",
+  "text": "Requires: Analytics with the Defend-Your-Area Directive augment When someone causes your automaton to act out their Defend- Your-Area Directive, your clockwork is pre-programmed to not fail its programmer. It gains an accuracy bonus on any attacks made while acting out the Defend-Your-Area Directive.\n+3 Accuracy\n+6 Accuracy\n+9 Accuracy\n+12 Accuracy",
   "modifiers": []
  },
  {
@@ -4588,7 +4588,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Defend-Your-Area Directive augment When someone causes your automaton to act out their Defend- Your-Area Directive, your clockwork is designed to make their prey regret it. It gains a strike bonus on any attacks made while acting out the Defend-Your-Area Directive.\n+4 Strike\n+8 Strike\n+12 Strike\n+16 Strike",
+  "text": "Requires: Analytics with the Defend-Your-Area Directive augment When someone causes your automaton to act out their Defend- Your-Area Directive, your clockwork is designed to make their prey regret it. It gains a strike bonus on any attacks made while acting out the Defend-Your-Area Directive.\n+4 Strike\n+8 Strike\n+12 Strike\n+16 Strike",
   "modifiers": []
  },
  {
@@ -4612,7 +4612,7 @@
   "notes": "always mQ II",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Defend-Your-Area Directive augment If someone attempts to attack your automaton while already in a space adjacent to them, your automaton will spend one of its Defend-Your-Area Directive actions (if it has any available) attacking them after they finish their attack. They still will not attack anyone programmed into them as a friendly.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "text": "Requires: Analytics with the Defend-Your-Area Directive augment If someone attempts to attack your automaton while already in a space adjacent to them, your automaton will spend one of its Defend-Your-Area Directive actions (if it has any available) attacking them after they finish their attack. They still will not attack anyone programmed into them as a friendly.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
   "modifiers": []
  },
  {
@@ -4660,7 +4660,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Follow-Me Directive augment Your clockwork’s body inanely lurches towards its target as fast as its body will allow. Your automaton can move further per movement whenever it is carrying out its Follow-Me Directive.\n+10 feet of movement\n+20 feet of movement\n+30 feet of movement\n+40 feet of movement",
+  "text": "Requires: Analytics with the Follow-Me Directive augment Your clockwork’s body inanely lurches towards its target as fast as its body will allow. Your automaton can move further per movement whenever it is carrying out its Follow-Me Directive.\n+10 feet of movement\n+20 feet of movement\n+30 feet of movement\n+40 feet of movement",
   "modifiers": []
  },
  {
@@ -4686,7 +4686,7 @@
   "notes": "always mQ I",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Go-There Directive augment Your clockwork is designed to stay beside its target no matter what. Whenever your clockwork acts out its Follow-Me Directive, it can make one additional movement towards its target per combat turn.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "text": "Requires: Analytics with the Go-There Directive augment Your clockwork is designed to stay beside its target no matter what. Whenever your clockwork acts out its Follow-Me Directive, it can make one additional movement towards its target per combat turn.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
   "modifiers": []
  },
  {
@@ -4710,7 +4710,7 @@
   "notes": "always mQ II",
   "size": "",
   "price": "",
-  "text": "aCtivation Cost: 1 AP (see below)\nYour clockwork is programmed to move where you want it to, although its analytical engine needs guidance when doing so. When applying this augment, choose someone (usually yourself) to be its target. For 1 action point the target of this augment can, through pointing and probably yelling, make your clockwork move once. If your clockwork has a separate directive that makes it move, directing your clockwork somewhere with this augment will not prevent it from carrying out the other directive the first chance it gets.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "text": "Activation Cost: 1 AP (see below)\nYour clockwork is programmed to move where you want it to, although its analytical engine needs guidance when doing so. When applying this augment, choose someone (usually yourself) to be its target. For 1 action point the target of this augment can, through pointing and probably yelling, make your clockwork move once. If your clockwork has a separate directive that makes it move, directing your clockwork somewhere with this augment will not prevent it from carrying out the other directive the first chance it gets.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
   "modifiers": []
  },
  {
@@ -4734,7 +4734,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Go-There Directive augment More people can guide your clockwork’s aimless wandering around the battlefield. Based on the marque of this augment, you can program in more targets for your Go-There Directive. One additional guide\nTwo additional guides\nThree additional guides\nFour additional guides",
+  "text": "Requires: Analytics with the Go-There Directive augment More people can guide your clockwork’s aimless wandering around the battlefield. Based on the marque of this augment, you can program in more targets for your Go-There Directive. One additional guide\nTwo additional guides\nThree additional guides\nFour additional guides",
   "modifiers": []
  },
  {
@@ -4758,7 +4758,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Go-There Directive augment While your analytical engine still has difficulties following directions, it is faster in getting to its destination once you set it on the right path. It gains a speed bonus while acting out the Go-There Directive.\n+5 feet of movement\n+10 feet of movement\n+15 feet of movement\n+25 feet of movement",
+  "text": "Requires: Analytics with the Go-There Directive augment While your analytical engine still has difficulties following directions, it is faster in getting to its destination once you set it on the right path. It gains a speed bonus while acting out the Go-There Directive.\n+5 feet of movement\n+10 feet of movement\n+15 feet of movement\n+25 feet of movement",
   "modifiers": []
  },
  {
@@ -4806,7 +4806,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Protect-Me Directive augment You can program in additional targets (usually other party members) of your automaton’s Protect-Me Directive, although they still must be adjacent to any persons they attempt to protect.\n1 additional protectee\n2 additional protectees\n3 additional protectees\n4 additional protectees",
+  "text": "Requires: Analytics with the Protect-Me Directive augment You can program in additional targets (usually other party members) of your automaton’s Protect-Me Directive, although they still must be adjacent to any persons they attempt to protect.\n1 additional protectee\n2 additional protectees\n3 additional protectees\n4 additional protectees",
   "modifiers": []
  },
  {
@@ -4830,7 +4830,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Protect-Me Directive augment When your automaton acts out its Protect-Me Directive it is better about protecting itself. It gains a defense bonus while acting out the Protect-Me Directive.\n+4 Defense\n+8 Defense\n+12 Defense\n+16 Defense",
+  "text": "Requires: Analytics with the Protect-Me Directive augment When your automaton acts out its Protect-Me Directive it is better about protecting itself. It gains a defense bonus while acting out the Protect-Me Directive.\n+4 Defense\n+8 Defense\n+12 Defense\n+16 Defense",
   "modifiers": []
  },
  {
@@ -4854,7 +4854,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Analytics with the Protect-Me Directive augment When your automaton acts out its Protect-Me Directive it won’t take as much damage. It gains a soak class bonus while acting out the Protect-Me Directive.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
+  "text": "Requires: Analytics with the Protect-Me Directive augment When your automaton acts out its Protect-Me Directive it won’t take as much damage. It gains a soak class bonus while acting out the Protect-Me Directive.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
   "modifiers": []
  },
  {
@@ -5070,7 +5070,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Cunning (negates)\nYou’ve designed the body of your automaton to look quite real, replicating the appearance of a living or imaginary creature. Any persons who looks upon it will believe it to be real unless they can beat the automaton’s roll with their Cunning. The automaton’s roll gains a bonus based on the marque of this augment.\n+5 to fool target\n+10 to foot target\n+15 to fool target\n+20 to fool target",
+  "text": "Resist: Cunning (negates)\nYou’ve designed the body of your automaton to look quite real, replicating the appearance of a living or imaginary creature. Any persons who looks upon it will believe it to be real unless they can beat the automaton’s roll with their Cunning. The automaton’s roll gains a bonus based on the marque of this augment.\n+5 to fool target\n+10 to foot target\n+15 to fool target\n+20 to fool target",
   "modifiers": []
  },
  {
@@ -5118,7 +5118,7 @@
   "notes": "1 AP; Brute resist",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\naCtivation Cost: 1 AP\nPowerful ventilators have been built into your body part, allowing you to blow a strong, concentrated stream of pure air straight at an opponent within your 25 feet of range. They cannot evade your air blast, but they can resist with their Brute. Your target is pushed back 5 feet\nYour target is pushed back 5 feet\nYour target is pushed back 10 feet\nYour target is pushed back 15 feet",
+  "text": "Resist: Brute (marques down)\nActivation Cost: 1 AP\nPowerful ventilators have been built into your body part, allowing you to blow a strong, concentrated stream of pure air straight at an opponent within your 25 feet of range. They cannot evade your air blast, but they can resist with their Brute. Your target is pushed back 5 feet\nYour target is pushed back 5 feet\nYour target is pushed back 10 feet\nYour target is pushed back 15 feet",
   "modifiers": []
  },
  {
@@ -5144,7 +5144,7 @@
   "notes": "1 AP toggle",
   "size": "",
   "price": "",
-  "text": "reQuires: Prosthetic with the Air Blaster augment aCtivation Cost: 1 AP (see below)\nYou are able to superheat or supercool the air from your air blaster, causing it to deal either heat or freezing damage whenever you use it, in addition to its normal effects. For one action point, you can switch your air blaster between heat and freezing damage or turn the effects of this augment on and off. The damage is soakable.\n2 heat or freezing damage\n4 heat or freezing damage\n6 heat or freezing damage\n8 heat or freezing damage",
+  "text": "Requires: Prosthetic with the Air Blaster augment activation Cost: 1 AP (see below)\nYou are able to superheat or supercool the air from your air blaster, causing it to deal either heat or freezing damage whenever you use it, in addition to its normal effects. For one action point, you can switch your air blaster between heat and freezing damage or turn the effects of this augment on and off. The damage is soakable.\n2 heat or freezing damage\n4 heat or freezing damage\n6 heat or freezing damage\n8 heat or freezing damage",
   "modifiers": []
  },
  {
@@ -5245,7 +5245,7 @@
   "notes": "until breather",
   "size": "",
   "price": "",
-  "text": "reQuires: Body Part must be made of metal & the Freezer Augment somewhere on subject’s body\nThis prosthetic leaks small amounts of liquid nitrogen diverted from your freezer. Whenever someone comes into contact with this body part, whether it be them grabbing you or you punching them, they suffer first degree frostbite. This means they will suffer increased sensitivity to heat and cold lasting until their next breather. This augment deactivates if your freezer is extinguished. This effect will not stack with multiple exposures to a cold iron body part.\nTarget suffers a -3 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -6 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -9 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -12 when resisting effects caused by heat, flames, cold, or ice",
+  "text": "Requires: Body Part must be made of metal & the Freezer Augment somewhere on subject’s body\nThis prosthetic leaks small amounts of liquid nitrogen diverted from your freezer. Whenever someone comes into contact with this body part, whether it be them grabbing you or you punching them, they suffer first degree frostbite. This means they will suffer increased sensitivity to heat and cold lasting until their next breather. This augment deactivates if your freezer is extinguished. This effect will not stack with multiple exposures to a cold iron body part.\nTarget suffers a -3 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -6 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -9 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -12 when resisting effects caused by heat, flames, cold, or ice",
   "modifiers": []
  },
  {
@@ -5319,7 +5319,7 @@
   "notes": "3 AP; Dex resist",
   "size": "",
   "price": "",
-  "text": "reQuires: Furnace Augment somewhere on subject’s body resist: Dexterity (marques down)\naCtivation Cost: 3 AP\nExhausts protrude from the prosthetic, flames periodically leaking out of them. For three action points you cause the body part to spray flames onto everyone adjacent to you to set them on fire, although they can still attempt to resist the attack. You cannot activate your flame exhausts if your furnace is extinguished. tier 1 Burning: 2 unsoakable damage per turn, 2 AP to put out the fire\ntier 1 Burning: 2 unsoakable damage per turn, 2 AP to put out the fire\ntier 2 Burning: 4 unsoakable damage per turn, 4 AP to put out the fire, wooden and cloth items destroyed tier 3 Burning: 8 unsoakable damage per turn, 8 AP to put out the fire, wooden and cloth items destroyed",
+  "text": "Requires: Furnace Augment somewhere on subject’s body resist: Dexterity (marques down)\nActivation Cost: 3 AP\nExhausts protrude from the prosthetic, flames periodically leaking out of them. For three action points you cause the body part to spray flames onto everyone adjacent to you to set them on fire, although they can still attempt to resist the attack. You cannot activate your flame exhausts if your furnace is extinguished. tier 1 Burning: 2 unsoakable damage per turn, 2 AP to put out the fire\ntier 1 Burning: 2 unsoakable damage per turn, 2 AP to put out the fire\ntier 2 Burning: 4 unsoakable damage per turn, 4 AP to put out the fire, wooden and cloth items destroyed tier 3 Burning: 8 unsoakable damage per turn, 8 AP to put out the fire, wooden and cloth items destroyed",
   "modifiers": []
  },
  {
@@ -5345,7 +5345,7 @@
   "notes": "3 AP; Brute resist",
   "size": "",
   "price": "",
-  "text": "reQuires: Freezer augment somewhere on subject’s body resist: Brute (marques down)\naCtivation Cost: 3 ap\nExhausts protrude from the prosthetic, icy mist periodically leaking out of it. For three action points you cause the body part to spray this mist onto everyone adjacent to you, although they can still attempt to resist the attack. This mist causes your target’s body temperature to rapidly drop, making them sluggish until the start of your next turn. You cannot activate your freeze exhausts if your freezer is extinguished.\nTarget suffers a -2 to evade\nTarget suffers a -4 to evade\nTarget suffers a -6 to evade\nTarget suffers a -8 to evade",
+  "text": "Requires: Freezer augment somewhere on subject’s body resist: Brute (marques down)\nActivation Cost: 3 ap\nExhausts protrude from the prosthetic, icy mist periodically leaking out of it. For three action points you cause the body part to spray this mist onto everyone adjacent to you, although they can still attempt to resist the attack. This mist causes your target’s body temperature to rapidly drop, making them sluggish until the start of your next turn. You cannot activate your freeze exhausts if your freezer is extinguished.\nTarget suffers a -2 to evade\nTarget suffers a -4 to evade\nTarget suffers a -6 to evade\nTarget suffers a -8 to evade",
   "modifiers": []
  },
  {
@@ -5443,7 +5443,7 @@
   "notes": "always mQ II",
   "size": "",
   "price": "",
-  "text": "reQuires: Prosthetic augmented with Weapon Mounting The prosthetic has a secret weapon hidden inside that can flip out at a moment’s notice. For no action point cost, you can now retract your weapon into your body, as long as the weapon would normally be concealable.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "text": "Requires: Prosthetic augmented with Weapon Mounting The prosthetic has a secret weapon hidden inside that can flip out at a moment’s notice. For no action point cost, you can now retract your weapon into your body, as long as the weapon would normally be concealable.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
   "modifiers": []
  },
  {
@@ -5469,7 +5469,7 @@
   "notes": "always mQ III",
   "size": "",
   "price": "",
-  "text": "reQuires: Prosthetic augmented with Hidden Blade The prosthetic can fit an enormous weapon inside it by breaking down its key components. For no action point cost you can now retract your weapon into your body, even if the weapon would normally not be concealable.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "text": "Requires: Prosthetic augmented with Hidden Blade The prosthetic can fit an enormous weapon inside it by breaking down its key components. For no action point cost you can now retract your weapon into your body, even if the weapon would normally not be concealable.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
   "modifiers": []
  },
  {
@@ -5496,7 +5496,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Prosthetic must be made of metal & the Furnace augment somewhere on subject’s body\nAs long as fire burns within your body, it constantly heats up this body part, making it burn to the touch. Whenever someone comes into contact with this body part, whether it be them grabbing you or you punching them, they take a small amount of heat damage. This doesn’t apply if your furnace is extinguished.\n2 heat damage\n4 heat damage\n6 heat damage\n8 heat damage",
+  "text": "Requires: Prosthetic must be made of metal & the Furnace augment somewhere on subject’s body\nAs long as fire burns within your body, it constantly heats up this body part, making it burn to the touch. Whenever someone comes into contact with this body part, whether it be them grabbing you or you punching them, they take a small amount of heat damage. This doesn’t apply if your furnace is extinguished.\n2 heat damage\n4 heat damage\n6 heat damage\n8 heat damage",
   "modifiers": []
  },
  {
@@ -5522,7 +5522,7 @@
   "notes": "1 AP; Cunning resist",
   "size": "",
   "price": "",
-  "text": "reQuires: Prosthetic with the Glowing Augment\nresist: Cunning (marques down)\naCtivation Cost: 1 ap\nLight erupts from your prosthetic, arcing toward a single target within 25 feet with the potential to blind them (giving them a -4 on accuracy and evade rolls). They can resist with their cunning attribute.\nBlinds for one turn\nBlinds for two turns\nBlinds for three turns\nBlinds for four turns",
+  "text": "Requires: Prosthetic with the Glowing Augment\nResist: Cunning (marques down)\nActivation Cost: 1 ap\nLight erupts from your prosthetic, arcing toward a single target within 25 feet with the potential to blind them (giving them a -4 on accuracy and evade rolls). They can resist with their cunning attribute.\nBlinds for one turn\nBlinds for two turns\nBlinds for three turns\nBlinds for four turns",
   "modifiers": []
  },
  {
@@ -5644,7 +5644,7 @@
   "notes": "1 AP; Cunning resist",
   "size": "",
   "price": "",
-  "text": "reQuires: Furnace augment or Freezer augment somewhere on subject’s body\nresist: Cunning (negates)\naCtivation Cost: 1 AP (see below)\nA chimney or metal gratings constantly release clouds of smoke or fog from your furnace. This cloud billows out around you, making you and those within a certain range completely blinded. This will instantly end if your furnace or freezer is extinguished. You can spend one action point to start your smokescreen or to adjust the range of the cloud from affecting characters adjacent to you up to its maximum range detailed by the marque of this augment.\nOnly characters adjacent to you are blinded\nAnyone up to 10 feet of you are blinded\nAnyone up to 15 feet of you are blinded\nAnyone up to 20 feet of you are blinded",
+  "text": "Requires: Furnace augment or Freezer augment somewhere on subject’s body\nResist: Cunning (negates)\nActivation Cost: 1 AP (see below)\nA chimney or metal gratings constantly release clouds of smoke or fog from your furnace. This cloud billows out around you, making you and those within a certain range completely blinded. This will instantly end if your furnace or freezer is extinguished. You can spend one action point to start your smokescreen or to adjust the range of the cloud from affecting characters adjacent to you up to its maximum range detailed by the marque of this augment.\nOnly characters adjacent to you are blinded\nAnyone up to 10 feet of you are blinded\nAnyone up to 15 feet of you are blinded\nAnyone up to 20 feet of you are blinded",
   "modifiers": []
  },
  {
@@ -5934,7 +5934,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 3 essenCe sLots on a person\nYour body has been modified to produce and use twice the amount of adrenaline of a normal being. While this does speed you up temporarily, it exhausts you immediately afterwards. You are able to gain additional action points during a turn; however, you are stunned for an equal number of action points when your action points refresh. In other words, you’re stealing action points away from your next turn.\nYou can gain 1 action point\nYou can gain up to 2 action points\nYou can gain up to 2 action points\nYou can gain up to 3 action points",
+  "text": "takes up 3 essence slots on a person\nYour body has been modified to produce and use twice the amount of adrenaline of a normal being. While this does speed you up temporarily, it exhausts you immediately afterwards. You are able to gain additional action points during a turn; however, you are stunned for an equal number of action points when your action points refresh. In other words, you’re stealing action points away from your next turn.\nYou can gain 1 action point\nYou can gain up to 2 action points\nYou can gain up to 2 action points\nYou can gain up to 3 action points",
   "modifiers": []
  },
  {
@@ -6226,7 +6226,7 @@
   "notes": "always mQ III",
   "size": "",
   "price": "",
-  "text": "reQuires: Exoskeleton augment\nYour exoskeleton is made of natural metal armoring, weighing you down but acting as a natural kind of armor. You may act as if you were wearing any kind of armor on your body permanently, so if you armor is broken or destroyed, you still act as if you are wearing armor.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in bio-flux.",
+  "text": "Requires: Exoskeleton augment\nYour exoskeleton is made of natural metal armoring, weighing you down but acting as a natural kind of armor. You may act as if you were wearing any kind of armor on your body permanently, so if you armor is broken or destroyed, you still act as if you are wearing armor.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in bio-flux.",
   "modifiers": []
  },
  {
@@ -6274,7 +6274,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Cunning (see below)\nYour body appears to be made out of metal, making you appear to be some kind of robot when you aren’t. You gain a bonus to Cunning against anyone using Notice on you when you’re trying to hide the fact that you’re an organic being.\n+5, your body appears to be metallic\n+10, your metallic body is angular and disproportionate\n+15, your metallic body appears to be made of separate parts bolted together\n+20, your metallic body looks machine-made with soulless eyes, emitting clear water vapor instead of sweat",
+  "text": "Resist: Cunning (see below)\nYour body appears to be made out of metal, making you appear to be some kind of robot when you aren’t. You gain a bonus to Cunning against anyone using Notice on you when you’re trying to hide the fact that you’re an organic being.\n+5, your body appears to be metallic\n+10, your metallic body is angular and disproportionate\n+15, your metallic body appears to be made of separate parts bolted together\n+20, your metallic body looks machine-made with soulless eyes, emitting clear water vapor instead of sweat",
   "modifiers": []
  },
  {
@@ -6300,7 +6300,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Jellyskin augment\nYour body is capable of actually absorbing the body of an opponent. When you successfully grapple or grab an opponent, your skin sinks through their armor and they automatically begin to take unsoakable damage. Your body is partially transparent and your solid organs bend like rubber. When you absorb organic material, it counts as eating.\n2 unsoakable damage per turn\n3 unsoakable damage per turn\n4 unsoakable damage per turn\n5 unsoakable damage per turn",
+  "text": "Requires: Jellyskin augment\nYour body is capable of actually absorbing the body of an opponent. When you successfully grapple or grab an opponent, your skin sinks through their armor and they automatically begin to take unsoakable damage. Your body is partially transparent and your solid organs bend like rubber. When you absorb organic material, it counts as eating.\n2 unsoakable damage per turn\n3 unsoakable damage per turn\n4 unsoakable damage per turn\n5 unsoakable damage per turn",
   "modifiers": []
  },
  {
@@ -6385,7 +6385,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 essenCe sLots on a person\nYour body has been modified to heal at a much faster rate than normal. The areas where you’ve taken wounds damage now have yellow skin blemishes. Along with this accelerated wound recovery, lingering wound effects are removed twice as fast. You recover 1 additional wound per day\nYou recover 2 additional wounds per day\nYou recover 3 additional wounds per day\nYou recover 4 additional wounds per day",
+  "text": "takes up 2 essence slots on a person\nYour body has been modified to heal at a much faster rate than normal. The areas where you’ve taken wounds damage now have yellow skin blemishes. Along with this accelerated wound recovery, lingering wound effects are removed twice as fast. You recover 1 additional wound per day\nYou recover 2 additional wounds per day\nYou recover 3 additional wounds per day\nYou recover 4 additional wounds per day",
   "modifiers": []
  },
  {
@@ -6409,7 +6409,7 @@
   "notes": "[STAT:Soak]",
   "size": "",
   "price": "",
-  "text": "takes up 2 essenCe sLots on a person\nYour skin mutates into thick scales, the outer layer of your grafts taking on a bumpy texture. This gives you a small amount of natural armoring.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
+  "text": "takes up 2 essence slots on a person\nYour skin mutates into thick scales, the outer layer of your grafts taking on a bumpy texture. This gives you a small amount of natural armoring.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
   "modifiers": [
    {
     "stat": "soak",
@@ -6688,7 +6688,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Dexterity (marques down)\nYour bio-zapper makes your target’s body react as if the clothing on it is much heavier than it actually is. The penalty is greater depending on how much armor the target is wearing.\n-5 speed penalty (heavy or larger armor)\n-10 speed penalty (heavy or larger armor) or -5 speed penalty (light or medium armor)\n-15 speed penalty (heavy or larger armor) or -10 speed penalty (light or medium armor)\n-20 speed penalty (heavy or larger armor) or -15 speed penalty (light or medium armor)",
+  "text": "Resist: Dexterity (marques down)\nYour bio-zapper makes your target’s body react as if the clothing on it is much heavier than it actually is. The penalty is greater depending on how much armor the target is wearing.\n-5 speed penalty (heavy or larger armor)\n-10 speed penalty (heavy or larger armor) or -5 speed penalty (light or medium armor)\n-15 speed penalty (heavy or larger armor) or -10 speed penalty (light or medium armor)\n-20 speed penalty (heavy or larger armor) or -15 speed penalty (light or medium armor)",
   "modifiers": []
  },
  {
@@ -6712,7 +6712,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nThe victims blood refuses to clot when bleeding. Patching Bleeding now only stops 3 bleeding damage Patching Bleeding now only stops 2 bleeding damage Patching Bleeding now only stops 1 bleeding damage Bleeding can only be stopped when taking a breather",
+  "text": "Resist: Brute (marques down)\nThe victims blood refuses to clot when bleeding. Patching Bleeding now only stops 3 bleeding damage Patching Bleeding now only stops 2 bleeding damage Patching Bleeding now only stops 1 bleeding damage Bleeding can only be stopped when taking a breather",
   "modifiers": []
  },
  {
@@ -6736,7 +6736,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Spirit (marques down)\nThe victim’s bones become spiked inside of their bodies. This causes extreme pain when the victim does anything. The victim takes 1 unsoakable damage for each action point they spend\nThe victim takes 1 unsoakable damage for each action point they spend\nThe victim takes 2 unsoakable damage for each action point they spend\nThe victim takes 2 unsoakable damage for each action point they spend",
+  "text": "Resist: Spirit (marques down)\nThe victim’s bones become spiked inside of their bodies. This causes extreme pain when the victim does anything. The victim takes 1 unsoakable damage for each action point they spend\nThe victim takes 1 unsoakable damage for each action point they spend\nThe victim takes 2 unsoakable damage for each action point they spend\nThe victim takes 2 unsoakable damage for each action point they spend",
   "modifiers": []
  },
  {
@@ -6784,7 +6784,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nWhen hit by a crippling ray, your body becomes weak and sickly.\n-3 on Brute rolls\n-6 on Brute rolls\n-9 on Brute rolls\n-12 on Brute rolls",
+  "text": "Resist: Brute (marques down)\nWhen hit by a crippling ray, your body becomes weak and sickly.\n-3 on Brute rolls\n-6 on Brute rolls\n-9 on Brute rolls\n-12 on Brute rolls",
   "modifiers": []
  },
  {
@@ -6856,7 +6856,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nYour target has sporatic spells of exhaustion, conveniently taking place right as they try to attack.\n-2 on strike rolls\n-4 on strike rolls\n-6 on strike rolls\n-8 on strike rolls",
+  "text": "Resist: Brute (marques down)\nYour target has sporatic spells of exhaustion, conveniently taking place right as they try to attack.\n-2 on strike rolls\n-4 on strike rolls\n-6 on strike rolls\n-8 on strike rolls",
   "modifiers": []
  },
  {
@@ -6880,7 +6880,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Cunning (marques down)\nBio-Zappers on this setting rewrite its victim’s face to resemble a cubist painting, making them feel less confident and ugly.\n-2 on Spirit rolls\n-4 on Spirit rolls\n-6 on Spirit rolls\n-8 on Spirit rolls",
+  "text": "Resist: Cunning (marques down)\nBio-Zappers on this setting rewrite its victim’s face to resemble a cubist painting, making them feel less confident and ugly.\n-2 on Spirit rolls\n-4 on Spirit rolls\n-6 on Spirit rolls\n-8 on Spirit rolls",
   "modifiers": []
  },
  {
@@ -6904,7 +6904,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Spirit (negates, see below)\nVictims hit with rays on this setting have their organs rearranged in such a weird way that it becomes impossible for them to recover from wounds damage (but not wounds effects) while under its effects.\ntier 2 spirit resist to negate\ntier 3 spirit resist to negate\ntier 3 spirit resist to negate\ntier 4 spirit resist to negate",
+  "text": "Resist: Spirit (negates, see below)\nVictims hit with rays on this setting have their organs rearranged in such a weird way that it becomes impossible for them to recover from wounds damage (but not wounds effects) while under its effects.\ntier 2 spirit resist to negate\ntier 3 spirit resist to negate\ntier 3 spirit resist to negate\ntier 4 spirit resist to negate",
   "modifiers": []
  },
  {
@@ -6928,7 +6928,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Spirit (marques down)\nVictims hit by this ray see their essence slots temporarily shut down. This not only makes augments to those slots useless but also causes the person to become grotesque like an elf. The person wielding the bio-zapper chooses which, if any, augments on the target are deactivated.\n1 essence slot is turned off\n2 essence slots are turned off\n3 essence slots are turned off\n4 essence slots are turned off",
+  "text": "Resist: Spirit (marques down)\nVictims hit by this ray see their essence slots temporarily shut down. This not only makes augments to those slots useless but also causes the person to become grotesque like an elf. The person wielding the bio-zapper chooses which, if any, augments on the target are deactivated.\n1 essence slot is turned off\n2 essence slots are turned off\n3 essence slots are turned off\n4 essence slots are turned off",
   "modifiers": []
  },
  {
@@ -6952,7 +6952,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Spirit (marques down)\nHitting a victim with a ray on the exhausting setting tires the opponent. A quick blast from one of these ensures the victim will not be going the distance.\nmaximum hit points are lowered by 5\nmaximum hit points are lowered by 10\nmaximum hit points are lowered by 15\nmaximum hit points are lowered by 20",
+  "text": "Resist: Spirit (marques down)\nHitting a victim with a ray on the exhausting setting tires the opponent. A quick blast from one of these ensures the victim will not be going the distance.\nmaximum hit points are lowered by 5\nmaximum hit points are lowered by 10\nmaximum hit points are lowered by 15\nmaximum hit points are lowered by 20",
   "modifiers": []
  },
  {
@@ -7024,7 +7024,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nFlesh melting rays cause the victim’s skin to melt and tear, making all attacks against them more deadly. This cannot lower their soak class below zero.\nsoak class lowered by 1\nsoak class lowered by 2\nsoak class lowered by 3\nsoak class lowered by 4",
+  "text": "Resist: Brute (marques down)\nFlesh melting rays cause the victim’s skin to melt and tear, making all attacks against them more deadly. This cannot lower their soak class below zero.\nsoak class lowered by 1\nsoak class lowered by 2\nsoak class lowered by 3\nsoak class lowered by 4",
   "modifiers": []
  },
  {
@@ -7048,7 +7048,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nThis ray causes the victim to grow just large enough for their armor and clothing to become unbearably tight and uncomfortable. This ray only affects victims in armor.\n-2 on defense rolls\n-4 on defense rolls\n-6 on defense rolls\n-8 on defense rolls",
+  "text": "Resist: Brute (marques down)\nThis ray causes the victim to grow just large enough for their armor and clothing to become unbearably tight and uncomfortable. This ray only affects victims in armor.\n-2 on defense rolls\n-4 on defense rolls\n-6 on defense rolls\n-8 on defense rolls",
   "modifiers": []
  },
  {
@@ -7072,7 +7072,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Spirit (marques down)\nWhen hit with this ray, its victim is dropped on the priority list as they hesitate to act, allowing others to take their turn first. If it drops them to the bottom of the priority list, they act there. They must wait until everyone has taken their turn before going. Dropped 1 priority slot\nDropped 2 priority slots\nDropped 3 priority slots\nDropped 4 priority slots",
+  "text": "Resist: Spirit (marques down)\nWhen hit with this ray, its victim is dropped on the priority list as they hesitate to act, allowing others to take their turn first. If it drops them to the bottom of the priority list, they act there. They must wait until everyone has taken their turn before going. Dropped 1 priority slot\nDropped 2 priority slots\nDropped 3 priority slots\nDropped 4 priority slots",
   "modifiers": []
  },
  {
@@ -7096,7 +7096,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Spirit (negates, see below)\nThis ray alters your victim’s body chemistry, causing them to feel drained and demoralized. It forces them to see their own limits. When effected by this ray, victims may no longer re-roll pure 12s. tier 2 spirit resist to negate\ntier 3 spirit resist to negate\ntier 3 spirit resist to negate\ntier 4 spirit resist to negate",
+  "text": "Resist: Spirit (negates, see below)\nThis ray alters your victim’s body chemistry, causing them to feel drained and demoralized. It forces them to see their own limits. When effected by this ray, victims may no longer re-roll pure 12s. tier 2 spirit resist to negate\ntier 3 spirit resist to negate\ntier 3 spirit resist to negate\ntier 4 spirit resist to negate",
   "modifiers": []
  },
  {
@@ -7120,7 +7120,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nThe victim’s equilibrium is thrown off, making acrobatics and fast movements almost impossible.\n-2 on Dexterity rolls\n-4 on Dexterity rolls\n-6 on Dexterity rolls\n-8 on Dexterity rolls",
+  "text": "Resist: Brute (marques down)\nThe victim’s equilibrium is thrown off, making acrobatics and fast movements almost impossible.\n-2 on Dexterity rolls\n-4 on Dexterity rolls\n-6 on Dexterity rolls\n-8 on Dexterity rolls",
   "modifiers": []
  },
  {
@@ -7192,7 +7192,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (negates, see below)\nThe victim’s ears melt and fuse with the side of their head causing them to become deafened. For a single action point they can deal a point of wounds damage to themselves to rip their ears open. They don’t take a wounds effect for doing so. tier 2 brute resist to negate\ntier 3 brute resist to negate\ntier 3 brute resist to negate\ntier 4 brute resist to negate",
+  "text": "Resist: Brute (negates, see below)\nThe victim’s ears melt and fuse with the side of their head causing them to become deafened. For a single action point they can deal a point of wounds damage to themselves to rip their ears open. They don’t take a wounds effect for doing so. tier 2 brute resist to negate\ntier 3 brute resist to negate\ntier 3 brute resist to negate\ntier 4 brute resist to negate",
   "modifiers": []
  },
  {
@@ -7240,7 +7240,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Dexterity (marques down)\nThe victim’s fingers swell, making it difficult for them to smoothly pull the trigger on a firearm.\n-2 accuracy with a firearm or crossbow\n-4 accuracy with a firearm or crossbow\n-6 accuracy with a firearm or crossbow\n-8 accuracy with a firearm or crossbow",
+  "text": "Resist: Dexterity (marques down)\nThe victim’s fingers swell, making it difficult for them to smoothly pull the trigger on a firearm.\n-2 accuracy with a firearm or crossbow\n-4 accuracy with a firearm or crossbow\n-6 accuracy with a firearm or crossbow\n-8 accuracy with a firearm or crossbow",
   "modifiers": []
  },
  {
@@ -7264,7 +7264,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (negates, see below)\nYour bio-zapper shakes and rattles your target’s stomach, making them unsettled and nauseous (-2 to all rolls until 3 action points are spent emptying their stomach).\ntier 2 brute resist to negate\ntier 3 brute resist to negate\ntier 3 brute resist to negate\ntier 4 brute resist to negate",
+  "text": "Resist: Brute (negates, see below)\nYour bio-zapper shakes and rattles your target’s stomach, making them unsettled and nauseous (-2 to all rolls until 3 action points are spent emptying their stomach).\ntier 2 brute resist to negate\ntier 3 brute resist to negate\ntier 3 brute resist to negate\ntier 4 brute resist to negate",
   "modifiers": []
  },
  {
@@ -7288,7 +7288,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nVictims hit by a bio-zapper set to perspiring will begin to rapidly sweat. Their sweaty hands make it very difficult to hold on to any items and even more difficult to hold on to a person.\n-2 to all disarm resists and maintaining grabs\n-4 to all disarm resists and maintaining grabs\n-6 to all disarm resists and maintaining grabs\n-8 to all disarm resists and maintaining grabs",
+  "text": "Resist: Brute (marques down)\nVictims hit by a bio-zapper set to perspiring will begin to rapidly sweat. Their sweaty hands make it very difficult to hold on to any items and even more difficult to hold on to a person.\n-2 to all disarm resists and maintaining grabs\n-4 to all disarm resists and maintaining grabs\n-6 to all disarm resists and maintaining grabs\n-8 to all disarm resists and maintaining grabs",
   "modifiers": []
  },
  {
@@ -7312,7 +7312,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nAfter being hit by a ray on this setting, the victim’s legs become weak like jelly. Because of this, all called shots to to the legs become much more effective.\n-2 on resist rolls against the legs\n-4 on resist rolls against the legs\n-6 on resist rolls against the legs\n-8 on resist rolls against the legs",
+  "text": "Resist: Brute (marques down)\nAfter being hit by a ray on this setting, the victim’s legs become weak like jelly. Because of this, all called shots to to the legs become much more effective.\n-2 on resist rolls against the legs\n-4 on resist rolls against the legs\n-6 on resist rolls against the legs\n-8 on resist rolls against the legs",
   "modifiers": []
  },
  {
@@ -7360,7 +7360,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nYour bio-zapper makes your target’s skin become thinner, less moist, and burn easier.\n-4 on resists against burns\n-8 on resists against burns\n-12 on resists against burns\n-16 on resists against burns",
+  "text": "Resist: Brute (marques down)\nYour bio-zapper makes your target’s skin become thinner, less moist, and burn easier.\n-4 on resists against burns\n-8 on resists against burns\n-12 on resists against burns\n-16 on resists against burns",
   "modifiers": []
  },
  {
@@ -7384,7 +7384,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nYour bio-zapper makes your target’s skin secrete a flammable liquid. They have a harder time resisting catching on fire.\n-3 on resists against catching on fire\n-6 on resists against catching on fire\n-9 on resists against catching on fire\n-12 on resists against catching on fire",
+  "text": "Resist: Brute (marques down)\nYour bio-zapper makes your target’s skin secrete a flammable liquid. They have a harder time resisting catching on fire.\n-3 on resists against catching on fire\n-6 on resists against catching on fire\n-9 on resists against catching on fire\n-12 on resists against catching on fire",
   "modifiers": []
  },
  {
@@ -7408,7 +7408,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (negates, see below)\nVictims hit by this ray find their mouths sewn shut, their ability to speak or make any sound stripped from them. In addition, victims lose the ability to use any specialties with required vocal components, such as yelling or singing. For a single action point they can deal a point of wounds damage to themselves to rip their lips open. They don’t take a wounds effect for doing so. tier 2 brute resist to negate\ntier 3 brute resist to negate\ntier 3 brute resist to negate\ntier 4 brute resist to negate",
+  "text": "Resist: Brute (negates, see below)\nVictims hit by this ray find their mouths sewn shut, their ability to speak or make any sound stripped from them. In addition, victims lose the ability to use any specialties with required vocal components, such as yelling or singing. For a single action point they can deal a point of wounds damage to themselves to rip their lips open. They don’t take a wounds effect for doing so. tier 2 brute resist to negate\ntier 3 brute resist to negate\ntier 3 brute resist to negate\ntier 4 brute resist to negate",
   "modifiers": []
  },
  {
@@ -7456,7 +7456,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nYour bio-zapper makes your target’s legs mutate to resemble elephant feet, slowing them down.\nspeed reduced by 5 feet\nspeed reduced by 10 feet\nspeed reduced by 15 feet\nspeed reduced by 20 feet",
+  "text": "Resist: Brute (marques down)\nYour bio-zapper makes your target’s legs mutate to resemble elephant feet, slowing them down.\nspeed reduced by 5 feet\nspeed reduced by 10 feet\nspeed reduced by 15 feet\nspeed reduced by 20 feet",
   "modifiers": []
  },
  {
@@ -7480,7 +7480,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Cunning (marques down)\nThe stupifying setting causes victims to become dazed and unobservant. They take a penalty on cunning rolls.\n-3 on cunning rolls\n-6 on cunning rolls\n-9 on cunning rolls\n-12 on cunning rolls",
+  "text": "Resist: Cunning (marques down)\nThe stupifying setting causes victims to become dazed and unobservant. They take a penalty on cunning rolls.\n-3 on cunning rolls\n-6 on cunning rolls\n-9 on cunning rolls\n-12 on cunning rolls",
   "modifiers": []
  },
  {
@@ -7504,7 +7504,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nThis setting creates rays that cause the victim’s called shot locations to swell to ridiculous sizes. These swollen called shot are then easier to hit due to their increased size. You must select a single called shot location to affect when firing your bio-zapper set to this setting.\n+2 accuracy to that called-shot\n+4 accuracy to that called-shot\n+6 accuracy to that called-shot\n+8 accuracy to that called-shot",
+  "text": "Resist: Brute (marques down)\nThis setting creates rays that cause the victim’s called shot locations to swell to ridiculous sizes. These swollen called shot are then easier to hit due to their increased size. You must select a single called shot location to affect when firing your bio-zapper set to this setting.\n+2 accuracy to that called-shot\n+4 accuracy to that called-shot\n+6 accuracy to that called-shot\n+8 accuracy to that called-shot",
   "modifiers": []
  },
  {
@@ -7528,7 +7528,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "resist: Brute (marques down)\nThe rays fired from this zapper make it difficult for your victim to lift their weapon, much less harm you with it. The damage class on any melee attacks the target makes is lowered. melee damage class lowered by 1\nmelee damage class lowered by 2\nmelee damage class lowered by 3\nmelee damage class lowered by 4",
+  "text": "Resist: Brute (marques down)\nThe rays fired from this zapper make it difficult for your victim to lift their weapon, much less harm you with it. The damage class on any melee attacks the target makes is lowered. melee damage class lowered by 1\nmelee damage class lowered by 2\nmelee damage class lowered by 3\nmelee damage class lowered by 4",
   "modifiers": []
  },
  {
@@ -7552,7 +7552,7 @@
   "notes": "always mQ II",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to autos\nYour vehicle has jets, wings, propellers, sails, or some other way of moving through the air. You may apply your vehicle speed to moving in the air. You do not gain the ability to move vertically in the air - you can only move horizontally. Aerial propulsion also allows you to move through water, but you move at half your speed (unless you have Underwater Propulsion).\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in engineer.",
+  "text": "Can only Be applied to autos\nYour vehicle has jets, wings, propellers, sails, or some other way of moving through the air. You may apply your vehicle speed to moving in the air. You do not gain the ability to move vertically in the air - you can only move horizontally. Aerial propulsion also allows you to move through water, but you move at half your speed (unless you have Underwater Propulsion).\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in engineer.",
   "modifiers": []
  },
  {
@@ -7653,7 +7653,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to autos\nreQuires: vehicle to be augmented to have the Improved Speed Your vehicle is stupidly fast. Your speed is improved based on the marque of this augment. (This bonus stacks with that granted by Improved Speed.)\n+50 speed\n+100 speed\n+150 speed\n+200 speed",
+  "text": "Can only Be applied to autos\nRequires: vehicle to be augmented to have the Improved Speed Your vehicle is stupidly fast. Your speed is improved based on the marque of this augment. (This bonus stacks with that granted by Improved Speed.)\n+50 speed\n+100 speed\n+150 speed\n+200 speed",
   "modifiers": []
  },
  {
@@ -7677,7 +7677,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to autos\nYour vehicle is built to go so fast that nothing else can hit it. When traveling at your top speeds, your vehicle is little more than a blur. You vehicle gains a bonus to its evade rolls whenever you’re moving at its top speed (and until the pilot’s next turn, when the speed is adjusted). The evade bonus is based on the marque of this augment.\n+3 on evade rolls\n+4 on evade rolls\n+5 on evade rolls\n+6 on evade rolls",
+  "text": "Can only Be applied to autos\nYour vehicle is built to go so fast that nothing else can hit it. When traveling at your top speeds, your vehicle is little more than a blur. You vehicle gains a bonus to its evade rolls whenever you’re moving at its top speed (and until the pilot’s next turn, when the speed is adjusted). The evade bonus is based on the marque of this augment.\n+3 on evade rolls\n+4 on evade rolls\n+5 on evade rolls\n+6 on evade rolls",
   "modifiers": []
  },
  {
@@ -7702,7 +7702,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Cost to aCtivate: 1 AP reflexively\nWhen your vehicle starts to sink or hits the water and isn’t equipped for staying afloat, you can hit your buoyancy release in order to stay afloat. The pilot may activate the buoyancy release for 1 action point, and it will cause the vehicle to stay afloat despite any injuries the vehicle has taken.\nA foe may attack the buoyancy release mechanism. The buoyancy has a number of wounds based on the marque of this augment.\n6 wounds\n12 wounds\n18 wounds\n24 wounds",
+  "text": "Cost to activate: 1 AP reflexively\nWhen your vehicle starts to sink or hits the water and isn’t equipped for staying afloat, you can hit your buoyancy release in order to stay afloat. The pilot may activate the buoyancy release for 1 action point, and it will cause the vehicle to stay afloat despite any injuries the vehicle has taken.\nA foe may attack the buoyancy release mechanism. The buoyancy has a number of wounds based on the marque of this augment.\n6 wounds\n12 wounds\n18 wounds\n24 wounds",
   "modifiers": []
  },
  {
@@ -7826,7 +7826,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to CLankers\nYou clockwork engines respond seemlessly, letting you squeeze out every ounce of movement from your clanker. Your speed increases.\n+20 speed\n+40 speed\n+60 speed\n+80 speed",
+  "text": "Can only Be applied to CLankers\nYou clockwork engines respond seemlessly, letting you squeeze out every ounce of movement from your clanker. Your speed increases.\n+20 speed\n+40 speed\n+60 speed\n+80 speed",
   "modifiers": []
  },
  {
@@ -7851,7 +7851,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Cost to aCtivate: 1 AP reflexively\nWhen your vehicle starts to lose altitude and is going to crash, you can release your emergency parachute in order to slow your descent. The pilot may activate the emergency parachute for 1 action point, and it will cause the vehicle to float slowly to the ground despite any injuries the vehicle has taken. The vehicle will fall 10 feet per turn.\nA foe may attack the emergency parachute. The parachute has a number of wounds based on the marque of this augment.\n3 wounds\n6 wounds\n9 wounds\n12 wounds",
+  "text": "Cost to activate: 1 AP reflexively\nWhen your vehicle starts to lose altitude and is going to crash, you can release your emergency parachute in order to slow your descent. The pilot may activate the emergency parachute for 1 action point, and it will cause the vehicle to float slowly to the ground despite any injuries the vehicle has taken. The vehicle will fall 10 feet per turn.\nA foe may attack the emergency parachute. The parachute has a number of wounds based on the marque of this augment.\n3 wounds\n6 wounds\n9 wounds\n12 wounds",
   "modifiers": []
  },
  {
@@ -7878,7 +7878,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: vehicle to be augmented to have the Passenger augment You’ve outfitted your vehicle with small compartments, uncomfortable back seats, and barrels that hang from the main seat that are all capable of carrying extra passengers. You may add a number of extra passengers (in addition to the passenger allowed from your Passenger augment). This does not make the vehicle much larger, despite logic dictating otherwise (hey, it’s steampunk!).\n+1 passengers (to a total of 1 pilot & 2 passengers)\n+2 passengers (to a total of 1 pilot & 3 passengers)\n+3 passengers (to a total of 1 pilot & 4 passengers)\n+4 passengers (to a total of 1 pilot & 5 passengers)",
+  "text": "Requires: vehicle to be augmented to have the Passenger augment You’ve outfitted your vehicle with small compartments, uncomfortable back seats, and barrels that hang from the main seat that are all capable of carrying extra passengers. You may add a number of extra passengers (in addition to the passenger allowed from your Passenger augment). This does not make the vehicle much larger, despite logic dictating otherwise (hey, it’s steampunk!).\n+1 passengers (to a total of 1 pilot & 2 passengers)\n+2 passengers (to a total of 1 pilot & 3 passengers)\n+3 passengers (to a total of 1 pilot & 4 passengers)\n+4 passengers (to a total of 1 pilot & 5 passengers)",
   "modifiers": []
  },
  {
@@ -7902,7 +7902,7 @@
   "notes": "always mQ II",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to CLankers & takes up 2 augment sLots You’ve attached cranked propellers or wings to your clanker, letting you soar through the air. You may move your vehicle through the air, traveling in any direction.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in engineer.",
+  "text": "Can only Be applied to CLankers & takes up 2 augment slots You’ve attached cranked propellers or wings to your clanker, letting you soar through the air. You may move your vehicle through the air, traveling in any direction.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in engineer.",
   "modifiers": []
  },
  {
@@ -7976,7 +7976,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to autos\nYou’ve streamlined your vehicle to make it faster. Your speed is improved based on the marque of this augment.\n+50 speed\n+100 speed\n+150 speed\n+200 speed",
+  "text": "Can only Be applied to autos\nYou’ve streamlined your vehicle to make it faster. Your speed is improved based on the marque of this augment.\n+50 speed\n+100 speed\n+150 speed\n+200 speed",
   "modifiers": []
  },
  {
@@ -8000,7 +8000,7 @@
   "notes": "1 AP to change lift",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to autos\nYour vehicle can support itself through verticle lift, either through a lighter-than-air envelope or a graviton sphere. If you are combining Lift with Aerial Propulsion, you’ll be able to move vertically a certain distance based on the marque of this augment as well as move horizontally based on your speed. Lift only lets you move vertically, and it acts independently of all other speeds. The pilot of the automatic vehicle will need to set the lift speed as well (which costs 1 action point to change).\n20 feet of vertical movement\n40 feet of vertical movement\n60 feet of vertical movement\n80 feet of vertical movement",
+  "text": "Can only Be applied to autos\nYour vehicle can support itself through verticle lift, either through a lighter-than-air envelope or a graviton sphere. If you are combining Lift with Aerial Propulsion, you’ll be able to move vertically a certain distance based on the marque of this augment as well as move horizontally based on your speed. Lift only lets you move vertically, and it acts independently of all other speeds. The pilot of the automatic vehicle will need to set the lift speed as well (which costs 1 action point to change).\n20 feet of vertical movement\n40 feet of vertical movement\n60 feet of vertical movement\n80 feet of vertical movement",
   "modifiers": []
  },
  {
@@ -8049,7 +8049,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Can onLy Be appLieD to autos\naCtivation Cost: 0 AP (but done when changing speed) You’ve applied extra thrusters to your vehicle that make you move exceptionally fast. Unfortunately, it makes you so fast that your vehicle starts to break down. Any time you adjust your speed, you can choose to freely activate your power thrusters. This increases the vehicle’s maximum speed based on the marque of this augment. However, every turn that you have your power thrusters activated, your vehicle loses 1 wound.\n+100 speed beyond your vehicle’s maximum speed\n+200 speed beyond your vehicle’s maximum speed\n+300 speed beyond your vehicle’s maximum speed\n+400 speed beyond your vehicle’s maximum speed",
+  "text": "Can only Be applied to autos\nActivation Cost: 0 AP (but done when changing speed) You’ve applied extra thrusters to your vehicle that make you move exceptionally fast. Unfortunately, it makes you so fast that your vehicle starts to break down. Any time you adjust your speed, you can choose to freely activate your power thrusters. This increases the vehicle’s maximum speed based on the marque of this augment. However, every turn that you have your power thrusters activated, your vehicle loses 1 wound.\n+100 speed beyond your vehicle’s maximum speed\n+200 speed beyond your vehicle’s maximum speed\n+300 speed beyond your vehicle’s maximum speed\n+400 speed beyond your vehicle’s maximum speed",
   "modifiers": []
  },
  {
@@ -8346,7 +8346,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: armoring to be augmented to have the Structural Integrity augment\nYour vehicle’s armoring is exceptional, providing greater support and a thicker buffer between your hard, outer shell and the gooey insides. This grants you additional hit points, which stack with those granted by Structural Integrity.\n+20 hit points\n+40 hit points\n+60 hit points\n+80 hit points",
+  "text": "Requires: armoring to be augmented to have the Structural Integrity augment\nYour vehicle’s armoring is exceptional, providing greater support and a thicker buffer between your hard, outer shell and the gooey insides. This grants you additional hit points, which stack with those granted by Structural Integrity.\n+20 hit points\n+40 hit points\n+60 hit points\n+80 hit points",
   "modifiers": []
  },
  {
@@ -8610,7 +8610,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on a Firearm or CrossBow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
+  "text": "takes up 2 augment slots on a Firearm or Crossbow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
   "modifiers": []
  },
  {
@@ -8660,7 +8660,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "reQuires: Marque II Explosives\nThe bomb has a greater radius of effect. The bomb acts normally, but also blasts out beyond its normal range. The bomb does damage of one marque lower than its own marque beyond its normal range.\n5 feet further\n10 feet further\n15 feet further\n20 feet further",
+  "text": "Requires: Marque II Explosives\nThe bomb has a greater radius of effect. The bomb acts normally, but also blasts out beyond its normal range. The bomb does damage of one marque lower than its own marque beyond its normal range.\n5 feet further\n10 feet further\n15 feet further\n20 feet further",
   "modifiers": []
  },
  {
@@ -8756,7 +8756,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on an expLosive\nThe bomb is built to explode in such a way that it disables machinery, rattling gears and causing it to become stunned. When an automaton is effected by this augment, it is stunned for a number of action points.\nStunned for 1 AP\nStunned for 2 AP\nStunned for 3 AP\nStunned for 4 AP\nWhen a vehicle is effected by an explosive with this augment, it is uncontrollable and moves directly forward for a number of action points.\nCannot be controlled for 1 AP\nCannot be controlled for 2 AP\nCannot be controlled for 3 AP\nCannot be controlled for 4 AP",
+  "text": "takes up 2 augment slots on an explosive\nThe bomb is built to explode in such a way that it disables machinery, rattling gears and causing it to become stunned. When an automaton is effected by this augment, it is stunned for a number of action points.\nStunned for 1 AP\nStunned for 2 AP\nStunned for 3 AP\nStunned for 4 AP\nWhen a vehicle is effected by an explosive with this augment, it is uncontrollable and moves directly forward for a number of action points.\nCannot be controlled for 1 AP\nCannot be controlled for 2 AP\nCannot be controlled for 3 AP\nCannot be controlled for 4 AP",
   "modifiers": []
  },
  {
@@ -8900,7 +8900,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment sLots on an expLosive\nThe blast splashes molten metal onto armor and clothing, decreasing its potency and melting through it, causing it to be less useful until it can be repaired (which can normally be done during a breather).\n-1 soak class\n-1 soak class\n-2 soak class\n-2 soak class",
+  "text": "takes up 2 augment slots on an explosive\nThe blast splashes molten metal onto armor and clothing, decreasing its potency and melting through it, causing it to be less useful until it can be repaired (which can normally be done during a breather).\n-1 soak class\n-1 soak class\n-2 soak class\n-2 soak class",
   "modifiers": []
  },
  {
@@ -9188,7 +9188,7 @@
   "notes": "always mQ II",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment sLots on eyewear\nRegardless of what kind of situation you are in, Happy Place Vision makes whatever you fear the most look like your favorite dessert! While using eyewear with Happy Place Vision, you will never become scared or flustered.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
+  "text": "takes up 3 augment slots on eyewear\nRegardless of what kind of situation you are in, Happy Place Vision makes whatever you fear the most look like your favorite dessert! While using eyewear with Happy Place Vision, you will never become scared or flustered.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
   "modifiers": []
  },
  {
@@ -9404,7 +9404,7 @@
   "notes": "2 AP, Acc vs Eva, Cunning resist",
   "size": "L",
   "price": "4/20/100/500",
-  "text": "size: Light\nresist: Cunning (marques down)\naCtivation Cost: 2 AP\nA miniscule, highly concentrated beam of light is emitted by this contraption through the use of a weak aether resonator. Not large enough to light much of anything, the best use of this object is shining it into the eyes of others for your own enjoyment. (If you attempt to point the aether pointer at somebody’s eyes, you must make an accuracy versus their evade, and then they must resist the effect.)\nBlurry vision (-2 to accuracy and evade) until the end of their next turn\nBlurry vision (-2 accuracy & evade) for the next 2 turns Blurry vision (-2 accuracy & evade) for the next 3 turns Blurry vision (-2 accuracy & evade) for the next 4 turns marQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Light\nResist: Cunning (marques down)\nActivation Cost: 2 AP\nA miniscule, highly concentrated beam of light is emitted by this contraption through the use of a weak aether resonator. Not large enough to light much of anything, the best use of this object is shining it into the eyes of others for your own enjoyment. (If you attempt to point the aether pointer at somebody’s eyes, you must make an accuracy versus their evade, and then they must resist the effect.)\nBlurry vision (-2 to accuracy and evade) until the end of their next turn\nBlurry vision (-2 accuracy & evade) for the next 2 turns Blurry vision (-2 accuracy & evade) for the next 3 turns Blurry vision (-2 accuracy & evade) for the next 4 turns marque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9428,7 +9428,7 @@
   "notes": "1 AP arm; Cunning resist",
   "size": "L",
   "price": "4/20/100/500",
-  "text": "size: Light\nresist: Cunning (marques down)\naCtivation Cost: 1 AP (see below)\nThis small, unremarkable box can be activated and deactivated for 1 action point. Whenever someone enters a space adjacent to the person carrying an activated alarm box, its pivoting speaker turns toward them and blasts an ear-piercing siren. Afterward, the alarm box shuts down, requiring it to be reactivated. Someone must move towards the alarm box for it to sound; carrying or throwing an alarm box past someone or activating an alarm box for use against someone already adjacent to you will not activate its alarm.\nDeafened (-2 evade) for 1 turn\nDeafened (-2 evade) for 2 turns\nDeafened (-2 evade) for 3 turns\nDeafened (-2 evade) for 4 turns\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Light\nResist: Cunning (marques down)\nActivation Cost: 1 AP (see below)\nThis small, unremarkable box can be activated and deactivated for 1 action point. Whenever someone enters a space adjacent to the person carrying an activated alarm box, its pivoting speaker turns toward them and blasts an ear-piercing siren. Afterward, the alarm box shuts down, requiring it to be reactivated. Someone must move towards the alarm box for it to sound; carrying or throwing an alarm box past someone or activating an alarm box for use against someone already adjacent to you will not activate its alarm.\nDeafened (-2 evade) for 1 turn\nDeafened (-2 evade) for 2 turns\nDeafened (-2 evade) for 3 turns\nDeafened (-2 evade) for 4 turns\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9452,7 +9452,7 @@
   "notes": "0 AP bite-release potion",
   "size": "L",
   "price": "3/15/75/375",
-  "text": "size: Light\nCost: 0 AP\nThis fake tooth is in reality a small capsule you can fill with a dose of an alchemical potion! For no action point cost during your turn you can bite down on it to release the potion into your system. Tooth is crushed after every use, ruining your smile Tooth can be refilled during a breather (15-30 minute break)\nTooth can be refilled for 3 AP\nTooth can be refilled for 1 AP\nmarQue I II III IV\nmarket priCe 3 princes 15 princes 75 princes 375 princes",
+  "text": "Size: Light\nCost: 0 AP\nThis fake tooth is in reality a small capsule you can fill with a dose of an alchemical potion! For no action point cost during your turn you can bite down on it to release the potion into your system. Tooth is crushed after every use, ruining your smile Tooth can be refilled during a breather (15-30 minute break)\nTooth can be refilled for 3 AP\nTooth can be refilled for 1 AP\nMarque I II III IV\nmarket price 3 princes 15 princes 75 princes 375 princes",
   "modifiers": []
  },
  {
@@ -9476,7 +9476,7 @@
   "notes": "set up",
   "size": "M/H",
   "price": "5/25/125/625",
-  "text": "size: Medium or Heavy (when unwound)\nThe collapsible ladder is a bundle of rods that, when unwound, form together to make a ladder. The ladder requires action points to set up and take down, and it only goes so high, depending on the marque of the ladder.\n10 feet high and requires 10 AP to set up\n20 feet high and requires 7 AP to set up\n30 feet high and requires 4 AP to set up\n40 feet high and requires 2 AP to set up\nmarQue I II III IV\nmarket priCe 5 princes 25 princes 125 princes 625 princes",
+  "text": "Size: Medium or Heavy (when unwound)\nThe collapsible ladder is a bundle of rods that, when unwound, form together to make a ladder. The ladder requires action points to set up and take down, and it only goes so high, depending on the marque of the ladder.\n10 feet high and requires 10 AP to set up\n20 feet high and requires 7 AP to set up\n30 feet high and requires 4 AP to set up\n40 feet high and requires 2 AP to set up\nMarque I II III IV\nmarket price 5 princes 25 princes 125 princes 625 princes",
   "modifiers": []
  },
  {
@@ -9524,7 +9524,7 @@
   "notes": "1 AP per 5 ft",
   "size": "M",
   "price": "4/20/100/500",
-  "text": "size: Medium\nCost: 1 AP per 5 feet extended\nYou have a one-handed and portable periscope that can be maneuvered around any number of corners, out of water, or out of a cloud of smoke. The periscope is not very discreet in-and-of itself, and trying to be sneaky about it will require a cunning roll as if you were hiding yourself. It costs 1 action point to extend your periscope 5 feet, and the periscope can be extended a maximum distance based on its marque.\n20 feet\n40 feet\n60 feet\n80 feet\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Medium\nCost: 1 AP per 5 feet extended\nYou have a one-handed and portable periscope that can be maneuvered around any number of corners, out of water, or out of a cloud of smoke. The periscope is not very discreet in-and-of itself, and trying to be sneaky about it will require a cunning roll as if you were hiding yourself. It costs 1 action point to extend your periscope 5 feet, and the periscope can be extended a maximum distance based on its marque.\n20 feet\n40 feet\n60 feet\n80 feet\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9548,7 +9548,7 @@
   "notes": "3 AP to put on",
   "size": "L",
   "price": "4/20/100/500",
-  "text": "size: Light\nCost to put on: 3 AP\nNot only does this poignant fashion statement require no hands when it’s strapped to your face, it also helps filter your breathing, protecting you from harmful airborne chemicals. Only one can be worn at a time.\n+4 to resists against alchemical gases\n+8 to resists against alchemical gases\n+12 to resists against alchemical gases\n+16 to resists against alchemical gases\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Light\nCost to put on: 3 AP\nNot only does this poignant fashion statement require no hands when it’s strapped to your face, it also helps filter your breathing, protecting you from harmful airborne chemicals. Only one can be worn at a time.\n+4 to resists against alchemical gases\n+8 to resists against alchemical gases\n+12 to resists against alchemical gases\n+16 to resists against alchemical gases\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9572,7 +9572,7 @@
   "notes": "thrown attack; target grabbed & can only remove net",
   "size": "M",
   "price": "3/15/75/375",
-  "text": "size: Medium\nCost: as a thrown weapon attack (generally 2 AP) A medium-sized restraining device, people you successfully hit with your net act as if they have been grabbed without you having to be up-close-and-personal with them. While under your net they cannot take any actions other than removing the net capturing them. It can be used on enemies adjacent to you or shot through a firearm with the delivery augment.\nCosts 1 AP to remove the grabnet\nCosts 2 AP to remove the grabnet\nCosts 3 AP to remove the grabnet\nCosts 4 AP to remove the grabnet\nmarQue I II III IV\nmarket priCe 3 princes 15 princes 75 princes 375 princes",
+  "text": "Size: Medium\nCost: as a thrown weapon attack (generally 2 AP) A medium-sized restraining device, people you successfully hit with your net act as if they have been grabbed without you having to be up-close-and-personal with them. While under your net they cannot take any actions other than removing the net capturing them. It can be used on enemies adjacent to you or shot through a firearm with the delivery augment.\nCosts 1 AP to remove the grabnet\nCosts 2 AP to remove the grabnet\nCosts 3 AP to remove the grabnet\nCosts 4 AP to remove the grabnet\nMarque I II III IV\nmarket price 3 princes 15 princes 75 princes 375 princes",
   "modifiers": []
  },
  {
@@ -9596,7 +9596,7 @@
   "notes": "1 AP launch/unlatch/retract, 50 ft line",
   "size": "M",
   "price": "6/30/150/750",
-  "text": "size: Medium\nCost: 1 AP to launch, 1 AP to unlatch, 1 AP to retract This is a metal grappling hook launching device. The hook is designed to mechanically bend outward, attaching itself onto most surfaces perfectly. You can unlatch the hook from any surface with a simple tug on its line. It can stick to most ledges and flat surfaces regardless of whether it is rocky, magnetic, rough, or slick. The maximum length of chain, cable, or rope that it can successfully propel upwards is 50 feet. How fast it can pull you upwards is based on its marque. If you can get footing on the surface you are climbing, your climb speed is added to the speed of your grappling hook. While hanging from one grappling hook, you can easily fire another one further upwards with your other hand if you have a spare.\n20 feet per action point spent retracting\n30 feet per action point spent retracting\n40 feet per action point spent retracting\n50 feet per action point spent retracting\nmarQue I II III IV\nmarket priCe 6 princes 30 princes 150 princes 750 princes",
+  "text": "Size: Medium\nCost: 1 AP to launch, 1 AP to unlatch, 1 AP to retract This is a metal grappling hook launching device. The hook is designed to mechanically bend outward, attaching itself onto most surfaces perfectly. You can unlatch the hook from any surface with a simple tug on its line. It can stick to most ledges and flat surfaces regardless of whether it is rocky, magnetic, rough, or slick. The maximum length of chain, cable, or rope that it can successfully propel upwards is 50 feet. How fast it can pull you upwards is based on its marque. If you can get footing on the surface you are climbing, your climb speed is added to the speed of your grappling hook. While hanging from one grappling hook, you can easily fire another one further upwards with your other hand if you have a spare.\n20 feet per action point spent retracting\n30 feet per action point spent retracting\n40 feet per action point spent retracting\n50 feet per action point spent retracting\nMarque I II III IV\nmarket price 6 princes 30 princes 150 princes 750 princes",
   "modifiers": []
  },
  {
@@ -9620,7 +9620,7 @@
   "notes": "3 AP, 3 uses; Dex T2 or prone",
   "size": "L",
   "price": "5/25/125/625",
-  "text": "size: Light\nresist: Dexterity (negates, see below)\naCtivation Cost: 3 AP\nThis little contraption pours slippery grease all over a small area. Anybody who walks into the space of a grease guzzler must make a Dexterity result of tier 2 or fall prone. Upon standing up and trying to move, they must make the resist again. A grease guzzler may be used up to three times before having to refill it with the slippery grease.\nCovers a space 5 feet x 5 feet\nCovers a space 10 feet x 5 feet\nCovers a space 10 feet x 10 feet\nCovers a space 15 feet x 10 feet\nmarQue I II III IV\nmarket priCe 5 princes 25 princes 125 princes 625 princes",
+  "text": "Size: Light\nResist: Dexterity (negates, see below)\nActivation Cost: 3 AP\nThis little contraption pours slippery grease all over a small area. Anybody who walks into the space of a grease guzzler must make a Dexterity result of tier 2 or fall prone. Upon standing up and trying to move, they must make the resist again. A grease guzzler may be used up to three times before having to refill it with the slippery grease.\nCovers a space 5 feet x 5 feet\nCovers a space 10 feet x 5 feet\nCovers a space 10 feet x 10 feet\nCovers a space 15 feet x 10 feet\nMarque I II III IV\nmarket price 5 princes 25 princes 125 princes 625 princes",
   "modifiers": []
  },
  {
@@ -9644,7 +9644,7 @@
   "notes": "1 AP on grabbed limb; Brute to break",
   "size": "L",
   "price": "3/15/75/375",
-  "text": "size: Light\nresist: Brute (negates)\nCost: 1 AP\nHandcuffs allow you to put a hold on someone you’re already grabbing. Perfect for those gentlemen adventurers of weaker physique, you can attach one cuff of your set to any body part you currently are grabbing. Its extendable chain design allows it to tighten around the biggest (and smallest) of limbs. One set of handcuffs consists of two cuffs which can attach to one limb apiece. They remain attached until the person bound by them is able to break free or until you voluntarily remove them. Until then, the wearer of your handcuffs acts constantly grabbed. They can move, but once both cuffs are grabbing something they can’t use any limbs your handcuffs are attached to.\nTier 2 Brute to break free\nTier 3 Brute to break free\nTier 4 Brute to break free\nImpossible (Unless you can somehow attain a Tier 5 Brute)\nmarQue I II III IV\nmarket priCe 3 princes 15 princes 75 princes 375 princes",
+  "text": "Size: Light\nResist: Brute (negates)\nCost: 1 AP\nHandcuffs allow you to put a hold on someone you’re already grabbing. Perfect for those gentlemen adventurers of weaker physique, you can attach one cuff of your set to any body part you currently are grabbing. Its extendable chain design allows it to tighten around the biggest (and smallest) of limbs. One set of handcuffs consists of two cuffs which can attach to one limb apiece. They remain attached until the person bound by them is able to break free or until you voluntarily remove them. Until then, the wearer of your handcuffs acts constantly grabbed. They can move, but once both cuffs are grabbing something they can’t use any limbs your handcuffs are attached to.\nTier 2 Brute to break free\nTier 3 Brute to break free\nTier 4 Brute to break free\nImpossible (Unless you can somehow attain a Tier 5 Brute)\nMarque I II III IV\nmarket price 3 princes 15 princes 75 princes 375 princes",
   "modifiers": []
  },
  {
@@ -9692,7 +9692,7 @@
   "notes": "1 AP",
   "size": "L",
   "price": "2/10/50/250",
-  "text": "size: Light\naCtivation Cost: 1 AP\nAn illumitorch looks, in many ways, like a normal torch. The difference is that it has a small bulb at the end. By rotating a knob, the illumitorch creates light up to a distance away determined by its marque. It can be dimmed to illuminate anywhere from 5 to the maximum feet away. If you’re using an illumitorch in a small or enclosed area, it’s likely to light the entire area.\n25 feet\n50 feet\n75 feet\n100 feet\nmarQue I II III IV\nmarket priCe 2 princes 10 princes 50 princes 250 princes",
+  "text": "Size: Light\nActivation Cost: 1 AP\nAn illumitorch looks, in many ways, like a normal torch. The difference is that it has a small bulb at the end. By rotating a knob, the illumitorch creates light up to a distance away determined by its marque. It can be dimmed to illuminate anywhere from 5 to the maximum feet away. If you’re using an illumitorch in a small or enclosed area, it’s likely to light the entire area.\n25 feet\n50 feet\n75 feet\n100 feet\nMarque I II III IV\nmarket price 2 princes 10 princes 50 princes 250 princes",
   "modifiers": []
  },
  {
@@ -9716,7 +9716,7 @@
   "notes": "1 AP per 10 ft cranked, 5 ft wide",
   "size": "M",
   "price": "6/30/150/750",
-  "text": "size: Medium\nCost: 1 AP (see below)\nThe Insta-Bridge is perfect for the more venturesome traveler. Perfect for passing over ravines or creating handy ramps up hills, the Insta-Bridge is 5 feet wide and hand-cranked. For every action point you spend cranking it, it will extend or retract 10 feet, extending as far as its maximum length. It can be cranked in and out from either of its two ends. While extended out 10 feet or more, the Insta-Bridge becomes too cumbersome to lift.\n25 foot maximum length\n50 foot maximum length\n75 foot maximum length\n100 foot maximum length\nmarQue I II III IV\nmarket priCe 6 princes 30 princes 150 princes 750 princes",
+  "text": "Size: Medium\nCost: 1 AP (see below)\nThe Insta-Bridge is perfect for the more venturesome traveler. Perfect for passing over ravines or creating handy ramps up hills, the Insta-Bridge is 5 feet wide and hand-cranked. For every action point you spend cranking it, it will extend or retract 10 feet, extending as far as its maximum length. It can be cranked in and out from either of its two ends. While extended out 10 feet or more, the Insta-Bridge becomes too cumbersome to lift.\n25 foot maximum length\n50 foot maximum length\n75 foot maximum length\n100 foot maximum length\nMarque I II III IV\nmarket price 6 princes 30 princes 150 princes 750 princes",
   "modifiers": []
  },
  {
@@ -9740,7 +9740,7 @@
   "notes": "2 AP prying",
   "size": "M",
   "price": "4/20/100/500",
-  "text": "size: Medium\nCost: 2 AP to activate\nThe jaws of life is a tool with thin, metal blades sticking out from its base. It’s used for prying things open by sliding its blades into an opening and activating it. Roll brute on behalf of the tool, using the indicated bonus.\n+4 on the brute roll\n+8 on the brute roll\n+12 on the brute roll\n+16 on the brute roll\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Medium\nCost: 2 AP to activate\nThe jaws of life is a tool with thin, metal blades sticking out from its base. It’s used for prying things open by sliding its blades into an opening and activating it. Roll brute on behalf of the tool, using the indicated bonus.\n+4 on the brute roll\n+8 on the brute roll\n+12 on the brute roll\n+16 on the brute roll\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9764,7 +9764,7 @@
   "notes": "3 AP",
   "size": "M",
   "price": "4/20/100/500",
-  "text": "size: Medium\nCost: 3 AP\nThe metal cutter looks like a large pair of steam-powered wire snips and functions in much the same way. Using the metal cutter requires 3 action points, but it can automatically cut through a certain thickness of metal.\n3 inches of metal\n6 inches of metal\n1 foot of metal\n3 feet of metal\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Medium\nCost: 3 AP\nThe metal cutter looks like a large pair of steam-powered wire snips and functions in much the same way. Using the metal cutter requires 3 action points, but it can automatically cut through a certain thickness of metal.\n3 inches of metal\n6 inches of metal\n1 foot of metal\n3 feet of metal\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9788,7 +9788,7 @@
   "notes": "2 AP load, 3 AP launch",
   "size": "L",
   "price": "7/35/175/875",
-  "text": "size: Light\nCost: 2 AP to insert item, 3 AP to activate\nAn efficient mode of communication, the messenger sphere appears as nothing more than a small hollow sphere you can place a single concealable item, most commonly a written note, into. A destination can be programmed into it using dials representing longitude and latitude. When activated sides of the sphere extend outward to form propellors, spinning quickly to create lift. It will then fly toward its destination at a speed based on its marque.\n185 feet per turn (roughly 500 miles a day)\n370 feet per turn (roughly 1000 miles a day)\n555 feet per turn (roughly 1500 miles a day)\n925 feet per turn (roughly 2500 miles a day)\nmarQue I II III IV\nmarket priCe 7 princes 35 princes 175 princes 875 princes",
+  "text": "Size: Light\nCost: 2 AP to insert item, 3 AP to activate\nAn efficient mode of communication, the messenger sphere appears as nothing more than a small hollow sphere you can place a single concealable item, most commonly a written note, into. A destination can be programmed into it using dials representing longitude and latitude. When activated sides of the sphere extend outward to form propellors, spinning quickly to create lift. It will then fly toward its destination at a speed based on its marque.\n185 feet per turn (roughly 500 miles a day)\n370 feet per turn (roughly 1000 miles a day)\n555 feet per turn (roughly 1500 miles a day)\n925 feet per turn (roughly 2500 miles a day)\nMarque I II III IV\nmarket price 7 princes 35 princes 175 princes 875 princes",
   "modifiers": []
  },
  {
@@ -9812,7 +9812,7 @@
   "notes": "~2 min",
   "size": "L",
   "price": "3/15/75/375",
-  "text": "size: Light\nA trinket made for the more thrifty adventurer, the mold-maker is a blanket which hardens when it is wrapped around items of a size determined by its marque. This allows you to recreate any item you come across at its base material cost without the need of a crafter specializing in that field. The mold-maker only copies the shape of an item and thus cannot replicate augments of any kind. After so many uses the mold-maker will become stuck in the form of the last item it copied. The mold-maker takes about two minutes to use.\nCan wrap around light or smaller items\nCan wrap around medium or smaller items\nCan wrap around heavy or smaller items\nCan wrap around super-heavy or smaller items\nNote: Most merchants won’t appreciate you making molds of their wares. Please use responsibly.\nmarQue I II III IV\nmarket priCe 3 princes 15 princes 75 princes 375 princes",
+  "text": "Size: Light\nA trinket made for the more thrifty adventurer, the mold-maker is a blanket which hardens when it is wrapped around items of a size determined by its marque. This allows you to recreate any item you come across at its base material cost without the need of a crafter specializing in that field. The mold-maker only copies the shape of an item and thus cannot replicate augments of any kind. After so many uses the mold-maker will become stuck in the form of the last item it copied. The mold-maker takes about two minutes to use.\nCan wrap around light or smaller items\nCan wrap around medium or smaller items\nCan wrap around heavy or smaller items\nCan wrap around super-heavy or smaller items\nNote: Most merchants won’t appreciate you making molds of their wares. Please use responsibly.\nMarque I II III IV\nmarket price 3 princes 15 princes 75 princes 375 princes",
   "modifiers": []
  },
  {
@@ -9836,7 +9836,7 @@
   "notes": "1 AP lock / ranged called shot throw",
   "size": "L",
   "price": "5/25/125/625 (keys 5 dukes, material 1 duke)",
-  "text": "size: Light\nCost: 1 AP to lock a held item, Ranged Called Shot to throw As the name implies, this lock can secure almost anything. Doors, luggage, handcuffs, vehicles and more can be sealed shut with this device, and it takes anyone trying to lockpick it two free hands and an amount of action points based on the marque of this augment to do so. If thrown accurately, it will automatically lock any compatible item it lands on.\nIf you crafted the lock, you can also craft keys for it at no cost. Keys allow you to unlock the lock for 1 action point.\n3 AP to pick the lock\n5 AP to pick the lock\n7 AP to pick the lock\n10 AP to pick the lock\nmarQue I II III IV\nmarket priCe 5 princes 25 princes 125 princes 625 princes Note: Making keys for a Mostly-Universal Lock has a material cost of 1 dukes per key and a market cost of 5 dukes.",
+  "text": "Size: Light\nCost: 1 AP to lock a held item, Ranged Called Shot to throw As the name implies, this lock can secure almost anything. Doors, luggage, handcuffs, vehicles and more can be sealed shut with this device, and it takes anyone trying to lockpick it two free hands and an amount of action points based on the marque of this augment to do so. If thrown accurately, it will automatically lock any compatible item it lands on.\nIf you crafted the lock, you can also craft keys for it at no cost. Keys allow you to unlock the lock for 1 action point.\n3 AP to pick the lock\n5 AP to pick the lock\n7 AP to pick the lock\n10 AP to pick the lock\nMarque I II III IV\nmarket price 5 princes 25 princes 125 princes 625 princes Note: Making keys for a Mostly-Universal Lock has a material cost of 1 dukes per key and a market cost of 5 dukes.",
   "modifiers": []
  },
  {
@@ -9860,7 +9860,7 @@
   "notes": "swap at breather",
   "size": "L+",
   "price": "4/20/100/500",
-  "text": "size: Light (see below)\nTired of having to switch between all of your trinkets? The omnitrinket combines trinkets together into a single item, allowing you to hold multiple trinkets at once! The omni-trinket at default is a light item, but increases in size to match the largest sized item attached to it. Items attached can be switched out during a breather (a 15-30 minute break). You must spend action points to use each item individually; you cannot combine actions to reduce action point cost.\nCombines up to 2 Trinkets\nCombines up to 4 Trinkets\nCombines up to 6 Trinkets\nCombines up to 10 Trinkets\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Light (see below)\nTired of having to switch between all of your trinkets? The omnitrinket combines trinkets together into a single item, allowing you to hold multiple trinkets at once! The omni-trinket at default is a light item, but increases in size to match the largest sized item attached to it. Items attached can be switched out during a breather (a 15-30 minute break). You must spend action points to use each item individually; you cannot combine actions to reduce action point cost.\nCombines up to 2 Trinkets\nCombines up to 4 Trinkets\nCombines up to 6 Trinkets\nCombines up to 10 Trinkets\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9884,7 +9884,7 @@
   "notes": "0 AP inject",
   "size": "L",
   "price": "3/15/75/375",
-  "text": "size: Light\naCtivation Cost: 0 AP\nThis trinket puts a small button in your palm, hooked up to an injector line. When you push the button (an action that requires no action points), you are injected with a single alchemical substance of your choosing. Replacing the alchemical substance after use requires a number of action points based on the marque of the palm injector.\n4 action points to reload\n3 action points to reload\n2 action points to reload\n1 action point to reload\nAlchemical substance not included.\nmarQue I II III IV\nmarket priCe 3 princes 15 princes 75 princes 375 princes",
+  "text": "Size: Light\nActivation Cost: 0 AP\nThis trinket puts a small button in your palm, hooked up to an injector line. When you push the button (an action that requires no action points), you are injected with a single alchemical substance of your choosing. Replacing the alchemical substance after use requires a number of action points based on the marque of the palm injector.\n4 action points to reload\n3 action points to reload\n2 action points to reload\n1 action point to reload\nAlchemical substance not included.\nMarque I II III IV\nmarket price 3 princes 15 princes 75 princes 375 princes",
   "modifiers": []
  },
  {
@@ -9908,7 +9908,7 @@
   "notes": "1 AP (reflexive)",
   "size": "M",
   "price": "5/25/125/625",
-  "text": "size: Medium\nCost: 1 AP (can be done reflexively)\nDesigned with daredevils in mind, the parachute glider is a trinket you can wear on your back. Not only will it prevent you from taking any damage from falling, it will also keep you aloft by gliding in place without falling for a number of turns based on its marque, allowing you to keep on fighting any airborne foes who sank your battle-airship. Your fall begins when your action points refresh after your final turn of gliding. The parachute glider includes a ripchord allowing you to end your time gliding prematurely for no action point cost.\n1 turn before falling\n2 turns before falling\n5 turns before falling\n10 turns before falling\nmarQue I II III IV\nmarket priCe 5 princes 25 princes 125 princes 625 princes",
+  "text": "Size: Medium\nCost: 1 AP (can be done reflexively)\nDesigned with daredevils in mind, the parachute glider is a trinket you can wear on your back. Not only will it prevent you from taking any damage from falling, it will also keep you aloft by gliding in place without falling for a number of turns based on its marque, allowing you to keep on fighting any airborne foes who sank your battle-airship. Your fall begins when your action points refresh after your final turn of gliding. The parachute glider includes a ripchord allowing you to end your time gliding prematurely for no action point cost.\n1 turn before falling\n2 turns before falling\n5 turns before falling\n10 turns before falling\nMarque I II III IV\nmarket price 5 princes 25 princes 125 princes 625 princes",
   "modifiers": []
  },
  {
@@ -9932,7 +9932,7 @@
   "notes": "1 AP place / 3 AP throw (25 ft)",
   "size": "M",
   "price": "25 (no marques)",
-  "text": "size: Medium\nCost: 1 AP to place, 3 AP to throw\nThis trendy leather briefcase can quickly reveal the metal spiral on its side to be a collapsible drill. When placed in an adjacent space or thrown up to 25 feet away, the pitcase will drill a circle 5 feet in diameter downwards up to 15 feet (you can set it to a lower distance manually for no action point cost at any time before use). It can also be held to tunnel you in any direction at a rate of 15 feet per action point. The pitcase cannot burrow through worked stones, mountains, metals or similar materials.\nNote: This market price for this trinket is 25 princes (and so costs 5 princes to make).",
+  "text": "Size: Medium\nCost: 1 AP to place, 3 AP to throw\nThis trendy leather briefcase can quickly reveal the metal spiral on its side to be a collapsible drill. When placed in an adjacent space or thrown up to 25 feet away, the pitcase will drill a circle 5 feet in diameter downwards up to 15 feet (you can set it to a lower distance manually for no action point cost at any time before use). It can also be held to tunnel you in any direction at a rate of 15 feet per action point. The pitcase cannot burrow through worked stones, mountains, metals or similar materials.\nNote: This market price for this trinket is 25 princes (and so costs 5 princes to make).",
   "modifiers": []
  },
  {
@@ -9956,7 +9956,7 @@
   "notes": "deploy/retract",
   "size": "M",
   "price": "4/20/100/500 (heavy cover when closed)",
-  "text": "size: Medium\nCost: Based on Marque (see below)\nDesigned for true eccentrics, this gadget produces a free-standing doorframe, complete with door and knobs on both sides, at a moment’s notice. This doorframe accomplishes little past putting a door between you and any pursuers, although they can simply open it for 1 action point or alternatively move around it. It easily attaches to any wall or to other doorframes, although opening it while it’s attached to a wall will reveal the solid wall behind it. It provides heavy cover to anyone standing behind it while it is freestanding and closed.\n2 AP to deploy/retract\n1 AP to deploy/retract\n0 AP to deploy/retract\n0 AP to deploy/retract (and can be done reflexively) marQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Medium\nCost: Based on Marque (see below)\nDesigned for true eccentrics, this gadget produces a free-standing doorframe, complete with door and knobs on both sides, at a moment’s notice. This doorframe accomplishes little past putting a door between you and any pursuers, although they can simply open it for 1 action point or alternatively move around it. It easily attaches to any wall or to other doorframes, although opening it while it’s attached to a wall will reveal the solid wall behind it. It provides heavy cover to anyone standing behind it while it is freestanding and closed.\n2 AP to deploy/retract\n1 AP to deploy/retract\n0 AP to deploy/retract\n0 AP to deploy/retract (and can be done reflexively) marque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -9980,7 +9980,7 @@
   "notes": "3 AP, throw 50 ft",
   "size": "L",
   "price": "5/25/125/625",
-  "text": "size: Light\nCost: 3 AP\nEnemies behind cover will fear your crafty visage when you walk up to their barricades and smash them with your tiny trinket. The porta-bull is a handheld device designed to attach to a single piece of cover and repeatedly beat it with a hydraulic ram until it breaks. It can be thrown a maximum of 50 feet. After a certain amount of damage to the cover it attaches itself to, the porta-bull will fall off and will need to be picked up before it can be used again. Any damage it does to a piece of cover lasts until someone can repair the cover outside of combat. This device has too much trouble staying attached to flat, unmoving surfaces to be able to ever attach to a living creature.\nLowers cover by one degree before falling off\nLowers cover by two degrees before falling off\nLowers cover by three degrees before falling off Lowers cover by four degrees before falling off\nNote: The porta-bull is not strong enough to damage anything considered full cover.\nmarQue I II III IV\nmarket priCe 5 princes 25 princes 125 princes 625 princes",
+  "text": "Size: Light\nCost: 3 AP\nEnemies behind cover will fear your crafty visage when you walk up to their barricades and smash them with your tiny trinket. The porta-bull is a handheld device designed to attach to a single piece of cover and repeatedly beat it with a hydraulic ram until it breaks. It can be thrown a maximum of 50 feet. After a certain amount of damage to the cover it attaches itself to, the porta-bull will fall off and will need to be picked up before it can be used again. Any damage it does to a piece of cover lasts until someone can repair the cover outside of combat. This device has too much trouble staying attached to flat, unmoving surfaces to be able to ever attach to a living creature.\nLowers cover by one degree before falling off\nLowers cover by two degrees before falling off\nLowers cover by three degrees before falling off Lowers cover by four degrees before falling off\nNote: The porta-bull is not strong enough to damage anything considered full cover.\nMarque I II III IV\nmarket price 5 princes 25 princes 125 princes 625 princes",
   "modifiers": []
  },
  {
@@ -10004,7 +10004,7 @@
   "notes": "2 AP activate",
   "size": "M",
   "price": "4/20/100/500",
-  "text": "size: Medium\nThese boots are simple looking enough, except for the large flipout device on the back. Once activated (for just 2 action points), the boots activate a propeller on the back that comes around over the heel of the boot. This grants a speed bonus to the wearer when swimming.\n+5 to swim speed\n+10 to swim speed\n+15 to swim speed\n+20 to swim speed\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Medium\nThese boots are simple looking enough, except for the large flipout device on the back. Once activated (for just 2 action points), the boots activate a propeller on the back that comes around over the heel of the boot. This grants a speed bonus to the wearer when swimming.\n+5 to swim speed\n+10 to swim speed\n+15 to swim speed\n+20 to swim speed\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -10028,7 +10028,7 @@
   "notes": "2 AP; Cunning/Spirit resist ≥ marque",
   "size": "L",
   "price": "6/30/150/750",
-  "text": "size: Light\nResist: Cunning or Spirit (negates, see below)\naCtivation Cost: 2 AP\nThis is a small, flat, metal device with a glass cover. It is able to pick up on the heartbeats of organisms around it. After picking up on a heart beat, the trinket will display it by raising small pins under the glass in the direction of the heart beat’s source. Somebody who is aware of the pulse detector can attempt to hide their heartbeat, which requires a cunning or spirit resist (target’s choice) with a result equal to the item’s marque. Detects heart beats within 25 feet\nDetects heart beats within 50 feet\nDetects heart beats within 75 feet\nDetects heart beats within 100 feet\nmarQue I II III IV\nmarket priCe 6 princes 30 princes 150 princes 750 princes",
+  "text": "Size: Light\nResist: Cunning or Spirit (negates, see below)\nActivation Cost: 2 AP\nThis is a small, flat, metal device with a glass cover. It is able to pick up on the heartbeats of organisms around it. After picking up on a heart beat, the trinket will display it by raising small pins under the glass in the direction of the heart beat’s source. Somebody who is aware of the pulse detector can attempt to hide their heartbeat, which requires a cunning or spirit resist (target’s choice) with a result equal to the item’s marque. Detects heart beats within 25 feet\nDetects heart beats within 50 feet\nDetects heart beats within 75 feet\nDetects heart beats within 100 feet\nMarque I II III IV\nmarket price 6 princes 30 princes 150 princes 750 princes",
   "modifiers": []
  },
  {
@@ -10052,7 +10052,7 @@
   "notes": "1 AP place / 2 AP throw",
   "size": "L",
   "price": "8/40/200/1,000",
-  "text": "size: Light\nCost: 1 AP to place, 2 AP to throw\nWorried about getting fingerprints on a lock? Perhaps you simply prefer to have someone, or something, else do the dirty work? The Reasonable Doubt lockpicking device will attach to any lock and quickly get to work picking it for you. When your action points refresh it will spend a number of action points picking the lock based off of its marque.\n1 AP per turn spent lockpicking\n2 AP per turn spent lockpicking\n3 AP per turn spent lockpicking\n4 AP per turn spent lockpicking\nmarQue I II III IV\nmarket priCe 8 princes 40 princes 200 princes 1000 princes",
+  "text": "Size: Light\nCost: 1 AP to place, 2 AP to throw\nWorried about getting fingerprints on a lock? Perhaps you simply prefer to have someone, or something, else do the dirty work? The Reasonable Doubt lockpicking device will attach to any lock and quickly get to work picking it for you. When your action points refresh it will spend a number of action points picking the lock based off of its marque.\n1 AP per turn spent lockpicking\n2 AP per turn spent lockpicking\n3 AP per turn spent lockpicking\n4 AP per turn spent lockpicking\nMarque I II III IV\nmarket price 8 princes 40 princes 200 princes 1000 princes",
   "modifiers": []
  },
  {
@@ -10076,7 +10076,7 @@
   "notes": "0 AP release to hand",
   "size": "L",
   "price": "3/15/75/375",
-  "text": "size: Light\nCost: 0 AP to activate\nThe spring loaded sleeve holds a light weapon or small item (such as a potion vial or explosive). With a flick, you can release the spring, sending the item straight into your hand. (If your hand is not free, it’ll fall at your feet... and break, if it’s a potion vial.) Retracting the spring takes a few seconds, depending on the marque of the sleeve.\n2 AP to retract\n1 AP to retract\n0 AP to retract\n0 AP reflexively to retract (can do it during anyone’s turn)\nmarQue I II III IV\nmarket priCe 3 princes 15 princes 75 princes 375 princes",
+  "text": "Size: Light\nCost: 0 AP to activate\nThe spring loaded sleeve holds a light weapon or small item (such as a potion vial or explosive). With a flick, you can release the spring, sending the item straight into your hand. (If your hand is not free, it’ll fall at your feet... and break, if it’s a potion vial.) Retracting the spring takes a few seconds, depending on the marque of the sleeve.\n2 AP to retract\n1 AP to retract\n0 AP to retract\n0 AP reflexively to retract (can do it during anyone’s turn)\nMarque I II III IV\nmarket price 3 princes 15 princes 75 princes 375 princes",
   "modifiers": []
  },
  {
@@ -10100,7 +10100,7 @@
   "notes": "items count as drawn (0 AP swap), unconcealable, −8 vs sunder",
   "size": "M",
   "price": "4/20/100/500",
-  "text": "size: Medium\nThis utilitarian fashion accessory can store a number of light-size items. These items are considered drawn, allowing you to switch between them at no action point cost during your turn. Unfortunately any items attached to your toolbelt are unconcealable and suffer a -8 when resisting sundering. Wearing the toolbelt does not require hands.\nCan hold two light items\nCan hold four light items\nCan hold six light items\nCan hold eight light items\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Medium\nThis utilitarian fashion accessory can store a number of light-size items. These items are considered drawn, allowing you to switch between them at no action point cost during your turn. Unfortunately any items attached to your toolbelt are unconcealable and suffer a -8 when resisting sundering. Wearing the toolbelt does not require hands.\nCan hold two light items\nCan hold four light items\nCan hold six light items\nCan hold eight light items\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -10124,7 +10124,7 @@
   "notes": "2 AP release fire (10 ft)",
   "size": "M",
   "price": "10/50/250/1,250",
-  "text": "size: Medium\nCost: 2 AP to release fire\nWhat appears to be nothing more than a common household cleaning appliance is actually the latest in fire-fighting technology. When aimed at a fire of any kind within 10 feet, this suction device will decrease the amount of action points required to put the fire out to a minimum of 1 action point. Once the required action points have been spent, you can choose to extinguish the fire normally or suck the fire into your vacuum. If you choose the latter, you can spray the fire back out onto a different area or person. It retains whatever tier of fire it was previously and can be blasted anywhere within 10 feet. The vacuum can hold one charge of fire at a time. If the fire it ingests would normally destroy it from the outside, it will destroy it from the inside as well, the flame extinguishing afterwards. You can permanently extinguish a flame inside of your vacuum for no action point cost at any time.\n-1 AP to extinguish flame (to a minimum of 1)\n-2 AP to extinguish flame (to a minimum of 1)\n-3 AP to extinguish flame (to a minimum of 1)\n-4 AP to extinguish flame (to a minimum of 1)\nmarQue I II III IV\nmarket priCe 10 princes 50 princes 250 princes 1250 princes",
+  "text": "Size: Medium\nCost: 2 AP to release fire\nWhat appears to be nothing more than a common household cleaning appliance is actually the latest in fire-fighting technology. When aimed at a fire of any kind within 10 feet, this suction device will decrease the amount of action points required to put the fire out to a minimum of 1 action point. Once the required action points have been spent, you can choose to extinguish the fire normally or suck the fire into your vacuum. If you choose the latter, you can spray the fire back out onto a different area or person. It retains whatever tier of fire it was previously and can be blasted anywhere within 10 feet. The vacuum can hold one charge of fire at a time. If the fire it ingests would normally destroy it from the outside, it will destroy it from the inside as well, the flame extinguishing afterwards. You can permanently extinguish a flame inside of your vacuum for no action point cost at any time.\n-1 AP to extinguish flame (to a minimum of 1)\n-2 AP to extinguish flame (to a minimum of 1)\n-3 AP to extinguish flame (to a minimum of 1)\n-4 AP to extinguish flame (to a minimum of 1)\nMarque I II III IV\nmarket price 10 princes 50 princes 250 princes 1250 princes",
   "modifiers": []
  },
  {
@@ -10148,7 +10148,7 @@
   "notes": "1 AP, walks 20 ft/turn, triggers traps",
   "size": "M",
   "price": "4/20/100/500",
-  "text": "size: Medium\nCost: 1 AP to activate\nThis is a device that walks forward in a straight line at a speed of\n20 feet per turn. It weighs roughly equivalent to a gnome and sets off most traps it walks across.\nWill take 10 damage before breaking\nWill take 20 damage before breaking\nWill take 30 damage before breaking\nWill take 40 damage before breaking\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Medium\nCost: 1 AP to activate\nThis is a device that walks forward in a straight line at a speed of\n20 feet per turn. It weighs roughly equivalent to a gnome and sets off most traps it walks across.\nWill take 10 damage before breaking\nWill take 20 damage before breaking\nWill take 30 damage before breaking\nWill take 40 damage before breaking\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {
@@ -10172,7 +10172,7 @@
   "notes": "one hand",
   "size": "L",
   "price": "4/20/100/500",
-  "text": "size: Light\nThis handheld item has a rotating, barbed head at the end. It will snatch on to any wall it is put up against and climb up it, leaving small indentions along the wall. It requires one hand to hold on to, and cannot climb up very solid walls (like a wall made out of steel) or inclines.\nWall-scaler can move 10 feet per turn\nWall-scaler can move 20 feet per turn\nWall-scaler can move 30 feet per turn\nWall-scaler can move 40 feet per turn\nmarQue I II III IV\nmarket priCe 4 princes 20 princes 100 princes 500 princes",
+  "text": "Size: Light\nThis handheld item has a rotating, barbed head at the end. It will snatch on to any wall it is put up against and climb up it, leaving small indentions along the wall. It requires one hand to hold on to, and cannot climb up very solid walls (like a wall made out of steel) or inclines.\nWall-scaler can move 10 feet per turn\nWall-scaler can move 20 feet per turn\nWall-scaler can move 30 feet per turn\nWall-scaler can move 40 feet per turn\nMarque I II III IV\nmarket price 4 princes 20 princes 100 princes 500 princes",
   "modifiers": []
  },
  {

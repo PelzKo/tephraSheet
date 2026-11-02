@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+{% block title %}{{ r.name }} – {% t "Wiki" %}{% endblock %}
+{% block content %}
+<article class="paper wiki-page">
+  <a href="{% url 'wiki' %}">← {% t "Wiki" %}</a>
+  <h1>{{ r.name }}</h1>
+  <p>{% t "Speed" %} {{ r.speed }} · {% t "Swim" %} {{ r.swim }} · {% t "Climb" %} {{ r.climb }}</p>
+  <h2>{% t "Racial traits" %}</h2>
+  <ul>{% for t in r.fixed %}<li><b>{{ t.name }}</b>: {{ t.text }}</li>{% endfor %}</ul>
+  <h2>{% t "Random racial traits (d12)" %}</h2>
+  <table class="data">{% for t in r.random %}<tr><td class="num">{{ t.roll }}</td><td><b>{{ t.name }}</b></td><td>{{ t.text }}</td></tr>{% endfor %}</table>
+</article>
+{% endblock %}

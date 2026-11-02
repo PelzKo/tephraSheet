@@ -105,3 +105,24 @@ def xp_pos(i, radius=140, cy=1178, cx=475):
 
     theta = math.radians(180 - (i - 1) * 180 / 11)
     return {"x": round(cx + radius * math.cos(theta), 1), "y": round(cy - radius * math.sin(theta), 1)}
+
+
+TIER_RANGES = ["1–9", "10–19", "20–29", "30+"]
+
+
+@register.filter
+def effect_html(text):
+    """Specialty effect as HTML: the text, then the four tier results as numbered gears."""
+    from django.utils.html import escape
+    from django.utils.safestring import mark_safe
+
+    from rules.engine.text import split_tiers
+
+    body, tiers = split_tiers(text or "")
+    html = f'<p class="effect">{escape(body)}</p>' if body.strip() else ""
+    if tiers:
+        rows = "".join(f'<li><span class="tier-gear" title="Tier {n} (roll {TIER_RANGES[n - 1]})">'
+                       f'<span>{n}</span></span><span class="tier-text">{escape(t)}</span></li>'
+                       for n, t in enumerate(tiers, 1))
+        html += f'<ol class="tier-results" aria-label="Results by tier">{rows}</ol>'
+    return mark_safe(html)

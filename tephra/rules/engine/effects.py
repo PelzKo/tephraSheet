@@ -142,8 +142,42 @@ def _build_index():
 EFFECTS = _build_index()
 
 
+def _translations():
+    from rules.lang import DEFAULT, get_language
+    from rules.registry import translations
+
+    lang = get_language()
+    return translations(lang, "effects") if lang != DEFAULT else {}
+
+
 def get(key):
-    return EFFECTS.get(key or "")
+    """The effect with its name/text in the current language (see rules/data/i18n/<lang>/effects.json)."""
+    e = EFFECTS.get(key or "")
+    if not e:
+        return e
+    tr = _translations()
+    if not tr:
+        return e
+    kind, _, slug = key.partition(":")
+    t = tr.get("STATUS", {}).get(slug) if kind == "status" else tr.get("CALLED_SHOTS", {}).get(slug, {}).get(kind)
+    loc = tr.get("CALLED_SHOTS", {}).get(slug, {}).get("name") if kind != "status" else None
+    return dict(e, **{k: v for k, v in (t or {}).items() if k in ("name", "text")}, **({"location": loc} if loc else {}))
+
+
+def location_label(number):
+    return _translations().get("LOCATION_LABELS", {}).get(str(number)) or LOCATION_LABELS.get(number, "")
+
+
+def location_labels():
+    return {n: location_label(n) for n in LOCATION_LABELS}
+
+
+def called_label(kind):
+    return _translations().get("CALLED_LABELS", {}).get(kind) or CALLED_LABELS[kind]
+
+
+def status_list():
+    return [get(f"status:{s['slug']}") | {"slug": s["slug"]} for s in STATUS]
 
 
 def called_key(number, kind):

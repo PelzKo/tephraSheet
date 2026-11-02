@@ -2,6 +2,7 @@
 
 import random as _random
 
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import tables
@@ -65,7 +66,7 @@ def roll_random_traits(race_slug, chosen=(), rng=None):
     rolls = []
     while len([k for k in keys if k.startswith(race_slug + "/")]) < slots["random_count"]:
         value = rng.randint(1, 12)
-        new, _ = resolve_random_trait(race_slug, value, rng)
+        new, _l = resolve_random_trait(race_slug, value, rng)
         if new[0] in keys:
             continue  # re-roll duplicates (gnomes)
         rolls.append(value)
@@ -94,13 +95,13 @@ def nationality_stories(nationality_slug, race_slug=None):
     nat = reg.nationalities.get(nationality_slug)
     if not nat or not nat["story_group"]:
         return []
-    race_name = reg.races[race_slug]["name"] if race_slug else None
+    race_name = reg.races[race_slug]["name_en"] if race_slug else None
     out = []
     for s in reg.stories.values():
         if s["type"] != "nationality" or s["group"] != nat["story_group"]:
             continue
         req = s.get("requires", "")
-        if req and req in [r["name"] for r in reg.races.values()] and req != race_name:
+        if req and req in [r["name_en"] for r in reg.races.values()] and req != race_name:
             continue
         out.append(s)
     return out
@@ -126,13 +127,12 @@ def validate_creation_skills(alloc):
     points = sorted((p for p in alloc.values() if p), reverse=True)
     errors = []
     if any(p < 0 for p in alloc.values()):
-        errors.append("Skill points can't be negative.")
+        errors.append(_("Skill points can't be negative."))
     if points != sorted(tables.CREATION_SKILL_POINTS, reverse=True):
-        errors.append("Place 3 points in one skill, 2 points in two skills and 1 point in three skills "
-                      "(six different skills).")
+        errors.append(_("Place 3 points in one skill, 2 points in two skills and 1 point in three skills (six different skills)."))
     unknown = [s for s in alloc if s not in tables.ALL_SKILLS]
     if unknown:
-        errors.append(f"Unknown skills: {', '.join(unknown)}")
+        errors.append(_("Unknown skills: {skills}", skills=", ".join(unknown)))
     return errors
 
 
@@ -152,7 +152,7 @@ def random_specialties(state, compute, count, rng=None):
     reg = get_registry()
     picked = []
     level = state.level
-    for _ in range(count):
+    for _i in range(count):
         sheet = compute(state)
         options = [s for s in reg.specialties.values() if check_specialty(s, state, sheet)[0]]
         if not options:
@@ -171,7 +171,7 @@ def random_augments(state, compute, rng=None, limit=None):
     picked = []
     sheet = compute(state)
     free = (sheet.stats["aug"].total - len(state.augments)) if limit is None else limit
-    for _ in range(max(0, free)):
+    for _i in range(max(0, free)):
         options = [a for a in reg.augments.values() if check_augment(a, state, sheet)[0]]
         if not options:
             break
@@ -206,5 +206,5 @@ def random_finishings(race_slug, rng=None):
         "age": str(rng.randint(lo, hi)),
         "height": f"{height} cm",
         "weight": f"{int(height * rng.uniform(0.33, 0.5))} kg",
-        "personality": rng.choice(PERSONALITIES),
+        "personality": _(rng.choice(PERSONALITIES)),
     }

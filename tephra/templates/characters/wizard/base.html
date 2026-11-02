@@ -1,10 +1,10 @@
 {% extends "base.html" %}{% load sheet_tags %}
-{% block title %}Create character – step {{ step }}{% endblock %}
+{% block title %}{% t "Create character – step {n}" n=step %}{% endblock %}
 {% block content %}
 <div class="row spread" style="color:var(--paper);margin-bottom:8px">
-  <h1 style="margin:0">{{ character.name|default:"New character" }}</h1>
-  <form method="post" action="{% url 'wizard_step' character.pk step %}" onsubmit="return confirm('Roll a complete random character? This replaces your current choices.')">
-    {% csrf_token %}<button class="btn brass dice" name="action" value="random_all"> Random character</button>
+  <h1 style="margin:0">{% if character.name %}{{ character.name }}{% else %}{% t "New character" %}{% endif %}</h1>
+  <form method="post" action="{% url 'wizard_step' character.pk step %}" onsubmit="return confirm('{% t "Roll a complete random character? This replaces your current choices." %}')">
+    {% csrf_token %}<button class="btn brass dice" name="action" value="random_all"> {% t "Random character" %}</button>
   </form>
 </div>
 <nav class="steps">
@@ -15,19 +15,19 @@
   <button name="action" value="save" hidden tabindex="-1" aria-hidden="true" formnovalidate></button>
   <div class="row spread">
     <h2>{{ step }} – {% block step_title %}{% endblock %}</h2>
-    {% block random_btn %}<button class="btn dice" name="action" value="random" formnovalidate> Random</button>{% endblock %}
+    {% block random_btn %}<button class="btn dice" name="action" value="random" formnovalidate> {% t "Random" %}</button>{% endblock %}
   </div>
   {% block intro %}{% endblock %}
   {% block step %}{% endblock %}
   <div class="wizard-actions">
     <div class="row">
-      {% if step > 1 %}<button class="btn" name="action" value="back" formnovalidate>← Back</button>{% endif %}
-      <button class="btn" name="action" value="save" formnovalidate>Save</button>
+      {% if step > 1 %}<button class="btn" name="action" value="back" formnovalidate>{% t "← Back" %}</button>{% endif %}
+      <button class="btn" name="action" value="save" formnovalidate>{% t "Save" %}</button>
     </div>
-    {% block next_btn %}<button class="btn primary" name="action" value="next">Next →</button>{% endblock %}
+    {% block next_btn %}<button class="btn primary" name="action" value="next">{% t "Next →" %}</button>{% endblock %}
   </div>
 </form>
 {% if step == 1 %}
-<form method="post" action="{% url 'delete_character' character.pk %}" style="margin-top:14px;text-align:right" onsubmit="return confirm('Discard this draft?')">{% csrf_token %}<button class="btn small danger">Discard draft</button></form>
+<form method="post" action="{% url 'delete_character' character.pk %}" style="margin-top:14px;text-align:right" onsubmit="return confirm('{% t "Discard this draft?" %}')">{% csrf_token %}<button class="btn small danger">{% t "Discard draft" %}</button></form>
 {% endif %}
 {% endblock %}

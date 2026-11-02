@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from characters import access, services
 from characters.models import Character, InventoryItem
 from rules.engine import tables
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .forms import ItemForm, augment_choices_json
@@ -69,11 +70,11 @@ def _equip(request, character, inv, slot):
     try:
         result = services.equip(character, inv, slot)
     except services.EquipError as exc:
-        messages.error(request, f"{exc} It was added as carried.")
+        messages.error(request, _("{error} It was added as carried.", error=exc))
         services.equip(character, inv, "carried")
         return
     if result["moved"]:
-        messages.info(request, f"Put away (now carried): {', '.join(result['moved'])}.")
+        messages.info(request, _("Put away (now carried): {items}.", items=", ".join(result["moved"])))
     if result["notice"]:
         messages.warning(request, result["notice"])
 
@@ -87,11 +88,15 @@ def item_create(request):
     form = ItemForm(request.POST or None, gm=gm, initial=initial)
     if request.method == "POST" and form.is_valid():
         obj = form.save(commit=False)
-        to_catalog = request.POST.get("to_catalog") == "on" or not character
-        if to_catalog:
-            if ItemTemplate.objects.filter(name=obj.name, kind=obj.kind).exists():
-                form.add_error("name", "An item with this name and kind already exists in the catalog.")
+        # Every created item is shared in the catalog. A name+kind that already exists stays
+        # inventory-only for a character (the catalog keeps the original).
+        if ItemTemplate.objects.filter(name=obj.name, kind=obj.kind).exists():
+            if not character:
+                form.add_error("name", _("An item with this name and kind already exists in the catalog."))
                 return render(request, "catalog/item_form.html", _creator_context(form, character))
+            messages.info(request, _("The catalog already has a {kind} called {name}; your version was only added to the inventory.",
+                                   kind=obj.get_kind_display().lower(), name=obj.name))
+        else:
             obj.source = "custom"
             obj.save()
         if character:
@@ -99,9 +104,9 @@ def item_create(request):
             inv = InventoryItem(character=character, template=obj if obj.pk else None, slot="carried",
                                 **{f: getattr(obj, f) for f in ItemTemplate.ITEM_FIELDS})
             _equip(request, character, inv, slot)
-            messages.success(request, f"{obj.name} added to {character}'s inventory.")
+            messages.success(request, _("{name} added to {character}'s inventory.", name=obj.name, character=character))
             return redirect(request.POST.get("next") or f"{character.get_absolute_url()}?tab=inventory")
-        messages.success(request, f"{obj.name} added to the catalog.")
+        messages.success(request, _("{name} added to the catalog.", name=obj.name))
         return redirect("catalog")
     return render(request, "catalog/item_form.html", _creator_context(form, character))
 
@@ -110,17 +115,17 @@ def item_edit(request, pk):
     item = get_object_or_404(ItemTemplate, pk=pk)
     gm = access.is_gm(request)
     if item.source == "book" and not gm:
-        messages.error(request, "Only the narrator can change Playing Guide items.")
+        messages.error(request, _("Only the narrator can change Playing Guide items."))
         return redirect("catalog")
     form = ItemForm(request.POST or None, instance=item, gm=gm)
     if request.method == "POST":
         if request.POST.get("delete") and gm:
             item.delete()
-            messages.success(request, "Item deleted from the catalog.")
+            messages.success(request, _("Item deleted from the catalog."))
             return redirect("catalog")
         if form.is_valid():
             form.save()
-            messages.success(request, "Catalog item saved.")
+            messages.success(request, _("Catalog item saved."))
             return redirect("catalog")
     return render(request, "catalog/item_form.html", _creator_context(form, None, item=item))
 
@@ -136,7 +141,7 @@ def inventory_item_edit(request, character, item_id):
             setattr(inv, f, getattr(obj, f))
         inv.notes = request.POST.get("notes", inv.notes)[:255]
         inv.save()
-        messages.success(request, f"{inv.name} updated.")
+        messages.success(request, _("{name} updated.", name=inv.name))
         return redirect(f"{character.get_absolute_url()}?tab=inventory")
     return render(request, "catalog/item_form.html", _creator_context(form, character, inventory_item=inv))
 
@@ -146,7 +151,7 @@ def add_to_inventory(request, pk):
     template = get_object_or_404(ItemTemplate, pk=pk)
     character = _target_character(request)
     if not character:
-        messages.error(request, "Unlock a character first.")
+        messages.error(request, _("Unlock a character first."))
         return redirect("catalog")
     slot = request.POST.get("slot", "carried")
     if slot not in dict(InventoryItem._meta.get_field("slot").choices):
@@ -157,9 +162,9 @@ def add_to_inventory(request, pk):
     if request.POST.get("pay"):
         character.money_on_hand -= template.price_dukes * max(1, int(qty) if qty.isdigit() else 1)
         character.save(update_fields=["money_on_hand"])
-    messages.success(request, f"{template.name} added to {character}.")
+    messages.success(request, _("{name} added to {character}.", name=template.name, character=character))
     if request.headers.get("HX-Request"):
-        return HttpResponse(f'<span class="added">✓ added</span>')
+        return HttpResponse(f'<span class="added">{_("✓ added")}</span>')
     return redirect(request.POST.get("next") or f"{character.get_absolute_url()}?tab=inventory")
 
 
@@ -197,7 +202,7 @@ def import_view(request):
             else:
                 InventoryItem.objects.create(character=character, quantity=max(1, qty), slot="carried", **values)
                 created += 1
-        messages.success(request, f"Imported {created} new item(s), skipped {len(rows) - len(good)} with errors.")
+        messages.success(request, _("Imported {created} new item(s), skipped {skipped} with errors.", created=created, skipped=len(rows) - len(good)))
         if character and target != "catalog":
             return redirect(f"{character.get_absolute_url()}?tab=inventory")
         return redirect("catalog")

@@ -731,7 +731,7 @@
   "kind": "gear",
   "price_dukes": 60,
   "price_text": "6 pr",
-  "description": "Perfect for the gentleman thief on the run, this grapple-gun can propel up to 50 feet of chain, rope, or cable and will attach to rocky, magnetic, rough, or slick surfaces. It will increase your climb speed by 20 feet while you retract the cord towards its latch. It costs 1 action point to shoot your grapple-gun, 1 action point to unlatch it, and 1 action point to retract it to climb. Just be wary, this trinket isn’t concealable. MaskedMen Inc. Unleash Your Inner Rogue!",
+  "description": "Perfect for the gentleman thief on the run, this grapple-gun can propel up to 50 feet of chain, rope, or cable and will attach to rocky, magnetic, rough, or slick surfaces. It will increase your climb speed by 20 feet while you retract the cord towards its latch. It costs 1 action point to shoot your grapple-gun, 1 action point to unlatch it, and 1 action point to retract it to climb. Just be wary, this trinket isn’t concealable. Maskedmen Inc. Unleash Your Inner Rogue!",
   "is_starting_gear": false,
   "modifiers": [
    {
@@ -749,7 +749,7 @@
   "kind": "gear",
   "price_dukes": 100,
   "price_text": "10 pr",
-  "description": "Back by popular demand, Red-Gate Security is proud to present the Chains of Security! Attachable to any item, a single chain can secure an item to its owner’s hands, granting the wielder a +2 on resists against the item being disarmed. reD-gate: Keeping Evangless Safe",
+  "description": "Back by popular demand, Red-Gate Security is proud to present the Chains of Security! Attachable to any item, a single chain can secure an item to its owner’s hands, granting the wielder a +2 on resists against the item being disarmed. red-gate: Keeping Evangless Safe",
   "is_starting_gear": false
  },
  {
@@ -757,7 +757,7 @@
   "kind": "gear",
   "price_dukes": 100,
   "price_text": "10 pr",
-  "description": "Standard-issue for the Evanglessian military police, these styl- ish pieces of eyewear art by Red-Gate Security protect your eyes from the harmful rays of the sun, as well as any flashes of light. Wearing them grants you a +3 to resist being blinded by flashes of light. reD-gate: Keeping Evangless Safe",
+  "description": "Standard-issue for the Evanglessian military police, these styl- ish pieces of eyewear art by Red-Gate Security protect your eyes from the harmful rays of the sun, as well as any flashes of light. Wearing them grants you a +3 to resist being blinded by flashes of light. red-gate: Keeping Evangless Safe",
   "is_starting_gear": false
  },
  {
@@ -765,7 +765,7 @@
   "kind": "gear",
   "price_dukes": 100,
   "price_text": "10 pr",
-  "description": "You’re in the middle of a barfight. Your chosen foe pushes a table on its side and ducks behind it. Your curiousity piques. What is he doing back there? With a Heat-Sight monocle from Masked- Men Incorporated, you could see his heat signature clear as day! This handy monocle allows you to see heat through anything deemed poor cover. MaskedMen Inc. Unleash Your Inner Rogue!",
+  "description": "You’re in the middle of a barfight. Your chosen foe pushes a table on its side and ducks behind it. Your curiousity piques. What is he doing back there? With a Heat-Sight monocle from Masked- Men Incorporated, you could see his heat signature clear as day! This handy monocle allows you to see heat through anything deemed poor cover. Maskedmen Inc. Unleash Your Inner Rogue!",
   "is_starting_gear": false
  },
  {
@@ -773,7 +773,7 @@
   "kind": "gear",
   "price_dukes": 80,
   "price_text": "8 pr/dose",
-  "description": "At MaskedMen Incorporated, we believe subtlety is the greatest weapon in any gentleman’s arsenal. Simply add a dose of Hid- den Intentions to your target’s food or drink. Requiring a Tier 3 Cunning resist to detect the added ingredient in their meal, your target will take 6 unsoakable damage roughly 6 seconds or three action points after they ingest it. MaskedMen Inc. Unleash Your Inner Rogue!",
+  "description": "At Maskedmen Incorporated, we believe subtlety is the greatest weapon in any gentleman’s arsenal. Simply add a dose of Hid- den Intentions to your target’s food or drink. Requiring a Tier 3 Cunning resist to detect the added ingredient in their meal, your target will take 6 unsoakable damage roughly 6 seconds or three action points after they ingest it. Maskedmen Inc. Unleash Your Inner Rogue!",
   "is_starting_gear": false
  },
  {
@@ -781,7 +781,7 @@
   "kind": "gear",
   "price_dukes": 80,
   "price_text": "8 pr",
-  "description": "The premier product of MaskedMen Incorporated, this automat- ed lockpicking device keeps the lock fingerprint-free. It spends 1 action point lockpicking any lock it’s attached to whenever your action points refresh. One-handed and concealable, you can place it on a lock for 1 action point or throw it at a lock for 2 action points. MaskedMen Inc. Unleash Your Inner Rogue! *Though there are some rumors concerning the legitimacy and morality of MaskedMen Incorporated, all of their agents have been very forthright with us and leave us no reason to question the validity of their company.",
+  "description": "The premier product of Maskedmen Incorporated, this automat- ed lockpicking device keeps the lock fingerprint-free. It spends 1 action point lockpicking any lock it’s attached to whenever your action points refresh. One-handed and concealable, you can place it on a lock for 1 action point or throw it at a lock for 2 action points. Maskedmen Inc. Unleash Your Inner Rogue! *Though there are some rumors concerning the legitimacy and morality of Maskedmen Incorporated, all of their agents have been very forthright with us and leave us no reason to question the validity of their company.",
   "is_starting_gear": false
  },
  {

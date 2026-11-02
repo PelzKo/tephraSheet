@@ -1,0 +1,187 @@
+{
+ "expertise-remove-poison": {
+  "name": "Gift entfernen",
+  "group": "Gegengift",
+  "cost": "2 AP",
+  "effect": "Kosten: 2 AP\nDu hast ein Händchen dafür, Gift aus einem Opfer zu ziehen. Immer wenn du oder ein angrenzender Verbündeter vergiftet wurde, darfst du versuchen, es zu entfernen. Hat das Gift noch nicht gewirkt, kannst du versuchen, alle Effekte zu entfernen. Hat es bereits gewirkt, kannst du nur nachwirkende Effekte entfernen. Verursachte das Gift bei der Aktivierung Schaden, müsstest du das Gift also vor der Aktivierung entfernen, um den Schaden zu verhindern. Wenn du Gift entfernst, kannst du Effekte aufheben. Sobald du versuchst, das Gift zu entfernen, siehst du, welche Effekte das Gift haben wird.\nentferne 1 Effekt\nentferne 2 Effekte\nentferne 3 Effekte\nentferne 4 Effekte\nHinweis: Gifte, die dasselbe Augment mehrfach besitzen, um dessen Wirkung zu erhöhen, zählen nur als ein Effekt."
+ },
+ "expertise-combat-insight": {
+  "name": "Kampfeinsicht",
+  "group": "Kampfeinsichten",
+  "cost": "Passiv",
+  "effect": "Während andere sich auf ihre rohe Kraft oder ihre Reflexe verlassen müssen, um gezielten Angriffen auszuweichen, siehst du sie alle kommen und reagierst entsprechend. Du darfst für alle Widerstände gegen gezielte Angriffe deine List statt des normalen Attributs verwenden."
+ },
+ "expertise-combat-analytics": {
+  "name": "Kampfanalytik",
+  "group": "Kampfeinsichten",
+  "cost": "1 AP reflexiv",
+  "requires_text": "11 Fachwissen; Kampfeinsicht",
+  "effect": "Voraussetzung: 11 Fertigkeitspunkte in Fachwissen & Spezialisierung Kampfeinsicht Kosten: 1 AP reflexiv\nDu warst schon so oft im Kampf, dass dich nichts mehr überrascht. Vorbei sind die Zeiten, in denen du dich auf Kraft, Geschick oder Geist verlassen hast. Immer wenn im Kampf ein Widerstand von dir verlangt wird, darfst du für 1 Aktionspunkt stets deine List verwenden."
+ },
+ "expertise-weapon-appropriations": {
+  "name": "Waffenbeschaffung",
+  "group": "Gegenstandsbeschaffung",
+  "cost": "Passiv (Auszeit an einem Handelsort)",
+  "effect": "Auch wenn du keinen Waffenschmied zur Hand hast, verschafft dir dein Verhandlungsgeschick und dein Talent, Kontakte zu knüpfen, qualitativ bessere Waffen als üblich. Du darfst ein einzelnes Waffen-Augment auf eine Waffe deiner Wahl setzen (sei es Schusswaffe, Armbrust, Nahkampfwaffe, Wurfwaffe oder Bogen). Das Augment muss einen einzelnen Platz belegen. Das Augment beginnt bei Marque 1, steigt aber in der Marque, als würde dein Fachwissen seine Marque bestimmen. (Bei 5 Fertigkeitspunkten in Fachwissen hast du also ein Augment der Marque II, 15 Fertigkeitspunkte ergeben Marque III und 25 Fertigkeitspunkte Marque IV.)\nDu darfst nur ein solches Augment auf einer Waffe haben, die du trägst, kannst aber in jeder Auszeit ein anderes Augment wählen. (Die Auszeit muss an einem Ort mit Handel und Gewerbe stattfinden, sonst könntest du das Augment nicht beschaffen.) Hat das Augment keine Marque, kannst du es erst beschaffen, wenn du die entsprechenden Kosten für das Augment erreichst."
+ },
+ "expertise-quality-weapon": {
+  "name": "Qualitätswaffe",
+  "group": "Gegenstandsbeschaffung",
+  "cost": "Passiv",
+  "requires_text": "Waffenbeschaffung",
+  "effect": "Voraussetzung: Spezialisierung Waffenbeschaffung\nDu bist ziemlich gut darin, Almosen zu bekommen. Deine beschaffte Waffe erhält ein zusätzliches Augment (derselben Marque). Sobald du 10 Fertigkeitspunkte in Fachwissen erreichst, erhältst du ein drittes Augment auf der Waffe. Alle Augments müssen auf derselben Waffe sein."
+ },
+ "expertise-field-surgeon": {
+  "name": "Feldchirurg",
+  "group": "Chirurgie",
+  "cost": "3 AP (Patient gibt 3 AP reflexiv aus)",
+  "requires_text": "4 Fachwissen",
+  "effect": "Voraussetzung: 4 Fertigkeitspunkte in Fachwissen\nKosten: 3 AP\nDer Feldchirurg flickt schwere Wunden zusammen, um die Sterblichkeit unter seinen Verbündeten auf dem Schlachtfeld zu senken. Du bist dieser Chirurg. Du kannst Wundenschaden heilen, aber hast du es einmal versucht, kannst du bei einer Person keine weiteren Wunden heilen, es sei denn, sie erleidet mehr Schaden an ihren Wunden. Außerdem kannst du nicht mehr Wundenschaden heilen, als sie durch ihren jüngsten Angriff erlitten hat. Hat jemand deinen Verbündeten also um 3 Wundenschaden verletzt, könntest du nicht 4 seiner Wunden heilen. Der Patient muss 3 Aktionspunkte reflexiv ausgeben, um behandelt zu werden. Der Patient kann das über mehrere Züge tun und bei Bedarf Aktionspunkte aus seinem nächsten Zug entnehmen. Bist du mit einem Nahkampfangreifer im Nahkampf gebunden, sind sowohl du als auch der Patient für reflexive Angriffe offen (die er für die normalen Kosten seines Angriffs machen kann).\nheilt 1 Wunde\nheilt 2 Wunden\nheilt 3 Wunden\nheilt 4 Wunden"
+ },
+ "expertise-first-aid": {
+  "name": "Erste Hilfe",
+  "group": "Chirurgie",
+  "cost": "Bewegen + Feldchirurg reflexiv",
+  "requires_text": "Feldchirurg",
+  "effect": "Voraussetzung: Spezialisierung Feldchirurg\nKosten: Bewegen + Feldchirurg reflexiv\nWenn jemand in deiner Nähe Schaden nimmt, kannst du zur Rettung eilen und ihm helfen. Hat jemand Wundenschaden erlitten und befindet er sich in Reichweite einer Bewegung von dir, darfst du dich reflexiv zu ihm bewegen und ihn mit deinen Feldchirurg-Spezialisierungen heilen."
+ },
+ "expertise-self-surgery": {
+  "name": "Selbstoperation",
+  "group": "Chirurgie",
+  "cost": "Passiv",
+  "requires_text": "Feldchirurg",
+  "effect": "Voraussetzung: Spezialisierung Feldchirurg\nObwohl die Schwierigkeit die meisten Menschen übersteigt, kannst du dich durch eine Selbstoperation hindurchbeißen. Du darfst Feldchirurg nun an dir selbst anwenden."
+ },
+ "showmanship-blindside": {
+  "name": "Von der Seite",
+  "cost": "2 AP zum Beginnen, 1 AP/Zug zum Fortsetzen",
+  "effect": "Kosten: 2 AP zum Beginnen, 1 AP zum Fortsetzen in den folgenden Zügen Große Handbewegungen und laute Geräusche halten deinen Gegner auf eine Richtung deiner Wahl konzentriert, sodass du ihn für alles in der entgegengesetzten Richtung blind machen kannst. Das Ziel muss innerhalb von\n25 Fuß um dich sein. Der Gegner verhält sich gegenüber allem aus dieser Richtung, als wäre er blind und taub, bis ihn etwas aus dieser Richtung angreift; dann ist dein Von der Seite aufgehoben und muss neu begonnen werden. Du darfst Von der Seite auf mehreren Personen gleichzeitig aktiv haben, aber ein einzelner Gegner kann nur Ziel eines Von der Seite sein."
+ },
+ "showmanship-captive-audience": {
+  "name": "Gefangenes Publikum",
+  "cost": "Haltung; Widerstand: List (hebt auf)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nWiderstand: List (hebt auf)\nHast du jemanden erst einmal nah bei dir, lässt du ihn nie wieder los. Wenn du diese Haltung einnimmst, wähle ein einzelnes angrenzendes Ziel. Du kannst dich nicht vom Ziel wegbewegen, verhinderst aber auch, dass sich das Ziel von dir wegbewegt, es sei denn, es widersteht. Es kann sofort versuchen zu widerstehen, wenn du die Haltung einnimmst, und dann am Ende seines Zuges, wenn sich seine Aktionspunkte erneuern. Widersteht es erfolgreich, verlässt du deine Haltung."
+ },
+ "showmanship-catchphrase": {
+  "name": "Schlagwort",
+  "cost": "1 AP",
+  "effect": "Kosten: 1 AP\nDu enthüllst dein verborgenes Schlagwort und springst in deine nächste Handlung. Dein Schlagwort zu sagen kostet 1 Aktionspunkt, aber beim nächsten Mal, wenn du ein Stufenergebnis für eine Spezialisierung würfelst, verwendest du deine Fertigkeit Showtalent anstelle der Fertigkeit, die die Spezialisierung normalerweise verlangt."
+ },
+ "showmanship-chime-in": {
+  "name": "Einwerfen",
+  "cost": "Passiv",
+  "requires_text": "2 Showtalent",
+  "effect": "Voraussetzung: 2 Fertigkeitspunkte in Showtalent\nIndem du kleine Informationsschnipsel einwirfst, die ein Argument stützen, gibst du dem Listwurf eines anderen Spielers einen Bonus, wann immer er Diplomatie, Bluff oder irgendeine soziale Interaktion versucht. Der Bonus beträgt +1 für je 2 Fertigkeitspunkte in Showtalent."
+ },
+ "showmanship-conveyor": {
+  "name": "Förderband",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nDu kannst Effekte, die du siehst, vervielfältigen und so die Stärkungsreichweite eines Verbündeten ausdehnen. Erzeugt ein Verbündeter einen Effekt, der alle Verbündeten innerhalb einer bestimmten Reichweite betrifft, kannst du 1 Aktionspunkt reflexiv ausgeben, damit er auch alle Verbündeten innerhalb derselben Reichweite um dich betrifft."
+ },
+ "showmanship-deafening-roar": {
+  "name": "Ohrenbetäubendes Brüllen",
+  "cost": "1 AP; Widerstand: Kraft (senkt Stufe)",
+  "effect": "Widerstand: Kraft (senkt Stufe)\nKosten: 1 AP\nDu wählst einen angrenzenden Gegner und brüllst ihm so laut ins Ohr, dass sein Trommelfell platzt. Der Gegner ist für eine Anzahl Züge taub (er erleidet -2 auf Ausweichen).\n1 Zug\n2 Züge\n3 Züge\n4 Züge"
+ },
+ "showmanship-distract": {
+  "name": "Ablenken",
+  "cost": "2 AP reflexiv; Widerstand: List (hebt auf)",
+  "effect": "Widerstand: List (hebt auf)\nKosten: 2 AP reflexiv\nManchmal stehst du direkt vor ihnen. Manchmal sind sie sich nicht so sicher. Du kannst einen Gegner während seines Zuges ablenken, sodass er kurz glaubt, du seist woanders. Immer wenn ein Gegner eine Handlung gegen dich unternimmt, darfst du versuchen, ihn abzulenken. Wähle einen anderen Ort innerhalb von 10 Fuß für deine Ablenkung. Scheitert der Gegner an seinem Listwiderstand gegen dein Showtalent, glaubt er für diese eine Handlung, du seist an dem Ort, an dem du die Ablenkung verursacht hast. Befindet sich dort etwas anderes (wie eine Wand oder eine Person), erhält er +10 auf den Widerstand."
+ },
+ "showmanship-jester": {
+  "name": "Hofnarr",
+  "cost": "2 AP; Widerstand: List (senkt Stufe)",
+  "effect": "Widerstand: List (senkt Stufe)\nKosten: 2 AP\nDu kannst deine Stimme werfen, schreien oder tanzen, um Gegner zu verwirren. Zuschauende Gegner innerhalb von 25 Fuß können allein vom Lachen über dich orientierungslos werden. Hofnarr kann mehrere Personen betreffen, und alle Betroffenen dürfen versuchen zu widerstehen. Für jede Stufe über Stufe 1, die sie erhalten, verringern sie die Zahl der Züge, die sie orientierungslos sind, um 1.\n1 Ziel ist für 1 Zug orientierungslos\n2 Ziele sind für 2 Züge orientierungslos\n3 Ziele sind für 3 Züge orientierungslos\n4 Ziele sind für 4 Züge orientierungslos"
+ },
+ "showmanship-marionette-strings": {
+  "name": "Marionettenfäden",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nDu lenkst den Angriff eines Verbündeten in der Nähe und sicherst so seinen Erfolg. Immer wenn ein Verbündeter innerhalb von 25 Fuß einen Angriff macht, kannst du mit deinen Marionettenfäden seiner Genauigkeit einen Bonus geben. Das kann sogar entschieden werden, nachdem der Wurf gemacht wurde.\n+2 auf seinen Genauigkeitswurf\n+4 auf seinen Genauigkeitswurf\n+6 auf seinen Genauigkeitswurf\n+8 auf seinen Genauigkeitswurf"
+ },
+ "showmanship-praise": {
+  "name": "Lobpreisung",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nDu singst das Lob deiner Abenteurerkameraden. Du darfst\n1 Aktionspunkt reflexiv ausgeben, damit ein Gruppenmitglied einen beliebigen Widerstand neu würfeln darf, solange es dich hören kann. Du kannst das nur einmal pro Widerstand tun."
+ },
+ "showmanship-sleight-of-hand": {
+  "name": "Fingerfertigkeit",
+  "cost": "Passiv",
+  "effect": "Wenn du einen Gegenstand benutzt, ist er in einer Sekunde da und in der nächsten weg. Deine Gegner können dich nicht ausnutzen, während du Gegenstände benutzt. Das Aktivieren und Benutzen von Gegenständen öffnet dich nicht für reflexive Angriffe."
+ },
+ "showmanship-smoke-mirrors": {
+  "name": "Rauch & Spiegel",
+  "cost": "3 AP reflexiv; Widerstand: Geschick (hebt auf)",
+  "requires_text": "3 Showtalent",
+  "effect": "Voraussetzung: 3 Fertigkeitspunkte in Showtalent\nWiderstand: Geschick (hebt auf)\nKosten: 3 AP reflexiv\nMit einer Handbewegung kannst du einen Verbündeten innerhalb von 25 Fuß an einem Ort erscheinen lassen, obwohl der Angreifer ihn woanders wähnte. Hat ein Verbündeter einen Ausweichwurf verfehlt, darfst du ihn reflexiv auf ein angrenzendes Feld bewegen. Der Angreifer darf mit seinem Geschick gegen dein Showtalent widerstehen. Gelingt es dir, darf sich dein Verbündeter sofort auf ein angrenzendes Feld bewegen, und der Angriff des Angreifers verfehlt automatisch."
+ },
+ "showmanship-throw-off-balance": {
+  "name": "Aus dem Gleichgewicht bringen",
+  "cost": "1 AP reflexiv; Widerstand: List (senkt Stufe)",
+  "effect": "Widerstand: List (senkt Stufe)\nKosten: 1 AP reflexiv\nGenau wenn ein Nahkampfangriff einen deiner Verbündeten innerhalb von 25 Fuß trifft, lenkst du den Gegner ab und sorgst dafür, dass er nur minimalen Schaden verursacht. Der Angreifer muss seine Schlagkraft mehrfach würfeln und den niedrigsten Wurf nehmen, kann aber seinen Listwiderstand nutzen, um das Ergebnis zu senken.\nDer Angreifer würfelt zweimal und nimmt den niedrigsten Der Angreifer würfelt dreimal und nimmt den niedrigsten Der Angreifer würfelt viermal und nimmt den niedrigsten Der Angreifer würfelt fünfmal und nimmt den niedrigsten"
+ },
+ "showmanship-unmarred-perfection": {
+  "name": "Makellose Perfektion",
+  "cost": "Haltung; Widerstand: List oder Geist (hebt auf)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nWiderstand: List oder Geist (hebt auf)\nGegner bereuen es, dich anzugreifen, aus Angst, dein perfektes Bild zu beschädigen. Solange du in dieser Haltung bist, muss jeder, der dich im Nahkampf angreift, widerstehen oder erleidet einen Abzug auf seine Genauigkeit in Höhe deiner Fertigkeit in Showtalent. In dieser Haltung kannst du jedoch nur anmutige und unauffällige Bewegungen machen und musst deshalb alle Schlagkraftwürfe zweimal würfeln und das niedrigere Ergebnis nehmen."
+ },
+ "showmanship-epic-dance": {
+  "name": "Epischer Tanz",
+  "group": "Choreografiert",
+  "cost": "2 AP zum Beginnen, 1 AP/Zug zum Fortsetzen",
+  "effect": "Kosten: 2 AP zum Beginnen, 1 AP zum Fortsetzen in den folgenden Zügen Du packst deine besten Tanzschritte aus und reihst sie auf wunderbar unvorhersehbare Weise aneinander. Während du deinen epischen Tanz tanzt, erhältst du +3 auf Ausweichen. Du erhältst einen zusätzlichen Punkt Ausweichen für je 5 Fertigkeitspunkte in Showtalent. Du kannst immer nur einen epischen Tanz gleichzeitig laufen haben.\nWirst du zu Fall gebracht, ist dein Epischer Tanz aufgehoben und muss neu begonnen werden."
+ },
+ "showmanship-never-stop-the-dance": {
+  "name": "Der Tanz endet nie",
+  "group": "Choreografiert",
+  "cost": "Passiv",
+  "requires_text": "Epischer Tanz",
+  "effect": "Voraussetzung: Spezialisierung Epischer Tanz\nWährend du deinen epischen Tanz aufführst, nutzt du deine Choreografie, um deinen Körper gegen eingehende Schläge abzuschirmen und zu stützen. Du erhältst einen identischen Bonus auf deine Verteidigung zusätzlich zum Ausweichbonus, den du durch deinen epischen Tanz erhältst."
+ },
+ "showmanship-battle-theme": {
+  "name": "Schlachthymne",
+  "group": "Epische Musik",
+  "cost": "2 AP zum Beginnen, 1 AP/Zug zum Fortsetzen",
+  "effect": "Kosten: 2 AP zum Beginnen, 1 AP zum Fortsetzen in den folgenden Zügen Keine Sorge, du schaffst das. Die epische Musik in der Luft sagt, dass du nicht scheitern kannst. Während du deine Schlachthymne vorträgst, erhältst du +3 auf Genauigkeitswürfe. Du erhältst einen zusätzlichen Punkt Genauigkeit für je 5 Fertigkeitspunkte in Showtalent. Du kannst immer nur eine Schlachthymne gleichzeitig singen.\nSingst du, bricht ein erfolgreicher gezielter Angriff auf deinen Hals deine Schlachthymne ab. Benutzt du stattdessen ein Musikinstrument, bricht auch ein erfolgreiches Zerschmettern oder Entwaffnen deine Schlachthymne ab.",
+  "options": {
+   "label": "Wie trägst du vor?",
+   "options": {
+    "singing": "Gesang (ein gezielter Angriff auf deinen Hals bricht sie ab)",
+    "instrument": "Ein Instrument spielen (Zerschmettern oder Entwaffnen bricht sie ab)"
+   }
+  }
+ },
+ "showmanship-heavenly-serenade": {
+  "name": "Himmlische Serenade",
+  "group": "Epische Musik",
+  "cost": "2 AP reflexiv; Widerstand: Geist (hebt auf)",
+  "requires_text": "Schlachthymne",
+  "effect": "Voraussetzung: Spezialisierung Schlachthymne\nWiderstand: Geist (hebt auf)\nKosten: 2 AP reflexiv\nDeine Schlachthymne ist so schön, dass sie tief in die Seelen der Menschen dringt und sie am Handeln hindert. Während du deine Schlachthymne vorträgst, kannst du jedes Mal, wenn jemand innerhalb von 25 Fuß eine Handlung unternehmen will, reflexiv 2 Aktionspunkte ausgeben, damit er einen Widerstand gegen dein Showtalent würfeln muss, um diese Handlung auszuführen. Scheitert er am Widerstand, verliert er stattdessen 1 Aktionspunkt."
+ },
+ "showmanship-spotlight": {
+  "name": "Rampenlicht",
+  "group": "Epische Musik",
+  "cost": "1 AP reflexiv",
+  "requires_text": "Schlachthymne",
+  "effect": "Voraussetzung: Spezialisierung Schlachthymne\nKosten: 1 AP reflexiv\nDu zeigst auf einen Verbündeten innerhalb von 25 Fuß und signalisierst ihm, dass seine Zeit zu glänzen gekommen ist. Während du deine Schlachthymne vorträgst, darfst du 1 Aktionspunkt reflexiv ausgeben, um den Genauigkeitsbonus deiner Schlachthymne auf den Genauigkeits-, Ausweich-, Schlagkraft- oder Verteidigungswurf eines Verbündeten zu übertragen."
+ },
+ "showmanship-unified-chorus": {
+  "name": "Vereinter Chor",
+  "group": "Epische Musik",
+  "cost": "Passiv",
+  "requires_text": "Schlachthymne; 16 Showtalent",
+  "effect": "Voraussetzung: Spezialisierung Schlachthymne & 16 Fertigkeitspunkte in Showtalent Dein wunderschönes Lied bringt deine Verbündeten dazu, dir ihre Stimmen zu leihen! Alle Boni auf Genauigkeit oder Schlagkraft, die du durch deine Schlachthymne erhältst, gelten nun für alle Verbündeten innerhalb von 25 Fuß um dich. Haben mehrere Verbündete diese Spezialisierung, erhält jeder nur die Boni desjenigen mit den meisten Fertigkeitspunkten in Showtalent."
+ },
+ "showmanship-victory-theme": {
+  "name": "Siegeshymne",
+  "group": "Epische Musik",
+  "cost": "Passiv",
+  "requires_text": "Schlachthymne",
+  "effect": "Voraussetzung: Spezialisierung Schlachthymne\nDu beginnst eine Powerballade zu weben, die dich vorantreibt; deine Musik schreit nach der völligen Vernichtung deiner Feinde. Jeder Bonus auf Genauigkeit, den du durch deine Schlachthymne erhältst, gilt auch als Bonus auf deine Schlagkraft."
+ },
+ "showmanship-smokescreen": {
+  "name": "Nebelwand",
+  "group": "Nebelwand",
+  "cost": "1 AP",
+  "effect": "Kosten: 1 AP\nWenn nötig, hast du immer einen Weg, Feinde für ein, zwei Sekunden aus dem Konzept zu bringen. Du darfst während deines Zuges eine Nebelwand legen, die bis zum Ende deines Zuges anhält (wenn sich deine Aktionspunkte erneuern). Diese Nebelwand hüllt nur dich ein, verbirgt aber alle deine Handlungen, solange du in ihr bist. Bewegst du dich, bewegt sich die Nebelwand nicht mit dir und löst sich stattdessen auf."
+ }
+}

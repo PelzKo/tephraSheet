@@ -7,9 +7,11 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
 from rules.engine import leveling, tables
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .. import access, services
+from .planner import planned_for
 from .wizard import augment_options, specialty_options
 
 
@@ -42,7 +44,7 @@ def levelup(request, character):
     catch_up = _catch_up(character)
     if character.level >= tables.MAX_LEVEL or (not catch_up and character.xp < tables.XP_PER_LEVEL
                                                 and not access.in_admin_mode(request, character)):
-        messages.info(request, f"You need {tables.XP_PER_LEVEL} XP to level up.")
+        messages.info(request, _("You need {xp} XP to level up.", xp=tables.XP_PER_LEVEL))
         return redirect("sheet", pk=character.pk)
     new_level = character.level + 1
     if request.method == "POST":
@@ -52,7 +54,7 @@ def levelup(request, character):
             delta = _delta_from(request.POST)
             retrofit = (request.POST.get("retrofit_old", ""), request.POST.get("retrofit_new", ""))
             specialty = request.POST.get("specialty", "")
-            errors = [] if specialty else ["Choose a new specialty."]
+            errors = [] if specialty else [_("Choose a new specialty.")]
             if not errors:
                 options = {s: request.POST.get(f"opt:{s}", "") for s in (specialty, retrofit[1]) if s}
                 errors = services.apply_levelup(character, delta, specialty, retrofit=retrofit, from_xp=not catch_up,
@@ -62,13 +64,13 @@ def levelup(request, character):
             for e in errors:
                 messages.error(request, e)
             return redirect("levelup", pk=character.pk)
-        messages.success(request, f"{character.name} reached level {character.level}!")
+        messages.success(request, _("{name} reached level {level}!", name=character.name, level=character.level))
         if not _catch_up(character) and catch_up:
             character.money_on_hand = services.starting_money(character.level)
             character.save(update_fields=["money_on_hand"])
         sheet = character.compute()
         if sheet.stats["aug"].total > len(character.augments):
-            messages.info(request, "You can learn new augments.")
+            messages.info(request, _("You can learn new augments."))
             return redirect("augments", pk=character.pk)
         if _catch_up(character):
             return redirect("levelup", pk=character.pk)
@@ -76,7 +78,12 @@ def levelup(request, character):
     reg = get_registry()
     owned = [reg.specialties[s] for s, _ in character.specialties if s in reg.specialties]
     sheet = character.compute()
+    plan = planned_for(character, new_level) or {}
+    plan_skills = sorted((plan.get("skills") or {}).items(), key=lambda kv: -kv[1])
+    ones = [s for s, v in plan_skills if v == 1]
     return render(request, "characters/levelup.html", {
+        "plan": plan, "plan_two": next((s for s, v in plan_skills if v == 2), ""),
+        "plan_one_a": ones[0] if ones else "", "plan_one_b": ones[1] if len(ones) > 1 else "",
         "character": character, "new_level": new_level, "sheet": sheet, "catch_up": catch_up,
         "skills_by_attr": tables.SKILLS, "retrofit": leveling.retrofit_allowed(new_level),
         "owned": owned, "ap_now": tables.action_points(character.level),
@@ -89,7 +96,7 @@ def levelup(request, character):
 def levelup_options(request, character):
     """HTMX partial: specialties eligible after applying the chosen skill points."""
     delta = _delta_from(request.POST)
-    errors = leveling.validate_levelup_skills(delta) if delta else ["Choose your skill points first."]
+    errors = leveling.validate_levelup_skills(delta) if delta else [_("Choose your skill points first.")]
     state = _state_with_delta(character, delta)
     sheet, groups = specialty_options(character, extra_state=state)
     reg = get_registry()
@@ -101,7 +108,7 @@ def levelup_options(request, character):
                                   key=lambda s: (s["skill"] or "", s["name"]))
     return render(request, "characters/partials/levelup_options.html", {
         "character": character, "groups": groups, "errors": errors, "sheet": sheet,
-        "selected": request.POST.get("specialty", ""), "retrofit_targets": retrofit_targets,
+        "selected": request.POST.get("specialty") or (planned_for(character, character.level + 1) or {}).get("specialty", ""), "retrofit_targets": retrofit_targets,
         "retrofit_new": request.POST.get("retrofit_new", ""), "stat_cols": tables.COMBAT_STATS,
     })
 
@@ -126,7 +133,7 @@ def augments_view(request, character):
                 for e in errors:
                     messages.error(request, e)
             else:
-                messages.error(request, "Augments can only be swapped for one of the same skill.")
+                messages.error(request, _("Augments can only be swapped for one of the same skill."))
         elif action == "remove" and access.in_admin_mode(request, character):
             character.augments = [a for a in character.augments if a != slug]
         elif action == "random":

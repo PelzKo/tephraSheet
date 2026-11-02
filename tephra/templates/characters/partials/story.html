@@ -1,0 +1,29 @@
+{# Story journal: read view with collapsible blocks + search, and an editor. #}
+<div class="paper journal" x-data="{edit: {{ journal|yesno:'false,true' }}, q: ''}">
+  <div class="row spread">
+    <h2>{% t "Story journal" %}</h2>
+    <div class="row">
+      <input type="search" x-show="!edit" x-model="q" placeholder="{% t "Search the journal…" %}" aria-label="{% t "Search the journal" %}">
+      <button type="button" class="btn small" x-on:click="edit = !edit" x-text="edit ? '{% t "Show journal" %}' : '{% t "Edit" %}'"></button>
+    </div>
+  </div>
+  <div x-show="!edit">
+    {% for s in journal %}
+      <details class="journal-block lvl{{ s.level }}" open data-text="{{ s.text }}" x-show="!q || $el.dataset.text.includes(q.toLowerCase())">
+        <summary>{% if s.title %}{{ s.title }}{% else %}{% t "Notes" %}{% endif %}</summary>
+        <div class="journal-body">{{ s.html|safe }}</div>
+      </details>
+    {% empty %}<p class="muted">{% t "Nothing written yet." %}</p>{% endfor %}
+  </div>
+  <form x-show="edit" hx-post="{% url 'play' character.pk 'story' %}" hx-target="#sheet-body" hx-swap="outerHTML" x-ref="form">
+    <input type="hidden" name="tab" value="story">
+    <div class="row" style="margin-bottom:6px">
+      <button type="button" class="btn small" title="{% t "Start a new block (a day, a city …)" %}"
+        x-on:click="const t = $refs.form.querySelector('textarea'); t.value += (t.value && !t.value.endsWith('\n') ? '\n' : '') + '\n# ' + new Date().toLocaleDateString() + ' – \n'; t.focus(); t.selectionStart = t.selectionEnd = t.value.length - 1">{% t "+ New block" %}</button>
+      <button type="button" class="btn small" x-on:click="const t = $refs.form.querySelector('textarea'); t.value += '\n## '; t.focus()">{% t "+ Sub-heading" %}</button>
+      <span class="muted small"><code># {% t "Heading" %}</code> {% t "starts a block" %}, <code>## {% t "Sub-heading" %}</code>, <code>- {% t "item" %}</code>, <code>**{% t "bold" %}**</code>, <code>*{% t "italic" %}*</code></span>
+    </div>
+    <textarea name="story_notes" rows="18" placeholder="{% t "# Day 1 – Daion" %}&#10;{% t "Why we are here, who we met, what we plan …" %}">{{ character.story_notes }}</textarea>
+    <div class="row" style="margin-top:8px"><button class="btn small primary">{% t "Save journal" %}</button></div>
+  </form>
+</div>

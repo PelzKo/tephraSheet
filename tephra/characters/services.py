@@ -8,6 +8,7 @@ from catalog.models import ItemTemplate
 from rules.engine import creation, leveling, tables
 from rules.engine.requirements import check_augment, check_specialty
 from rules.engine.stats import compute
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .models import Character, InventoryItem, LevelLog, NarratorSettings
@@ -82,7 +83,7 @@ def revalidate(character):
         if not spec:
             continue
         state.specialties = [(s, l) for s, l in kept]
-        ok, _ = check_specialty(spec, state, compute(state))
+        ok, _reasons = check_specialty(spec, state, compute(state))
         if ok:
             kept.append((slug, level))
     character.specialties = [list(k) for k in kept]
@@ -132,7 +133,7 @@ def add_specialties_sequentially(character, slugs, level=1, options=None):
     for slug in slugs:
         spec = reg.specialties.get(slug)
         if not spec:
-            errors.append(f"Unknown specialty {slug}.")
+            errors.append(_("Unknown specialty {slug}.", slug=slug))
             continue
         if options is not None and spec.get("options") and \
                 (options.get(slug) or "") not in spec["options"]["options"]:
@@ -176,7 +177,7 @@ def set_augments(character, slugs):
             errors.append(f"{aug['name']}: {'; '.join(reasons)}")
             continue
         if len(kept) >= capacity:
-            errors.append(f"Only {capacity} augments can be learned.")
+            errors.append(_("Only {count} augments can be learned.", count=capacity))
             break
         kept.append(slug)
     character.augments = kept
@@ -201,7 +202,7 @@ class EquipError(ValueError):
 def one_handing(character):
     """One-Handing It: two-handed weapons (except bows) fit in one hand."""
     reg = get_registry()
-    return any(reg.specialties.get(s, {}).get("name") == "One-Handing It" for s, _ in character.specialties)
+    return any(reg.specialties.get(s, {}).get("name_en") == "One-Handing It" for s, _ in character.specialties)
 
 
 def has_wings(character):
@@ -234,9 +235,9 @@ def equip(character, item, slot):
     shield = [o for o in others.filter(slot="deflection") if item_hands(character, o) >= 1]
     if slot == "wings":
         if not has_wings(character):
-            raise EquipError("Only characters with Wings as Arms can hold items in their wings.")
+            raise EquipError(_("Only characters with Wings as Arms can hold items in their wings."))
         if hands != 1 or item.kind == "deflection":
-            raise EquipError(f"The wings can only hold one-handed items, and {item.name} is not one.")
+            raise EquipError(_("The wings can only hold one-handed items, and {item} is not one.", item=item.name))
         carry(others.filter(slot="wings"))
     elif slot in HAND_SLOTS:
         if item.kind == "deflection":
@@ -261,7 +262,7 @@ def equip(character, item, slot):
     item.save()
     notice = ""
     if slot in HAND_SLOTS + ("wings",) and tables.needs_firing_position(item.to_item_state()):
-        notice = f"{item.name} has rotating barrels: you need to be in a firing position to fire it."
+        notice = _("{item} has rotating barrels: you need to be in a firing position to fire it.", item=item.name)
     return {"moved": moved, "notice": notice}
 
 
@@ -406,7 +407,7 @@ def random_all(character, rng=None):
 def reset_health(character):
     sheet = character.compute()
     character.current_hp = sheet.max_hp
-    character.current_wounds = sheet.max_wounds
+    character.wounds_taken = 0
 
 
 @transaction.atomic
@@ -433,14 +434,14 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
     character.level = new_level
     if retrofit and retrofit[0] and retrofit[1]:
         if not leveling.retrofit_allowed(new_level):
-            return ["Retrofitting specialties is only possible at levels 4, 8 and 12."]
+            return [_("Retrofitting specialties is only possible at levels 4, 8 and 12.")]
         errs = leveling.validate_retrofit(*retrofit)
         if errs:
             return errs
         old = [list(s) for s in character.specialties]
         idx = next((i for i, (s, _) in enumerate(old) if s == retrofit[0]), None)
         if idx is None:
-            return ["The specialty to replace is not learned."]
+            return [_("The specialty to replace is not learned.")]
         replaced_level = old[idx][1]
         del old[idx]
         character.specialties = old
@@ -465,7 +466,7 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
 
 def random_levelup(character, rng=None, from_xp=True):
     rng = rng or random.Random()
-    for _ in range(20):
+    for _try in range(20):
         state = character.to_state()
         delta = leveling.random_levelup_skills(state, rng)
         for s, p in delta.items():
@@ -483,7 +484,7 @@ def random_levelup(character, rng=None, from_xp=True):
             character.save(update_fields=["specialty_choices"])
             return []
         character.refresh_from_db()
-    return ["Could not find a legal random level-up."]
+    return [_("Could not find a legal random level-up.")]
 
 
 def needs_catch_up(character):

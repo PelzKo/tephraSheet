@@ -1,28 +1,43 @@
 """Specialty eligibility and prerequisite checks (reference §6.1)."""
 
+from functools import cache
+
+from rules.lang import get_language
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import tables
 from .weapons import hand_layout
 
 
+@cache
+def _names(lang):
+    reg = get_registry()
+    return {x["name_en"]: x["name"] for coll in (reg.specialties, reg.augments) for x in coll.values()}
+
+
+def _local(name_en):
+    """Translated specialty/augment name for an English name."""
+    return _names(get_language()).get(name_en, name_en)
+
+
 def owned_names(state):
     reg = get_registry()
-    return {reg.specialties[s]["name"] for s, _ in state.specialties if s in reg.specialties}
+    return {reg.specialties[s]["name_en"] for s, _l in state.specialties if s in reg.specialties}
 
 
 def check_specialty(spec, state, sheet, ignore_owned=False):
     """Return (ok, reasons). ``sheet`` is the computed Sheet of ``state``."""
     reg = get_registry()
     reasons = []
-    owned = [s for s, _ in state.specialties]
+    owned = [s for s, _l in state.specialties]
     if spec["slug"] in owned and not spec.get("repeatable") and not ignore_owned:
-        reasons.append("already learned")
+        reasons.append(_("already learned"))
     if spec["general"]:
         if not any(sheet.skills[s].total >= 1 for s in tables.SCIENCE_SKILLS):
-            reasons.append("needs at least 1 point in a Science skill")
+            reasons.append(_("needs at least 1 point in a Science skill"))
     elif sheet.skills[spec["skill"]].total < 1:
-        reasons.append(f"needs at least 1 point in {spec['skill']}")
+        reasons.append(_("needs at least 1 point in {skill}", skill=_(spec["skill"])))
     names = owned_names(state)
     for clause in spec.get("requires", []):
         if clause.get("soft"):
@@ -31,36 +46,38 @@ def check_specialty(spec, state, sheet, ignore_owned=False):
         if t == "skill":
             have = sheet.skills[clause["skill"]].total
             if have < clause["min"]:
-                reasons.append(f"needs {clause['min']} points in {clause['skill']} (has {have})")
+                reasons.append(_("needs {min} points in {skill} (has {have})", min=clause["min"], skill=_(clause["skill"]), have=have))
         elif t == "attribute":
             have = sheet.attributes[clause["attribute"]].total
             if have < clause["min"]:
-                reasons.append(f"needs {clause['attribute']} {clause['min']} (has {have})")
+                reasons.append(_("needs {attribute} {min} (has {have})", attribute=_(clause["attribute"]), min=clause["min"], have=have))
         elif t == "stat":
             have = sheet.specialty_totals.get(clause["stat"], 0)
             if have < clause["min"]:
-                label = tables.COMBAT_STAT_LABELS[clause["stat"]]
-                reasons.append(f"needs +{clause['min']} {label} from specialties (has +{have})")
+                label = _(tables.COMBAT_STAT_LABELS[clause["stat"]])
+                reasons.append(_("needs +{min} {stat} from specialties (has +{have})", min=clause["min"], stat=label, have=have))
         elif t == "specialty":
             if not names.intersection(clause["any"]):
-                reasons.append("needs " + " or ".join(clause["any"]))
+                reasons.append(_("needs {names}", names=_(" or ").join(_local(n) for n in clause["any"])))
         elif t == "stances":
             count = 0
-            for slug, _ in state.specialties:
+            for slug, _l in state.specialties:
                 s = reg.specialties.get(slug)
                 if s and s.get("stance") and (not clause.get("skill") or s["skill"] == clause["skill"]):
                     count += 1
             if count < clause["min"]:
-                where = f" {clause['skill']}" if clause.get("skill") else ""
-                reasons.append(f"needs {clause['min']}{where} stances known (has {count})")
+                if clause.get("skill"):
+                    reasons.append(_("needs {min} {skill} stances known (has {have})", min=clause["min"], skill=_(clause["skill"]), have=count))
+                else:
+                    reasons.append(_("needs {min} stances known (has {have})", min=clause["min"], have=count))
         elif t == "ap":
             have = tables.action_points(state.level)
             if have < clause["min"]:
-                reasons.append(f"needs {clause['min']} AP per turn (has {have})")
+                reasons.append(_("needs {min} AP per turn (has {have})", min=clause["min"], have=have))
         elif t == "skill_specialty":
             if not any(reg.specialties[s]["skill"] == clause["skill"] and s != spec["slug"]
                        for s in owned if s in reg.specialties):
-                reasons.append(f"needs another {clause['skill']} specialty")
+                reasons.append(_("needs another {skill} specialty", skill=_(clause["skill"])))
     return not reasons, reasons
 
 
@@ -119,19 +136,19 @@ def specialty_warnings(spec, state):
     warnings = []
     for clause in spec.get("requires", []):
         if clause.get("soft") and not soft_clause_met(clause, state):
-            warnings.append(f"needs {clause['text']}{_currently(clause, state)}")
+            warnings.append(_("needs {what}", what=_(clause["text"])) + _currently(clause, state))
     return warnings
 
 
 def _currently(clause, state):
     if clause["type"] in ("armor", "armor_worn", "armor_material"):
         armor = state.armor
-        return f" (wearing {armor.name})" if armor is not None else " (no armor worn)"
+        return " " + (_("(wearing {name})", name=armor.name) if armor is not None else _("(no armor worn)"))
     if clause["type"] in ("weapon", "free_hand", "hands_empty"):
         layout = hand_layout(state)
         names = [i.name for i in (layout["left"], layout["right"], layout["blocked_by"], layout["wings"]) if i]
         names = list(dict.fromkeys(names))
-        return f" (holding: {', '.join(names)})" if names else " (hands empty)"
+        return " " + (_("(holding: {names})", names=", ".join(names)) if names else _("(hands empty)"))
     return ""
 
 
@@ -139,7 +156,7 @@ def character_warnings(state):
     """[(specialty name, [warnings])] for learned specialties whose soft requirements are unmet."""
     reg = get_registry()
     out = []
-    for slug, _ in state.specialties:
+    for slug, _l in state.specialties:
         spec = reg.specialties.get(slug)
         warnings = specialty_warnings(spec, state) if spec else []
         if warnings:
@@ -161,7 +178,7 @@ def augment_lists(state):
     """Augment lists the character can learn from (via [CRAFT:x] specialties)."""
     reg = get_registry()
     lists = set()
-    for slug, _ in state.specialties:
+    for slug, _l in state.specialties:
         s = reg.specialties.get(slug)
         if s:
             lists.update(s.get("crafts", []))
@@ -171,20 +188,20 @@ def augment_lists(state):
 def check_augment(aug, state, sheet):
     reasons = []
     if aug["slug"] in state.augments:
-        reasons.append("already known")
+        reasons.append(_("already known"))
     lists = augment_lists(state)
     if not lists.intersection(aug["lists"]):
-        reasons.append("needs a crafting specialty for " + " / ".join(aug["lists"]))
+        reasons.append(_("needs a crafting specialty for {lists}", lists=" / ".join(_(x) for x in aug["lists"])))
     if sheet.skills[aug["skill"]].total < 1:
-        reasons.append(f"needs points in {aug['skill']}")
+        reasons.append(_("needs points in {skill}", skill=_(aug["skill"])))
     reg = get_registry()
-    known_names = {reg.augments[a]["name"] for a in state.augments if a in reg.augments}
+    known_names = {reg.augments[a]["name_en"] for a in state.augments if a in reg.augments}
     names = owned_names(state)
     for q in aug.get("qualifiers", []):
         if q.startswith("req. "):
             needed = [n.strip() for n in q[5:].split(" or ")]
             if not any(n in known_names or n in names for n in needed):
-                reasons.append(f"needs {q[5:]}")
+                reasons.append(_("needs {names}", names=_(" or ").join(_local(n) for n in needed)))
     return not reasons, reasons
 
 

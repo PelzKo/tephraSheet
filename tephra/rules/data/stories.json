@@ -449,7 +449,7 @@
  },
  {
   "slug": "lavrey-agent",
-  "name": "LaVrey Agent",
+  "name": "Lavrey Agent",
   "type": "membership",
   "group": "LaVrey National Detective Agency",
   "requires": "",
@@ -459,7 +459,7 @@
  },
  {
   "slug": "lavrey-detective",
-  "name": "LaVrey Detective",
+  "name": "Lavrey Detective",
   "type": "membership",
   "group": "LaVrey National Detective Agency",
   "requires": "",
@@ -469,7 +469,7 @@
  },
  {
   "slug": "lavrey-train-guard",
-  "name": "LaVrey Train Guard",
+  "name": "Lavrey Train Guard",
   "type": "membership",
   "group": "LaVrey National Detective Agency",
   "requires": "",

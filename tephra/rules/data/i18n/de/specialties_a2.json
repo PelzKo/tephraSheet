@@ -1,0 +1,173 @@
+{
+ "frenzy-neverending-bloodbath": {
+  "name": "Endloses Blutbad",
+  "cost": "Passiv",
+  "effect": "Für jeden Feind, den du während deines Zuges tötest, erhältst du 1 Aktionspunkt, der nur dafür verwendet werden kann, auf einen weiteren Feind zuzulaufen."
+ },
+ "frenzy-no-escape": {
+  "name": "Kein Entkommen",
+  "cost": "Wie Bewegen, reflexiv",
+  "effect": "Kosten: Wie Bewegen, reflexiv\nAuch wenn deine Feinde versuchen mögen, sich zurückzuziehen, bist du bereit, sie zu jagen. Immer wenn ein Feind, mit dem du im Nahkampf gebunden bist, versucht, sich mit seinem Landtempo von dir zu entfernen, folgst du ihm reflexiv. Ist das Tempo eines Gegners größer als deines (aber innerhalb von 20 Fuß), stellst du dich der Herausforderung und passt dich seinem Tempo an."
+ },
+ "frenzy-raging": {
+  "name": "Wüten",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nNichts kann dich aufhalten. Du zerstörst alles auf deinem Weg. Wenn du im Wüten angreifst, ziehst du deine Boni aus Genauigkeit, Ausweichen und Verteidigung ab, um sie auf deinen Schlagkraftwurf zu addieren. Addiere deine Boni auf Genauigkeit, Ausweichen und Verteidigung und wende die Summe als Bonus auf deine Schlagkraft an. In dieser Haltung erhältst du jedoch keine Boni auf Genauigkeits-, Ausweich- oder Verteidigungswürfe. Verlässt du diese Haltung (freiwillig oder gezwungen), erhältst du deine Boni auf Ausweichen und Verteidigung erst am Ende deines nächsten Zuges zurück."
+ },
+ "frenzy-straining-blow": {
+  "name": "Kräftezehrender Schlag",
+  "cost": "Wie Nahkampfangriff",
+  "effect": "Kosten: wie ein Nahkampfangriff\nDu treibst dich ans Maximum und richtest dich selbst zugrunde, um deine Gegner zu verwüsten. Bei einem kräftezehrenden Schlag darfst du dir selbst 5 nicht durch Schutz minderbaren Trefferpunkteschaden zufügen, um +1 Schadensklasse auf deinen Angriff zu erhalten. Du darfst dir so viel Schaden zufügen, wie du willst, um weitere Schadensklassen zu erhalten, aber nicht mehr, als du Trefferpunkte hast. Hast du keine Trefferpunkte mehr, kannst du keine kräftezehrenden Schläge ausführen."
+ },
+ "frenzy-soulless-blade": {
+  "name": "Seelenlose Klinge",
+  "cost": "2 AP reflexiv",
+  "effect": "Kosten: 2 AP reflexiv\nWenn du einen Gegner erledigen willst, tust du das gnadenlos. Nachdem du einen Nahkampfangriff gemacht hast, der dem Ziel Wundenschaden zufügt, darfst du 2 Aktionspunkte reflexiv ausgeben, um ihn in eine seelenlose Klinge zu verwandeln. Nun würfelt das Ziel statt auf der Wundentabelle auf einen Tödlichen Effekt."
+ },
+ "frenzy-walking-destruction": {
+  "name": "Wandelnde Zerstörung",
+  "cost": "Bewegen + Nahkampfangriff + 2 AP",
+  "requires_text": "15 Raserei",
+  "effect": "Voraussetzung: 15 Fertigkeitspunkte in Raserei\nKosten: Bewegen + Nahkampfangriff + 2 AP\nDu machst eine einzelne Bewegung. Während dieser Bewegung darfst du jeden angreifen, neben den du gelangst. Du darfst dieselbe Person nicht mehr als einmal als Ziel wählen.\nAndere Spezialisierungen können auf diesen Angriff nicht angewendet werden."
+ },
+ "frenzy-berserker": {
+  "name": "Berserker",
+  "group": "Blutrausch",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nDer Anblick von Blut erregt dich. Nachdem du einem Gegner erfolgreich Schaden zugefügt hast, erhältst du +1 Schadensklasse gegen diesen Gegner mit allen Nahkampfwaffen. Dieser Bonus steigt um +1 je 6 Fertigkeitspunkte in Raserei. Der Bonus kann gegen mehrere Gegner genutzt werden."
+ },
+ "frenzy-bloodlust": {
+  "name": "Blutdurst",
+  "group": "Blutrausch",
+  "cost": "+1 AP beim Einnehmen von Berserker",
+  "requires_text": "Berserker; 6 Raserei",
+  "effect": "Voraussetzung: Spezialisierung Berserker & 6 Fertigkeitspunkte in Raserei Kosten: 1 AP\nIm wirbelnden Chaos der Schlacht bist du eine einzigartige Kraft der Zerstörung, unerbittlich und unaufhaltsam. Wenn du die Berserker-Haltung einnimmst, darfst du einen zusätzlichen Aktionspunkt ausgeben, um deine Haltung aufzuwerten und im Blutdurst zu wüten. Im Blutdurst steigt deine Schadensklasse mit Nahkampfwaffen um 1 für jeden Feind innerhalb von\n25 Fuß um dich.\nDieser Bonus ersetzt den normalen Bonus deiner Berserker-Haltung. Er wird automatisch auf alle Nahkampfwaffenangriffe addiert, egal ob du den Feind schon zuvor angegriffen hast oder nicht.\nWirst du aus der Berserker-Haltung geworfen, musst du die Haltung neu einnehmen und den zusätzlichen Aktionspunkt ausgeben, um erneut im Blutdurst zu wüten."
+ },
+ "frenzy-unquenchable-thirst": {
+  "name": "Unstillbarer Durst",
+  "group": "Blutrausch",
+  "cost": "+1 AP nach Blutdurst",
+  "requires_text": "Berserker, Blutdurst; 12 Raserei",
+  "effect": "Voraussetzung: Spezialisierungen Berserker & Blutdurst & 12 Fertigkeitspunkte in Raserei\nKosten: 1 AP\nDein unstillbarer Durst nach Blut ist zu einer ausgewachsenen Besessenheit geworden. Hast du deine Berserker-Haltung eingenommen und im Blutdurst zu wüten begonnen, darfst du einen weiteren Aktionspunkt ausgeben, um zum unstillbaren Durst aufzuwerten. Nun zählt jeder innerhalb von 25 Fuß um dich als Feind (auch Verbündete), um deinen Blutdurst-Bonus zu bestimmen. Du darfst nun normale Nahkampfangriffe (mit einer schweren oder kleineren Waffe) für nur 1 Aktionspunkt machen, aber wenn jemand in deine Nähe kommt, Feind oder Verbündeter, bist du gezwungen, ihn reflexiv im Nahkampf anzugreifen, sofern irgend möglich.\nWirst du aus der Berserker-Haltung geworfen, musst du die Haltung neu einnehmen und den zusätzlichen Aktionspunkt ausgeben, um erneut im Blutdurst zu wüten und den unstillbaren Durst zu aktivieren."
+ },
+ "frenzy-laugh-like-youre-crazy": {
+  "name": "Lache wie ein Irrer",
+  "group": "Masochistisch",
+  "cost": "Passiv; Widerstand: Geist (hebt auf)",
+  "effect": "Widerstand: Geist (hebt auf)\nDu bist eine manische, wahnsinnige, lachende Vision des Bösen auf dem Schlachtfeld. Wähle für je 10 Punkte Trefferpunkteschaden, die du erlitten hast, einen Gegner innerhalb von 25 Fuß. Dieser Gegner leidet nun unter den Effekten von Furcht der Stufe 1. Er darf mit seinem Geist gegen deine Raserei widerstehen. Widersteht er, kann er erst nach seiner nächsten Verschnaufpause erneut betroffen werden."
+ },
+ "frenzy-marriage-to-suffering": {
+  "name": "Ehe mit dem Leid",
+  "group": "Masochistisch",
+  "cost": "Passiv",
+  "requires_text": "Lache wie ein Irrer",
+  "effect": "Voraussetzung: Spezialisierung Lache wie ein Irrer\nAm Rande des Abgrunds kämpfst du noch härter. Hast du keine Trefferpunkte mehr, erhältst du +1 Schadensklasse pro verlorenem Wundpunkt. Dieser Schadensbonus geht verloren, wenn deine Trefferpunkte nicht mehr bei null liegen."
+ },
+ "frenzy-seize-your-suffering": {
+  "name": "Ergreife dein Leid",
+  "group": "Masochistisch",
+  "cost": "Passiv",
+  "requires_text": "8 Raserei; Lache wie ein Irrer; Ehe mit dem Leid",
+  "effect": "Voraussetzung: 8 Fertigkeitspunkte in Raserei, Spezialisierungen Lache wie ein Irrer & Ehe mit dem Leid\nSchläge einzustecken ist auf dem Schlachtfeld zu deiner Nahrung geworden. Für jeden Punkt Wundenschaden, den du erleidest, erhältst du sofort einen Aktionspunkt. Der Aktionspunkt hält nur für den Zug, in dem der Schaden erlitten wurde. Du darfst dadurch in einem einzelnen Zug nicht mehr Aktionspunkte erhalten als 1 je 8 Fertigkeitspunkte, die du in Raserei hast.\nErleidest du zum Beispiel in diesem Zug 3 Wundenschaden, erhältst du 3 Aktionspunkte zusätzlich zu deinen normalen Aktionspunkten für diesen Zug."
+ },
+ "overpower-brickbreaker": {
+  "name": "Ziegelbrecher",
+  "cost": "Wie Nahkampfangriff",
+  "effect": "Kosten: wie ein Nahkampfangriff\nMit schierer Kraft kannst du Deckung durchbrechen und Wände umgehen. Immer wenn ein Gegner hinter Deckung steht, darfst du versuchen, sie mit deinem Nahkampfangriff zu umgehen (er muss aber weiterhin in Reichweite deiner Nahkampfwaffe sein). Du kannst nur Deckung durchbrechen, die höchstens so stabil ist wie Ziegel. Eine verstärkte Eisenwand könnte zum Beispiel nicht mit dem Ziegelbrecher durchbrochen werden. Die Deckung wird durch den Ziegelbrecher-Angriff nicht zerstört, aber beschädigt.\nUmgeht schlechte Deckung\nUmgeht leichte Deckung\nUmgeht mittlere Deckung\nUmgeht schwere Deckung"
+ },
+ "overpower-dragging": {
+  "name": "Schleifen",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nDu ziehst deine Waffe hinter dir her und lässt sie beim Schwung dein ganzes Körpergewicht nach oben tragen. Immer wenn du 10 oder mehr Schaden verursachst (nach Schutz), verliert der Feind seine Haltung."
+ },
+ "overpower-follow-through": {
+  "name": "Nachsetzen",
+  "cost": "Passiv",
+  "requires_text": "4 Überwältigen",
+  "effect": "Voraussetzung: 4 Fertigkeitspunkte in Überwältigen\nWährend dein erster Angriff einen Gegner taumeln lassen kann, ist dein zweiter Angriff eine wahre Demonstration deiner Macht. Machst du in deinem Zug zwei aufeinanderfolgende, erfolgreiche mittlere (oder größere) Nahkampfangriffe gegen denselben Gegner, ist der Schaden deines zweiten Angriffs automatisch eine Stufe höher."
+ },
+ "overpower-heavy-hitter": {
+  "name": "Schwerer Hitter",
+  "cost": "Haltung",
+  "requires_text": "4 Überwältigen",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nVoraussetzung: 4 Fertigkeitspunkte in Überwältigen\nSolange du in dieser Haltung bist und eine schwere (oder größere) Nahkampfwaffe führst, addiere für je 4 Fertigkeitspunkte in Überwältigen einen zusätzlichen Punkt auf deine Schadensklasse."
+ },
+ "overpower-keep-them-down": {
+  "name": "Unten halten",
+  "cost": "Schwerer+ Nahkampfangriff",
+  "effect": "Kosten: Schwerer (oder größerer) Nahkampfangriff\nIst ein Gegner neben dir und liegend, hast du kein Problem, ihn zu erledigen. Wann immer du einen liegenden Gegner mit einer schweren Waffe angreifst, steigt dein Schaden automatisch um eine Stufe."
+ },
+ "overpower-monstrous-attacks": {
+  "name": "Monströse Angriffe",
+  "cost": "Überschwerer Nahkampfangriff +1 AP",
+  "effect": "Kosten: Überschwerer Nahkampfangriff +1 AP\nAndere Leute glauben, überschwere Nahkampfwaffen hätten die Schadensklasse 10. Du weißt nicht, was das bedeutet, aber du weißt, dass du diese Leute mit einem Schlag töten kannst! Gibst du bei einem Angriff mit einer überschweren Nahkampfwaffe einen zusätzlichen Aktionspunkt aus, verursachst du erheblich mehr Schaden. Deine Schadensklasse steigt um 2, plus +1 je 6 Fertigkeitspunkte in Überwältigen."
+ },
+ "overpower-no-quarter": {
+  "name": "Kein Pardon",
+  "cost": "Schwerer+ Nahkampfangriff +1 AP; Widerstand: Geschick (hebt auf)",
+  "effect": "Widerstand: Geschick (hebt auf, siehe unten)\nKosten: Schwerer (oder größerer) Nahkampfangriff +1 AP\nDu schlägst nieder, nicht auf eine einzelne Person zielend, sondern auf ihren ganzen Bereich. Die einzige Rettung ist für das Ziel, sich zu bewegen. Bei einem Angriff mit Kein Pardon greifst du nicht die Person an, sondern ein einzelnes Feld. Jeder auf diesem Feld wird entweder automatisch getroffen oder muss 1 Aktionspunkt reflexiv ausgeben, um zu versuchen, aus dem Feld zu springen. Entscheidet er sich auszuweichen, würfelt er Geschick. Übersteigt sein Geschick deine Genauigkeit, kann er sich auf 1 angrenzendes Feld bewegen. Scheitert er, triffst du ihn. Hinweis: Wenn du Fähigkeiten nutzt, die vom Ausweichen des Gegners abhängen, behandle sein Geschick als Ausweichen. Entscheidet sich der Gegner, dem Angriff nicht auszuweichen, nimm an, dass sein Ausweichen deiner Genauigkeit entspricht."
+ },
+ "overpower-one-handing-it": {
+  "name": "Einhändig",
+  "cost": "Passiv",
+  "effect": "Du darfst zweihändige Waffen mit einer Hand führen. Das Nachladen einer Schießkunst-Waffe und die Nutzung von Bögen jeder Größe erfordern weiterhin eine zusätzliche freie Hand. Abgesehen davon, wie viele Hände die Waffe benötigt, ändert diese Spezialisierung nichts."
+ },
+ "overpower-robust-toss": {
+  "name": "Kräftiger Wurf",
+  "cost": "Mittlerer+ Wurfangriff",
+  "effect": "Kosten: Mittlerer (oder größerer) Wurfangriff\nNur weil dein Gegner außer Reichweite ist, heißt das nicht, dass du ihm nicht das Gesicht einschlagen kannst. Immer wenn du eine mittlere oder größere Wurfwaffe benutzt, darfst du mit dem Angriff zusätzlichen Schaden verursachen. Trifft er, würfle Überwältigen, um den zusätzlichen Schaden zu bestimmen.\n2 zusätzlicher Schaden\n4 zusätzlicher Schaden\n6 zusätzlicher Schaden\n8 zusätzlicher Schaden"
+ },
+ "overpower-shield-whack": {
+  "name": "Schildhieb",
+  "cost": "Umwandlung eines Nahkampfangriffs",
+  "effect": "Kosten: Umwandlung eines Nahkampfangriffs\nDie meisten Leute benutzen ihre Schilde zum Schutz und halten ihren Schild zwischen deine Waffe und ihr Fleisch. Das ist ein Vorteil, den du nutzen wirst. Immer wenn ein Gegner versucht, mit einem Schild einen deiner Angriffe zu parieren, darfst du den Angriff sofort in einen Schildhieb umwandeln. Obwohl du mit dem Angriff keinen Schaden verursachst, triffst du den Schild des Opfers so hart, dass es taumelt, seine Haltung verliert und in seinem nächsten Zug orientierungslos ist."
+ },
+ "overpower-solid-assault": {
+  "name": "Solider Angriff",
+  "cost": "Nahkampfangriff +1 AP",
+  "effect": "Kosten: Nahkampfangriff +1 AP\nDu setzt deinen Schlag an und führst ihn glatt durch, um genau die richtige Schadensmenge zu verursachen. Triffst du mit deinem soliden Angriff, verursachst du Schaden, als wäre er eine Stufe höher."
+ },
+ "overpower-stunning-blow": {
+  "name": "Betäubender Schlag",
+  "cost": "Nahkampfangriff +1 AP; Widerstand: Kraft (senkt Stufe)",
+  "effect": "Widerstand: Kraft (senkt Stufe)\nKosten: Nahkampfangriff +1 AP\nMit einem gut gezielten Schlag betäubst du deinen Gegner. Scheitert der Gegner am Widerstand gegen dein Überwältigen und du erhältst ein Ergebnis der Stufe\n2 oder höher, ist das Ziel betäubt. Das Ziel darf Kraft würfeln, um zu widerstehen. Für jede Stufe über Stufe 1, die es erhält, senkt es die Wirkung des Betäubenden Schlags um eine Stufe. Keine Wirkung\nBetäubt für 1 AP\nBetäubt für 2 AP\nBetäubt für 3 AP"
+ },
+ "overpower-titanic-strength": {
+  "name": "Titanische Stärke",
+  "cost": "Passiv",
+  "requires_text": "3 Überwältigen",
+  "effect": "Voraussetzung: 3 Fertigkeitspunkte in Überwältigen\nDu hebst die schwersten Waffen und schwingst sie, als wären es winzige Degen. Du musst keine Standhaltung einnehmen, wenn du überschwere Nahkampfwaffen benutzt."
+ },
+ "overpower-with-gusto": {
+  "name": "Mit Schwung",
+  "cost": "Passiv; Widerstand: Kraft (hebt auf)",
+  "requires_text": "+13 Schlagkraft",
+  "effect": "Voraussetzung: +13 Schlagkraft\nWiderstand: Kraft (hebt auf)\nGreifst du mit Schwung an, ist dein Angriff so kraftvoll, dass keine Rüstung ihm standhält. Verursacht dein Nahkampfangriff Schaden der Stufe 4 (oder höher), hebst du den gesamten Schutz deines Gegners durch seine Rüstung auf, es sei denn, er besteht seinen Widerstand gegen dein Überwältigen."
+ },
+ "overpower-chipping-away": {
+  "name": "Abnagen",
+  "group": "Rüstungsbrechen",
+  "cost": "Schwerer+ Nahkampfangriff +1 AP; Widerstand: Geschick (im Wettstreit, hebt auf)",
+  "effect": "Widerstand: Geschick (senkt Stufe)\nKosten: Schwerer (oder größerer) Nahkampfangriff +1 AP\nDeine Angriffe zermürben die Rüstung des Gegners und nagen sie langsam ab, bis sie auseinanderfällt. Bei einem Abnagen-Angriff senkst du die Schutzklasse der Rüstung des Ziels um 1. Der Abzug kann die Schutzklasse nie unter null senken, summiert sich aber im Laufe der Zeit. Erreicht die Schutzklasse der Rüstung 0, ist die Rüstung faktisch zerstört (und alle Augments darauf oder Boni, die das Ziel für das Tragen von Rüstung erhält, sind aufgehoben). Der Gegner kann das Abnagen aufheben, indem er einen Geschickwurf im Wettstreit gegen deinen Überwältigen-Wurf besteht.\nHinweis: Wer eine zerbrochene oder beschädigte Rüstung hat, kann sie während einer Verschnaufpause\nwieder zusammenflicken."
+ },
+ "overpower-armor-sunder": {
+  "name": "Rüstung zerschmettern",
+  "group": "Rüstungsbrechen",
+  "cost": "Schwerer+ Nahkampfangriff +1 AP; Widerstand: Geschick (senkt Stufe)",
+  "requires_text": "Abnagen",
+  "effect": "Voraussetzung: Spezialisierung Abnagen\nWiderstand: Geschick (senkt Stufe)\nKosten: Schwerer (oder größerer) Nahkampfangriff +1 AP\nDas größte Hindernis zwischen deinem Schwert und ihrem Herzen ist ihre Rüstung, und du scheust nicht davor zurück, auch die zu zerstören. Ein rüstungszerschmetternder Angriff senkt die Schutzklasse ihrer Rüstung. Der Abzug kann die Schutzklasse nie unter null senken, aber mehrere rüstungszerschmetternde Angriffe können sich summieren. Erreicht die Schutzklasse der Rüstung 0, ist die Rüstung faktisch zerstört (und alle Augments darauf oder Boni, die das Ziel für das Tragen von Rüstung erhält, sind aufgehoben).\n-2 Schutzklasse\n-3 Schutzklasse\n-4 Schutzklasse\n-5 Schutzklasse\nHinweis: Wer eine zerbrochene oder beschädigte Rüstung hat, kann sie während einer Verschnaufpause wieder zusammenflicken."
+ },
+ "overpower-earthquaking-strike": {
+  "name": "Erdbebenschlag",
+  "group": "Erdzertrümmernd",
+  "cost": "Wie schwerer+ Nahkampfangriff; Widerstand: List (hebt auf)",
+  "effect": "Widerstand: List (hebt auf)\nKosten: Wie ein schwerer (oder größerer) Nahkampfangriff\nStatt das Ziel anzugreifen, schlägst du auf den Boden vor dem Ziel, zerstörst ihn und bringst alle in der Umgebung aus dem Gleichgewicht, es sei denn, sie bestehen einen Listwiderstand gegen deine Fertigkeit Überwältigen.\nDie Person im angegriffenen Bereich ist für einen Zug orientierungslos\nAlle innerhalb von 5 Fuß um den angegriffenen Bereich sind für einen Zug orientierungslos\nAlle innerhalb von 5 Fuß um den angegriffenen Bereich sind für zwei Züge orientierungslos\nAlle innerhalb von 10 Fuß um den angegriffenen Bereich sind für drei Züge orientierungslos"
+ },
+ "overpower-rampant-destruction": {
+  "name": "Wilde Zerstörung",
+  "group": "Erdzertrümmernd",
+  "cost": "Erdbebenschlag +1 AP",
+  "requires_text": "Erdbebenschlag",
+  "effect": "Voraussetzung: Spezialisierung Erdbebenschlag\nKosten: Erdbebenschlag +1 AP\nMit nur ein wenig mehr Aufwand kannst du deinen Erdbebenschlag in wilde Zerstörung verwandeln. Die Wirkung deiner wilden Zerstörung ist genau dieselbe, nur lässt sie den Boden um dich nicht bloß vibrieren, sondern nach außen explodieren. Würfle nur einmal, für den Erdbebenschlag wie für die wilde Zerstörung.\nIm getroffenen Bereich wird der Boden einen Fuß tief zerstört.\nIm betroffenen Bereich wird der Boden drei Fuß tief zerstört.\nIm betroffenen Bereich wird der Boden zehn Fuß tief zerstört.\nIm betroffenen Bereich wird der Boden zwanzig Fuß tief zerstört.\nHinweis zu einstürzenden Strukturen: Das ist besonders wirksam auf einer Brücke, im ersten Stock eines Gebäudes oder auf Straßen mit einer Kanalisation darunter. Denk aber daran: Befindest du dich im Wirkungsbereich der wilden Zerstörung, stürzt auch du hinab."
+ }
+}

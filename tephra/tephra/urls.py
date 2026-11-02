@@ -3,7 +3,8 @@ from django.contrib.auth import views as auth_views
 from django.urls import path
 
 from catalog import views as catalog_views
-from characters.views import admin_mode, feedback, general, levelup, sheet, wizard
+from wiki import views as wiki_views
+from characters.views import admin_mode, feedback, general, levelup, planner, sheet, wizard
 
 urlpatterns = [
     path("", general.character_list, name="character_list"),
@@ -18,6 +19,7 @@ urlpatterns = [
     path("c/<int:pk>/play/<slug:action>/", sheet.play_action, name="play"),
     path("c/<int:pk>/levelup/", levelup.levelup, name="levelup"),
     path("c/<int:pk>/levelup/options/", levelup.levelup_options, name="levelup_options"),
+    path("c/<int:pk>/planner/", planner.planner, name="planner"),
     path("c/<int:pk>/augments/", levelup.augments_view, name="augments"),
     path("c/<int:pk>/admin-mode/", admin_mode.toggle_admin, name="toggle_admin"),
     path("c/<int:pk>/misc/", admin_mode.misc_adjust, name="misc_adjust"),
@@ -35,7 +37,16 @@ urlpatterns = [
     path("gm/", general.gm_settings, name="gm_settings"),
     path("gm/password/<int:pk>/", general.gm_reset_password, name="gm_reset_password"),
     path("feedback/", feedback.feedback_submit, name="feedback"),
+    path("language/", general.set_language, name="set_language"),
     path("gm/feedback/<int:pk>/status/", feedback.feedback_status, name="gm_feedback_status"),
     path("gm/feedback/<int:pk>/delete/", feedback.feedback_delete, name="gm_feedback_delete"),
+    path("wiki/", wiki_views.wiki_index, name="wiki"),
+    path("wiki/new/", wiki_views.edit, name="wiki_new"),
+    path("wiki/help/<slug:slug>/", wiki_views.help_page, name="wiki_help"),
+    path("wiki/rules/<slug:slug>/", wiki_views.rules_chapter, name="wiki_rules"),
+    path("wiki/specialty/<slug:slug>/", wiki_views.specialty, name="wiki_specialty"),
+    path("wiki/race/<slug:slug>/", wiki_views.race, name="wiki_race"),
+    path("wiki/p/<slug:slug>/", wiki_views.page, name="wiki_page"),
+    path("wiki/p/<slug:slug>/edit/", wiki_views.edit, name="wiki_edit"),
     path("admin/", admin.site.urls),
 ]

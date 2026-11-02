@@ -1,6 +1,13 @@
 /* Breakdown popovers for composite values: hover on mouse devices, click/tap everywhere.
    Any other sheet element with a hover title (truncated text, racial traits, locations) shows
    that text in the same popover on click/tap, so everything works on tablets too. */
+/* UI texts: the page embeds {English: translation} for exactly the strings below (js_i18n). */
+const t = (function () {
+  let dict = {};
+  try { dict = JSON.parse(document.getElementById("js-i18n").textContent) || {}; } catch (e) { /* no dict */ }
+  return (s) => dict[s] || s;
+})();
+
 (function () {
   const pop = document.createElement("div");
   pop.className = "bd-pop";
@@ -51,7 +58,7 @@
       return `<tr><td>${label}</td><td class="n">${n}</td></tr>`;
     }).join("");
     const title = el.dataset.title ? `<h4>${esc(el.dataset.title)}</h4>` : "";
-    pop.innerHTML = `${title}<table>${rows}<tr class="total"><td>Total</td><td class="n">${data.total}</td></tr></table>`;
+    pop.innerHTML = `${title}<table>${rows}<tr class="total"><td>${esc(t("Total"))}</td><td class="n">${data.total}</td></tr></table>`;
     place(el);
   }
 
@@ -133,7 +140,7 @@ window.effectForm = function () {
       const q = this.q.trim().toLowerCase();
       const list = this.opts.status.filter((o) => !q || o.name.toLowerCase().includes(q));
       if (q && !this.opts.status.some((o) => o.name.toLowerCase() === q)) {
-        list.push({ key: "", name: this.q.trim(), text: "custom effect (no automatic changes)" });
+        list.push({ key: "", name: this.q.trim(), text: t("custom effect (no automatic changes)") });
       }
       return list;
     },
@@ -155,10 +162,10 @@ window.effectForm = function () {
     hint() {
       if (this.kind === "status") {
         const o = this.opts.status.find((s) => s.key === this.key);
-        return o ? o.text : "Pick a status effect from the list, or type your own.";
+        return o ? o.text : t("Pick a status effect from the list, or type your own.");
       }
       const c = this.called().find((x) => x.kind === this.which);
-      return c ? c.text : "Choose the hit location, then the wounded or fatal effect.";
+      return c ? c.text : t("Choose the hit location, then the wounded or fatal effect.");
     },
   };
 };
@@ -222,7 +229,7 @@ window.effectForm = function () {
         if (th.tagName !== "TH" || th.hasAttribute("data-nosort") || !th.textContent.trim()) return;
         th.classList.add("sortable");
         th.tabIndex = 0;
-        th.title = th.title || "Sort by this column (click again to reverse)";
+        th.title = th.title || t("Sort by this column (click again to reverse)");
       });
       const saved = chosen[tableKey(table)];
       if (saved) sortTable(table, saved.col, saved.dir);
@@ -391,15 +398,15 @@ window.effectForm = function () {
     data.set("meta", JSON.stringify(meta(box)));
     const token = document.querySelector("meta[name=csrf-token]");
     button.disabled = true;
-    status.textContent = "Sending…";
+    status.textContent = t("Sending…");
     try {
       const resp = await fetch(form.action, {
         method: "POST", body: data, headers: { "X-CSRFToken": token ? token.content : "" },
       });
       const result = await resp.json().catch(() => ({}));
-      if (!resp.ok) throw new Error(result.error || "Could not send feedback.");
+      if (!resp.ok) throw new Error(result.error || t("Could not send feedback."));
       form.querySelector("textarea").value = "";
-      status.textContent = "Thanks! Your message was sent to the narrator.";
+      status.textContent = t("Thanks! Your message was sent to the narrator.");
       setTimeout(() => close(box), 1600);
     } catch (err) {
       status.textContent = err.message;

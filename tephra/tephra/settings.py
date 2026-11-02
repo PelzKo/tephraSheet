@@ -48,6 +48,7 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "rules",
     "catalog",
+    "wiki",
     "characters",
 ]
 
@@ -59,6 +60,7 @@ MIDDLEWARE = [
     "django.middleware.csrf.CsrfViewMiddleware",
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
+    "characters.middleware.LanguageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -74,7 +76,9 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+                "characters.middleware.language_context",
             ],
+            "builtins": ["characters.templatetags.tr_tags"],
         },
     },
 ]
@@ -114,6 +118,10 @@ AUTH_PASSWORD_VALIDATORS = [
 LANGUAGE_CODE = "en-us"
 TIME_ZONE = "Europe/Berlin"
 USE_I18N = True
+# Languages come from locale/<code>/_meta.json (see rules/lang.py).
+from rules.lang import languages as _languages  # noqa: E402
+
+LANGUAGES = list(_languages().items())
 USE_TZ = True
 
 STATIC_URL = "static/"

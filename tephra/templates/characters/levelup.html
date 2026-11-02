@@ -1,40 +1,41 @@
 {% extends "base.html" %}{% load sheet_tags %}
 {% block content %}
-<form method="post" class="paper" id="lvlform" x-data="{two: '', a: '', b: '',
+<form method="post" class="paper" id="lvlform" x-data="{two: '{{ plan_two }}', a: '{{ plan_one_a }}', b: '{{ plan_one_b }}',
       get dup() { const v = [this.two, this.a, this.b].filter(Boolean); return new Set(v).size < v.length; }}"
       x-on:submit="if (dup && $event.submitter && $event.submitter.value === 'apply') $event.preventDefault()">
   {% csrf_token %}
   <div class="row spread">
-    <h1>{{ character.name }}: level {{ character.level }} → {{ new_level }}</h1>
-    <button class="btn dice" name="action" value="random" formnovalidate> Random level-up</button>
+    <h1>{% t "{name}: level {old} → {new}" name=character.name old=character.level new=new_level %}</h1>
+    <button class="btn dice" name="action" value="random" formnovalidate> {% t "Random level-up" %}</button>
   </div>
-  {% if catch_up %}<p class="muted">Building up to starting level {{ character.target_level }}: level up one level at a time.</p>{% endif %}
+  {% if catch_up %}<p class="muted">{% t "Building up to starting level {n}: level up one level at a time." n=character.target_level %}</p>{% endif %}
   <ul class="small">
-    <li>+2 points in any one skill, +1 point in two <i>other</i> skills</li>
-    <li>Learn one new specialty (its bonuses are added automatically)</li>
-    {% if ap_new > ap_now %}<li><b>Action points: {{ ap_now }} → {{ ap_new }}</b></li>{% endif %}
-    {% if retrofit %}<li>Level {{ new_level }}: you may retrofit one specialty for another within the same attribute</li>{% endif %}
+    <li>{% t "+2 points in any one skill, +1 point in two other skills" %}</li>
+    <li>{% t "Learn one new specialty (its bonuses are added automatically)" %}</li>
+    {% if ap_new > ap_now %}<li><b>{% t "Action points: {old} → {new}" old=ap_now new=ap_new %}</b></li>{% endif %}
+    {% if retrofit %}<li>{% t "Level {n}: you may retrofit one specialty for another within the same attribute" n=new_level %}</li>{% endif %}
   </ul>
-  <h2>Skill points</h2>
+  {% if plan %}<div class="usage-note">📋 {% t "Your plan for level {n} is preselected." n=new_level %}{% if plan.note %} {% t "Note: {note}" note=plan.note %}{% endif %} <a href="{% url 'planner' character.pk %}">{% t "Open planner" %}</a></div>{% endif %}
+  <h2>{% t "Skill points" %}</h2>
   <div class="form-grid">
-    <div class="field"><label>+2 points</label><select name="skill_two" class="lvl-skill" required x-model="two"><option value="">–</option>
-      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr }}">{% for s in skills %}<option value="{{ s }}">{{ s }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
-    <div class="field"><label>+1 point</label><select name="skill_one_a" class="lvl-skill" required x-model="a"><option value="">–</option>
-      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr }}">{% for s in skills %}<option value="{{ s }}">{{ s }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
-    <div class="field"><label>+1 point</label><select name="skill_one_b" class="lvl-skill" required x-model="b"><option value="">–</option>
-      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr }}">{% for s in skills %}<option value="{{ s }}">{{ s }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
+    <div class="field"><label>{% t "+2 points" %}</label><select name="skill_two" class="lvl-skill" required x-model="two"><option value="">–</option>
+      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr|t }}">{% for s in skills %}<option value="{{ s }}">{{ s|t }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
+    <div class="field"><label>{% t "+1 point" %}</label><select name="skill_one_a" class="lvl-skill" required x-model="a"><option value="">–</option>
+      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr|t }}">{% for s in skills %}<option value="{{ s }}">{{ s|t }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
+    <div class="field"><label>{% t "+1 point" %}</label><select name="skill_one_b" class="lvl-skill" required x-model="b"><option value="">–</option>
+      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr|t }}">{% for s in skills %}<option value="{{ s }}">{{ s|t }} ({{ sheet.skills|get:s|total }})</option>{% endfor %}</optgroup>{% endfor %}</select></div>
   </div>
   <div class="warn-banner" role="alert" x-show="dup" style="display:none;margin-top:10px">
-    ⚠ Each skill can only be chosen once: +2 go into one skill and +1 into two <i>other</i> skills.</div>
+    ⚠ {% t "Each skill can only be chosen once: +2 go into one skill and +1 into two other skills." %}</div>
   {% if retrofit %}
-    <h2 style="margin-top:14px">Retrofit (optional)</h2>
-    <div class="form-grid"><div class="field"><label>Replace specialty</label>
-      <select name="retrofit_old" id="retro-old"><option value="">– keep all –</option>{% for s in owned %}<option value="{{ s.slug }}">{{ s.name }} ({{ s.attribute }})</option>{% endfor %}</select></div></div>
+    <h2 style="margin-top:14px">{% t "Retrofit (optional)" %}</h2>
+    <div class="form-grid"><div class="field"><label>{% t "Replace specialty" %}</label>
+      <select name="retrofit_old" id="retro-old"><option value="">{% t "– keep all –" %}</option>{% for s in owned %}<option value="{{ s.slug }}">{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div></div>
   {% endif %}
   <div id="lvl-options" hx-post="{% url 'levelup_options' character.pk %}" hx-include="#lvlform"
        hx-trigger="load, change[target.matches('.lvl-skill, #retro-old')] from:#lvlform" hx-swap="innerHTML">
-    <p class="muted">Choose your skill points to see the specialties you can learn.</p></div>
-  <div class="wizard-actions"><a class="btn" href="{% url 'sheet' character.pk %}">Cancel</a>
-    <button class="btn primary" type="submit" name="action" value="apply" :disabled="dup">Level up ✓</button></div>
+    <p class="muted">{% t "Choose your skill points to see the specialties you can learn." %}</p></div>
+  <div class="wizard-actions"><a class="btn" href="{% url 'sheet' character.pk %}">{% t "Cancel" %}</a>
+    <button class="btn primary" type="submit" name="action" value="apply" :disabled="dup">{% t "Level up ✓" %}</button></div>
 </form>
 {% endblock %}

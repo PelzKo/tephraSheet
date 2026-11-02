@@ -104,6 +104,19 @@ def test_stance_and_toggle():
     assert compute(st).stats["pri"].total == 5
 
 
+def test_battle_theme_is_ongoing_and_drives_victory_theme():
+    bt, vt = spec("Battle Theme"), spec("Victory Theme")
+    st = human(specialties=[(bt, 1), (vt, 2)], skills={"Showmanship": 5})
+    sheet = compute(st)
+    assert not any(s["slug"] == bt for s in sheet.stances)  # not a stance
+    assert [o["key"] for o in sheet.ongoing] == [f"spec:{bt}"] and not sheet.toggles  # no own Victory button
+    base_acc, base_stk = sheet.stats["acc"].total, sheet.stats["stk"].total
+    st.toggles = {f"spec:{bt}"}
+    sheet = compute(st)
+    assert sheet.stats["acc"].total == base_acc + 4 and sheet.stats["stk"].total == base_stk + 4
+    assert any(label == "Battle Theme" for label, _ in sheet.notes)
+
+
 def test_quick_feet_base_speed_and_farishtaa_ace():
     st = human(random_traits=["human/quick-feet"])
     assert compute(st).stats["spd"].total == 35
@@ -254,3 +267,21 @@ def test_weapon_breakdown_shows_character_sources():
     acc = compute(st).weapons[0].acc
     assert ("Effect: Blinded", -4) in acc.breakdown
     assert acc.total == compute(st).stats["acc"].total
+
+
+def test_split_tiers():
+    from rules.engine.text import split_tiers
+
+    body, tiers = split_tiers("Cost: 1 AP\nYou guide.\n+2 acc\n+4 acc\n+6 acc\n+8 acc")
+    assert body == "Cost: 1 AP\nYou guide." and tiers == ["+2 acc", "+4 acc", "+6 acc", "+8 acc"]
+    body, tiers = split_tiers("Cost: 2 AP\n" + "Long text " * 12 + "lowers soak. Ignores 1 soak class\nIgnores 2\nIgnores 3\nIgnores 4")
+    assert body.endswith("lowers soak.") and tiers[0] == "Ignores 1 soak class"
+    assert split_tiers("Passive\nNo tiers here.") == ("Passive\nNo tiers here.", None)
+
+
+def test_journal_sections():
+    from characters.journal import sections
+
+    s = sections("intro\n# Day 1 – Daion\nWe met **Igi**.\n- bought rope\n- <script>\n## Night\nquiet")
+    assert [x["title"] for x in s] == ["", "Day 1 – Daion", "Night"]
+    assert "<b>Igi</b>" in s[1]["html"] and "<li>&lt;script&gt;</li>" in s[1]["html"] and s[2]["level"] == 2

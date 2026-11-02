@@ -1,0 +1,167 @@
+{
+ "overpower-staggering-strike": {
+  "name": "Taumelnder Schlag",
+  "group": "Wegstoßen",
+  "cost": "Nahkampfangriff +1 AP; Widerstand: Kraft (senkt Stufe)",
+  "effect": "Widerstand: Kraft (senkt Stufe)\nKosten: Nahkampfangriff +1 AP\nDu wirfst dich voll in den Angriff und schleuderst deinen Gegner wie eine Lumpenpuppe in die Luft. Du stößt ihn mehrere Fuß zurück und wirfst ihn eventuell zu Boden. Das Ziel darf Kraft würfeln, um zu widerstehen.\n5 Fuß\n10 Fuß\n10 Fuß und liegend\n15 Fuß und liegend"
+ },
+ "overpower-bullrush": {
+  "name": "Bullenansturm",
+  "group": "Wegstoßen",
+  "cost": "Bewegen + Nahkampfangriff",
+  "requires_text": "Taumelnder Schlag",
+  "effect": "Voraussetzung: Spezialisierung Taumelnder Schlag\nKosten: Bewegen + Nahkampfangriff\nWenn du auf einen Gegner zustürmst, kannst du ihn nach hinten schleudern. Rennst du in gerader Linie auf einen Gegner zu (mindestens 15 Fuß) und machst dann einen Nahkampfangriff, ist dein Nahkampfangriff automatisch ein taumelnder Schlag.\nWenn du willst, darfst du dich außerdem mit dem Ziel bewegen (und angrenzend zu ihm bleiben), und zwar um die Strecke, die du es mit dem taumelnden Schlag wegschickst. Diese zusätzliche Bewegung kostet nichts."
+ },
+ "resilience-blast-proof": {
+  "name": "Explosionssicher",
+  "cost": "Schildparade +1 AP reflexiv; Widerstand: List (senkt Stufe)",
+  "effect": "Widerstand: List (senkt Stufe)\nKosten: Schildparade +1 AP reflexiv\nAngesichts von Sprengstoffen, Explosionen und Stürmen hebst du deinen Schild und machst weiter, und schützt dich und deine Verbündeten vor der Explosion. Immer wenn du mitten in einer Explosion oder einem ähnlichen Effekt mit Explosionsbereich bist, kannst du den Effekt auf dich und eventuell auf angrenzende Felder aufheben, es sei denn, der Verursacher des Effekts widersteht gegen deine Fertigkeit Zähigkeit.\nHebt den Effekt auf deinem Feld auf\nHebt den Effekt auf deinem Feld & 1 Feld hinter dir auf Hebt den Effekt auf deinem Feld & 2 Feldern hinter dir auf Hebt den Effekt auf deinem Feld & 4 Feldern hinter dir auf"
+ },
+ "resilience-body-of-steel": {
+  "name": "Körper aus Stahl",
+  "cost": "Passiv",
+  "effect": "Dein gepanzertes Training erlaubt dir, gezielten Angriffen standzuhalten. Versucht ein Gegner einen gezielten Angriff auf dich, darfst du deine Verteidigung zum Widerstand gegen den gezielten Angriff addieren."
+ },
+ "resilience-brace-for-impact": {
+  "name": "Auf den Aufprall gefasst",
+  "cost": "Wie eine Schildparade",
+  "effect": "Kosten: wie eine Schildparade\nStatt zu versuchen, dem Angriff auszuweichen, bereitest du dich auf den Aufprall vor. Du kannst dich jederzeit auf den Aufprall gefasst machen, wenn du normalerweise einen Schlag parieren könntest. Dadurch wird dein Ausweichbonus für das Parieren stattdessen zu einem Verteidigungsbonus."
+ },
+ "resilience-bulwark": {
+  "name": "Bollwerk",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nDu machst dich auf jeden Angriff gefasst und wirst zu einem unberührbaren Bollwerk. In dieser Haltung würfelst du deine Verteidigungswürfe zweimal und nimmst das höhere Ergebnis. Deinen Verteidigungsbonus addierst du weiterhin auf den Wurf deiner Wahl."
+ },
+ "resilience-interposition": {
+  "name": "Dazwischentreten",
+  "cost": "Bewegen +1 AP reflexiv; Widerstand: Geschick (hebt auf)",
+  "effect": "Widerstand: Geschick (hebt auf)\nKosten: Bewegen +1 AP reflexiv\nDu kannst einschätzen, ob ein Gegner einen Freund angreifen will, und dich zwischen ihn und einen deiner Verbündeten stellen. Du musst dich entscheiden, bevor dein Verbündeter sein Ausweichen würfelt. Für die Kosten einer Bewegung +1 Aktionspunkt darfst du eine einzelne Bewegung machen, um dich vor den Angriff zu stellen. Ist der Angriff ein Nahkampfangriff, musst du deine Bewegung angrenzend zu dem angegriffenen Verbündeten und zu dem Angreifer beenden.\nIst der Angriff ein Fernangriff, musst du deine Bewegung zwischen deinem Verbündeten und dem Angreifer beenden. Außerdem darf der Angreifer gegen deine Zähigkeit widerstehen. Widersteht er erfolgreich, trifft der Angriff stattdessen das vorgesehene Ziel statt dich. Scheitert der Widerstand, trifft der Angriff automatisch dich."
+ },
+ "resilience-metal-embrace": {
+  "name": "Metallumarmung",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nImmer wenn du im Kampf getroffen wirst, kannst du für 1 Aktionspunkt einen Zähigkeitswurf machen und eine zusätzliche Schadensmenge absorbieren, wie unten bestimmt.\nSchütze vor 3 zusätzlichem Schaden\nSchütze vor 6 zusätzlichem Schaden\nSchütze vor 9 zusätzlichem Schaden\nSchütze vor 12 zusätzlichem Schaden"
+ },
+ "resilience-never-off-guard": {
+  "name": "Nie unvorbereitet",
+  "cost": "Passiv",
+  "effect": "Du bist immer auf einen Angriff gefasst. Normalerweise sinken deine Trefferpunkte nach dem Kampf, während du dich ausruhst oder Gespräche führst. Deine Trefferpunkte sind immer zumindest teilweise einsatzbereit. Außerhalb des Kampfes hast du immer eine Anzahl Trefferpunkte aktiv, die dem Doppelten deiner Fertigkeit in Zähigkeit entspricht, selbst wenn du bewusstlos bist. Natürlich kannst du nicht mehr Trefferpunkte aktiv haben als dein Maximum."
+ },
+ "resilience-press": {
+  "name": "Bedrängen",
+  "cost": "Haltung; Widerstand: Geschick (hebt auf)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nWiderstand: Geschick (hebt auf)\nDu wählst ein Ziel, und solange du angrenzend zu diesem Ziel bist, kannst du es vollständig daran hindern, jemand anderen als dich anzugreifen. Wenn du diese Haltung einnimmst, wähle ein Ziel der Haltung. Um ein anderes Ziel zu wählen, musst du die Haltung neu einnehmen. Solange du angrenzend zum Ziel bist und das Ziel versucht, jemanden anzugreifen, muss es den Widerstand bestehen. Scheitert es, greift es nicht an und verliert stattdessen 1 Aktionspunkt."
+ },
+ "resilience-protector": {
+  "name": "Beschützer",
+  "cost": "Wie Schildparade",
+  "effect": "Kosten: wie eine Schildparade\nDu kannst die Menschen um dich mit deinem Schild beschützen. Immer wenn ein angrenzender Verbündeter Ziel eines Angriffs wäre, kannst du mit deinem Schild den Schlag für ihn parieren. Der Verbündete erhält alle Boni, die du für deine Parade erhalten würdest."
+ },
+ "resilience-resolute": {
+  "name": "Entschlossen",
+  "cost": "Passiv",
+  "requires_text": "2+ Zähigkeits-Haltungen",
+  "effect": "Voraussetzung: 2 oder mehr bekannte Haltungen aus der Fertigkeit Zähigkeit Du bist der ultimative Wächter und verwandelst dich in eine undurchdringliche Barriere. Wenn du eine deiner Haltungen aus der Fertigkeit Zähigkeit einnimmst, darfst du gleichzeitig alle deine bekannten Zähigkeits-Haltungen einnehmen und alle aktiv halten (solange sie sich nicht aus irgendeinem Grund gegenseitig aufheben). Sie wirken alle als eine Haltung; wirst du also aus deiner Haltung geworfen, wirst du aus allen deinen Haltungen geworfen."
+ },
+ "resilience-second-skin": {
+  "name": "Zweite Haut",
+  "cost": "1 AP reflexiv",
+  "effect": "Kosten: 1 AP reflexiv\nAngriffe, die Schutz ignorieren, haben dennoch Probleme mit dir. Immer wenn du einem Angriff ausgesetzt bist, der deinen Schutz ignorieren würde, darfst du 1 Aktionspunkt ausgeben, um ihn in durch Schutz minderbaren Schaden umzuwandeln.\nBis zu 3 Punkte nicht minderbaren Schadens werden minderbar. Bis zu 6 Punkte nicht minderbaren Schadens werden minderbar. Bis zu 9 Punkte nicht minderbaren Schadens werden minderbar. Bis zu 12 Punkte nicht minderbaren Schadens werden minderbar."
+ },
+ "resilience-solid-stances": {
+  "name": "Feste Haltungen",
+  "cost": "Passiv",
+  "effect": "Du hast ein großartiges Gleichgewicht und verstehst es, deine Haltung zu bewahren. Solange du bei Bewusstsein bist, kannst du nicht unfreiwillig aus deinen Haltungen geworfen werden, weil du zurückgestoßen oder zu Boden gestoßen wirst."
+ },
+ "resilience-thick-skin": {
+  "name": "Dicke Haut",
+  "cost": "Passiv",
+  "effect": "Dein Körper absorbiert von Natur aus etwas Schaden. Dein Körper hat eine natürliche Schutzklasse von 1. Außerdem hast du für je 5 Fertigkeitspunkte in Zähigkeit eine zusätzliche Schutzklasse von 1. Hast du also 20 in Zähigkeit, hättest du eine Schutzklasse (ohne Rüstung) von 5. Diese Schutzklasse summiert sich mit Rüstung."
+ },
+ "resilience-tough-stuff": {
+  "name": "Zähes Zeug",
+  "cost": "Passiv",
+  "effect": "Du erhältst Bonus-Trefferpunkte abhängig von deiner Fertigkeit in Zähigkeit und der Zahl deiner Spezialisierungen. Für jede Spezialisierung, die du hast (diese eingeschlossen), erhältst du 1 zusätzlichen Trefferpunkt. Für je 8 Fertigkeitspunkte in Zähigkeit steigt diese Zahl um 1. Hast du also 8 Fertigkeitspunkte in Zähigkeit und 6 Spezialisierungen, hättest du 12 zusätzliche Trefferpunkte."
+ },
+ "resilience-unassailable-mountain": {
+  "name": "Unbezwingbarer Berg",
+  "cost": "3 AP reflexiv",
+  "requires_text": "schwere oder schwerere Rüstung getragen",
+  "effect": "Voraussetzung: du trägst schwere (oder schwerere) Rüstung Kosten: 3 AP reflexiv\nFür 3 Aktionspunkte darfst du deinen Schutz stark erhöhen. Das kann entschieden werden, nachdem der Schaden angesagt wurde. War der Angriff ein Spezialangriff, gelten alle anderen Effekte des Angriffs weiterhin. Diese Fähigkeit funktioniert nur in schwerer (oder schwererer) Rüstung. Um zu bestimmen, um wie viel deine Schutzklasse steigt, würfle unten:\n+4 Schutzklasse\n+5 Schutzklasse\n+6 Schutzklasse\n+7 Schutzklasse"
+ },
+ "resilience-walking-fortress": {
+  "name": "Wandelnde Festung",
+  "cost": "Haltung",
+  "requires_text": "3 Zähigkeit",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nVoraussetzung: 3 Fertigkeitspunkte in Zähigkeit\nIn der Haltung Wandelnde Festung schnellt deine Verteidigung in die Höhe. Du erhältst +1 auf deine Verteidigung für je 3 Fertigkeitspunkte in Zähigkeit."
+ },
+ "resilience-ward": {
+  "name": "Wache",
+  "cost": "Haltung; 1 AP reflexiv",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nKosten: 1 AP reflexiv\nDu lässt deine Feinde nicht unversehrt an dir vorbeiziehen. Bewegt sich ein Gegner in deine Nahkampfreichweite, kannst du ihn für 1 Aktionspunkt reflexiv angreifen. Bewegt sich ein Gegner von einem Feld in Nahkampfreichweite auf ein anderes Feld in Nahkampfreichweite, öffnet ihn das ebenfalls für deine reflexiven Angriffe. Ein einzelner Gegner kann pro Zug nur einmal Ziel dieser Spezialisierung sein."
+ },
+ "resilience-armored-ease": {
+  "name": "Gepanzerte Leichtigkeit",
+  "group": "Gepanzerte Bewegung",
+  "cost": "Passiv",
+  "effect": "Wenn du Rüstung trägst, darfst du sie nach eigenem Ermessen als einen Grad leichter betrachten. Du kannst deine mittlere Rüstung also zur Bestimmung von Abzügen wie eine leichte Rüstung behandeln, erhältst aber weiterhin alle Vorteile des Tragens einer mittleren Rüstung."
+ },
+ "resilience-armored-freedom": {
+  "name": "Gepanzerte Freiheit",
+  "group": "Gepanzerte Bewegung",
+  "cost": "Passiv",
+  "requires_text": "Gepanzerte Leichtigkeit; 7 Zähigkeit",
+  "effect": "Voraussetzung: Spezialisierung Gepanzerte Leichtigkeit & 7 Fertigkeitspunkte in Zähigkeit Nun darfst du Rüstung, die du trägst, zur Bestimmung von Abzügen als zwei Grade leichter betrachten (zusätzlich zu dem einen Grad durch Gepanzerte Leichtigkeit). So könntest du überschwere Rüstung tragen, hättest aber nur die Abzüge einer leichten Rüstung."
+ },
+ "resilience-living-barrier": {
+  "name": "Lebende Barriere",
+  "group": "Barriere",
+  "cost": "Haltung; Widerstand: Geschick (hebt auf)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nWiderstand: Geschick (hebt auf)\nNichts kommt an dir vorbei. Wenn du die Haltung Lebende Barriere einnimmst, platzierst du dich strategisch so, dass du drei angrenzende Felder einnimmst (also dein normales Feld plus zwei weitere), und du darfst alles angreifen, was an deine neue Größe angrenzt.\nGegner, die versuchen, sich durch dein neues Feld zu bewegen, müssen einen Geschickwiderstand gegen deine Zähigkeit würfeln. Scheitert der Gegner, darf er dein neues Feld nicht betreten und seine Bewegung endet."
+ },
+ "resilience-living-wall": {
+  "name": "Lebende Mauer",
+  "group": "Barriere",
+  "cost": "1 AP reflexiv; Widerstand: Geschick (hebt auf)",
+  "requires_text": "Lebende Barriere",
+  "effect": "Voraussetzung: Spezialisierung Lebende Barriere\nWiderstand: Geschick (hebt auf)\nKosten: 1 AP reflexiv\nVersucht ein Gegner, während du in der Haltung Lebende Barriere bist, jemanden durch dich hindurch oder innerhalb deines erweiterten Feldes anzugreifen, darfst du 1 reflexiven Aktionspunkt ausgeben, um diesen Angriff abzufangen. Dabei erhältst du keinen Ausweichwurf (als wäre der Ausweichwurf eine\n1) und wirst vom Angriff getroffen. Der Gegner darf dennoch einen Geschickwiderstand gegen deine Zähigkeit würfeln, um zu versuchen, sein ursprüngliches Ziel anzugreifen."
+ },
+ "resilience-living-stronghold": {
+  "name": "Lebende Festung",
+  "group": "Barriere",
+  "cost": "Passiv; Widerstand: Geschick",
+  "requires_text": "Lebende Barriere, Lebende Mauer",
+  "effect": "Widerstand: Geschick\nVoraussetzung: Spezialisierungen Lebende Barriere & Lebende Mauer Nichts kommt an dir vorbei. Versucht ein Gegner in der Haltung Lebende Barriere, jemanden durch dich hindurch oder innerhalb deines erweiterten Feldes anzugreifen, und scheitert sein Geschickwiderstand gegen dich, wird der Angriff aufgehoben. Er verliert alle Aktionspunkte, die er für den Angriff ausgegeben hat."
+ },
+ "espionage-destabilizing-strike": {
+  "name": "Destabilisierender Schlag",
+  "cost": "Angriff +1 AP",
+  "effect": "Kosten: Angriff +1 AP\nIst dein Gegner orientierungslos, nutzt du seinen geschwächten Geist aus und kannst einen destabilisierenden Schlag machen. Verursacht ein destabilisierender Schlag Schaden, öffnet er den Gegner für einen reflexiven Angriff jedes Charakters in Nahkampfreichweite des Ziels. Diese reflexiven Angriffe können als waffenlose Angriffe oder mit überschweren oder kleineren Nahkampfwaffen gemacht werden und kosten nur 1 Aktionspunkt statt der normalen 2. Als Person, die den destabilisierenden Schlag gemacht hat, kannst du keinen reflexiven Angriff machen."
+ },
+ "espionage-feign-fatal-wounds": {
+  "name": "Tödliche Wunden vortäuschen",
+  "cost": "1 AP reflexiv; Widerstand: List (im Wettstreit, hebt auf)",
+  "effect": "Widerstand: List (hebt auf)\nKosten: 1 AP reflexiv\nWirst du im Kampf getroffen, kannst du den Erfolg des Angriffs übertrieben darstellen und deinen Feind glauben machen, du seist aus dem Kampf ausgeschieden oder schwer verletzt. Wenn dir Schaden zugefügt wird, darfst du 1 Aktionspunkt reflexiv ausgeben, um den Gegner glauben zu machen, er habe dich verwundet, dir einen tödlichen Treffer verpasst oder dich glatt getötet. Er darf mit einem erfolgreichen Listwurf widerstehen (im Wettstreit gegen deinen Spionagewurf). Scheitert er, darfst du wählen, wie schwer verletzt du erscheinst (oder ob du hinfällst und den Tod völlig vortäuschst).\nBeachte: Fällst du infolge vorgetäuschten Todes oder einer schweren Wunde hin, kostet das Aufstehen einen Aktionspunkt."
+ },
+ "espionage-first-strike": {
+  "name": "Erstschlag",
+  "cost": "Passiv",
+  "effect": "Du machst es dir zur Aufgabe, zu wissen, dass ein Kampf stattfindet, bevor deine Feinde es wissen. Führst du den ersten Schlag eines Kampfes aus (entweder bevor Initiative gewürfelt wird oder indem du die erste Person bist, die im Kampf handelt), erhält dein Angriff einen Bonus auf deinen Genauigkeitswurf in Höhe deiner Fertigkeit in Spionage."
+ },
+ "espionage-flowing-shadow": {
+  "name": "Fließender Schatten",
+  "cost": "Passiv",
+  "requires_text": "4 Spionage",
+  "effect": "Voraussetzung: 4 Fertigkeitspunkte in Spionage\nDu fließt durch die Schatten und lässt deine Gegner rätseln, während du durch die Dunkelheit huschst. Immer wenn die Person, die dich angreift, geblendet ist oder bei schlechtem Licht kämpft, kannst du Ausweichen zweimal würfeln und das höhere Ergebnis nehmen. Außerdem erhältst du in der Dunkelheit +1 auf deine Ausweichwürfe für je 4 Fertigkeitspunkte in Spionage. Ist der angreifende Gegner von der Dunkelheit unbeeinflusst oder findet dich auf eine Weise, die nicht auf Sicht beruht, erhältst du weder den Ausweichbonus noch die Möglichkeit, zweimal zu würfeln und das höhere Ergebnis zu nehmen."
+ },
+ "espionage-heartseeker": {
+  "name": "Herzsucher",
+  "cost": "Nahkampfangriff mit leichter Waffe +1 AP",
+  "effect": "Kosten: Nahkampfangriff mit einer leichten Waffe +1 AP\nMit einer leichten Waffe weißt du, wie man am besten an der lästigen Rüstung deines Feindes vorbeikommt. Bei einem herzsuchenden Angriff hat dein Gegner mehr Mühe, ihn abzufangen. Senke für diesen Angriff die Schutzklasse deines Gegners um 1 für jede Stufe, die du mit deinem Spionagewurf erhältst. Dies beeinflusst die Rüstung nicht dauerhaft.\n-1 Schutzklasse\n-2 Schutzklasse\n-3 Schutzklasse\n-4 Schutzklasse"
+ },
+ "espionage-invisible-blade": {
+  "name": "Unsichtbare Klinge",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nDu kämpfst mit verborgenen Waffen in der Handfläche und hältst deine Angriffe so eng, dass deine Klingen kaum mehr als eine Verlängerung deiner Fäuste sind. Mit einer Waffe, die sowohl leicht als auch verbergbar ist, kämpfst du wie waffenlos: Du kannst nicht entwaffnet werden und deine Waffe kann nicht zerschmettert werden, und deine Angriffe kosten nur 1 Aktionspunkt. In jeder anderen Hinsicht zählt deine Waffe weiterhin als leichte Waffe."
+ }
+}

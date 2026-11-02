@@ -5,57 +5,82 @@
   {{ effect_options|json_script:"effect-options" }}
   {% if messages %}
     {% for m in messages %}{% if "popup" in m.tags %}
-      <div class="modal-backdrop" x-data="{open: true}" x-show="open" x-on:click.self="open = false" role="alertdialog" aria-label="Notice">
-        <div class="paper modal"><h2>Heads up</h2><p>{{ m }}</p>
-          <div class="row" style="justify-content:flex-end"><button class="btn primary" type="button" x-on:click="open = false">OK</button></div></div>
+      <div class="modal-backdrop" x-data="{open: true}" x-show="open" x-on:click.self="open = false" role="alertdialog" aria-label="{% t "Notice" %}">
+        <div class="paper modal"><h2>{% t "Heads up" %}</h2><p>{{ m }}</p>
+          <div class="row" style="justify-content:flex-end"><button class="btn primary" type="button" x-on:click="open = false">{% t "OK" %}</button></div></div>
       </div>
     {% endif %}{% endfor %}
     <ul class="messages" style="max-width:1400px;margin:0 auto 10px">{% for m in messages %}{% if "popup" not in m.tags %}<li class="{{ m.tags }}">{{ m }}</li>{% endif %}{% endfor %}</ul>
   {% endif %}
   {% if missing_options %}
-    <div class="warn-banner" role="alert"><b>Choice needed:</b>
+    <div class="warn-banner" role="alert"><b>{% t "Choice needed:" %}</b>
       {% for sp in missing_options %}<button type="button" class="linkish" x-on:click="showSpec('{{ sp.slug }}')">{{ sp.name }} – {{ sp.options.label }}</button>{% endfor %}</div>
   {% endif %}
   {% if spec_warnings %}
-    <div class="warn-banner" role="alert"><b>Requirements not met:</b>
+    <div class="warn-banner" role="alert"><b>{% t "Requirements not met:" %}</b>
       {% for name, warnings in spec_warnings %}<span>{{ name }} – {{ warnings|join:"; " }}</span>{% if not forloop.last %} · {% endif %}{% endfor %}</div>
   {% endif %}
   {% if admin_mode %}
-    <div class="admin-banner">Admin mode – values can be changed freely.
-      <a href="{% url 'edit_choices' character.pk %}" style="color:#fff">Edit choices…</a></div>
+    <div class="admin-banner">{% t "Admin mode – values can be changed freely." %}
+      <a href="{% url 'edit_choices' character.pk %}" style="color:#fff">{% t "Edit choices…" %}</a></div>
   {% endif %}
 
   <div class="play-bar">
-    <div class="grp"><b>Health</b>
+    <div class="grp"><b>{% t "Health" %}</b>
       <form class="row" style="gap:4px" hx-post="{% url 'play' character.pk 'damage' %}" hx-target="#sheet-body" hx-swap="outerHTML">
-        <input type="number" name="amount" min="0" placeholder="dmg" aria-label="Damage amount" required>
-        <button class="btn small" type="submit" title="Damage goes to HP first, then wounds">Damage</button>
+        <input type="number" name="amount" min="0" placeholder="{% t "dmg" %}" aria-label="{% t "Damage amount" %}" required>
+        <button class="btn small" type="submit" title="{% t "Damage goes to HP first, then wounds" %}">{% t "Damage" %}</button>
       </form>
       <form class="row" style="gap:4px" hx-post="{% url 'play' character.pk 'heal' %}" hx-target="#sheet-body" hx-swap="outerHTML">
-        <input type="number" name="amount" min="0" placeholder="hp" aria-label="Heal amount" required>
-        <button class="btn small" type="submit">Heal</button>
+        <input type="number" name="amount" min="0" placeholder="{% t "hp" %}" aria-label="{% t "Heal amount" %}" required>
+        <button class="btn small" type="submit">{% t "Heal" %}</button>
       </form>
-      <button class="btn small" hx-post="{% url 'play' character.pk 'breather' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="15–30 min rest: all HP restored">Breather</button>
-      <button class="btn small" hx-post="{% url 'play' character.pk 'heal-wounds' %}" hx-vals='{"amount": "1"}' hx-target="#sheet-body" hx-swap="outerHTML" title="Wounds heal 1 per day">+1 Wound</button>
-      <button class="btn small" type="button" x-on:click="openPanel('health')">More…</button>
+      <button class="btn small" hx-post="{% url 'play' character.pk 'breather' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "15–30 min rest: all HP restored" %}">{% t "Breather" %}</button>
+      <button class="btn small" hx-post="{% url 'play' character.pk 'heal-wounds' %}" hx-vals='{"amount": "1"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Wounds heal 1 per day" %}">{% t "Heal 1 wound" %}</button>
+      <button class="btn small" type="button" x-on:click="openPanel('health')">{% t "More…" %}</button>
     </div>
-    <div class="grp"><b>XP</b> {{ character.xp }}/{{ xp_to_level }}
-      <button class="btn small" hx-post="{% url 'play' character.pk 'xp' %}" hx-vals='{"delta": "1"}' hx-target="#sheet-body" hx-swap="outerHTML">+1</button>
-      <button class="btn small" hx-post="{% url 'play' character.pk 'xp' %}" hx-vals='{"delta": "-1"}' hx-target="#sheet-body" hx-swap="outerHTML">−1</button>
-      {% if can_level or admin_mode and character.level < 12 %}<a class="btn small brass" href="{% url 'levelup' character.pk %}">Level up!</a>{% endif %}
-    </div>
-    <div class="grp"><b>Stance</b>
-      {% for s in sheet.stances %}
-        <button class="chip{% if s.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'stance' %}" hx-vals='{"stance": "{{ s.slug }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ s.detail }}">{{ s.label }}{% if s.detail %} <small>{{ s.detail|truncatechars:28 }}</small>{% endif %}</button>
-      {% endfor %}
-      {% if battle_theme and battle_theme.2 and battle_theme.1 == "instrument" %}
-        <button class="btn small danger" hx-post="{% url 'play' character.pk 'theme-sundered' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="A sunder or disarm of your instrument cancels the Battle Theme">Instrument sundered / disarmed</button>
+    <div class="grp fight{% if character.fight.active %} on{% endif %}"><b>{% t "Fight" %}</b>
+      {% if character.fight.active %}
+        {% with f=character.fight %}
+        <span class="ap-left{% if f.ap == 0 %} empty{% endif %}" title="{% t "Action points left this round" %}">{{ f.ap }}/{{ sheet.stats.ap.total }} {% t "AP" %}</span>
+        <span class="muted small">{% t "Round {n}" n=f.round %}{% if f.my_turn %} · {% t "your turn" %}{% endif %}</span>
+        {% for n in "123" %}<button class="btn small" hx-post="{% url 'play' character.pk 'fight-spend' %}" hx-vals='{"amount": "{{ n }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Spend {n} AP (on your turn or reflexively)" n=n %}" {% if f.ap < n|add:0 %}disabled{% endif %}>−{{ n }}</button>{% endfor %}
+        <button class="btn small" hx-post="{% url 'play' character.pk 'fight-undo' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Give 1 AP back (mis-click)" %}">+1</button>
+        {% if f.my_turn %}
+          <button class="btn small brass" hx-post="{% url 'play' character.pk 'fight-end-turn' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Your action points refresh" %}">{% t "End my turn" %}</button>
+        {% else %}
+          <button class="btn small primary" hx-post="{% url 'play' character.pk 'fight-turn' %}" hx-target="#sheet-body" hx-swap="outerHTML">{% t "My turn" %}</button>
+        {% endif %}
+        <button class="btn small" hx-post="{% url 'play' character.pk 'fight-stop' %}" hx-target="#sheet-body" hx-swap="outerHTML">{% t "End fight" %}</button>
+        {% endwith %}
+      {% else %}
+        <button class="btn small" hx-post="{% url 'play' character.pk 'fight-start' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Track the AP you have left each round" %}">{% t "Start fight" %}</button>
       {% endif %}
     </div>
+    <div class="grp"><b>{% t "XP" %}</b> {{ character.xp }}/{{ xp_to_level }}
+      <button class="btn small" hx-post="{% url 'play' character.pk 'xp' %}" hx-vals='{"delta": "1"}' hx-target="#sheet-body" hx-swap="outerHTML">+1</button>
+      <button class="btn small" hx-post="{% url 'play' character.pk 'xp' %}" hx-vals='{"delta": "-1"}' hx-target="#sheet-body" hx-swap="outerHTML">−1</button>
+      {% if can_level or admin_mode and character.level < 12 %}<a class="btn small brass" href="{% url 'levelup' character.pk %}">{% t "Level up!" %}</a>{% endif %}
+    </div>
+    <div class="grp"><b>{% t "Stance" %}</b>
+      {% for s in sheet.stances %}
+        <button class="chip{% if s.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'stance' %}" hx-vals='{"stance": "{{ s.slug }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ s.detail|t }}">{{ s.label|t }}{% if s.detail %} <small>{{ s.detail|t|truncatechars:28 }}</small>{% endif %}</button>
+      {% endfor %}
+    </div>
+    {% if sheet.ongoing %}
+      <div class="grp"><b>{% t "Other" %}</b>
+        {% for t in sheet.ongoing %}
+          <button class="chip{% if t.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'toggle' %}" hx-vals='{"key": "{{ t.key }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ t.cost|t }}: {{ t.detail|t }}">{{ t.label|t }} <small>{{ t.detail|t|truncatechars:34 }}</small></button>
+        {% endfor %}
+        {% if battle_theme and battle_theme.2 and battle_theme.1 == "instrument" %}
+          <button class="btn small danger" hx-post="{% url 'play' character.pk 'theme-sundered' %}" hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "A sunder or disarm of your instrument cancels the Battle Theme" %}">{% t "Instrument sundered / disarmed" %}</button>
+        {% endif %}
+      </div>
+    {% endif %}
     {% if sheet.toggles %}
-      <div class="grp"><b>Situational</b>
+      <div class="grp"><b>{% t "Situational" %}</b>
         {% for t in sheet.toggles %}
-          <button class="chip{% if t.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'toggle' %}" hx-vals='{"key": "{{ t.key }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ t.detail }}">{{ t.label|cut:"Specialty: "|cut:"Racial trait: "|cut:"Story: " }} <small>{{ t.detail|truncatechars:28 }}</small></button>
+          <button class="chip{% if t.active %} on{% endif %}" hx-post="{% url 'play' character.pk 'toggle' %}" hx-vals='{"key": "{{ t.key }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{{ t.detail|t }}">{{ t.label|cut:"Specialty: "|cut:"Racial trait: "|cut:"Story: " }} <small>{{ t.detail|t|truncatechars:28 }}</small></button>
         {% endfor %}
       </div>
     {% endif %}
@@ -64,20 +89,22 @@
         <form class="inline" method="post" action="{% url 'toggle_admin' character.pk %}">{% csrf_token %}
           <input type="hidden" name="on" value="{% if admin_mode %}0{% else %}1{% endif %}">
           <button class="btn small{% if admin_mode %} danger{% endif %}" type="submit"
-            {% if not admin_mode %}onclick="return confirm('Enter admin mode? You can then change values that are normally fixed by the rules.')"{% endif %}>
-            {% if admin_mode %}Leave admin{% else %}Admin{% endif %}</button>
+            {% if not admin_mode %}onclick="return confirm('{% t "Enter admin mode? You can then change values that are normally fixed by the rules." %}')"{% endif %}>
+            {% if admin_mode %}{% t "Leave admin" %}{% else %}{% t "Admin" %}{% endif %}</button>
         </form>
       {% endif %}
-      <a class="btn small" href="{% url 'password' character.pk %}">Password</a>
-      <button class="btn small" type="button" onclick="window.print()">Print</button>
-      <form class="inline" method="post" action="{% url 'lock' character.pk %}">{% csrf_token %}<button class="btn small" type="submit">Lock</button></form>
+      <a class="btn small" href="{% url 'password' character.pk %}">{% t "Password" %}</a>
+      <button class="btn small" type="button" onclick="window.print()">{% t "Print" %}</button>
+      <form class="inline" method="post" action="{% url 'lock' character.pk %}">{% csrf_token %}<button class="btn small" type="submit">{% t "Lock" %}</button></form>
     </div>
   </div>
 
   <nav class="sheet-tabs" role="tablist">
-    <button type="button" class="tab-page1" :class="{on: tab==='page1' || tab==='page2' && window.matchMedia('(orientation: landscape) and (min-width: 901px)').matches}" x-on:click="setTab('page1')">Sheet</button>
-    <button type="button" class="tab-page2" :class="{on: tab==='page2'}" x-on:click="setTab('page2')">Specialties &amp; Gear</button>
-    <button type="button" :class="{on: tab==='inventory'}" x-on:click="setTab('inventory')">Inventory &amp; Effects</button>
+    <button type="button" class="tab-page1" :class="{on: tab==='page1' || tab==='page2' && window.matchMedia('(orientation: landscape) and (min-width: 901px)').matches}" x-on:click="setTab('page1')">{% t "Sheet" %}</button>
+    <button type="button" class="tab-page2" :class="{on: tab==='page2'}" x-on:click="setTab('page2')">{% t "Specialties & Gear" %}</button>
+    <button type="button" :class="{on: tab==='inventory'}" x-on:click="setTab('inventory')">{% t "Inventory & Effects" %}</button>
+    <button type="button" :class="{on: tab==='story'}" x-on:click="setTab('story')">{% t "Story" %}</button>
+    <a class="btn small" href="{% url 'planner' character.pk %}">{% t "Planner" %}</a>
   </nav>
 
   <div class="pages{% if sheet.hands.has_wings %} has-wings{% endif %}" :data-tab="tab" data-tab="{{ tab }}">
@@ -85,7 +112,7 @@
     {% include "characters/partials/page2.html" %}
     {% if sheet.hands.has_wings %}
       {# Wings as Arms: an extra weapon box; shown next to Weapon (Left) or above page 1 (order: -1). #}
-      <section class="page-wings" aria-label="Weapon held with the wings">
+      <section class="page-wings" aria-label="{% t "Weapon held with the wings" %}">
         {% include "characters/partials/weapon_block.html" with x=9 y=10 w=282 label="Weapon (Wings)" w_block=sheet.hands.wings_block held=sheet.hands.wings blocked=None two_handed=None unarmed=None %}
       </section>
     {% endif %}
@@ -94,39 +121,42 @@
   <div class="inventory" x-show="tab==='inventory'" {% if tab != "inventory" %}style="display:none"{% endif %}>
     {% include "characters/partials/inventory.html" %}
   </div>
+  <div class="inventory" x-show="tab==='story'" {% if tab != "story" %}style="display:none"{% endif %}>
+    {% include "characters/partials/story.html" %}
+  </div>
 
   <!-- panels -->
   <div x-show="panel" style="display:none" class="modal-backdrop" x-on:click.self="close()">
     <div class="paper modal" x-show="panel==='health'">
-      <h2>Health &amp; effects</h2>
+      <h2>{% t "Health & effects" %}</h2>
       <div class="row">
         <form class="row" hx-post="{% url 'play' character.pk 'set-hp' %}" hx-target="#sheet-body" hx-swap="outerHTML">
-          <label>Hit points <input type="number" name="value" value="{{ hp }}" min="0" max="{{ sheet.max_hp }}"></label>
-          <button class="btn small">Set</button></form>
+          <label>{% t "Hit points" %} <input type="number" name="value" value="{{ hp }}" min="0" max="{{ sheet.max_hp }}"></label>
+          <button class="btn small">{% t "Set" %}</button></form>
         <form class="row" hx-post="{% url 'play' character.pk 'set-wounds' %}" hx-target="#sheet-body" hx-swap="outerHTML">
-          <label>Wounds <input type="number" name="value" value="{{ wounds }}" min="0" max="{{ sheet.max_wounds }}"></label>
-          <button class="btn small">Set</button></form>
+          <label>{% t "Wounds taken" %} <input type="number" name="value" value="{{ wounds }}" min="0" max="{{ sheet.max_wounds }}"></label>
+          <button class="btn small">{% t "Set" %}</button></form>
         <form class="row" hx-post="{% url 'play' character.pk 'damage' %}" hx-target="#sheet-body" hx-swap="outerHTML">
           <input type="hidden" name="direct" value="1">
-          <label>Direct wound damage <input type="number" name="amount" min="0" required></label>
-          <button class="btn small">Apply</button></form>
+          <label>{% t "Direct wound damage" %} <input type="number" name="amount" min="0" required></label>
+          <button class="btn small">{% t "Apply" %}</button></form>
       </div>
-      <h3 style="margin-top:14px">Add effect</h3>
+      <h3 style="margin-top:14px">{% t "Add effect" %}</h3>
       {% include "characters/partials/effect_form.html" %}
-      <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" type="button" x-on:click="close()">Close</button></div>
+      <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" type="button" x-on:click="close()">{% t "Close" %}</button></div>
     </div>
     <div class="paper modal" x-show="panel==='money'">
-      <h2>Money</h2>
-      <p class="muted small">1 king = 10 princes = 100 dukes. On hand: {{ money_on_hand }} · In bank: {{ money_in_bank }}</p>
+      <h2>{% t "Money" %}</h2>
+      <p class="muted small">{% t "1 king = 10 princes = 100 dukes. On hand: {hand} · In bank: {bank}" hand=money_on_hand bank=money_in_bank %}</p>
       <form class="stack" hx-post="{% url 'play' character.pk 'money' %}" hx-target="#sheet-body" hx-swap="outerHTML">
         <div class="row">
-          <select name="sign"><option value="+">Gain</option><option value="-">Spend</option></select>
+          <select name="sign"><option value="+">{% t "Gain" %}</option><option value="-">{% t "Spend" %}</option></select>
           <input type="number" name="amount" min="0" required>
-          <select name="unit"><option value="pr">princes</option><option value="d">dukes</option></select>
-          <select name="where"><option value="hand">on hand</option><option value="bank">in bank</option></select>
+          <select name="unit"><option value="k">{% t "kings" %}</option><option value="pr" selected>{% t "princes" %}</option><option value="d">{% t "dukes" %}</option></select>
+          <select name="where"><option value="hand">{% t "on hand" %}</option><option value="bank">{% t "in bank" %}</option></select>
         </div>
-        <label><input type="checkbox" name="transfer" value="1"> Transfer between hand and bank</label>
-        <div class="row"><button class="btn primary">Apply</button><button class="btn" type="button" x-on:click="close()">Close</button></div>
+        <label><input type="checkbox" name="transfer" value="1"> {% t "Transfer between hand and bank" %}</label>
+        <div class="row"><button class="btn primary">{% t "Apply" %}</button><button class="btn" type="button" x-on:click="close()">{% t "Close" %}</button></div>
       </form>
     </div>
     <div class="paper modal" x-show="panel==='spec'">
@@ -134,7 +164,7 @@
         <div>
           <h2 x-text="spec.name"></h2>
           <p class="muted small"><span x-text="spec.skill"></span> · <span x-text="spec.cost"></span>
-            <template x-if="spec.requires"><span> · Requires: <span x-text="spec.requires"></span></span></template></p>
+            <template x-if="spec.requires"><span> · {% t "Requires:" %} <span x-text="spec.requires"></span></span></template></p>
           <p class="small" x-text="spec.bonuses"></p>
           <template x-if="spec.usage_note"><div class="usage-note" x-text="'ⓘ ' + spec.usage_note"></div></template>
           <template x-if="spec.options">
@@ -146,8 +176,8 @@
                 </select></label>
             </form>
           </template>
-          <p style="white-space:pre-line" x-text="spec.effect"></p>
-          <div class="row" style="justify-content:flex-end"><button class="btn" type="button" x-on:click="close()">Close</button></div>
+          <div x-html="spec.effect_html"></div>
+          <div class="row" style="justify-content:flex-end"><button class="btn" type="button" x-on:click="close()">{% t "Close" %}</button></div>
         </div>
       </template>
     </div>

@@ -1,5 +1,5 @@
 {% load sheet_tags static %}
-<section class="page page1" aria-label="Character sheet page 1">
+<section class="page page1" aria-label="{% t "Character sheet page 1" %}">
   <svg class="deco" viewBox="0 0 952 1232" aria-hidden="true">
     <!-- header band with teeth -->
     <path d="M0,190 Q476,140 952,190 L952,205 Q476,155 0,205 Z" fill="#141210"/>
@@ -23,7 +23,7 @@
     <!-- experience arc -->
     <path d="M317,1178 A158,158 0 0 1 633,1178" fill="none" stroke="#141210" stroke-width="5"/>
     <path d="M353,1178 A122,122 0 0 1 597,1178" fill="none" stroke="#141210" stroke-width="2.5"/>
-    <text x="475" y="1082" text-anchor="middle" font-family="Anton" font-size="17">Experience</text>
+    <text x="475" y="1082" text-anchor="middle" font-family="Anton" font-size="17">{% t "Experience" %}</text>
     <!-- connector lines between attribute circles and the arc -->
     <g stroke="#141210" stroke-width="3" fill="none">
       <path d="M342,1030 L372,1045"/><path d="M288,1145 L335,1150"/>
@@ -36,22 +36,22 @@
   <!-- header -->
   <div class="box" style="--x:30;--y:14;--w:320;--h:150">
     <div class="line-field" style="flex-direction:row;gap:calc(8*var(--u));align-items:flex-end;margin-bottom:calc(9*var(--u))">
-      <span class="l" style="font-weight:700">Player Name</span>
+      <span class="l" style="font-weight:700">{% t "Player Name" %}</span>
       <span class="v" style="flex:1">{{ character.player_name }}</span>
     </div>
     <div class="logo">Tephra</div>
   </div>
   <div class="box" style="--x:612;--y:18;--w:300;--h:115">
-    <div class="line-field hdr-row"><div><div class="v">{{ character.name }}</div><div class="l">Character Name</div></div></div>
+    <div class="line-field hdr-row"><div><div class="v">{{ character.name }}</div><div class="l">{% t "Character Name" %}</div></div></div>
     <div class="hdr-row">
-      <div class="line-field"><div class="v">{{ sheet.race.name }}</div><div class="l">Race</div></div>
-      <div class="line-field"><div class="v" title="{{ character.nationality_name }}">{{ character.nationality_name }}</div><div class="l">Nationality</div></div>
+      <div class="line-field"><div class="v">{{ sheet.race.name }}</div><div class="l">{% t "Race" %}</div></div>
+      <div class="line-field"><div class="v" title="{{ character.nationality_name }}">{{ character.nationality_name }}</div><div class="l">{% t "Nationality" %}</div></div>
     </div>
     <div class="hdr-row">
-      <div class="line-field" style="flex:1.6"><div class="v" title="{{ character.religion }}">{{ character.religion }}</div><div class="l">Religion</div></div>
-      <div class="line-field"><div class="v">{{ character.age }}</div><div class="l">Age</div></div>
-      <div class="line-field"><div class="v" title="{{ character.height }}">{{ character.height }}</div><div class="l">Height</div></div>
-      <div class="line-field"><div class="v" title="{{ character.weight }}">{{ character.weight }}</div><div class="l">Weight</div></div>
+      <div class="line-field" style="flex:1.6"><div class="v" title="{{ character.religion }}">{{ character.religion }}</div><div class="l">{% t "Religion" %}</div></div>
+      <div class="line-field"><div class="v">{{ character.age }}</div><div class="l">{% t "Age" %}</div></div>
+      <div class="line-field"><div class="v" title="{{ character.height }}">{{ character.height }}</div><div class="l">{% t "Height" %}</div></div>
+      <div class="line-field"><div class="v" title="{{ character.weight }}">{{ character.weight }}</div><div class="l">{% t "Weight" %}</div></div>
     </div>
   </div>
 
@@ -62,16 +62,16 @@
   {% endwith %}
 
   <!-- centre gears -->
-  <div class="gear big" style="--cx:437;--cy:236;--r:70"><div class="face"><span class="val">{% stat sheet.stats.ap "Action points" %}</span><span class="lbl">AP</span></div></div>
-  <div class="gear" style="--cx:543;--cy:226;--r:43"><div class="face"><span class="val">{% stat sheet.stats.pri "Priority" signed=True %}</span><span class="lbl">Priority</span></div></div>
-  <div class="gear" style="--cx:494;--cy:320;--r:44"><div class="face"><span class="val">{% stat sheet.stats.spd "Speed (ft)" %}</span><span class="lbl">Speed</span></div></div>
-  <div class="gear" style="--cx:572;--cy:322;--r:33"><div class="face"><span class="val">{% stat sheet.stats.swim "Swim speed (ft)" %}</span><span class="lbl">Swim</span></div></div>
-  <div class="gear" style="--cx:456;--cy:384;--r:33"><div class="face"><span class="val">{% stat sheet.stats.climb "Climb speed (ft)" %}</span><span class="lbl">Climb</span></div></div>
-  <div class="gear" style="--cx:532;--cy:390;--r:33"><div class="face"><span class="val">{% stat sheet.stats.fly "Fly speed (ft)" %}</span><span class="lbl">Fly</span></div></div>
+  <div class="gear big" style="--cx:437;--cy:236;--r:70"><div class="face"><span class="val">{% stat sheet.stats.ap "Action points"|t %}</span><span class="lbl">{% t "AP" %}</span></div></div>
+  <div class="gear" style="--cx:543;--cy:226;--r:43"><div class="face"><span class="val">{% stat sheet.stats.pri "Priority"|t signed=True %}</span><span class="lbl">{% t "Priority" %}</span></div></div>
+  <div class="gear" style="--cx:494;--cy:320;--r:44"><div class="face"><span class="val">{% stat sheet.stats.spd "Speed (ft)"|t %}</span><span class="lbl">{% t "Speed" %}</span></div></div>
+  <div class="gear" style="--cx:572;--cy:322;--r:33"><div class="face"><span class="val">{% stat sheet.stats.swim "Swim speed (ft)"|t %}</span><span class="lbl">{% t "Swim" %}</span></div></div>
+  <div class="gear" style="--cx:456;--cy:384;--r:33"><div class="face"><span class="val">{% stat sheet.stats.climb "Climb speed (ft)"|t %}</span><span class="lbl">{% t "Climb" %}</span></div></div>
+  <div class="gear" style="--cx:532;--cy:390;--r:33"><div class="face"><span class="val">{% stat sheet.stats.fly "Fly speed (ft)"|t %}</span><span class="lbl">{% t "Fly" %}</span></div></div>
 
   <!-- tiers ribbon -->
   <div class="tiers box" style="--x:316;--y:305;--w:100;--h:200">
-    <h4 style="left:calc(36*var(--u));top:0">Tiers</h4>
+    <h4 style="left:calc(36*var(--u));top:0">{% t "Tiers" %}</h4>
     <div class="t" style="left:calc(10*var(--u));top:calc(26*var(--u))">1 - 9 <i><span>1</span></i></div>
     <div class="t" style="left:calc(4*var(--u));top:calc(72*var(--u))">10 - 19 <i><span>2</span></i></div>
     <div class="t" style="left:calc(4*var(--u));top:calc(118*var(--u))">20 - 29 <i><span>3</span></i></div>
@@ -90,8 +90,8 @@
         </g>
       </g>
       {% for loc in body_locations %}
-        <g class="loc{% if loc.hits %} hit{% endif %}" transform="translate({{ loc.x }} {{ loc.y }})" data-tip="{{ loc.n }} – {{ loc.label }}{% for e in loc.hits %}: {{ e.text }}{% endfor %}">
-          <title>{{ loc.n }} – {{ loc.label }}{% for e in loc.hits %}: {{ e.text }}{% endfor %}</title>
+        <g class="loc{% if loc.hits %} hit{% endif %}" transform="translate({{ loc.x }} {{ loc.y }})" data-tip="{{ loc.n }} – {{ loc.label|t }}{% for e in loc.hits %}: {{ e.text }}{% endfor %}">
+          <title>{{ loc.n }} – {{ loc.label|t }}{% for e in loc.hits %}: {{ e.text }}{% endfor %}</title>
           <circle r="8"/><text>{{ loc.n }}</text>
         </g>
       {% endfor %}
@@ -100,56 +100,57 @@
 
   <!-- armor -->
   <div class="frame box" style="--x:28;--y:555;--w:250;--h:310">
-    <h3>Armor</h3>
+    <h3>{% t "Armor" %}</h3>
     {% if sheet.armor %}
-      <div class="desc" title="{{ sheet.armor.name }}">{{ sheet.armor.name }}</div>
-    {% else %}<div class="desc empty-slot">Unarmored</div>{% endif %}
-    <div class="cap">Description</div>
+      <div class="desc" title="{{ sheet.armor.name|item_name }}">{{ sheet.armor.name|item_name }}</div>
+    {% else %}<div class="desc empty-slot">{% t "Unarmored" %}</div>{% endif %}
+    <div class="cap">{% t "Description" %}</div>
     <div class="trio" style="grid-template-columns:1fr 1fr">
-      <div><div class="v">{{ sheet.armor.size|default:"–" }}</div><div class="l">Size</div></div>
-      <div><div class="v">{% stat sheet.stats.soak "Soak class" %}</div><div class="l">Soak Class</div></div>
+      <div><div class="v">{{ sheet.armor.size|default:"–"|t }}</div><div class="l">{% t "Size" %}</div></div>
+      <div><div class="v">{% stat sheet.stats.soak "Soak class"|t %}</div><div class="l">{% t "Soak Class" %}</div></div>
     </div>
-    <div class="kv" style="justify-content:flex-end">Evade Penalty <span class="v">{% if sheet.armor %}{% if sheet.armor.eva_penalty.total %}−{% endif %}{% stat sheet.armor.eva_penalty "Evade penalty" %}{% else %}0{% endif %}</span></div>
-    <div class="kv" style="justify-content:flex-end">Speed Penalty <span class="v">{% if sheet.armor %}{% if sheet.armor.spd_penalty.total %}−{% endif %}{% stat sheet.armor.spd_penalty "Speed penalty" %}{% else %}0{% endif %}</span></div>
-    <div class="kv" style="justify-content:flex-end">Climb/Swim Penalty <span class="v">{% if sheet.armor %}{% if sheet.armor.climb_swim_penalty.total %}−{% endif %}{% stat sheet.armor.climb_swim_penalty "Climb/Swim penalty" %}{% else %}0{% endif %}</span></div>
-    <div class="notes-area"><b>Notes/Augments:</b>
+    <div class="kv" style="justify-content:flex-end">{% t "Evade Penalty" %} <span class="v">{% if sheet.armor %}{% stat sheet.armor.eva_penalty "Evade penalty"|t signed=True %}{% else %}0{% endif %}</span></div>
+    <div class="kv" style="justify-content:flex-end">{% t "Speed Penalty" %} <span class="v">{% if sheet.armor %}{% stat sheet.armor.spd_penalty "Speed penalty"|t signed=True %}{% else %}0{% endif %}</span></div>
+    <div class="kv" style="justify-content:flex-end">{% t "Climb/Swim Penalty" %} <span class="v">{% if sheet.armor %}{% stat sheet.armor.climb_swim_penalty "Climb/Swim penalty"|t signed=True %}{% else %}0{% endif %}</span></div>
+    <div class="notes-area"><b>{% t "Notes/Augments:" %}</b>
       <ul>
         {% for a in sheet.armor.item.augments %}{% with aug=a.0|augment %}<li>{{ aug.name|default:a.0 }} mQ {{ a.1|roman }}</li>{% endwith %}{% endfor %}
-        {% if sheet.armor.degree_reduced %}<li>Penalties reduced {{ sheet.armor.degree_reduced }} degree(s)</li>{% endif %}
+        {% if sheet.armor.degree_reduced %}<li>{% t "Penalties reduced by {n} degree(s)" n=sheet.armor.degree_reduced %}</li>{% endif %}
         {% if sheet.armor.item.notes %}<li>{{ sheet.armor.item.notes }}</li>{% endif %}
       </ul>
     </div>
   </div>
-  <div class="gear" style="--cx:278;--cy:585;--r:42"><div class="face"><span class="val">{% stat sheet.stats.eva "Evade" signed=True %}</span><span class="lbl">Evade</span></div></div>
-  <div class="gear" style="--cx:356;--cy:632;--r:42"><div class="face"><span class="val">{% stat sheet.stats.def "Defense" signed=True %}</span><span class="lbl">Defense</span></div></div>
+  <div class="gear" style="--cx:278;--cy:585;--r:42"><div class="face"><span class="val">{% stat sheet.stats.eva "Evade"|t signed=True %}</span><span class="lbl">{% t "Evade" %}</span></div></div>
+  <div class="gear" style="--cx:356;--cy:632;--r:42"><div class="face"><span class="val">{% stat sheet.stats.def "Defense"|t signed=True %}</span><span class="lbl">{% t "Defense" %}</span></div></div>
 
   <!-- deflection -->
   <div class="frame box defl" style="--x:280;--y:668;--w:139;--h:170;padding-left:calc(8*var(--u));padding-right:calc(8*var(--u))">
-    <h3>Deflection</h3>
-    <div class="desc" style="margin:calc(2*var(--u)) 0 0" title="{{ sheet.deflection.name }}">{{ sheet.deflection.name|default:"" }}</div>
-    <div class="cap">Item</div>
-    <div class="desc" style="margin:calc(3*var(--u)) calc(16*var(--u)) 0">{% if sheet.deflection %}{% stat sheet.deflection.bonus "Deflection evade bonus" signed=True %}{% endif %}</div>
-    <div class="cap">Evade Bonus</div>
+    <h3>{% t "Deflection" %}</h3>
+    <div class="desc" style="margin:calc(2*var(--u)) 0 0" title="{{ sheet.deflection.name|item_name }}">{{ sheet.deflection.name|default:""|item_name }}</div>
+    <div class="cap">{% t "Item" %}</div>
+    <div class="desc" style="margin:calc(3*var(--u)) calc(16*var(--u)) 0">{% if sheet.deflection %}{% stat sheet.deflection.bonus "Deflection evade bonus"|t signed=True %}{% endif %}</div>
+    <div class="cap">{% t "Evade Bonus" %}</div>
     <div class="row2">
-      <div><span class="check">{% if sheet.deflection.ranged %}✓{% endif %}</span>vs Ranged</div>
-      <div><span class="check">{% if sheet.deflection.melee %}✓{% endif %}</span>vs Melee</div>
+      <div><span class="check">{% if sheet.deflection.ranged %}✓{% endif %}</span>{% t "vs Ranged" %}</div>
+      <div><span class="check">{% if sheet.deflection.melee %}✓{% endif %}</span>{% t "vs Melee" %}</div>
     </div>
-    <div class="cap activate">1 AP to Activate</div>
+    <div class="cap activate">{% t "1 AP to Activate" %}</div>
   </div>
 
   <!-- health -->
   <div class="gear big play-btn" style="--cx:618;--cy:592;--r:56" x-on:click="openPanel('health')">
-    <div class="face"><span class="val">{{ hp }}</span><span class="lbl">Hit Points</span></div></div>
-  <div class="gear" style="--cx:712;--cy:556;--r:31"><div class="face"><span class="val">{% stat sheet.stats.hp "Max HP" %}</span><span class="lbl">Max HP</span></div></div>
-  <div class="gear max-wounds" style="--cx:765;--cy:606;--r:40"><div class="face"><span class="val">{% stat sheet.stats.wnd "Max wounds" %}</span><span class="lbl">Max<br>Wounds</span></div></div>
+    <div class="face"><span class="val">{{ hp }}</span><span class="lbl">{% t "Hit Points" %}</span></div></div>
+  <div class="gear" style="--cx:712;--cy:556;--r:31"><div class="face"><span class="val">{% stat sheet.stats.hp "Max HP"|t %}</span><span class="lbl">{% t "Max HP" %}</span></div></div>
+  <div class="gear max-wounds" style="--cx:765;--cy:606;--r:40"><div class="face"><span class="val">{% stat sheet.stats.wnd "Max wounds"|t %}</span><span class="lbl">{% t "Max Wounds" %}</span></div></div>
   <div class="gear big play-btn" style="--cx:868;--cy:592;--r:56" x-on:click="openPanel('health')">
-    <div class="face"><span class="val">{{ wounds }}</span><span class="lbl">Wounds</span></div></div>
+    <div class="face"><span class="val" title="{% t "Wounds taken (0 = unhurt). At {max} every hit is a fatal effect." max=sheet.max_wounds %}">{{ wounds }}</span><span class="lbl">{% t "Wounds" %}</span></div></div>
   <div class="frame box effects" style="--x:540;--y:648;--w:386;--h:215">
     {% for title, list in effect_boxes %}
-    <section><h4>{{ title }}:</h4>
-      {% for e in list %}<div class="fx"><span class="fx-text" title="{% if e.location %}{{ e.location }} {{ e.location_name }}: {% endif %}{{ e.text }}{% if e.rule_text %} – {{ e.rule_text }}{% endif %}">{% if e.location %}{{ e.location }} {{ e.location_name }}: {% endif %}{{ e.text }}{% if e.lost_wounds %} (−{{ e.lost_wounds }} max wounds){% endif %}</span>
-        <button hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="Remove" aria-label="Remove {{ e.text }}">✕</button></div>{% endfor %}
-      {% if forloop.last and character.stance %}<div class="fx"><span>Stance: {% for s in sheet.stances %}{% if s.active %}{{ s.label }}{% endif %}{% endfor %}</span></div>{% endif %}
+    <section><h4>{{ title|t }}:</h4>
+      {% for e in list %}<div class="fx"><span class="fx-text" title="{% if e.location %}{{ e.location }} {{ e.location_name|t }}: {% endif %}{{ e.text }}{% if e.rule_text %} – {{ e.rule_text }}{% endif %}">{% if e.location %}{{ e.location }} {{ e.location_name|t }}: {% endif %}{{ e.text }}{% if e.lost_wounds %} {% t "(−{n} max wounds)" n=e.lost_wounds %}{% endif %}</span>
+        <button hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Remove" %}" aria-label="{% t "Remove {name}" name=e.text %}">✕</button></div>{% endfor %}
+      {% if forloop.last and character.stance %}<div class="fx"><span>{% t "Stance" %}: {% for s in sheet.stances %}{% if s.active %}{{ s.label|t }}{% endif %}{% endfor %}</span></div>{% endif %}
+      {% if forloop.last %}{% for o in sheet.ongoing %}{% if o.active %}<div class="fx"><span title="{{ o.cost|t }}">{{ o.label|t }}: {{ o.detail|t }}</span></div>{% endif %}{% endfor %}{% endif %}
     </section>
     {% endfor %}
   </div>
@@ -159,36 +160,36 @@
     {% with a=sheet.attributes|get:attr %}
     {% if attr == "Sciences" %}
       <div class="skills-list science box" style="--x:330;--y:862;--w:140;--h:76">
-        {% for s in skills|slice:":3" %}<div class="sk">{{ s }} <span class="v">{% stat sheet.skills|get:s s %}</span></div>{% endfor %}
+        {% for s in skills|slice:":3" %}<div class="sk">{{ s|t }} <span class="v">{% stat sheet.skills|get:s s|t %}</span></div>{% endfor %}
       </div>
       <div class="skills-list science left box" style="--x:482;--y:862;--w:140;--h:76">
-        {% for s in skills|slice:"3:" %}<div class="sk"><span class="v">{% stat sheet.skills|get:s s %}</span> {{ s }}</div>{% endfor %}
+        {% for s in skills|slice:"3:" %}<div class="sk"><span class="v">{% stat sheet.skills|get:s s|t %}</span> {{ s|t }}</div>{% endfor %}
       </div>
-      <div class="attr-label at" style="--x:506;--y:948">Science</div>
+      <div class="attr-label at" style="--x:506;--y:948">{% t "Science" %}</div>
       {% include "characters/partials/attr_circles.html" with cx=475 cy=972 mx=415 my=972 %}
     {% elif attr == "Cunning" %}
       <div class="skills-list box" style="--x:30;--y:944;--w:160;--h:100">
-        {% for s in skills %}<div class="sk">{{ s }} <span class="v">{% stat sheet.skills|get:s s %}</span></div>{% endfor %}
+        {% for s in skills %}<div class="sk">{{ s|t }} <span class="v">{% stat sheet.skills|get:s s|t %}</span></div>{% endfor %}
       </div>
-      <div class="attr-label at" style="--x:198;--y:1004">Cunning</div>
+      <div class="attr-label at" style="--x:198;--y:1004">{% t "Cunning" %}</div>
       {% include "characters/partials/attr_circles.html" with cx=320 cy=1030 mx=297 my=984 %}
     {% elif attr == "Dexterity" %}
       <div class="skills-list left box" style="--x:770;--y:944;--w:165;--h:100">
-        {% for s in skills %}<div class="sk"><span class="v">{% stat sheet.skills|get:s s %}</span> {{ s }}</div>{% endfor %}
+        {% for s in skills %}<div class="sk"><span class="v">{% stat sheet.skills|get:s s|t %}</span> {{ s|t }}</div>{% endfor %}
       </div>
-      <div class="attr-label at" style="--x:660;--y:1004">Dexterity</div>
+      <div class="attr-label at" style="--x:660;--y:1004">{% t "Dexterity" %}</div>
       {% include "characters/partials/attr_circles.html" with cx=630 cy=1030 mx=655 my=984 %}
     {% elif attr == "Brute" %}
       <div class="skills-list box" style="--x:25;--y:1062;--w:150;--h:100">
-        {% for s in skills %}<div class="sk">{{ s }} <span class="v">{% stat sheet.skills|get:s s %}</span></div>{% endfor %}
+        {% for s in skills %}<div class="sk">{{ s|t }} <span class="v">{% stat sheet.skills|get:s s|t %}</span></div>{% endfor %}
       </div>
-      <div class="attr-label at" style="--x:180;--y:1118">Brute</div>
+      <div class="attr-label at" style="--x:180;--y:1118">{% t "Brute" %}</div>
       {% include "characters/partials/attr_circles.html" with cx=265 cy=1146 mx=240 my=1100 %}
     {% elif attr == "Spirit" %}
       <div class="skills-list left box" style="--x:790;--y:1062;--w:150;--h:100">
-        {% for s in skills %}<div class="sk"><span class="v">{% stat sheet.skills|get:s s %}</span> {{ s }}</div>{% endfor %}
+        {% for s in skills %}<div class="sk"><span class="v">{% stat sheet.skills|get:s s|t %}</span> {{ s|t }}</div>{% endfor %}
       </div>
-      <div class="attr-label at" style="--x:718;--y:1118">Spirit</div>
+      <div class="attr-label at" style="--x:718;--y:1118">{% t "Spirit" %}</div>
       {% include "characters/partials/attr_circles.html" with cx=685 cy=1146 mx=712 my=1100 %}
     {% endif %}
     {% endwith %}
@@ -204,12 +205,12 @@
       <g class="xp-dot{% if i <= character.xp %} on{% endif %}" style="pointer-events:auto"
          hx-post="{% url 'play' character.pk 'xp' %}" hx-vals='{"set": "{% if i == character.xp %}{{ i|add:-1 }}{% else %}{{ i }}{% endif %}"}'
          hx-target="#sheet-body" hx-swap="outerHTML" transform="translate({{ p.x }} {{ p.y }})">
-        <title>Set experience to {{ i }}</title>
+        <title>{% t "Set experience to {n}" n=i %}</title>
         <circle r="14"/><text>{{ i }}</text>
       </g>
     {% endfor %}
   </svg>
   <div class="level-box box" style="--x:430;--y:1090;--w:90;--h:56">
-    <span class="v">{{ character.level }}</span><span class="l">Level</span>
+    <span class="v">{{ character.level }}</span><span class="l">{% t "Level" %}</span>
   </div>
 </section>

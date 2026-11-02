@@ -1,0 +1,84 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block content %}
+<div class="paper">
+  <div class="row spread">
+    <h1>{% t "Planner: {name}" name=character.name %}</h1>
+    <a class="btn" href="{% url 'sheet' character.pk %}">{% t "Back to the sheet" %}</a>
+  </div>
+  <p class="muted">{% t "Plan your next levels. The plan changes nothing on the sheet; it preselects your choices on the level-up page and shows what your character would look like." %}</p>
+
+  <h2>{% t "Plan" %}</h2>
+  {% if checks %}
+    <table class="data">
+      <thead><tr><th>{% t "Level" %}</th><th>{% t "Skill points" %}</th><th>{% t "Specialty" %}</th><th>{% t "Augments" %}</th><th>{% t "Note" %}</th><th data-nosort></th></tr></thead>
+      <tbody>
+      {% for c in checks %}
+        <tr>
+          <td class="num">{{ c.entry.level }}</td>
+          <td>{% for s, v in c.entry.skills.items %}{{ s|t }} +{{ v }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+          <td>{% if c.specialty %}{{ c.specialty.name }} <span class="muted small">({{ c.specialty.skill|default:"General"|t }})</span>{% endif %}
+            {% for pr in c.problems %}<div class="why small">✗ {{ pr }}</div>{% empty %}{% if c.specialty %}<span class="tag ok">✓ {% t "can be learned" %}</span>{% endif %}{% endfor %}</td>
+          <td>{% for a in c.augments %}{{ a.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+          <td class="small">{{ c.entry.note }}</td>
+          <td><a class="btn small" href="?edit={{ c.entry.level }}">{% t "Edit" %}</a>
+            <form class="inline" method="post">{% csrf_token %}<input type="hidden" name="level" value="{{ c.entry.level }}">
+              <button class="btn small danger" name="action" value="remove">{% t "Remove" %}</button></form></td>
+        </tr>
+      {% endfor %}
+      </tbody>
+    </table>
+  {% else %}<p class="muted">{% t "Nothing planned yet." %}</p>{% endif %}
+</div>
+
+{% if future %}
+<form method="post" class="paper" x-data="{two: '{{ edit_two }}', a: '{{ edit_one_a }}', b: '{{ edit_one_b }}',
+      get dup() { const v = [this.two, this.a, this.b].filter(Boolean); return new Set(v).size < v.length; }}">
+  {% csrf_token %}
+  <div class="row spread">
+    <h2>{% t "Plan level" %}
+      <select onchange="location.search = '?edit=' + this.value" aria-label="{% t "Level to plan" %}">
+        {% for lvl in future %}<option value="{{ lvl }}" {% if lvl == edit %}selected{% endif %}>{{ lvl }}</option>{% endfor %}</select></h2>
+  </div>
+  <input type="hidden" name="level" value="{{ edit }}">
+  <div class="form-grid">
+    <div class="field"><label>{% t "+2 points" %}</label><select name="skill_two" x-model="two"><option value="">–</option>
+      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr|t }}">{% for s in skills %}<option value="{{ s }}">{{ s|t }}</option>{% endfor %}</optgroup>{% endfor %}</select></div>
+    <div class="field"><label>{% t "+1 point" %}</label><select name="skill_one_a" x-model="a"><option value="">–</option>
+      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr|t }}">{% for s in skills %}<option value="{{ s }}">{{ s|t }}</option>{% endfor %}</optgroup>{% endfor %}</select></div>
+    <div class="field"><label>{% t "+1 point" %}</label><select name="skill_one_b" x-model="b"><option value="">–</option>
+      {% for attr, skills in skills_by_attr.items %}<optgroup label="{{ attr|t }}">{% for s in skills %}<option value="{{ s }}">{{ s|t }}</option>{% endfor %}</optgroup>{% endfor %}</select></div>
+  </div>
+  <div class="warn-banner" x-show="dup" style="display:none">⚠ {% t "+2 go into one skill and +1 into two other skills." %}</div>
+  <div class="form-grid" style="margin-top:8px">
+    <div class="field"><label>{% t "Specialty" %}</label><select name="specialty"><option value="">–</option>
+      {% regroup specialties by skill as by_skill %}
+      {% for g in by_skill %}<optgroup label="{% if g.grouper %}{{ g.grouper|t }}{% else %}{% t "General (Sciences)" %}{% endif %}">{% for s in g.list %}<option value="{{ s.slug }}" {% if s.slug == entry.specialty %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</optgroup>{% endfor %}
+    </select></div>
+    <div class="field"><label>{% t "Augments to learn" %} <span class="muted small">{% t "(Ctrl/⌘-click for several)" %}</span></label>
+      <select name="augments" multiple size="5">
+        {% regroup augments by skill as by_aug %}
+        {% for g in by_aug %}<optgroup label="{{ g.grouper|t }}">{% for a in g.list %}<option value="{{ a.slug }}" {% if a.slug in entry.augments %}selected{% endif %}>{{ a.name }}</option>{% endfor %}</optgroup>{% endfor %}
+      </select></div>
+    <div class="field"><label>{% t "Note" %}</label><textarea name="note" rows="3" placeholder="{% t "Why, what to buy, other ideas …" %}">{{ entry.note }}</textarea></div>
+  </div>
+  <div class="wizard-actions">
+    <button class="btn danger" name="action" value="clear" formnovalidate onclick="return confirm('{% t "Delete the whole plan?" %}')">{% t "Clear plan" %}</button>
+    <button class="btn primary" name="action" value="save" :disabled="dup">{% t "Save level {n}" n=edit %}</button>
+  </div>
+</form>
+{% endif %}
+
+{% if checks %}
+<div class="paper">
+  <h2>{% t "Preview: level {old} → {new}" old=character.level new=plan_level %}</h2>
+  <table class="data">
+    <thead><tr><th>{% t "Value" %}</th><th>{% t "Now" %}</th><th>{% t "Planned" %}</th><th>{% t "Change" %}</th></tr></thead>
+    <tbody>
+      {% for r in rows %}<tr{% if r.diff %} class="changed"{% endif %}><td>{{ r.label|t }}</td><td class="num">{{ r.now }}</td><td class="num">{{ r.then }}</td>
+        <td class="num">{% if r.diff %}<b>{{ r.diff|signed }}</b>{% endif %}</td></tr>{% endfor %}
+      {% for r in skill_rows %}<tr class="changed"><td>{{ r.skill|t }}</td><td class="num">{{ r.now }}</td><td class="num">{{ r.then }}</td><td class="num"><b>{{ r.diff|signed }}</b></td></tr>{% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endif %}
+{% endblock %}

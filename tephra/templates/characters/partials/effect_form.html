@@ -1,13 +1,13 @@
 <form class="stack effect-form" hx-post="{% url 'play' character.pk 'effect-add' %}" hx-target="#sheet-body" hx-swap="outerHTML"
       x-data="effectForm()" x-on:submit="if (!ready()) $event.preventDefault()">
   <div class="row">
-    <select name="kind" x-model="kind" aria-label="Effect type">
-      <option value="status">Status effect</option>
-      <option value="called">Called shot</option>
+    <select name="kind" x-model="kind" aria-label="{% t "Effect type" %}">
+      <option value="status">{% t "Status effect" %}</option>
+      <option value="called">{% t "Called shot" %}</option>
     </select>
     <template x-if="kind === 'status'">
       <div class="combo grow" x-on:click.outside="open = false">
-        <input type="text" x-model="q" placeholder="Type to filter, e.g. Fatigued" autocomplete="off" aria-label="Status effect"
+        <input type="text" x-model="q" placeholder="{% t "Type to filter, e.g. Fatigued" %}" autocomplete="off" aria-label="{% t "Status effect" %}"
                x-on:focus="open = true" x-on:input="open = true; key = ''; active = 0"
                x-on:keydown.down.prevent="move(1)" x-on:keydown.up.prevent="move(-1)"
                x-on:keydown.enter.prevent="pick(matches()[active])" x-on:keydown.escape.stop="open = false">
@@ -24,17 +24,17 @@
     </template>
     <template x-if="kind === 'called'">
       <div class="row grow">
-        <select name="location" x-model="location" aria-label="Location">
-          <option value="">Location…</option>
+        <select name="location" x-model="location" aria-label="{% t "Location" %}">
+          <option value="">{% t "Location…" %}</option>
           <template x-for="l in opts.locations" :key="l.n"><option :value="l.n" x-text="l.label"></option></template>
         </select>
-        <select name="which" x-model="which" x-show="location" aria-label="Called-shot effect">
-          <option value="">Effect…</option>
+        <select name="which" x-model="which" x-show="location" aria-label="{% t "Called-shot effect" %}">
+          <option value="">{% t "Effect…" %}</option>
           <template x-for="c in called()" :key="c.kind"><option :value="c.kind" x-text="c.label"></option></template>
         </select>
       </div>
     </template>
-    <button class="btn small primary" type="submit" :disabled="!ready()">Add</button>
+    <button class="btn small primary" type="submit" :disabled="!ready()">{% t "Add" %}</button>
   </div>
   <p class="muted small" x-text="hint()"></p>
 </form>

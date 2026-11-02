@@ -1,12 +1,12 @@
 {% load sheet_tags %}
 {% if errors %}<p class="why">{{ errors|join:" " }}</p>{% endif %}
 {% if retrofit_targets %}
-  <div class="field" style="margin-top:10px"><label>…for this specialty (same attribute)</label>
-    <select name="retrofit_new"><option value="">–</option>{% for s in retrofit_targets %}<option value="{{ s.slug }}" {% if s.slug == retrofit_new %}selected{% endif %}>{{ s.skill|default:"General" }}: {{ s.name }}</option>{% endfor %}</select></div>
+  <div class="field" style="margin-top:10px"><label>{% t "…for this specialty (same attribute)" %}</label>
+    <select name="retrofit_new"><option value="">–</option>{% for s in retrofit_targets %}<option value="{{ s.slug }}" {% if s.slug == retrofit_new %}selected{% endif %}>{% if s.skill %}{{ s.skill|t }}{% else %}{% t "General" %}{% endif %}: {{ s.name }}</option>{% endfor %}</select></div>
   {% for s in retrofit_targets %}{% if s.options %}
-    <div class="field"><label>If retrofitting to {{ s.name }}: {{ s.options.label }}</label>
+    <div class="field"><label>{% t "If retrofitting to {name}: {label}" name=s.name label=s.options.label %}</label>
       <select name="opt:{{ s.slug }}"><option value="">–</option>{% for k, v in s.options.options.items %}<option value="{{ k }}">{{ v }}</option>{% endfor %}</select></div>
   {% endif %}{% endfor %}
 {% endif %}
-<h2 style="margin-top:14px">New specialty</h2>
+<h2 style="margin-top:14px">{% t "New specialty" %}</h2>
 {% include "characters/partials/specialty_picker.html" with mode="levelup" %}

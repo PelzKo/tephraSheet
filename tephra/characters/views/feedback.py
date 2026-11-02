@@ -9,6 +9,7 @@ from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 
+from rules.lang import gettext as _
 from .. import access
 from ..models import Character, Feedback
 
@@ -40,13 +41,13 @@ def feedback_submit(request):
     now = time.time()
     sent = [t for t in request.session.get(SESSION_KEY, []) if now - t < RATE_WINDOW]
     if len(sent) >= RATE_LIMIT:
-        return JsonResponse({"error": "Too many messages – please wait a few minutes."}, status=429)
+        return JsonResponse({"error": _("Too many messages – please wait a few minutes.")}, status=429)
 
     text = request.POST.get("message", "").strip()
     if not text:
-        return JsonResponse({"error": "Please write a message."}, status=400)
+        return JsonResponse({"error": _("Please write a message.")}, status=400)
     if len(text) > MAX_MESSAGE:
-        return JsonResponse({"error": f"Message too long (max {MAX_MESSAGE} characters)."}, status=400)
+        return JsonResponse({"error": _("Message too long (max {max} characters).", max=MAX_MESSAGE)}, status=400)
     category = request.POST.get("category", "feedback")
     if category not in dict(Feedback.CATEGORY_CHOICES):
         category = "other"
@@ -91,5 +92,5 @@ def feedback_status(request, pk):
 @require_POST
 def feedback_delete(request, pk):
     get_object_or_404(Feedback, pk=pk).delete()
-    messages.success(request, "Feedback deleted.")
+    messages.success(request, _("Feedback deleted."))
     return redirect("gm_settings")

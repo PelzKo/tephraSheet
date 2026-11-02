@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% block title %}{{ chapter.title }} – {% t "Wiki" %}{% endblock %}
+{% block content %}
+<article class="paper wiki-page">
+  <a href="{% url 'wiki' %}">← {% t "Wiki" %}</a>
+  <h1>{{ chapter.title }}</h1>
+  <nav class="small"><ul class="toc">{% for s in sections %}{% if s.title != chapter.title %}<li><a href="#{{ s.slug }}">{{ s.title }}</a></li>{% endif %}{% endfor %}</ul></nav>
+  {% for s in sections %}
+    <section id="{{ s.slug }}">{% if s.title != chapter.title %}<h2>{{ s.title }}</h2>{% endif %}<div class="wiki-body">{{ s.html|safe }}</div></section>
+  {% endfor %}
+</article>
+{% endblock %}

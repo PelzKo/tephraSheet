@@ -231,15 +231,15 @@ def test_battle_theme_choice_and_cancel(client_char):
     errors = services.add_specialties_sequentially(c, [theme["slug"]], options={theme["slug"]: ""})
     assert errors and "perform" in errors[0]
     assert not services.add_specialties_sequentially(c, [theme["slug"]], options={theme["slug"]: "singing"})
-    c.stance = theme["slug"]
+    c.toggles = [f"spec:{theme['slug']}"]
     c.save()
     play = lambda a, **d: client.post(reverse("play", args=[c.pk, a]), d, HTTP_HX_REQUEST="true")  # noqa: E731
     resp = play("effect-add", kind="called", location="9", which="wound")  # hand: no effect on singing
     c.refresh_from_db()
-    assert c.stance == theme["slug"] and b"cancelled" not in resp.content
+    assert c.toggles == [f"spec:{theme['slug']}"] and b"cancelled" not in resp.content
     resp = play("effect-add", kind="called", location="4", which="wound")
     c.refresh_from_db()
-    assert c.stance == "" and b"Battle Theme has been cancelled" in resp.content
+    assert c.toggles == [] and b"Battle Theme has been cancelled" in resp.content
 
 
 def test_shield_wings_and_hand_hit(client_char):
@@ -292,12 +292,12 @@ def test_instrument_battle_theme_sunder(client_char):
     theme = get_registry().specialties_by_name["Battle Theme"]
     c.specialties = list(c.specialties) + [[theme["slug"], 1]]
     c.specialty_choices = {theme["slug"]: "instrument"}
-    c.stance = theme["slug"]
+    c.toggles = [f"spec:{theme['slug']}"]
     c.save()
     assert b"Instrument sundered" in client.get(reverse("sheet", args=[c.pk])).content
     resp = client.post(reverse("play", args=[c.pk, "theme-sundered"]), HTTP_HX_REQUEST="true")
     c.refresh_from_db()
-    assert c.stance == "" and b"Battle Theme has been cancelled" in resp.content
+    assert c.toggles == [] and b"Battle Theme has been cancelled" in resp.content
 
 
 def test_catalog_sort_keys_and_inventory_toolbar(client_char):
@@ -341,3 +341,65 @@ def test_feedback_submit_and_gm_review(client_char):
     assert fb.status == "done"
     client.post(reverse("gm_feedback_delete", args=[fb.pk]))
     assert not Feedback.objects.filter(pk=fb.pk).exists()
+
+
+def test_choose_one_random_trait_and_prominent_host(client_char):
+    from characters.models import NarratorSettings
+
+    client, c = client_char
+    NarratorSettings.objects.update_or_create(pk=1, defaults={"allow_choose_random_trait": True})
+    url = reverse("wizard_step", args=[c.pk, 1])
+    client.post(url, {"action": "race", "race": "farishtaa"})
+    resp = client.post(url, {"action": "save", "chosen_random_submitted": "1",
+                             "chosen_random": ["farishtaa/halo", "farishtaa/dancers-body"]}, follow=True)
+    c.refresh_from_db()
+    assert c.random_traits == ["farishtaa/halo"] and b"Choose only 1" in resp.content
+    client.post(url, {"action": "save", "chosen_random_submitted": "1",
+                      "chosen_random": ["farishtaa/prominent-host"], "host_trait": "elf/danger-sense"})
+    c.refresh_from_db()
+    assert c.random_traits == ["farishtaa/prominent-host", "elf/danger-sense"]
+    assert b"trait from the Elf table" in client.get(url).content
+
+
+def test_fight_mode_ap_tracking(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(8))
+    services.finish_creation(c)
+    play = lambda a, **d: client.post(reverse("play", args=[c.pk, a]), d, HTTP_HX_REQUEST="true")  # noqa: E731
+    max_ap = c.compute().stats["ap"].total
+    play("fight-start")
+    play("fight-spend", amount="2")  # reflexive, before my turn
+    c.refresh_from_db()
+    assert c.fight == {"active": True, "ap": max_ap - 2, "my_turn": False, "round": 1}
+    assert b"Only" in play("fight-spend", amount=str(max_ap)).content
+    play("fight-turn")
+    play("fight-end-turn")
+    c.refresh_from_db()
+    assert c.fight["ap"] == max_ap and c.fight["round"] == 2 and not c.fight["my_turn"]
+    play("fight-stop")
+    c.refresh_from_db()
+    assert c.fight == {}
+
+
+def test_planner_preview_and_levelup_prefill(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(9))
+    services.finish_creation(c)
+    reg = get_registry()
+    owned = {s for s, _ in c.specialties}
+    spec = next(s for s in reg.specialties.values() if s["skill"] == "Brawl" and not s["requires"]
+                and s["slug"] not in owned)
+    url = reverse("planner", args=[c.pk])
+    client.post(url, {"action": "save", "level": "2", "skill_two": "Brawl", "skill_one_a": "Faith",
+                      "skill_one_b": "Luck", "specialty": spec["slug"], "note": "punchy"})
+    c.refresh_from_db()
+    assert c.plan[0]["skills"] == {"Brawl": 2, "Faith": 1, "Luck": 1} and c.plan[0]["specialty"] == spec["slug"]
+    resp = client.get(url)
+    assert resp.status_code == 200 and spec["name"].encode() in resp.content and b"Preview" in resp.content
+    c.xp = 12
+    c.save()
+    resp = client.get(reverse("levelup", args=[c.pk]))
+    assert b"two: 'Brawl'" in resp.content and b"punchy" in resp.content
+    client.post(url, {"action": "remove", "level": "2"})
+    c.refresh_from_db()
+    assert c.plan == []

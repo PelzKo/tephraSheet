@@ -1,0 +1,25 @@
+{
+ "showmanship-walking-darkness": {
+  "name": "Wandelnde Dunkelheit",
+  "group": "Nebelwand",
+  "cost": "Haltung",
+  "requires_text": "Nebelwand",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nVoraussetzung: Spezialisierung Nebelwand\nMehr als ein simpler Verschwindetrick: Du schreitest in die Rauchwolke eines Magiers gehüllt über das Schlachtfeld. In dieser Haltung erhältst du +4 auf Ausweichen und alle deine Handlungen gelten als verborgen. Hat ein Gegner eine Möglichkeit zu wissen, wo du bist, die nicht auf Sicht beruht, oder kann er durch vollkommene Dunkelheit sehen, erhältst du gegen ihn den Ausweichbonus nicht."
+ },
+ "tactical-ally-of-the-machine": {
+  "name": "Verbündeter der Maschine",
+  "cost": "Passiv",
+  "requires_text": "6 Automaten",
+  "effect": "Voraussetzung: 6 Fertigkeitspunkte in Automaten\nMit deinem feinen Gespür für Maschinen und die Funktionsweise von Automaten kannst du Automaten nun als deine Verbündeten behandeln. Wenn du eine Spezialisierung benutzt, die deine Verbündeten betreffen kann, dürfen Automaten nun als Verbündete gelten."
+ },
+ "tactical-armistice": {
+  "name": "Waffenstillstand",
+  "cost": "Haltung; Widerstand: List (hebt auf)",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nWiderstand: List (hebt auf)\nManchmal ist der beste Teil einer Schlacht, wenn man nicht mitkämpft. Wenn du deine Haltung Waffenstillstand einnimmst, sind Gegner, die dich angreifen, für 1 Aktionspunkt betäubt, es sei denn, sie widerstehen gegen deine Taktik. Du musst deine Haltung Waffenstillstand jedoch (für\n0 Aktionspunkte) verlassen, bevor du angreifst, sonst bist du für 2 Aktionspunkte betäubt."
+ },
+ "tactical-blitzkreig": {
+  "name": "Blitzkrieg",
+  "cost": "Haltung",
+  "effect": "Haltung (kostet 1 AP zum Einnehmen)\nDu wählst den nächsten Feind und deine Verbündeten greifen an. Wenn du diese Haltung einnimmst, wählst du ein einzelnes Ziel innerhalb von 50 Fuß. Alle deine Verbündeten erhalten einen Tempobonus, wenn sie sich auf dieses Ziel zubewegen. Der Bonus beträgt 10 Fuß, plus 5 Fuß für je 5 Fertigkeitspunkte in Taktik (also +15 Fuß bei 5 Fertigkeitspunkten, +20 Fuß bei 10 Fertigkeitspunkten und so weiter)."
+ }
+}

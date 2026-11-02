@@ -1,30 +1,39 @@
 {% load static %}<!doctype html>
-<html lang="en">
+<html lang="{{ current_language }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="csrf-token" content="{{ csrf_token }}">
-  <title>{% block title %}Tephra Sheets{% endblock %}</title>
+  <title>{% block title %}{% t "Tephra Sheets" %}{% endblock %}</title>
   <link rel="icon" href="{% static 'img/gear.svg' %}" type="image/svg+xml">
   <link rel="stylesheet" href="{% static 'css/app.css' %}">
   {% block head %}{% endblock %}
   <script src="{% static 'js/htmx.min.js' %}" defer></script>
+  {{ js_i18n|json_script:"js-i18n" }}
   <script src="{% static 'js/app.js' %}" defer></script>
   <script src="{% static 'js/alpine.min.js' %}" defer></script>
 </head>
 <body class="{% block bodyclass %}{% endblock %}">
   <header class="topbar">
-    <a class="brand" href="{% url 'character_list' %}">Tephra<small>character sheets</small></a>
+    <a class="brand" href="{% url 'character_list' %}">Tephra<small>{% t "character sheets" %}</small></a>
     {% block topbar %}{% endblock %}
     <nav>
-      <a href="{% url 'character_list' %}">Characters</a>
-      <a href="{% url 'catalog' %}">Catalog</a>
+      <a href="{% url 'character_list' %}">{% t "Characters" %}</a>
+      <a href="{% url 'catalog' %}">{% t "Catalog" %}</a>
+      <a href="{% url 'wiki' %}">{% t "Wiki" %}</a>
       {% if request.user.is_staff %}
-        <a href="{% url 'gm_settings' %}">Narrator</a>
-        <form class="inline" method="post" action="{% url 'gm_logout' %}">{% csrf_token %}<button type="submit">Log out</button></form>
+        <a href="{% url 'gm_settings' %}">{% t "Narrator" %}</a>
+        <form class="inline" method="post" action="{% url 'gm_logout' %}">{% csrf_token %}<button type="submit">{% t "Log out" %}</button></form>
       {% else %}
-        <a href="{% url 'gm_login' %}">Narrator login</a>
+        <a href="{% url 'gm_login' %}">{% t "Narrator login" %}</a>
       {% endif %}
+      <form class="inline lang-switch" method="post" action="{% url 'set_language' %}">{% csrf_token %}
+        <input type="hidden" name="next" value="{{ request.get_full_path }}">
+        <select name="language" onchange="this.form.submit()" aria-label="{% t "Language" %}" title="{% t "Language" %}">
+          {% for code, name in languages.items %}<option value="{{ code }}" {% if code == current_language %}selected{% endif %}>{{ code|upper }} · {{ name }}</option>{% endfor %}
+        </select>
+        <noscript><button type="submit">OK</button></noscript>
+      </form>
     </nav>
   </header>
   <main class="{% block mainclass %}wrap{% endblock %}">
@@ -33,20 +42,20 @@
     {% endif %}
     {% block content %}{% endblock %}
   </main>
-  <button type="button" class="fb-bubble" data-fb-open aria-label="Send feedback" title="Feedback, bug report or feature request">
+  <button type="button" class="fb-bubble" data-fb-open aria-label="{% t "Send feedback" %}" title="{% t "Feedback, bug report or feature request" %}">
     <svg viewBox="0 0 24 24" width="26" height="26" aria-hidden="true"><path fill="currentColor" d="M4 3h16a2 2 0 0 1 2 2v11a2 2 0 0 1-2 2H9l-5 4v-4H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zm3 6.5a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01zm5 0a1.5 1.5 0 1 0 0 .01z"/></svg>
   </button>
   <div class="fb-backdrop" data-fb hidden role="dialog" aria-modal="true" aria-labelledby="fb-title">
     <form class="paper fb-modal stack" data-fb-form method="post" action="{% url 'feedback' %}">
-      <div class="row spread"><h2 id="fb-title">Send feedback</h2><button type="button" class="btn small" data-fb-close aria-label="Close">✕</button></div>
+      <div class="row spread"><h2 id="fb-title">{% t "Send feedback" %}</h2><button type="button" class="btn small" data-fb-close aria-label="{% t "Close" %}">✕</button></div>
       <input type="hidden" name="character" value="{{ character.pk|default:'' }}">
       <div class="row">
-        <select name="category" aria-label="Type"><option value="bug">Bug</option><option value="feature">Feature request</option><option value="feedback" selected>Feedback</option><option value="other">Other</option></select>
-        <input type="text" name="name" maxlength="80" placeholder="Your name (optional)" class="grow" aria-label="Your name">
+        <select name="category" aria-label="{% t "Type" %}"><option value="bug">{% t "Bug" %}</option><option value="feature">{% t "Feature request" %}</option><option value="feedback" selected>{% t "Feedback" %}</option><option value="other">{% t "Other" %}</option></select>
+        <input type="text" name="name" maxlength="80" placeholder="{% t "Your name (optional)" %}" class="grow" aria-label="{% t "Your name" %}">
       </div>
-      <textarea name="message" rows="6" maxlength="5000" required placeholder="What happened, what would you like, what should change?"></textarea>
-      <p class="small muted">The page you are on{% if character.pk %}, the character ({{ character }}){% endif %} and basic device details (screen size, browser) are sent along.</p>
-      <div class="row spread"><span class="small" data-fb-status aria-live="polite"></span><button type="submit" class="btn primary">Send</button></div>
+      <textarea name="message" rows="6" maxlength="5000" required placeholder="{% t "What happened, what would you like, what should change?" %}"></textarea>
+      <p class="small muted">{% if character.pk %}{% t "The page you are on, the character ({name}) and basic device details (screen size, browser) are sent along." name=character %}{% else %}{% t "The page you are on and basic device details (screen size, browser) are sent along." %}{% endif %}</p>
+      <div class="row spread"><span class="small" data-fb-status aria-live="polite"></span><button type="submit" class="btn primary">{% t "Send" %}</button></div>
     </form>
   </div>
 </body>

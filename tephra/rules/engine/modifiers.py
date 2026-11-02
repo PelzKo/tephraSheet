@@ -2,6 +2,8 @@
 
 from dataclasses import dataclass, field
 
+from rules.lang import gettext as _
+
 from .formula import FormulaError, evaluate
 
 
@@ -20,12 +22,12 @@ class Value:
             self.parts.append((label, int(amount)))
 
     def set_base(self, label, amount):
-        if self.base is None or amount >= self.base[1] or self.base[0].startswith("Base"):
+        if self.base is None or amount >= self.base[1] or self.base[0].startswith(_("Base")):
             self.base = (label, int(amount))
 
     @property
     def raw_total(self):
-        total = (self.base[1] if self.base else 0) + sum(a for _, a in self.parts)
+        total = (self.base[1] if self.base else 0) + sum(a for _x, a in self.parts)
         if self.floor is not None:
             total = max(self.floor, total)
         return total
@@ -46,10 +48,10 @@ class Value:
             rows.append(self.base)
         rows.extend(self.parts)
         if self.floor is not None and self.raw_total == self.floor and \
-                (self.base[1] if self.base else 0) + sum(a for _, a in self.parts) < self.floor:
-            rows.append((f"minimum {self.floor}", None))
+                (self.base[1] if self.base else 0) + sum(a for _x, a in self.parts) < self.floor:
+            rows.append((_("minimum {n}", n=self.floor), None))
         if self.halved:
-            rows.append((f"{self.halved}: halved (round down)", None))
+            rows.append((_("{what}: halved (round down)", what=self.halved), None))
         if self.override is not None:
             rows.append(self.override)
         return rows
@@ -59,11 +61,11 @@ class Value:
         Values that are overridden, halved or floored are taken over as one part named ``label``."""
         v = Value()
         rows = ([self.base] if self.base else []) + self.parts
-        if self.override is None and not self.halved and self.raw_total == sum(a for _, a in rows):
+        if self.override is None and not self.halved and self.raw_total == sum(a for _x, a in rows):
             for part_label, amount in rows:
                 v.add(part_label, amount)
         else:
-            note = self.override[0] if self.override is not None else self.halved or "minimum"
+            note = self.override[0] if self.override is not None else self.halved or _("minimum")
             v.parts.append((f"{label} ({note})", self.total))
         return v
 
@@ -103,5 +105,5 @@ def is_active(mod, source, state):
     if when == "stance":
         return bool(source.stance_slug) and state.stance == source.stance_slug
     if when == "toggle":
-        return source.key in state.toggles
+        return mod.get("toggle_key", source.key) in state.toggles
     return False

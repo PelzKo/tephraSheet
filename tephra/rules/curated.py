@@ -11,6 +11,10 @@ Modifier schema (see rules/engine/modifiers.py):
     by_marque [I, II, III, IV]        (augments)
     op       add (default) | base (replace base value) | transfer (Raging)
     when     always (default) | stance | toggle | note
+    toggle_key  with when=toggle: the toggle that switches it (default: its own source key), e.g.
+             Victory Theme follows "spec:showmanship-battle-theme" and has no button of its own
+    ongoing  (specialty flag) a performance kept up each round (Battle Theme, Epic Dance): a toggle
+             under "Other", not a stance; costs 2 AP to begin and 1 AP per further round
     scope    character (default) | weapon (the item it is on) | melee (incl. unarmed)
              | unarmed | ranged
     label    optional short explanation shown in the breakdown
@@ -59,12 +63,15 @@ SPECIALTIES = {
                                          label="impromptu weapon")]},
     "Demoman": {"modifiers": [mod("note", formula="expertise // 3", when="note", label="explosive DC bonus")]},
     "Chime In": {"modifiers": [mod("note", formula="showmanship // 2", when="note", label="bonus")]},
-    "Epic Dance": {"stance": True, "modifiers": [mod("eva", formula="3 + showmanship // 5", when="stance")]},
+    "Epic Dance": {"stance": False, "ongoing": True,
+                   "modifiers": [mod("eva", formula="3 + showmanship // 5", when="toggle")]},
     "Never Stop the Dance": {"modifiers": [mod("def", formula="3 + showmanship // 5", when="toggle",
-                                               label="while dancing")]},
-    "Battle Theme": {"stance": True, "modifiers": [mod("acc", formula="3 + showmanship // 5", when="stance")]},
+                                               toggle_key="spec:showmanship-epic-dance",
+                                               label="Never Stop the Dance")]},
+    "Battle Theme": {"stance": False, "ongoing": True,
+                     "modifiers": [mod("acc", formula="3 + showmanship // 5", when="toggle")]},
     "Victory Theme": {"modifiers": [mod("stk", formula="3 + showmanship // 5", when="toggle",
-                                        label="while Battle Theme plays")]},
+                                        toggle_key="spec:showmanship-battle-theme", label="Victory Theme")]},
     "Walking Darkness": {"modifiers": [mod("eva", value=4, when="stance")]},
     "Blitzkreig": {"modifiers": [mod("note", formula="10 + 5 * (tactical // 5)", when="note",
                                      label="allies' speed bonus toward the target (ft)")]},

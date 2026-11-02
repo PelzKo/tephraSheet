@@ -13,6 +13,7 @@ KIND_CHOICES = [
     ("gear", "Gear"),
     ("animal", "Animal"),
     ("vehicle", "Vehicle"),
+    ("general", "General item"),
 ]
 WEAPON_KINDS = ("melee", "firearm", "bow", "crossbow")
 SIZE_CHOICES = [
@@ -54,6 +55,8 @@ class ItemFields(models.Model):
     spd_penalty = models.IntegerField(null=True, blank=True)
     climb_swim_penalty = models.IntegerField(null=True, blank=True)
     deflect_bonus = models.IntegerField(null=True, blank=True)
+    acc_bonus = models.IntegerField("accuracy bonus", null=True, blank=True)
+    stk_bonus = models.IntegerField("strike bonus", null=True, blank=True)
     deflect_ranged = models.BooleanField(default=False)
     deflect_melee = models.BooleanField(default=True)
     augments = models.JSONField(default=list, blank=True, help_text='[["augment-slug", marque], ...]')
@@ -66,7 +69,7 @@ class ItemFields(models.Model):
 
     ITEM_FIELDS = ["name", "kind", "size", "variants", "material", "beta", "concealable", "hands", "ap_use", "ap_ready",
                    "dc", "reach", "range", "increment", "soak", "eva_penalty", "spd_penalty",
-                   "climb_swim_penalty", "deflect_bonus", "deflect_ranged", "deflect_melee", "augments",
+                   "climb_swim_penalty", "deflect_bonus", "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "augments",
                    "modifiers", "price_dukes", "description"]
 
     def item_values(self):
@@ -90,6 +93,7 @@ class ItemFields(models.Model):
             reach=self.reach, range=self.range, increment=self.increment, soak=self.soak,
             eva_penalty=self.eva_penalty, spd_penalty=self.spd_penalty,
             climb_swim_penalty=self.climb_swim_penalty, deflect_bonus=self.deflect_bonus,
+            acc_bonus=self.acc_bonus, stk_bonus=self.stk_bonus,
             deflect_ranged=self.deflect_ranged, deflect_melee=self.deflect_melee,
             modifiers=list(self.modifiers or []), augments=[tuple(a) for a in (self.augments or [])],
             notes=getattr(self, "notes", ""), id=self.pk,

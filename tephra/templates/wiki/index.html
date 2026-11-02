@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+{% block title %}{% t "Wiki" %}{% endblock %}
+{% block content %}
+<div class="paper">
+  <div class="row spread">
+    <h1>{% t "Wiki" %}</h1>
+    <a class="btn primary" href="{% url 'wiki_new' %}">{% t "New page" %}</a>
+  </div>
+  <form class="row" method="get" role="search">
+    <input type="search" name="q" value="{{ q }}" class="grow" placeholder="{% t "Search rules, specialties, augments, help and pages…" %}" aria-label="{% t "Search" %}" autofocus>
+    <button class="btn">{% t "Search" %}</button>
+  </form>
+  {% if hits is not None %}
+    <h2>{% t "{n} results for “{q}”" n=hits|length q=q %}</h2>
+    {% for h in hits %}
+      <div class="wiki-hit"><span class="tag">{{ h.kind }}</span> <a href="{{ h.url }}"><b>{{ h.title }}</b></a>
+        <div class="small muted">{{ h.snippet|truncatechars:240 }}</div></div>
+    {% empty %}<p class="muted">{% t "Nothing found." %}</p>{% endfor %}
+  {% endif %}
+</div>
+{% if hits is None %}
+<div class="wiki-grid">
+  <div class="paper"><h2>{% t "Help" %}</h2>
+    <ul>{% for d in docs %}<li><a href="{% url 'wiki_help' d.slug %}">{{ d.title }}</a></li>{% endfor %}</ul></div>
+  <div class="paper"><h2>{% t "Rules" %}</h2>
+    <ul>{% for ch in chapters %}<li><a href="{% url 'wiki_rules' ch.slug %}">{{ ch.title }}</a></li>{% endfor %}
+      <li><a href="{% url 'augment_reference' %}">{% t "All augments" %}</a></li></ul>
+    <h3>{% t "Races" %}</h3>
+    <ul>{% for r in races %}<li><a href="{% url 'wiki_race' r.slug %}">{{ r.name }}</a></li>{% endfor %}</ul></div>
+  <div class="paper"><h2>{% t "Pages" %}</h2>
+    <ul>{% for p in pages %}<li><a href="{{ p.get_absolute_url }}">{{ p.title }}</a> <span class="muted small">{{ p.updated|date:"d.m.Y" }}</span></li>
+      {% empty %}<li class="muted">{% t "No pages yet – write the first one (house rules, places, people …)." %}</li>{% endfor %}</ul></div>
+</div>
+{% endif %}
+{% endblock %}

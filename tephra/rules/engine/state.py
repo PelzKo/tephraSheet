@@ -26,6 +26,8 @@ class ItemState:
     spd_penalty: int | None = None
     climb_swim_penalty: int | None = None
     deflect_bonus: int | None = None
+    acc_bonus: int | None = None
+    stk_bonus: int | None = None
     deflect_ranged: bool = False
     deflect_melee: bool = True
     modifiers: list = field(default_factory=list)

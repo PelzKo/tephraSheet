@@ -1,90 +1,98 @@
 {% load sheet_tags %}
 <div class="paper">
   <div class="row spread">
-    <h2>Inventory</h2>
+    <h2>{% t "Inventory" %}</h2>
     <div class="row">
-      <a class="btn small primary" href="{% url 'catalog' %}?for={{ character.pk }}">Add from catalog</a>
-      <a class="btn small" href="{% url 'item_create' %}?for={{ character.pk }}">Create item</a>
-      <a class="btn small" href="{% url 'catalog_import' %}?for={{ character.pk }}">Bulk import</a>
+      <a class="btn small primary" href="{% url 'catalog' %}?for={{ character.pk }}">{% t "Add from catalog" %}</a>
+      <a class="btn small" href="{% url 'item_create' %}?for={{ character.pk }}">{% t "Create item" %}</a>
+      <a class="btn small" href="{% url 'catalog_import' %}?for={{ character.pk }}">{% t "Bulk import" %}</a>
     </div>
   </div>
+  <form class="row quick-add" hx-post="{% url 'play' character.pk 'add-item' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+    <input type="hidden" name="tab" value="inventory">
+    <b>{% t "Found something?" %}</b>
+    <input type="text" name="name" placeholder="{% t "e.g. blanket, shark tooth" %}" maxlength="120" required aria-label="{% t "Item name" %}" class="grow">
+    <input type="number" name="quantity" value="1" min="1" aria-label="{% t "Quantity" %}" style="width:5em">
+    <input type="text" name="notes" placeholder="{% t "Notes (optional)" %}" maxlength="255" aria-label="{% t "Notes" %}">
+    <button class="btn small primary">{% t "Add" %}</button>
+  </form>
   {% if items %}
   <div class="inv-toolbar row" data-inv-toolbar data-character="{{ character.pk }}" data-target="#inv-list">
-    <input type="search" data-inv-q placeholder="Search inventory…" class="grow" aria-label="Search inventory">
-    <select data-inv-kind aria-label="Filter by kind"><option value="">All kinds</option>{% for v, l in item_kinds %}<option value="{{ v }}">{{ l }}</option>{% endfor %}</select>
-    <select data-inv-sort aria-label="Sort by">
-      <option value="slot">Sort: where it is</option>
-      <option value="name-asc">Name A → Z</option>
-      <option value="name-desc">Name Z → A</option>
-      <option value="price-desc">Price high → low</option>
-      <option value="price-asc">Price low → high</option>
-      <option value="value-desc">Total value (× quantity) high → low</option>
-      <option value="size-desc">Size heavy → light</option>
-      <option value="size-asc">Size light → heavy</option>
-      <option value="kind">Kind A → Z</option>
+    <input type="search" data-inv-q placeholder="{% t "Search inventory…" %}" class="grow" aria-label="{% t "Search inventory" %}">
+    <select data-inv-kind aria-label="{% t "Filter by kind" %}"><option value="">{% t "All kinds" %}</option>{% for v, l in item_kinds %}<option value="{{ v }}">{{ l|t }}</option>{% endfor %}</select>
+    <select data-inv-sort aria-label="{% t "Sort by" %}">
+      <option value="slot">{% t "Sort: where it is" %}</option>
+      <option value="name-asc">{% t "Name A → Z" %}</option>
+      <option value="name-desc">{% t "Name Z → A" %}</option>
+      <option value="price-desc">{% t "Price high → low" %}</option>
+      <option value="price-asc">{% t "Price low → high" %}</option>
+      <option value="value-desc">{% t "Total value (× quantity) high → low" %}</option>
+      <option value="size-desc">{% t "Size heavy → light" %}</option>
+      <option value="size-asc">{% t "Size light → heavy" %}</option>
+      <option value="kind">{% t "Kind A → Z" %}</option>
     </select>
-    <button type="button" class="btn small" data-inv-reset>Reset</button>
+    <button type="button" class="btn small" data-inv-reset>{% t "Reset" %}</button>
   </div>
   {% endif %}
   <div id="inv-list">
   {% for item in items %}
-    <div class="inv-slot" data-idx="{{ forloop.counter }}" data-name="{{ item.name }}" data-kind="{{ item.kind }}" data-kind-label="{{ item.get_kind_display }}"
+    <div class="inv-slot" data-idx="{{ forloop.counter }}" data-name="{{ item.name }}" data-kind="{{ item.kind }}" data-kind-label="{{ item.get_kind_display|t }}"
          data-size="{{ item.size|size_rank }}" data-price="{{ item.price_dukes|default:0 }}" data-qty="{{ item.quantity }}"
-         data-text="{{ item.name|lower }} {{ item.get_kind_display|lower }} {{ item.description|lower }} {{ item.notes|lower }}">
+         data-text="{{ item.name|item_name|lower }} {{ item.get_kind_display|t|lower }} {{ item|item_desc|lower }} {{ item.notes|lower }}">
       <div>
-        <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name }}</b>
-        <span class="tag">{{ item.get_kind_display }}{% if item.size %} · {{ item.get_size_display }}{% endif %}{% if item.hands_label %} · {{ item.hands_label }}{% endif %}{% if item.concealable %} · concealable{% endif %}</span>
-        {% if item.slot != "carried" %}<span class="tag ok">{{ item.get_slot_display }}</span>{% endif %}
+        <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name|item_name }}</b>
+        <span class="tag">{{ item.get_kind_display|t }}{% if item.size %} · {{ item.get_size_display|t }}{% endif %}{% if item.hands_label %} · {{ item.hands_label|t }}{% endif %}{% if item.concealable %} · {% t "concealable" %}{% endif %}</span>
+        {% if item.slot != "carried" %}<span class="tag ok">{{ item.get_slot_display|t }}</span>{% endif %}
         <div class="meta">
           {% for a in item.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}
           {% if item.price_dukes %} · {{ item.price_dukes|money }}{% endif %}
-          {% if item.description %} · {{ item.description|truncatechars:140 }}{% endif %}
+          {% if item.description %} · {{ item|item_desc|truncatechars:140 }}{% endif %}
           {% if item.notes %} · {{ item.notes }}{% endif %}
         </div>
       </div>
       <div class="inv-actions">
         <form hx-post="{% url 'play' character.pk 'equip' %}" hx-target="#sheet-body" hx-swap="outerHTML" hx-trigger="change">
           <input type="hidden" name="id" value="{{ item.pk }}"><input type="hidden" name="tab" value="inventory">
-          <select name="slot" aria-label="Where">
+          <select name="slot" aria-label="{% t "Where" %}">
             {% for value, label in slot_choices %}
-              {% if value == "weapon1" or value == "weapon2" %}{% if item.is_weapon %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
-              {% elif value == "wings" %}{% if has_wings and item.is_weapon and item.hands_label == "one-handed" or item.slot == "wings" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
-              {% elif value == "armor" %}{% if item.kind == "armor" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
-              {% elif value == "deflection" %}{% if item.kind == "deflection" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
-              {% else %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label }}</option>{% endif %}
+              {% if value == "weapon1" or value == "weapon2" %}{% if item.is_weapon %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
+              {% elif value == "wings" %}{% if has_wings and item.is_weapon and item.hands_label == "one-handed" or item.slot == "wings" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
+              {% elif value == "armor" %}{% if item.kind == "armor" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
+              {% elif value == "deflection" %}{% if item.kind == "deflection" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
+              {% else %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
             {% endfor %}
           </select>
         </form>
-        <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="One more">+</button>
-        <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "-1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="One less">−</button>
-        <a class="btn small" href="{% url 'inventory_item_edit' character.pk item.pk %}">Edit</a>
-        <button class="btn small danger" hx-post="{% url 'play' character.pk 'drop' %}" hx-vals='{"id": "{{ item.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" hx-confirm="Remove {{ item.name }}?">Drop</button>
+        <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "One more" %}">+</button>
+        <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "-1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "One less" %}">−</button>
+        <a class="btn small" href="{% url 'inventory_item_edit' character.pk item.pk %}">{% t "Edit" %}</a>
+        <button class="btn small danger" hx-post="{% url 'play' character.pk 'drop' %}" hx-vals='{"id": "{{ item.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" hx-confirm="{% t "Remove {name}?" name=item.name %}">{% t "Drop" %}</button>
       </div>
     </div>
   {% empty %}
-    <p class="muted">Nothing carried yet.</p>
+    <p class="muted">{% t "Nothing carried yet." %}</p>
   {% endfor %}
-    <p class="muted" data-inv-empty hidden>No items match the search or filter.</p>
+    <p class="muted" data-inv-empty hidden>{% t "No items match the search or filter." %}</p>
   </div>
-  <p class="muted small">"Worn / active" items (e.g. a flight pack) apply their modifiers; carried and stored items don't. A two-handed item always goes into the left hand and blocks the right one; a shield or parrying dagger takes the right hand (a cloak takes none).</p>
+  <p class="muted small">{% t "“Worn / active” items (e.g. a flight pack) apply their modifiers; carried and stored items don't. A two-handed item always goes into the left hand and blocks the right one; a shield or parrying dagger takes the right hand (a cloak takes none)." %}</p>
 </div>
 
 <div class="paper">
-  <h2>Effects</h2>
+  <h2>{% t "Effects" %}</h2>
   {% for e in effects %}
-    <div class="inv-slot"><div><b>{{ e.get_kind_display }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name }}{% endif %}: {{ e.text }}{% if e.lost_wounds %} (−{{ e.lost_wounds }} max wounds){% endif %}</div>
-      <div class="inv-actions"><button class="btn small" hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML">Remove</button></div></div>
-  {% empty %}<p class="muted">No active effects.</p>{% endfor %}
-  <h3 style="margin-top:12px">Add effect</h3>
+    <div class="inv-slot"><div><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text }}{% if e.lost_wounds %} {% t "(−{n} max wounds)" n=e.lost_wounds %}{% endif %}</div>
+      <div class="inv-actions"><button class="btn small" hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML">{% t "Remove" %}</button></div></div>
+  {% empty %}<p class="muted">{% t "No active effects." %}</p>{% endfor %}
+  <h3 style="margin-top:12px">{% t "Add effect" %}</h3>
   {% include "characters/partials/effect_form.html" %}
 </div>
 
 <div class="paper">
-  <h2>Notes</h2>
+  <h2>{% t "Notes" %}</h2>
   <form hx-post="{% url 'play' character.pk 'notes' %}" hx-target="#sheet-body" hx-swap="outerHTML">
     <input type="hidden" name="tab" value="inventory">
     <textarea name="notes" rows="5">{{ character.notes }}</textarea>
-    <div class="row" style="margin-top:8px"><button class="btn small primary">Save notes</button>
-      <a class="btn small" href="{% url 'augments' character.pk %}">Augments ({{ augments|length }}/{{ sheet.stats.aug.total }})</a></div>
+    <div class="row" style="margin-top:8px"><button class="btn small primary">{% t "Save notes" %}</button>
+      <a class="btn small" href="{% url 'augments' character.pk %}">{% t "Augments ({n}/{max})" n=augments|length max=sheet.stats.aug.total %}</a></div>
   </form>
 </div>

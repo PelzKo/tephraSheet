@@ -1,18 +1,18 @@
 {% extends "characters/wizard/base.html" %}{% load sheet_tags %}
-{% block step_title %}Skills{% endblock %}
-{% block intro %}<p class="muted">Place 3 points in one skill, 2 points in two skills, and 1 point in three skills. They can't be placed in the same skills.</p>{% endblock %}
+{% block step_title %}{% t "Skills" %}{% endblock %}
+{% block intro %}<p class="muted">{% t "Place 3 points in one skill, 2 points in two skills, and 1 point in three skills. A skill can only receive one group of points." %}</p>{% endblock %}
 {% block step %}
 <div x-data="skillAlloc({{ pool|safe }}, { {% for g in groups %}{% for s in g.skills %}'{{ s.name }}': {{ s.points }},{% endfor %}{% endfor %} })">
-  <div class="row" style="margin-bottom:10px"><b>Points to place:</b>
+  <div class="row" style="margin-bottom:10px"><b>{% t "Points to place:" %}</b>
     <div class="pool"><template x-for="(p, i) in pool" :key="i"><span :class="{used: usedIndex(i)}" x-text="p"></span></template></div>
-    <span class="tag" :class="complete ? 'ok' : ''" x-text="complete ? 'All points placed' : 'Not complete'"></span>
+    <span class="tag" :class="complete ? 'ok' : ''" x-text="complete ? '{% t "All points placed" %}' : '{% t "Not complete" %}'"></span>
   </div>
   <div class="skill-alloc">
     {% for g in groups %}
-      <fieldset><legend>{{ g.attribute }}</legend>
+      <fieldset><legend>{{ g.attribute|t }}</legend>
         {% for s in g.skills %}
           <div class="skill-row">
-            <span>{{ s.name }}{% if s.total != s.points %} <span class="muted small" title="racial/story bonus">({{ s.total|add:0 }} with bonus: {% stat s.value s.name %})</span>{% endif %}</span>
+            <span>{{ s.name|t }}{% if s.total != s.points %} <span class="muted small" title="{% t "Racial/story bonus" %}">({% t "{n} with bonus:" n=s.total|add:0 %} {% stat s.value s.name|t %})</span>{% endif %}</span>
             <input type="hidden" name="skill:{{ s.name }}" :value="alloc['{{ s.name }}'] || 0">
             <span class="seg">
               <template x-for="v in [0,1,2,3]"><button type="button" :class="{on: (alloc['{{ s.name }}']||0) === v}" :disabled="!can('{{ s.name }}', v)" x-on:click="set('{{ s.name }}', v)" x-text="v"></button></template>

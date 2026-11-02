@@ -3,8 +3,10 @@ from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth import views as auth_views
 from django.shortcuts import get_object_or_404, redirect, render
+from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
+from rules.lang import gettext as _
 from .. import access
 from ..models import Character, Feedback, NarratorSettings
 
@@ -19,7 +21,7 @@ def character_list(request):
             weapon = sheet.weapons[0] if sheet.weapons else sheet.unarmed
             card.update(sheet=sheet, weapon=weapon,
                         hp=c.current_hp if c.current_hp is not None else sheet.max_hp,
-                        wounds=c.current_wounds if c.current_wounds is not None else sheet.max_wounds)
+                        wounds=c.wounds_taken)
         cards.append(card)
     return render(request, "characters/list.html", {"cards": cards})
 
@@ -37,17 +39,17 @@ def unlock_view(request, pk):
         return redirect(character.get_absolute_url())
     error = ""
     if not character.password:
-        error = "This character has no password yet. Ask the narrator to set one."
+        error = _("This character has no password yet. Ask the narrator to set one.")
     if request.method == "POST":
         if access.is_throttled(request, character):
-            error = "Too many wrong attempts. Wait a few minutes."
+            error = _("Too many wrong attempts. Wait a few minutes.")
         elif character.check_password(request.POST.get("password", "")):
             access.clear_failures(request, character)
             access.unlock(request, character)
             return redirect(character.get_absolute_url())
         else:
             access.register_failure(request, character)
-            error = "Wrong password."
+            error = _("Wrong password.")
     return render(request, "characters/unlock.html", {"character": character, "error": error})
 
 
@@ -59,13 +61,18 @@ def lock_view(request, pk):
 
 
 class PasswordForm(forms.Form):
-    password = forms.CharField(widget=forms.PasswordInput, min_length=3, label="New password")
-    confirm = forms.CharField(widget=forms.PasswordInput, label="Repeat password")
+    password = forms.CharField(widget=forms.PasswordInput, min_length=3)
+    confirm = forms.CharField(widget=forms.PasswordInput)
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields["password"].label = _("New password")
+        self.fields["confirm"].label = _("Repeat password")
 
     def clean(self):
         data = super().clean()
         if data.get("password") != data.get("confirm"):
-            raise forms.ValidationError("Passwords don't match.")
+            raise forms.ValidationError(_("Passwords don't match."))
         return data
 
 
@@ -75,7 +82,7 @@ def password_view(request, character):
     if request.method == "POST" and form.is_valid():
         character.set_password(form.cleaned_data["password"])
         character.save(update_fields=["password"])
-        messages.success(request, "Password changed.")
+        messages.success(request, _("Password changed."))
         return redirect("sheet", pk=character.pk)
     return render(request, "characters/password.html", {"character": character, "form": form})
 
@@ -84,10 +91,10 @@ def password_view(request, character):
 @access.character_view
 def delete_view(request, character):
     if not access.is_gm(request) and character.status != "draft":
-        messages.error(request, "Only the narrator can delete finished characters.")
+        messages.error(request, _("Only the narrator can delete finished characters."))
         return redirect("sheet", pk=character.pk)
     character.delete()
-    messages.success(request, "Character deleted.")
+    messages.success(request, _("Character deleted."))
     return redirect("character_list")
 
 
@@ -108,7 +115,7 @@ def gm_settings(request):
     form = SettingsForm(request.POST or None, instance=obj)
     if request.method == "POST" and form.is_valid():
         form.save()
-        messages.success(request, "Narrator settings saved.")
+        messages.success(request, _("Narrator settings saved."))
         return redirect("gm_settings")
     feedback = list(Feedback.objects.select_related("character"))
     return render(request, "characters/gm_settings.html", {
@@ -122,9 +129,26 @@ def gm_reset_password(request, pk):
     character = get_object_or_404(Character, pk=pk)
     raw = request.POST.get("password", "")
     if len(raw) < 3:
-        messages.error(request, "Password must have at least 3 characters.")
+        messages.error(request, _("Password must have at least 3 characters."))
     else:
         character.set_password(raw)
         character.save(update_fields=["password"])
-        messages.success(request, f"Password of {character} reset.")
+        messages.success(request, _("Password of {character} reset.", character=character))
     return redirect("gm_settings")
+
+
+@require_POST
+def set_language(request):
+    from rules.lang import languages
+
+    from ..middleware import COOKIE
+
+    code = request.POST.get("language", "")
+    target = request.POST.get("next") or "/"
+    if not url_has_allowed_host_and_scheme(target, allowed_hosts={request.get_host()}):
+        target = "/"
+    response = redirect(target)
+    if code in languages():
+        request.session[COOKIE] = code
+        response.set_cookie(COOKIE, code, max_age=365 * 24 * 3600, samesite="Lax")
+    return response

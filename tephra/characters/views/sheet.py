@@ -4,16 +4,19 @@ from django.contrib import messages
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
-from catalog.models import KIND_CHOICES
+from catalog.models import KIND_CHOICES, ItemTemplate
 from rules.engine import effects as fx
+from rules.lang import gettext as _
 from rules.engine import tables
 from rules.engine.requirements import character_warnings
 from rules.registry import get_registry
 
-from .. import access, services
+from ..templatetags.sheet_tags import effect_html
+
+from .. import access, journal, services
 from ..models import EffectEntry, InventoryItem
 
-TAB_NAMES = ("page1", "page2", "inventory")
+TAB_NAMES = ("page1", "page2", "inventory", "story")
 BARREL_LINES = 14
 # Silhouette positions (svg units, see page1.html) of the called-shot locations.
 BODY_POSITIONS = {1: (65, 12), 2: (65, 31), 3: (82, 22), 4: (65, 55), 5: (65, 105), 6: (65, 165),
@@ -23,13 +26,13 @@ BODY_POSITIONS = {1: (65, 12), 2: (65, 31), 3: (82, 22), 4: (65, 55), 5: (65, 10
 def effect_options():
     """Data for the add-effect form (Alpine): status effects and the called-shot chart."""
     called = {}
-    for n, label in fx.LOCATION_LABELS.items():
-        loc = fx.CALLED_SHOTS[fx.LOCATION_NUMBERS[n]]
-        called[n] = [{"kind": k, "label": f"{fx.CALLED_LABELS[k]}: {loc[k]['name']}", "text": loc[k]["text"]}
-                     for k in fx.CALLED_KINDS]
+    labels = fx.location_labels()
+    for n in labels:
+        called[n] = [{"kind": k, "label": "{}: {}".format(fx.called_label(k), e['name']), "text": e["text"]}
+                     for k in fx.CALLED_KINDS for e in [fx.get(fx.called_key(n, k))]]
     return {
-        "status": [{"key": f"status:{e['slug']}", "name": e["name"], "text": e["text"]} for e in fx.STATUS],
-        "locations": [{"n": n, "label": f"{n} – {label}"} for n, label in fx.LOCATION_LABELS.items()],
+        "status": [{"key": f"status:{e['slug']}", "name": e["name"], "text": e["text"]} for e in fx.status_list()],
+        "locations": [{"n": n, "label": f"{n} – {label}"} for n, label in labels.items()],
         "called": called,
     }
 
@@ -38,7 +41,7 @@ def sheet_context(request, character):
     sheet = character.compute()
     reg = get_registry()
     hp = character.current_hp if character.current_hp is not None else sheet.max_hp
-    wounds = character.current_wounds if character.current_wounds is not None else sheet.max_wounds
+    wounds = character.wounds_taken
     effects = list(character.effects.filter(active=True))
     rows = list(sheet.specialty_rows)
     # Sheet p.2 has rows L1, L1, L1, L2 … L12.
@@ -63,9 +66,9 @@ def sheet_context(request, character):
         sp = row["specialty"]
         spec_data[row["slug"]] = {
             "slug": row["slug"], "name": sp["name"], "skill": sp["skill"] or "General (Sciences)", "cost": sp["cost"],
-            "requires": sp["requires_text"], "effect": sp["effect"], "usage_note": sp.get("usage_note", ""),
+            "requires": sp["requires_text"], "effect": sp["effect"], "effect_html": effect_html(sp["effect"]), "usage_note": sp.get("usage_note", ""),
             "options": sp.get("options"), "choice": character.specialty_choices.get(row["slug"], ""),
-            "bonuses": ", ".join(f"{tables.COMBAT_STAT_LABELS[k]} {v:+d}" for k, v in sp["bonuses"].items()),
+            "bonuses": ", ".join(f"{_(tables.COMBAT_STAT_LABELS[k])} {v:+d}" for k, v in sp["bonuses"].items()),
         }
     # The Gear/Augments/Notes boxes on p.2 are ruled with BARREL_LINES lines; fill the rest with blanks.
     gear_count = sum(1 for i in items if i.slot != "stored")
@@ -82,7 +85,7 @@ def sheet_context(request, character):
                          ("Fatal Effects", [e for e in effects if e.kind == "fatal"]),
                          ("Status Effects", [e for e in effects if e.kind in ("normal", "status")])],
         "body_locations": [{"n": n, "label": label, "x": BODY_POSITIONS[n][0], "y": BODY_POSITIONS[n][1],
-                            "hits": locations[n]} for n, label in fx.LOCATION_LABELS.items()],
+                            "hits": locations[n]} for n, label in fx.location_labels().items()],
         "effect_options": effect_options(),
         "spec_warnings": character_warnings(sheet.state),
         "missing_options": services.missing_options(character),
@@ -97,6 +100,7 @@ def sheet_context(request, character):
         "stored": [i for i in items if i.slot == "stored"],
         "money_on_hand": tables.format_money(character.money_on_hand),
         "money_in_bank": tables.format_money(character.money_in_bank),
+        "journal": journal.sections(character.story_notes),
         "xp_range": range(1, 13),
         "xp_hand": max(1, min(12, character.xp)),
         "admin_mode": access.in_admin_mode(request, character),
@@ -117,7 +121,7 @@ def sheet_view(request, character):
         return redirect("levelup", pk=character.pk)
     moved = services.normalize_hands(character)
     if moved:
-        messages.info(request, f"{', '.join(moved)} needs both hands (or the other hand is full) and was put away.")
+        messages.info(request, _("{items} needs both hands (or the other hand is full) and was put away.", items=", ".join(moved)))
     return render(request, "characters/sheet.html", sheet_context(request, character))
 
 
@@ -143,30 +147,33 @@ def play_action(request, character, action):
     sheet = character.compute()
     p = request.POST
     hp = character.current_hp if character.current_hp is not None else sheet.max_hp
-    wounds = character.current_wounds if character.current_wounds is not None else sheet.max_wounds
+    wounds = character.wounds_taken  # counts up from 0 (unhurt) to max wounds
 
     if action == "damage":
         # Damage reduces HP first; the rest goes to wounds (p.10). "direct" skips HP.
         amount = max(0, _int(p.get("amount")))
         if p.get("direct"):
-            wounds -= amount
+            wounds += amount
         else:
             to_hp = min(hp, amount)
             hp -= to_hp
-            wounds -= amount - to_hp
-        took_wounds = wounds < (character.current_wounds if character.current_wounds is not None
-                                else sheet.max_wounds)
-        character.current_hp, character.current_wounds = hp, max(0, wounds)
-        if wounds <= 0:
-            messages.warning(request, "0 wounds: every further hit causes a fatal effect (roll a location).")
+            wounds += amount - to_hp
+        took_wounds = wounds > character.wounds_taken
+        was_full = character.wounds_taken >= sheet.max_wounds
+        character.current_hp, character.wounds_taken = hp, min(sheet.max_wounds, wounds)
+        if took_wounds and was_full:
+            messages.warning(request, _("All wounds taken: this hit causes a fatal effect (roll a location)."),
+                             extra_tags="popup")
+        elif wounds >= sheet.max_wounds:
+            messages.warning(request, _("All wounds taken: every further hit causes a fatal effect (roll a location)."))
         elif took_wounds:
-            messages.warning(request, "Wounds damage: roll a called-shot location for the wounded effect.")
+            messages.warning(request, _("Wounds damage: roll a called-shot location for the wounded effect."))
     elif action == "heal":
         amount = max(0, _int(p.get("amount")))
         character.current_hp = min(sheet.max_hp, hp + amount)
     elif action == "heal_wounds":
         amount = max(0, _int(p.get("amount"), 1))
-        character.current_wounds = min(sheet.max_wounds, wounds + amount)
+        character.wounds_taken = max(0, wounds - amount)
     elif action == "breather":
         character.current_hp = sheet.max_hp
         ended = [k for k, e in fx.EFFECTS.items() if e.get("breather")]
@@ -174,16 +181,16 @@ def play_action(request, character, action):
     elif action == "set_hp":
         character.current_hp = max(0, min(sheet.max_hp, _int(p.get("value"), hp)))
     elif action == "set_wounds":
-        character.current_wounds = max(0, min(sheet.max_wounds, _int(p.get("value"), wounds)))
+        character.wounds_taken = max(0, min(sheet.max_wounds, _int(p.get("value"), wounds)))
     elif action == "xp":
         character.xp = max(0, min(99, character.xp + _int(p.get("delta"))))
         if "set" in p:
             character.xp = max(0, min(99, _int(p.get("set"))))
         if character.xp >= tables.XP_PER_LEVEL and character.level < tables.MAX_LEVEL:
-            messages.success(request, "Enough experience for a new level!")
+            messages.success(request, _("Enough experience for a new level!"))
     elif action == "money":
         field = "money_in_bank" if p.get("where") == "bank" else "money_on_hand"
-        unit = tables.DUKES_PER_PRINCE if p.get("unit", "pr") == "pr" else 1
+        unit = {"k": tables.DUKES_PER_KING, "pr": tables.DUKES_PER_PRINCE, "d": 1}.get(p.get("unit", "pr"), 1)
         delta = _int(p.get("amount")) * unit * (-1 if p.get("sign") == "-" else 1)
         setattr(character, field, getattr(character, field) + delta)
         if p.get("transfer"):
@@ -196,11 +203,22 @@ def play_action(request, character, action):
     elif action == "toggle":
         key = p.get("key", "")
         toggles = set(character.toggles)
+        ongoing = {t["key"]: t for t in sheet.ongoing}
         if key in toggles:
             toggles.discard(key)
-        elif key in {t["key"] for t in sheet.toggles}:
+        elif key in {t["key"] for t in sheet.toggles} or key in ongoing:
             toggles.add(key)
+            if key in ongoing:
+                if character.fight.get("active"):
+                    character.fight = dict(character.fight, ap=max(0, character.fight.get("ap", 0) - 2))
+                    messages.info(request, _("{label} started: 2 AP spent. It costs 1 AP at the start of each further turn.",
+                                         label=ongoing[key]["label"]), extra_tags="popup")
+                else:
+                    messages.info(request, _("{label} started: pay 2 AP now and 1 AP at the start of each further turn to keep it going.",
+                                         label=ongoing[key]["label"]), extra_tags="popup")
         character.toggles = sorted(toggles)
+    elif action.startswith("fight_"):
+        fight_action(request, character, sheet, action[6:], p)
     elif action == "effect_add":
         popups = add_effect(character, p)
         if popups:
@@ -223,7 +241,7 @@ def play_action(request, character, action):
                 messages.error(request, str(exc))
             else:
                 if result["moved"]:
-                    messages.info(request, f"Put away (now carried): {', '.join(result['moved'])}.")
+                    messages.info(request, _("Put away (now carried): {items}.", items=", ".join(result["moved"])))
                 if result["notice"]:
                     messages.warning(request, result["notice"], extra_tags="popup")
     elif action == "quantity":
@@ -235,8 +253,18 @@ def play_action(request, character, action):
             else:
                 item.quantity = q
                 item.save(update_fields=["quantity"])
+    elif action == "add_item":
+        name = p.get("name", "").strip()[:120]
+        if name:
+            template, _created = ItemTemplate.objects.get_or_create(name=name, kind="general",
+                                                             defaults={"source": "custom", "material": "organic"})
+            item = InventoryItem.from_template(character, template, quantity=max(1, _int(p.get("quantity"), 1)))
+            item.notes = p.get("notes", "").strip()[:255]
+            item.save()
     elif action == "drop":
         InventoryItem.objects.filter(character=character, pk=_int(p.get("id"))).delete()
+    elif action == "story":
+        character.story_notes = p.get("story_notes", "")
     elif action == "notes":
         character.notes = p.get("notes", "")
     character.save()
@@ -245,11 +273,42 @@ def play_action(request, character, action):
     changed = False
     if character.current_hp is not None and character.current_hp > new.max_hp:
         character.current_hp, changed = new.max_hp, True
-    if character.current_wounds is not None and character.current_wounds > new.max_wounds:
-        character.current_wounds, changed = new.max_wounds, True
+    if character.wounds_taken > new.max_wounds:
+        character.wounds_taken, changed = new.max_wounds, True
     if changed:
-        character.save(update_fields=["current_hp", "current_wounds"])
+        character.save(update_fields=["current_hp", "wounds_taken"])
     return _respond(request, character)
+
+
+def fight_action(request, character, sheet, what, p):
+    """Fight mode: AP left this round. Spending (on your turn or reflexively) subtracts right away;
+    "my turn" pays the upkeep of ongoing performances; AP refresh at the end of your turn."""
+    max_ap = sheet.stats["ap"].total
+    f = dict(character.fight)
+    if what == "start":
+        f = {"active": True, "ap": max_ap, "my_turn": False, "round": 1}
+    elif what == "stop":
+        f = {}
+    elif not f.get("active"):
+        return
+    elif what == "spend":
+        amount = max(0, _int(p.get("amount"), 1))
+        if amount > f.get("ap", 0):
+            messages.error(request, _("Only {ap} AP left this round.", ap=f.get("ap", 0)))
+            return
+        f["ap"] -= amount
+    elif what == "undo":
+        f["ap"] = min(max_ap, f.get("ap", 0) + 1)
+    elif what == "turn":
+        f["my_turn"] = True
+        upkeep = [o["label"] for o in sheet.ongoing if o["active"]]
+        if upkeep:
+            paid = min(len(upkeep), f.get("ap", 0))
+            f["ap"] -= paid
+            messages.info(request, _("Upkeep: {paid} AP for {items}.", paid=paid, items=", ".join(upkeep)))
+    elif what == "end_turn":
+        f.update(ap=max_ap, my_turn=False, round=f.get("round", 1) + 1)
+    character.fight = f
 
 
 # Battle Theme is cancelled by a called shot to the neck (singing), or by a disarm (called shot to a
@@ -271,7 +330,7 @@ def add_effect(character, p):
             if data.get("drop"):
                 dropped = drop_from_hand(character, loc)
                 if dropped:
-                    popups.append(f"You dropped {dropped} (1 AP to pick it up). It is now carried.")
+                    popups.append(_("You dropped {item} (1 AP to pick it up). It is now carried.", item=dropped))
             popups.append(cancel_battle_theme(character, loc))
         return [t for t in popups if t]
     data = fx.get(p.get("key"))
@@ -284,15 +343,16 @@ def add_effect(character, p):
 
 def cancel_battle_theme(character, location):
     spec = get_registry().specialties_by_name.get("Battle Theme")
-    if not spec or character.stance != spec["slug"]:
+    key = f"spec:{spec['slug']}" if spec else ""
+    if not spec or key not in character.toggles:
         return ""
     mode = character.specialty_choices.get(spec["slug"], "")
     if location not in THEME_CANCEL.get(mode, set()):
         return ""
-    character.stance = ""
-    what = {4: "a called shot to your neck", "sunder": "your instrument being sundered or knocked away"}.get(
-        location, "being disarmed (called shot to your hand)")
-    return f"Your Battle Theme has been cancelled by {what}. Start it again for 2 AP."
+    character.toggles = [t for t in character.toggles if t != key]
+    what = {4: _("a called shot to your neck"), "sunder": _("your instrument being sundered or knocked away")}.get(
+        location, _("being disarmed (called shot to your hand)"))
+    return _("Your Battle Theme has been cancelled by {what}. Start it again for 2 AP.", what=what)
 
 
 def drop_from_hand(character, location):
@@ -313,4 +373,4 @@ def battle_theme_state(character):
     spec = get_registry().specialties_by_name.get("Battle Theme")
     if not spec or spec["slug"] not in {s for s, _ in character.specialties}:
         return None
-    return spec["slug"], character.specialty_choices.get(spec["slug"], ""), character.stance == spec["slug"]
+    return spec["slug"], character.specialty_choices.get(spec["slug"], ""), f"spec:{spec['slug']}" in character.toggles

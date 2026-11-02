@@ -2,6 +2,7 @@
 
 from dataclasses import dataclass, field
 
+from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import effects, tables
@@ -31,6 +32,7 @@ class Sheet:
     sources: list = field(default_factory=list)
     toggles: list = field(default_factory=list)  # [{key, label, active, effects}]
     stances: list = field(default_factory=list)  # [{slug, label, active}]
+    ongoing: list = field(default_factory=list)  # [{key, label, detail, active, cost}] Battle Theme, Epic Dance
     weapons: list = field(default_factory=list)  # WeaponBlock
     unarmed: object = None
     armor: dict | None = None
@@ -78,39 +80,39 @@ def collect_sources(state):
         mods = t.get("modifiers", [])
         if key == "farishtaa/botched-surgery" and "farishtaa/botched-surgery:weak-souls" in negated:
             mods = [m for m in mods if not m["stat"].startswith("roll:Spirit")]
-        sources.append(Source(f"trait:{key}", f"Racial trait: {t['name']}", mods, kind="trait"))
+        sources.append(Source(f"trait:{key}", _("Racial trait: {name}", name=t["name"]), mods, kind="trait"))
     for slug, _level in state.specialties:
         s = reg.specialties.get(slug)
         if not s:
             continue
-        sources.append(Source(f"spec:{slug}", f"Specialty: {s['name']}", s.get("modifiers", []),
+        sources.append(Source(f"spec:{slug}", _("Specialty: {name}", name=s["name"]), s.get("modifiers", []),
                               kind="specialty", stance_slug=slug if s.get("stance") else ""))
     for slug in state.stories:
         s = reg.stories.get(slug)
         if s:
-            sources.append(Source(f"story:{slug}", f"Story: {s['name']}", s.get("modifiers", []), kind="story"))
+            sources.append(Source(f"story:{slug}", _("Story: {name}", name=s["name"]), s.get("modifiers", []), kind="story"))
     for n, cm in enumerate(state.custom_modifiers):
-        label = cm.get("source") or "Custom"
+        label = cm.get("source") or _("Custom")
         sources.append(Source(cm.get("key") or f"custom:{n}", label, [cm], kind="custom"))
     for key in state.effects:
         e = effects.get(key)
         if e and e.get("modifiers"):
-            sources.append(Source(f"effect:{key}", f"Effect: {e['name']}", e["modifiers"], kind="effect"))
+            sources.append(Source(f"effect:{key}", _("Effect: {name}", name=e["name"]), e["modifiers"], kind="effect"))
     for slug, marque in state.body_augments:
         a = reg.augments.get(slug)
         if a:
-            sources.append(Source(f"body:{slug}", f"Augment: {a['name']} mQ {roman(marque)}",
+            sources.append(Source(f"body:{slug}", _("Augment: {name} mQ {marque}", name=a["name"], marque=roman(marque)),
                                   [dict(m, marque=marque) for m in a.get("modifiers", [])], kind="augment"))
     for item in state.items:
         if item.slot in ("carried", "stored", ""):
             continue
         key = f"item:{item.id or item.name}"
         if item.modifiers:
-            sources.append(Source(key, f"Item: {item.name}", item.modifiers, kind="item", item_id=item.id))
+            sources.append(Source(key, _("Item: {name}", name=item.name), item.modifiers, kind="item", item_id=item.id))
         for slug, marque in item.augments:
             a = reg.augments.get(slug)
             if a:
-                sources.append(Source(f"{key}:aug:{slug}", f"{item.name}: {a['name']} mQ {roman(marque)}",
+                sources.append(Source(f"{key}:aug:{slug}", _("{item}: {name} mQ {marque}", item=item.name, name=a["name"], marque=roman(marque)),
                                       [dict(m, marque=marque) for m in a.get("modifiers", [])],
                                       kind="item-augment", item_id=item.id))
     return sources
@@ -130,7 +132,7 @@ def compute(state: CharacterState) -> Sheet:
     # --- skills & attributes -------------------------------------------------
     for skill in tables.ALL_SKILLS:
         v = Value()
-        v.add("Skill points", state.skills.get(skill, 0))
+        v.add(_("Skill points"), state.skills.get(skill, 0))
         sheet.skills[skill] = v
     for src in sources:
         for m in src.modifiers:
@@ -140,11 +142,11 @@ def compute(state: CharacterState) -> Sheet:
                     sheet.skills[skill].add(src.label, mod_amount(m, {}, m.get("marque")))
     for key, amount in state.misc.items():
         if key.startswith("skill:") and key[6:] in sheet.skills:
-            sheet.skills[key[6:]].add(MISC_LABEL, amount)
+            sheet.skills[key[6:]].add(_(MISC_LABEL), amount)
     for attr, skills in tables.SKILLS.items():
         v = Value()
         for skill in skills:
-            v.add(skill, sheet.skills[skill].total)
+            v.add(_(skill), sheet.skills[skill].total)
         sheet.attributes[attr] = v
         sheet.attr_misc[attr] = Value()
         sheet.roll_notes[attr] = []
@@ -166,14 +168,14 @@ def compute(state: CharacterState) -> Sheet:
                 if attr not in sheet.attributes:
                     continue
                 if m.get("when") == "note":
-                    text = m.get("label") or f"{attr} rolls"
+                    text = _(m["label"]) if m.get("label") else _("{attr} rolls", attr=_(attr))
                     sheet.roll_notes[attr].append((f"{src.label} ({text})", mod_amount(m, variables)))
                 elif is_active(m, src, state):
-                    label = src.label + (f" ({m['label']})" if m.get("label") else "")
+                    label = src.label + (f" ({_(m['label'])})" if m.get("label") else "")
                     sheet.attr_misc[attr].add(label, mod_amount(m, variables))
     for key, amount in state.misc.items():
         if key.startswith("attr:") and key[5:] in sheet.attributes:
-            sheet.attr_misc[key[5:]].add(MISC_LABEL, amount)
+            sheet.attr_misc[key[5:]].add(_(MISC_LABEL), amount)
     for attr, misc in sheet.attr_misc.items():
         for label, amount in misc.parts:
             sheet.attributes[attr].add(label, amount)
@@ -181,12 +183,12 @@ def compute(state: CharacterState) -> Sheet:
 
     # --- combat stats -------------------------------------------------------
     stats = {s: Value() for s in CHARACTER_STATS}
-    stats["spd"].set_base(f"Base ({race['name']})", race["speed"])
-    stats["swim"].set_base(f"Base ({race['name']})", race["swim"])
-    stats["climb"].set_base(f"Base ({race['name']})", race["climb"])
-    stats["wnd"].set_base("Base wounds", tables.BASE_WOUNDS)
-    stats["ap"].set_base(f"Level {state.level}", tables.action_points(state.level))
-    stats["essence_slots"].set_base("Base", 0)
+    stats["spd"].set_base(_("Base ({name})", name=race["name"]), race["speed"])
+    stats["swim"].set_base(_("Base ({name})", name=race["name"]), race["swim"])
+    stats["climb"].set_base(_("Base ({name})", name=race["name"]), race["climb"])
+    stats["wnd"].set_base(_("Base wounds"), tables.BASE_WOUNDS)
+    stats["ap"].set_base(_("Level {level}", level=state.level), tables.action_points(state.level))
+    stats["essence_slots"].set_base(_("Base"), 0)
 
     # Specialty bonus columns (sheet p.2), once each regardless of use.
     col_totals = {c: 0 for c in tables.COMBAT_STATS}
@@ -206,7 +208,7 @@ def compute(state: CharacterState) -> Sheet:
         v = Value()
         for row in sheet.specialty_rows:
             v.add(f"Specialty: {row['name']}", row["bonuses"][c])
-        v.add(MISC_LABEL, sheet.specialty_misc[c])
+        v.add(_(MISC_LABEL), sheet.specialty_misc[c])
         sheet.specialty_total_values[c] = v
     variables.update({f"{c}_specialties": col_totals[c] for c in tables.COMBAT_STATS})
 
@@ -218,7 +220,7 @@ def compute(state: CharacterState) -> Sheet:
                 continue
             if m.get("when") == "note" or stat == "note":
                 amount = mod_amount(m, variables, m.get("marque"))
-                sheet.notes.append((src.label, f"{m.get('label', '')}: {amount:+d}" if m.get("label") else f"{amount:+d}"))
+                sheet.notes.append((src.label, f"{_(m['label'])}: {amount:+d}" if m.get("label") else f"{amount:+d}"))
                 continue
             if not is_active(m, src, state):
                 continue
@@ -230,14 +232,14 @@ def compute(state: CharacterState) -> Sheet:
                 transfers.append((src, m))
                 continue
             amount = mod_amount(m, variables, m.get("marque"))
-            label = src.label + (f" ({m['label']})" if m.get("label") and m.get("when") == "toggle" else "")
+            label = src.label + (f" ({_(m['label'])})" if m.get("label") and m.get("when") == "toggle" else "")
             if stat == "armor_degree":
                 sheet.armor_degree += amount
             elif stat == "ap_ready":
                 sheet.ap_ready_mods.append((label, amount))
             elif stat in stats:
                 if m.get("op") == "set":
-                    stats[stat].override = (f"{label}: set to {amount}", amount)
+                    stats[stat].override = (_("{label}: set to {amount}", label=label, amount=amount), amount)
                 elif m.get("op") == "base":
                     stats[stat].set_base(label, amount)
                 else:
@@ -245,32 +247,32 @@ def compute(state: CharacterState) -> Sheet:
 
     for stat in CHARACTER_STATS:
         if stat in state.misc:
-            stats[stat].add(MISC_LABEL, state.misc[stat])
+            stats[stat].add(_(MISC_LABEL), state.misc[stat])
 
     # Armor penalties (p.80), reduced by Armored Ease/Freedom degrees.
     armor = state.armor
     if armor is not None:
         sheet.armor = armor_block(armor, sheet.armor_degree)
         a = sheet.armor
-        stats["soak"].add(f"Armor: {armor.name}", a["soak"])
-        stats["eva"].add(f"Armor penalty: {armor.name}", -a["eva_penalty"].total)
-        stats["spd"].add(f"Armor penalty: {armor.name}", -a["spd_penalty"].total)
-        stats["swim"].add(f"Armor penalty: {armor.name}", -a["climb_swim_penalty"].total)
-        stats["climb"].add(f"Armor penalty: {armor.name}", -a["climb_swim_penalty"].total)
+        stats["soak"].add(_("Armor: {name}", name=armor.name), a["soak"])
+        stats["eva"].add(_("Armor penalty: {name}", name=armor.name), a["eva_penalty"].total)
+        stats["spd"].add(_("Armor penalty: {name}", name=armor.name), a["spd_penalty"].total)
+        stats["swim"].add(_("Armor penalty: {name}", name=armor.name), a["climb_swim_penalty"].total)
+        stats["climb"].add(_("Armor penalty: {name}", name=armor.name), a["climb_swim_penalty"].total)
     stats["spd"].floor = 5  # crawling at 5 ft is always possible
     stats["swim"].floor = 0
     stats["climb"].floor = 0
 
     if state.lost_wounds:
-        stats["wnd"].add("Permanent fatal effects", -state.lost_wounds)
+        stats["wnd"].add(_("Permanent fatal effects"), -state.lost_wounds)
     if any((effects.get(k) or {}).get("halve_hp") for k in state.effects):
-        stats["hp"].halved = "Fatigued"
+        stats["hp"].halved = _("Fatigued")
 
     for src, m in transfers:
         moved = sum(stats[s].total for s in m.get("sources", []))
-        stats[m["stat"]].add(f"{src.label} (stance)", moved)
+        stats[m["stat"]].add(_("{label} (stance)", label=src.label), moved)
         for s in m.get("sources", []):
-            stats[s].override = (f"{src.label} (stance): set to 0", 0)
+            stats[s].override = (_("{label} (stance): set to 0", label=src.label), 0)
 
     sheet.stats = stats
     variables.update({f"{s}_total": v.total for s, v in stats.items()})
@@ -282,33 +284,48 @@ def compute(state: CharacterState) -> Sheet:
         default = next((v for v in tables.DEFLECTION.values() if v["label"].lower() in d.name.lower()), None)
         bonus = Value()
         if d.deflect_bonus is not None:
-            bonus.set_base(f"Item: {d.name}", d.deflect_bonus)
+            bonus.set_base(_("Item: {name}", name=d.name), d.deflect_bonus)
         else:
-            bonus.set_base(f"{default['label']} (standard)" if default else "No bonus set", default["bonus"] if default else 0)
+            bonus.set_base(_("{label} (standard)", label=_(default["label"])) if default else _("No bonus set"), default["bonus"] if default else 0)
         sheet.deflection = {"item": d, "name": d.name, "bonus": bonus,
                             "ranged": d.deflect_ranged, "melee": d.deflect_melee}
 
     # Traits list for sheet p.2.
-    trait_keys, _ = active_trait_keys(state)
+    trait_keys, _l = active_trait_keys(state)
     for key in trait_keys:
         t = reg.traits[key]
         choice = state.trait_choices.get(key)
         sheet.traits.append({"key": key, "name": t["name"], "text": t["text"], "choice": choice,
                              "kind": t["kind"], "roll": t.get("roll")})
 
-    # Toggles and stances.
+    # Toggles, ongoing performances and stances. A modifier with a toggle_key follows another
+    # source's toggle (Victory Theme → Battle Theme) and is described on that button.
+    linked = {}
     for src in sources:
-        toggle_mods = [m for m in src.modifiers if m.get("when") == "toggle"]
+        for m in src.modifiers:
+            if m.get("when") == "toggle" and m.get("toggle_key", src.key) != src.key:
+                linked.setdefault(m["toggle_key"], []).append(m)
+    for src in sources:
+        toggle_mods = [m for m in src.modifiers if m.get("when") == "toggle" and m.get("toggle_key", src.key) == src.key]
         if toggle_mods:
-            sheet.toggles.append({"key": src.key, "label": src.label,
-                                  "detail": ", ".join(describe_mod(m, variables) for m in toggle_mods),
-                                  "active": src.key in state.toggles})
+            mods = toggle_mods + linked.get(src.key, [])
+            entry = {"key": src.key, "label": src.label,
+                     "detail": ", ".join(describe_mod(m, variables) for m in mods),
+                     "active": src.key in state.toggles}
+            spec = reg.specialties.get(src.key[5:]) if src.key.startswith("spec:") else None
+            if spec and spec.get("ongoing"):
+                entry.update(label=spec["name"], cost=spec["cost"])
+                sheet.ongoing.append(entry)
+                if entry["active"]:
+                    sheet.notes.append((spec["name"], _("active – {detail}", detail=entry["detail"])))
+            else:
+                sheet.toggles.append(entry)
         if src.stance_slug:
             stance_mods = [m for m in src.modifiers if m.get("when") == "stance"]
-            sheet.stances.append({"slug": src.stance_slug, "label": src.label.replace("Specialty: ", ""),
+            sheet.stances.append({"slug": src.stance_slug, "label": reg.specialties[src.stance_slug]["name"],
                                   "detail": ", ".join(describe_mod(m, variables) for m in stance_mods),
                                   "active": state.stance == src.stance_slug})
-    sheet.stances.append({"slug": "footing", "label": "Footing", "detail": "needed for super-heavy items",
+    sheet.stances.append({"slug": "footing", "label": _("Footing"), "detail": _("needed for super-heavy items"),
                           "active": state.stance == "footing"})
 
     from .weapons import hand_layout, unarmed_block, weapon_block
@@ -332,34 +349,34 @@ def describe_mod(m, variables):
     if m.get("op") == "transfer":
         return m.get("label", "")
     amount = mod_amount(m, variables, m.get("marque"))
-    stat = STAT_SHORT.get(m["stat"], m["stat"])
+    stat = _(STAT_SHORT.get(m["stat"], m["stat"]))
     scope = m.get("scope", "character")
-    scope_txt = "" if scope in ("character", "weapon") else f" ({scope})"
+    scope_txt = "" if scope in ("character", "weapon") else f" ({_(scope)})"
     text = f"{stat} {amount:+d}{scope_txt}" if m.get("op") != "base" else f"{stat} = {amount}{scope_txt}"
     if m.get("label"):
-        text += f" – {m['label']}"
+        text += f" – {_(m['label'])}"
     return text
 
 
 def armor_block(armor, degree=0):
-    """Armor values (p.80). Penalties are positive Values (subtracted from the stats), reduced by
+    """Armor values (p.80). Penalties are negative Values (added to the stats), reduced by
     Armored Ease/Freedom degrees; explicit item values win over the size table."""
     size = armor.size if armor.size in tables.ARMOR else "none"
     base = tables.ARMOR[size]
     idx = tables.ARMOR_ORDER.index(size)
     reduced_size = tables.ARMOR_ORDER[max(0, idx - degree)]
     pen_row = tables.ARMOR[reduced_size]
-    size_label = tables.SIZE_LABELS.get(size, size)
+    size_label = _(tables.SIZE_LABELS.get(size, size))
 
     def penalty(override, key):
         v = Value()
         if override is not None:
-            v.set_base(f"Item: {armor.name}", override)
+            v.set_base(_("Item: {name}", name=armor.name), -abs(override))
         else:
-            v.set_base(f"{size_label} armor", base[key])
+            v.set_base(_("{size} armor", size=size_label), -base[key])
             if pen_row[key] != base[key]:
-                v.add(f"Armored Ease/Freedom (as {tables.SIZE_LABELS.get(reduced_size, reduced_size).lower()})",
-                      pen_row[key] - base[key])
+                v.add(_("Armored Ease/Freedom (as {size})", size=_(tables.SIZE_LABELS.get(reduced_size, reduced_size)).lower()),
+                      base[key] - pen_row[key])
         return v
 
     return {

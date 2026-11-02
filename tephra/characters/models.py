@@ -65,7 +65,7 @@ class Character(models.Model):
     level = models.PositiveSmallIntegerField(default=1)
     xp = models.PositiveSmallIntegerField(default=0)
     current_hp = models.IntegerField(null=True, blank=True)
-    current_wounds = models.IntegerField(null=True, blank=True)
+    wounds_taken = models.PositiveIntegerField(default=0, help_text="0 = unhurt; at max wounds every hit is fatal")
     money_on_hand = models.IntegerField(default=0, help_text="in dukes")
     money_in_bank = models.IntegerField(default=0, help_text="in dukes")
 
@@ -86,6 +86,11 @@ class Character(models.Model):
     stance = models.CharField(max_length=120, blank=True)
     toggles = models.JSONField(default=list, blank=True)
     misc = models.JSONField(default=dict, blank=True)
+    fight = models.JSONField(default=dict, blank=True,
+                             help_text='fight mode: {"active": bool, "ap": AP left, "my_turn": bool, "round": n}')
+    story_notes = models.TextField(blank=True, help_text="campaign journal; '# Heading' lines start a new block")
+    plan = models.JSONField(default=list, blank=True,
+                            help_text='planned level-ups: [{"level": n, "type": "specialty|skill|augment|note", ...}]')
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
@@ -214,7 +219,7 @@ class EffectEntry(models.Model):
 
     @property
     def location_name(self):
-        return effects.LOCATION_LABELS.get(self.location, "") if self.location else ""
+        return effects.location_label(self.location) if self.location else ""
 
     @property
     def rule_text(self):
