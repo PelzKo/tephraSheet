@@ -136,3 +136,29 @@ Marionette Strings → Marionettenfäden.
 | downtime | Auszeit |
 | Crafting Munitions / Shields / Turrets | Munition / Schilde / Geschütze herstellen |
 | Munitions Crafter / Shield Forger / Turret Builder | Munitionsmacher / Schildschmied / Geschützbauer |
+
+## Explosives!
+| English | German |
+|---|---|
+| explosive (item) / explosives (augment list) | Sprengsatz / Sprengstoffe (Tüftelei – Sprengstoffe) |
+| firebomb | Brandbombe |
+| squib | Knallkörper |
+| trinket | Schmuckstück |
+| Firebomber / Squib Producer | Brandbombenbauer / Knallkörpermacher |
+| Crafting Explosives / Firebombs / Squibs | Sprengsätze / Brandbomben / Knallkörper herstellen |
+| Squib-Launching | Knallkörper verschießen |
+| ricochet (noun / verb) | Abpraller / abprallen lassen |
+| Ricochet Attack / Deflecting Shot | Abprallangriff / Ablenkschuss |
+| mine | Mine |
+| fuse (device) / fuse (cord) | Zünder / Zündschnur |
+| proximity fuse / anti-handling fuse | Annäherungszünder / Aufhebesperre |
+| blasting cap / detonator cord | Sprengkapsel / Sprengschnur |
+| blast / blast seat | Explosion / Explosionszentrum |
+| activate / detonate / disarm | aktivieren / detonieren / entschärfen |
+| cook (hold a live explosive) | abkochen |
+| incendiary / high incendiary | Entflammend / Stark entflammend |
+| delivery device | Abschussgerät |
+| hardness tier | Härtestufe |
+| achievement (story type) | Errungenschaft |
+| BombRat(s) | BombRat(s) – unchanged |
+| Walking Bomb | Wandelnde Bombe |

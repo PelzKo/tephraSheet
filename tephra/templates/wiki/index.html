@@ -23,7 +23,7 @@
   <div class="paper"><h2>{% t "Help" %}</h2>
     <ul>{% for d in docs %}<li><a href="{% url 'wiki_help' d.slug %}">{{ d.title }}</a></li>{% endfor %}</ul></div>
   <div class="paper"><h2>{% t "Rules" %}</h2>
-    <ul>{% for ch in chapters %}<li><a href="{% url 'wiki_rules' ch.slug %}">{{ ch.title }}</a></li>{% endfor %}
+    <ul>{% for ch in chapters %}<li><a href="{% url 'wiki_rules' ch.slug %}">{{ ch.title }}</a> {% ext_badge ch %}</li>{% endfor %}
       <li><a href="{% url 'augment_reference' %}">{% t "All augments" %}</a></li></ul>
     <h3>{% t "Races" %}</h3>
     <ul>{% for r in races %}<li><a href="{% url 'wiki_race' r.slug %}">{{ r.name }}</a></li>{% endfor %}</ul></div>

@@ -189,5 +189,7 @@
  "shield": "Schild",
  "turret": "Geschütz",
  "The Armsmith Extra": "Waffenschmied-Erweiterung",
- "Turret": "Geschütz"
+ "Turret": "Geschütz",
+ "Explosives!": "Sprengstoff!",
+ "Rolling Explosive is meant for firebombs; without Firebomber you can only roll explosives you got elsewhere.": "Rollender Sprengsatz ist für Brandbomben gedacht; ohne Brandbombenbauer kannst du nur Sprengsätze rollen, die du anderswo bekommen hast."
 }

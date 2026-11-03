@@ -1,0 +1,5 @@
+{
+"ex-bombrat": {"name": "Ex-BombRat", "text": "Du warst einst Mitglied der BombRats (3. Luftsprengeinheit oder später Himmelspiraten) und weißt, wie sie vorgehen. +2 auf den Geschickwurf zum Ausweichen, wenn du in einen ihrer Sprengsätze gerätst."},
+"bombrat": {"name": "BombRat", "text": "Du bist ein BombRat: leicht verrückt, gefürchtet für deine Sprengsätze, unzivilisiert. BombRats sind meist nur untereinander höflich; mit ihnen kannst du reden."},
+"survived-the-bombrats": {"name": "Den BombRats entkommen", "text": "Du bist mit den BombRats aneinandergeraten und hast überlebt. +4 auf Listwürfe, um zu bemerken, ob ein Schiff oder eine Person zu den BombRats gehört."}
+}

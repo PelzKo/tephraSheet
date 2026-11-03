@@ -865,5 +865,141 @@
   "price_dukes": 0,
   "description": "Single crafted round/arrow/bolt, 3 augment slots; gone once fired. Others need Sciences one tier above its highest marque.",
   "extension": "armsmith-extra"
+ },
+ {
+  "name": "Base Explosive Material",
+  "kind": "gear",
+  "price_dukes": 3,
+  "description": "Volatile. Ignites for 5 damage to everything within 5 ft; doesn't enlarge or stack with other blasts (the higher damage applies). If carried and you roll a natural 1 on any physical activity, it explodes. Explodes on contact with fire; fails when damp.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Common Explosive Material",
+  "kind": "gear",
+  "price_dukes": 8,
+  "description": "Only set off by another explosion or a blasting cap. 5 damage within 5 ft, same non-stacking rule. Explodes on contact with fire; fails when damp.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Water-Proofing",
+  "kind": "gear",
+  "price_dukes": 2,
+  "description": "Explosive materials don't fail when damp (still won't go off when submerged).",
+  "extension": "explosives"
+ },
+ {
+  "name": "Blasting Cap",
+  "kind": "gear",
+  "price_dukes": 2,
+  "description": "Tiny detonator, lit by a fuse. 1 damage to someone next to it; sets off adjacent explosive material.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Basic Squib",
+  "kind": "gear",
+  "price_dukes": 10,
+  "description": "5 damage when detonated; short built-in fuse (seconds).",
+  "extension": "explosives"
+ },
+ {
+  "name": "Gunpowder Line (50 ft)",
+  "kind": "gear",
+  "price_dukes": 0,
+  "description": "Price ½ d. Burns 5 ft per turn; broken by tier 3 wind, water or a brushing foot.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Basic Fuse (50 ft)",
+  "kind": "gear",
+  "price_dukes": 1,
+  "description": "Burns 10 ft per turn; put out by water, cutting or snuffing (1 AP); won't burn underwater.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Underwater Fuse (50 ft)",
+  "kind": "gear",
+  "price_dukes": 2,
+  "description": "Burns 10 ft per turn, insulated; only stopped by cutting. +3 d per 50 ft for 20 ft per turn.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Fast Fuse (50 ft)",
+  "kind": "gear",
+  "price_dukes": 4,
+  "description": "Burns 20 ft per turn; put out by water, cutting or snuffing (1 AP); not underwater.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Detonator Cord (50 ft)",
+  "kind": "gear",
+  "price_dukes": 7,
+  "description": "Burns 25 miles per turn (effectively instant); not underwater.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Electrical Fuze (50 ft)",
+  "kind": "gear",
+  "price_dukes": 10,
+  "description": "Instant over any distance; works underwater.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Flint & Steel",
+  "kind": "gear",
+  "price_dukes": 0,
+  "description": "Price ¼ d. 3 AP to light something.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Matches (pack of 10)",
+  "kind": "gear",
+  "price_dukes": 1,
+  "description": "2 AP to light a fuse; a single match costs ⅛ d.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Lighter",
+  "kind": "gear",
+  "price_dukes": 3,
+  "description": "1 AP to light a fuse; steady small flame.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Trench Lighter",
+  "kind": "gear",
+  "price_dukes": 6,
+  "description": "1 AP; stays lit in everything below tier 4 rain or wind.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Flameless Lighter",
+  "kind": "gear",
+  "price_dukes": 10,
+  "description": "1 AP; lights fuses without an open flame.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Explosive (crafted)",
+  "kind": "gear",
+  "size": "light",
+  "price_dukes": 50,
+  "description": "Light, thrown. Activate 1 AP, throw 2 AP; explodes at the start of your next turn. 10 damage per marque (mQ I–IV 10/20/30/40) in the target space and all adjacent spaces; Dexterity resist (1 AP reflexive). Market price mQ I–IV 5/25/125/625 pr.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Firebomb (crafted)",
+  "kind": "gear",
+  "size": "light",
+  "price_dukes": 30,
+  "description": "Light, thrown; lands in the target space even on a miss. Activate 1 AP, throw 2 AP. 3 damage per marque (3/6/9/12) to the target space and all adjacent spaces; burns until the end of the activator's next turn and hurts anyone who enters or ends their turn there. Market price mQ I–IV 3/15/75/375 pr.",
+  "extension": "explosives"
+ },
+ {
+  "name": "Squib (crafted)",
+  "kind": "gear",
+  "size": "light",
+  "price_dukes": 10,
+  "description": "Light, thrown; detonates within seconds. Activate 1 AP, throw 2 AP. 5 damage per marque (5/10/15/20) to the target only; normal Evade, soakable. Marque from Alchemy. Market price mQ I–IV 1/5/25/125 pr.",
+  "extension": "explosives"
  }
 ]

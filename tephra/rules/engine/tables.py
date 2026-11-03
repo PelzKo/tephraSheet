@@ -166,6 +166,9 @@ VARIANTS = {
                "note": "assemble 3 AP; Footing stance to fire; 15 wounds, soak 1, light cover"},
 }
 TURRET_WOUNDS = 15
+# Which skill sets the marque (and the learn check) of an augment on a crafting list; default: the augment's skill.
+# Explosive augments that also work on squibs use the Alchemy marque there (Explosives!).
+CRAFT_LIST_SKILL = {"squib": "Alchemy"}
 SUPER_HEAVY_NO_FOOTING = -3
 
 # Armor (p.80). penalties are positive numbers that get subtracted.

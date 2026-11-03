@@ -7,7 +7,8 @@ from django.shortcuts import redirect, render
 
 from catalog.models import ItemTemplate
 from rules.engine import creation, tables
-from rules.engine.requirements import augment_lists, check_augment, check_specialty, known_augments, specialty_warnings
+from rules.engine.requirements import (augment_lists, augment_points, check_augment, check_specialty, known_augments,
+                                      specialty_warnings)
 from rules.engine.stats import compute
 from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
@@ -305,7 +306,8 @@ def augment_options(character, state=None):
         known = aug["slug"] in known_slugs
         key = f"{aug['skill']} – {aug['section']}"
         groups.setdefault(key, []).append({"aug": aug, "ok": ok or known, "reasons": reasons, "known": known,
-                                           "marque": tables.marque_for_points(sheet.skills[aug["skill"]].total)})
+                                           "marque": tables.marque_for_points(
+                                               augment_points(aug, sheet, lists & set(aug["lists"]) or None))})
     return sheet, sorted(groups.items()), lists
 
 

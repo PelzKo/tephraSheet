@@ -228,6 +228,35 @@ def augment_lists(state):
     return lists
 
 
+def augment_skills(aug, lists=None):
+    """Skills that set the augment's marque, one per crafting list (restricted to ``lists`` if given)."""
+    skills = {tables.CRAFT_LIST_SKILL.get(li, aug["skill"]) for li in aug["lists"] if lists is None or li in lists}
+    return skills or {aug["skill"]}
+
+
+def augment_points(aug, sheet, lists=None):
+    """Points of the best skill the augment can be crafted with (its marque comes from these)."""
+    return max(sheet.skills[s].total for s in augment_skills(aug, lists))
+
+
+@cache
+def _augments_by_name(lang):
+    out = {}
+    for a in get_registry().augments.values():
+        out.setdefault(a["name_en"], []).append(a)
+    return out
+
+
+def _req_met(name, aug, known, names):
+    """A "req. <Name>" qualifier. Same-name augments on other lists only count if no augment of that name shares a
+    list with this one (shield Bulletproofing is not armor Bulletproofing)."""
+    if name in names:
+        return True
+    same = _augments_by_name(get_language()).get(name, [])
+    on_list = [a for a in same if set(a["lists"]) & set(aug["lists"])]
+    return any(a["slug"] in known for a in (on_list or same))
+
+
 def check_augment(aug, state, sheet):
     reasons = []
     known = known_augments(state)
@@ -236,15 +265,13 @@ def check_augment(aug, state, sheet):
     lists = augment_lists(state)
     if not lists.intersection(aug["lists"]):
         reasons.append(_("needs a crafting specialty for {lists}", lists=" / ".join(_(x) for x in aug["lists"])))
-    if sheet.skills[aug["skill"]].total < 1:
-        reasons.append(_("needs points in {skill}", skill=_(aug["skill"])))
-    reg = get_registry()
-    known_names = {reg.augments[a]["name_en"] for a in known if a in reg.augments}
+    if augment_points(aug, sheet, lists & set(aug["lists"]) or None) < 1:
+        reasons.append(_("needs points in {skill}", skill=_(" or ").join(_(s) for s in sorted(augment_skills(aug)))))
     names = owned_names(state)
     for q in aug.get("qualifiers_en", []):
         if q.startswith("req. "):
             needed = [n.strip() for n in q[5:].split(" or ")]
-            if not any(n in known_names or n in names for n in needed):
+            if not any(_req_met(n, aug, known, names) for n in needed):
                 reasons.append(_("needs {names}", names=_(" or ").join(_local(n) for n in needed)))
     return not reasons, reasons
 

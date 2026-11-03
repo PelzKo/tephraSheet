@@ -14,6 +14,7 @@ import contextvars
 EXTENSIONS = {
     "suulrai": "Suulrai",
     "armsmith-extra": "The Armsmith Extra",
+    "explosives": "Explosives!",
 }
 
 _offer = contextvars.ContextVar("tephra_offer", default=(frozenset(), frozenset()))

@@ -234,5 +234,7 @@
  "Clanker": "Clanker",
  "Auto": "Automat",
  "{augment} only fits a turret.": "{augment} passt nur auf ein Geschütz.",
- "Turret": "Geschütz"
+ "Turret": "Geschütz",
+ "firebomb": "Brandbombe",
+ "squib": "Knallkörper"
 }

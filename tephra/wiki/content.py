@@ -13,6 +13,7 @@ from rules.lang import DEFAULT
 BASE = Path(__file__).resolve().parents[1]
 DOCS_DIR = BASE / "docs"
 SOURCE_DIR = BASE / "rules" / "data" / "source"
+EXT_DIR = BASE / "rules" / "data" / "ext"  # <key>/rules.md (+ rules_<lang>.md): extension rules chapters
 SAFE_HREF = re.compile(r'href="(?!https?://|/|#|mailto:)[^"]*"')
 
 
@@ -61,11 +62,18 @@ def reference(lang):
         full = (SOURCE_DIR / "Tephra_Reference_full.md").read_text(encoding="utf8")
         start = full.index("\n## 1.")
         text = full[start:full.index("\n## 6.", start)]
+    sources = [(text, "")]
+    for folder in sorted(p for p in EXT_DIR.glob("*") if p.is_dir()):
+        path = folder / f"rules_{lang}.md"
+        path = path if lang != DEFAULT and path.is_file() else folder / "rules.md"
+        if path.is_file():
+            sources.append((path.read_text(encoding="utf8"), folder.name))
     chapters = []
-    for title, body in _split(text, re.compile(r"^## (.+)$")):
-        if not title:
-            continue
-        sections = [{"slug": slugify(t) or f"s{n}", "title": t or title, "body": b}
-                    for n, (t, b) in enumerate(_split(body, re.compile(r"^### (.+)$")))]
-        chapters.append({"slug": slugify(title), "title": title, "sections": sections})
+    for text, extension in sources:
+        for title, body in _split(text, re.compile(r"^## (.+)$")):
+            if not title:
+                continue
+            sections = [{"slug": slugify(t) or f"s{n}", "title": t or title, "body": b}
+                        for n, (t, b) in enumerate(_split(body, re.compile(r"^### (.+)$")))]
+            chapters.append({"slug": slugify(title), "title": title, "sections": sections, "extension": extension})
     return chapters

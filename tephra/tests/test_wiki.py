@@ -24,8 +24,10 @@ def test_wiki_pages_search_and_language(client):
     assert client.get(reverse("wiki"), {"q": "crits"}).content.count(b"House rules") >= 1
     from wiki.content import reference
 
-    chapters = reference("en")
-    assert len(chapters) == 5 and len(reference("de")) == 5
+    chapters = [c for c in reference("en") if not c["extension"]]
+    assert len(chapters) == 5 and len([c for c in reference("de") if not c["extension"]]) == 5
+    ext = next(c for c in reference("en") if c["extension"] == "explosives")
+    assert client.get(reverse("wiki_rules", args=[ext["slug"]])).status_code == 404  # extension off
     assert b"Hit points" in client.get(reverse("wiki_rules", args=[chapters[0]["slug"]])).content
     client.post(reverse("set_language"), {"language": "de", "next": "/wiki/"})
     resp = client.get(reverse("wiki"), {"q": "Schlachthymne"})

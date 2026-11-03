@@ -80,6 +80,9 @@ class Command(BaseCommand):
                          "extension": e.get("extension", folder.name)}
                     if kind == "specialties":
                         e.setdefault("attribute", attribute_of.get(e["skill"], "Sciences"))
+                    if e.get("two_marque"):  # only mQ I and III exist: mQ II shows I, mQ IV shows III
+                        m = e["marques"]
+                        e["marques"] = [m[0], m[0], m[2], m[2]]
                     e.update(curated_by_kind.get(kind, {}).get(e.get("slug"), {}))
                     new.append(e)
                 at = next((i for i, e in enumerate(entries) if e.get("slug") == "other"), len(entries))
@@ -467,7 +470,7 @@ def expand_marques(marques):
 
 
 SMALLCAPS_WORD = re.compile(r"\b[A-Za-z]*[a-z][A-Z][A-Za-z]*\b")
-SMALLCAPS_KEEP = {"mQ", "unarmedDC", "fromDirect"}
+SMALLCAPS_KEEP = {"mQ", "unarmedDC", "fromDirect", "BombRat", "BombRats"}
 PROSE_KEYS = {"name", "text", "effect", "cost", "requires_text", "notes", "marques", "qualifiers", "summary",
               "relations", "description", "usage_note", "label", "section", "subsection"}
 

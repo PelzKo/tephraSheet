@@ -1,0 +1,5 @@
+[
+ {"slug": "ex-bombrat", "name": "Ex-BombRat", "type": "background", "group": "", "requires": "", "tags": "[COND]", "text": "You were once a member of the BombRats (3rd Aerial Demolitions Unit or later sky pirates) and know how they operate. +2 on the Dexterity roll to dodge when caught in one of their explosives.", "modifiers": [{"stat": "roll:Dexterity", "value": 2, "op": "add", "when": "note", "scope": "character", "label": "dodging BombRat explosives"}]},
+ {"slug": "bombrat", "name": "BombRat", "type": "background", "group": "", "requires": "", "tags": "[NARR]", "text": "You're a BombRat: slightly deranged, feared for your explosives, uncivilized. BombRats are typically only civil to each other; you can talk with them.", "modifiers": []},
+ {"slug": "survived-the-bombrats", "name": "Survived the BombRats", "type": "achievement", "group": "", "requires": "", "tags": "[COND]", "text": "You had a run-in with the BombRats and survived. +4 on Cunning rolls to notice whether a ship or person is a BombRat.", "modifiers": [{"stat": "roll:Cunning", "value": 4, "op": "add", "when": "note", "scope": "character", "label": "noticing BombRats"}]}
+]

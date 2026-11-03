@@ -377,5 +377,7 @@
  "Transfer between hand and bank": "Zwischen Hand und Bank übertragen",
  "Repair one wound": "Eine Wunde reparieren",
  "The turret takes a wound": "Das Geschütz erleidet eine Wunde",
- "Turret wounds: {left} / {max}": "Geschützwunden: {left} / {max}"
+ "Turret wounds: {left} / {max}": "Geschützwunden: {left} / {max}",
+ "Achievement": "Errungenschaft",
+ "achievement": "Errungenschaft"
 }

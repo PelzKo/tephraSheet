@@ -8522,7 +8522,9 @@
   "name": "Banshee",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8546,7 +8548,9 @@
   "name": "Concealable",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8570,7 +8574,9 @@
   "name": "Concussive",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8618,7 +8624,9 @@
   "name": "Delay",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8633,7 +8641,7 @@
   ],
   "notes": "always mQ I",
   "size": "",
-  "price": "",
+  "price": "8 / 2 pr",
   "text": "The bomb can be set to automatically go off in a number of turns specified by the player.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
   "modifiers": []
  },
@@ -8668,7 +8676,9 @@
   "name": "Flare",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8677,9 +8687,9 @@
   "accessory": false,
   "marques": [
    "light 25 ft (+25 dim) for 2 turns",
-   "light 4 ft (+25 dim) for 2 turns",
-   "light 6 ft (+25 dim) for 2 turns",
-   "light 8 ft (+25 dim) for 2 turns"
+   "light 25 ft (+25 dim) for 4 turns",
+   "light 25 ft (+25 dim) for 6 turns",
+   "light 25 ft (+25 dim) for 8 turns"
   ],
   "notes": "",
   "size": "",
@@ -8692,7 +8702,9 @@
   "name": "Flash",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8716,7 +8728,9 @@
   "name": "Flypaper",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8731,7 +8745,7 @@
   ],
   "notes": "always mQ II",
   "size": "",
-  "price": "",
+  "price": "40 / 8 pr",
   "text": "If the target is wearing organic or wooden armor, the bomb sticks to them like a magnet. The target must spend 2 action point and fully resist the augment or be denied their ability to evade the blast.\nIf the target is not wearing organic or wooden armor, it falls to the ground in front of them.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in engineer.",
   "modifiers": []
  },
@@ -8749,9 +8763,9 @@
   "accessory": false,
   "marques": [
    "automaton stunned 1 AP / vehicle uncontrollable 1 AP",
-   "automaton stunned 2 AP / vehicle uncontrollable 1 AP",
-   "automaton stunned 3 AP / vehicle uncontrollable 1 AP",
-   "automaton stunned 4 AP / vehicle uncontrollable 1 AP"
+   "automaton stunned 2 AP / vehicle uncontrollable 2 AP",
+   "automaton stunned 3 AP / vehicle uncontrollable 3 AP",
+   "automaton stunned 4 AP / vehicle uncontrollable 4 AP"
   ],
   "notes": "",
   "size": "",
@@ -8812,7 +8826,9 @@
   "name": "Latch",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8827,7 +8843,7 @@
   ],
   "notes": "always mQ II",
   "size": "",
-  "price": "",
+  "price": "40 / 8 pr",
   "text": "The bomb contains a clamp which latches it to opponents. When you throw or otherwise attach the bomb, the opponent must spend 1 action point to remove the bomb or be denied their ability to evade the blast. Also, if you make a called shot when attaching the weapon, the blast counts as a called shot to the called shot location.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
   "modifiers": []
  },
@@ -8836,7 +8852,9 @@
   "name": "Launching",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8860,7 +8878,9 @@
   "name": "Magnetic",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8875,7 +8895,7 @@
   ],
   "notes": "always mQ II",
   "size": "",
-  "price": "",
+  "price": "40 / 8 pr",
   "text": "If the target is wearing metal armor, the bomb sticks to them like flypaper. The target must spend 2 action point and fully resist the augment or be denied their ability to evade the blast. If the target is not wearing metal armor, it will stick on to any person within 5 feet wearing the heaviest metal armor. (If multiple people are wearing equally heavy armor within 5 feet, have them roll randomly to see who wins the right to wear the magnetic explosive. The highest roller gets the bomb.) Note: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
   "modifiers": []
  },
@@ -8884,7 +8904,9 @@
   "name": "Melter",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8923,7 +8945,7 @@
   ],
   "notes": "always mQ II",
   "size": "",
-  "price": "",
+  "price": "40 / 8 pr",
   "text": "The bomb is set up with a fuse that causes it to detonate when somebody walks within the bomb’s blast area. Characters attempting to pass through the area without detonating the fuse must move no faster than 10 feet per action point and roll to resist setting off the trigger.\nIn order to activate a proximity fuse, you must first spend the usual 1 action point to activate the fuse, then either drop or throw it. The fuse effect becomes active at the end of your turn. Note: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
   "modifiers": []
  },
@@ -8932,7 +8954,8 @@
   "name": "Powerful Blast",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8947,7 +8970,7 @@
   ],
   "notes": "always mQ II",
   "size": "",
-  "price": "",
+  "price": "40 / 8 pr",
   "text": "The blast occurs with such speed that it is more difficult to jump out of its way. Characters who wish to use their dexterity to resist the blast must act as if their dexterity roll to resist the blast was one tier lower.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
   "modifiers": []
  },
@@ -8956,7 +8979,9 @@
   "name": "Quick-Set",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -8971,7 +8996,7 @@
   ],
   "notes": "always mQ II",
   "size": "",
-  "price": "",
+  "price": "40 / 8 pr",
   "text": "Activating the fuse on an explosive costs 1 less action point (normally bringing the cost down to 0 action points). Note: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in gadgetry.",
   "modifiers": []
  },
@@ -8980,7 +9005,8 @@
   "name": "Remote Activation",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -9004,7 +9030,9 @@
   "name": "Searing",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -9028,7 +9056,9 @@
   "name": "Slippery",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "firebomb",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -9052,7 +9082,8 @@
   "name": "Smoking",
   "skill": "Gadgetry",
   "lists": [
-   "explosive"
+   "explosive",
+   "squib"
   ],
   "section": "Gadgetry – explosives",
   "subsection": "",
@@ -12146,5 +12177,1558 @@
   "price": "",
   "modifiers": [],
   "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "trinket"
+  ],
+  "section": "Gadgetry – trinkets",
+  "slug": "gadgetry-trinket-blast-extinguishing-pellet",
+  "name": "Blast-Extinguishing Pellet",
+  "size": "L",
+  "price": "1/5/25/125",
+  "notes": "1 AP reflexive; single use",
+  "marques": [
+   "blast damage class −2",
+   "−4",
+   "−6",
+   "−8"
+  ],
+  "text": "Break the pellet in your hand: anti-fire agent coats your space and all adjacent spaces. Any explosion going off there until the start of your next turn has a lower damage class. If you hold one when an explosion occurs you may break it reflexively. Also puts out tier 1 fires (other fires ignore it).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "trinket"
+  ],
+  "section": "Gadgetry – trinkets",
+  "slug": "gadgetry-trinket-bypass-boots",
+  "name": "Bypass Boots",
+  "size": "L",
+  "price": "6/30/150/750",
+  "notes": "worn",
+  "marques": [
+   "ignores mQ I mines",
+   "mQ II mines",
+   "mQ III mines",
+   "mQ IV mines"
+  ],
+  "text": "Air cushion and odd weights: stepping on a mine up to the boots' marque does not activate it.",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "trinket"
+  ],
+  "section": "Gadgetry – trinkets",
+  "slug": "gadgetry-trinket-explosion-eater",
+  "name": "Explosion Eater",
+  "size": "M",
+  "price": "4/20/100/500",
+  "notes": "1 AP reflexive; single use",
+  "marques": [
+   "blast damage class −3",
+   "−6",
+   "−9",
+   "−12"
+  ],
+  "text": "Bagged vacuum: point it at an explosion as it occurs to absorb force and lower its damage class; the hot-air bag then floats away. Usable once.",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "trinket"
+  ],
+  "section": "Gadgetry – trinkets",
+  "slug": "gadgetry-trinket-proximity-blinder",
+  "name": "Proximity Blinder",
+  "size": "L",
+  "price": "5/25/125/625",
+  "notes": "worn (hat, belt…)",
+  "marques": [
+   "mQ I proximity fuses ignore wearer",
+   "mQ II",
+   "mQ III",
+   "mQ IV"
+  ],
+  "text": "Proximity fuses up to the blinder's marque do not detect the wearer.",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "trinket"
+  ],
+  "section": "Gadgetry – trinkets",
+  "slug": "gadgetry-trinket-ride-the-blast-sails",
+  "name": "Ride-the-Blast Sails",
+  "size": "L",
+  "price": "4/20/100/500",
+  "notes": "worn; passive",
+  "marques": [
+   "+4 Dex to dodge blasts",
+   "+8",
+   "+12",
+   "+16"
+  ],
+  "text": "Hidden in a hat, vest or backpack; deploys on an explosion and pulls the wearer to safety: bonus on the Dexterity roll to dodge the blast.",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "trinket"
+  ],
+  "section": "Gadgetry – trinkets",
+  "slug": "gadgetry-trinket-volatile-materials-scanner",
+  "name": "Volatile Materials Scanner",
+  "size": "L",
+  "price": "6/30/150/750",
+  "notes": "1 AP",
+  "marques": [
+   "+5 to notice concealed explosives",
+   "+10",
+   "+15",
+   "+20"
+  ],
+  "text": "Bonus when trying to notice a concealed explosive on a person.",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-acid-spewing",
+  "name": "Acid-Spewing",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "dodge acid: Dex T2",
+   "dodge acid: Dex T2",
+   "dodge acid: Dex T3",
+   "dodge acid: Dex T3"
+  ],
+  "text": "Holds an acid that sprays everyone within or adjacent to the blast seat on detonation. 3 AP to install or switch the acid. Those in range may make a separate Dex resist to dodge the acid; acid and blast are otherwise resisted normally. (Acids: see Alchemy.)",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-after-blast",
+  "name": "After-Blast",
+  "lists": [
+   "explosive",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "Notice: Cunning T2",
+   "Cunning T3",
+   "Cunning T4",
+   "impossible (T5)"
+  ],
+  "text": "Contains a second explosive that this one's detonation activates (detonates a turn later, as default, or set as a mine). Anyone in sight may roll Cunning to notice the second explosive. Each explosive is priced separately; the inner one cannot also have After-Blast.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-air-lighting",
+  "name": "Air-Lighting",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "+1 DC per space the blast can't fill",
+   "+1 DC per space the blast can't fill",
+   "+2 DC per space",
+   "+2 DC per space"
+  ],
+  "text": "Consumes air; deadlier in enclosed spaces. DC increases per space the blast would normally occupy but can't (e.g. 9-space blast in a 10×10 ft room = 4 spaces → +5 DC at mQ I). Outdoors, obstructions such as trees or low walls don't count.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-anti-handling-fuse",
+  "name": "Anti-Handling Fuse",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Delay"
+  ],
+  "marques": [
+   "Disable: Sciences T2",
+   "Sciences T3",
+   "Sciences T4",
+   "impossible (T5)"
+  ],
+  "text": "After activation and once the first turn passes, anything affecting the explosive (picking up, disarming, shooting) detonates it immediately. A Sciences roll (3 AP) can bypass the mechanism (the explosive must still be dealt with afterwards); failure detonates it.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-automaton-linked",
+  "name": "Automaton-Linked",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "price": "40 pr (craft 8 pr)",
+  "marques": [
+   "detonates when the linked automaton stops functioning",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Tied into an automaton's workings; detonates immediately if the automaton is no longer 'alive'. Can be detached by disarming it; a failed removal activates it. Attaching only during a breather.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-clinging",
+  "name": "Clinging",
+  "lists": [
+   "explosive",
+   "firebomb"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Jumping or Roaming"
+  ],
+  "marques": [
+   "+2 Acc / +2 to keep grabbing",
+   "+4 / +4",
+   "+8 / +8",
+   "+16 / +16"
+  ],
+  "text": "Clings to the first thing it touches: makes an Acc roll to grab (normally a leg) and keeps grabbing unless pried off. If tossed off, it rights itself, moves on in the same direction and clings to the next thing in its path.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-collision-detonated",
+  "name": "Collision-Detonated",
+  "lists": [
+   "explosive",
+   "squib"
+  ],
+  "slots": 1,
+  "price": "8 pr (craft 1 pr 6 d)",
+  "marques": [
+   "detonates only on hard impact",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Only goes off on a forceful impact: usually a fall of 100+ ft (detonates immediately), being shot out of a delivery device, or an attack made with or against it that reaches at least tier 2 damage. Otherwise never detonates.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-dead-mans-switch",
+  "name": "Dead Man's Switch",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "price": "8 pr (craft 2 pr)",
+  "marques": [
+   "goes off when the switch is released",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "After activation you hold the switch (at least 1 turn to cook). Releasing it (0 AP) detonates it immediately, as does falling unconscious, dying, losing the arm or being disarmed of it. Turning it off costs 1 AP.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-depth-charges",
+  "name": "Depth Charges",
+  "lists": [
+   "explosive",
+   "firebomb"
+  ],
+  "slots": 1,
+  "marques": [
+   "active 1 week",
+   "1 month",
+   "1 year",
+   "1 decade"
+  ],
+  "text": "Sinks to a set depth and floats there until bumped over a space. Depth set on activation or changed for 1 AP; adjusts 25 ft/turn. If the depth can't be reached (lake shallower than set), it sinks 50 ft and explodes.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-dirty",
+  "name": "Dirty",
+  "lists": [
+   "explosive",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "3 AP to insert gas",
+   "2 AP",
+   "1 AP",
+   "0 AP"
+  ],
+  "text": "Releases a gas with the blast, filling the blast area. Inserting or switching the gas costs AP by marque. (Gases: see Alchemy.)",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-disintegrated-remains",
+  "name": "Disintegrated Remains",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "price": "8 pr (craft 2 pr)",
+  "marques": [
+   "leaves no trace",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "The explosive is entirely consumed; nothing remains to examine.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-disguised",
+  "name": "Disguised",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "+0 vs Cunning to find",
+   "+4",
+   "+8",
+   "+12"
+  ],
+  "text": "Looks like something else (suitcase, potted plant, door knob; fist-sized or larger). People pass over it by default; if someone searches, it gets this bonus against their Cunning. Stacks with Concealable.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-engine-detonated",
+  "name": "Engine-Detonated",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "6 AP to attach",
+   "4 AP",
+   "2 AP",
+   "1 AP"
+  ],
+  "text": "Attached to an engine, automaton or other large moving device; detonates once the device is turned on and starts moving.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-entrenched",
+  "name": "Entrenched",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "notes": "for use with mines",
+  "marques": [
+   "burrows 5 ft",
+   "10 ft",
+   "15 ft",
+   "20 ft"
+  ],
+  "text": "The mine burrows below ground; anyone stepping on the ground directly above activates it, and it drills back up and detonates.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-ethereal-blast",
+  "name": "Ethereal Blast",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "price": "40 pr (craft 8 pr)",
+  "marques": [
+   "invisible blast",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "No visible explosion: superheated air pushes and burns everyone inside. Victims dodging don't know where the edge of the blast is.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-far-lobbing",
+  "name": "Far Lobbing",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "throw range 50 ft",
+   "75 ft",
+   "100 ft",
+   "150 ft"
+  ],
+  "text": "Thrown range replaces the normal 25 ft. Throwing further: multiply this range by the Brute tier result.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-heartbeat-linked",
+  "name": "Heartbeat-Linked",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "price": "40 pr (craft 8 pr)",
+  "marques": [
+   "detonates when wearer's heart stops or it is detached",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Detects the heartbeat of the person it is attached to; detonates if detached or the heartbeat stops. Must be disarmed first to detach safely. Attaching only during a breather.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-high-incendiary",
+  "name": "High Incendiary",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Incendiary"
+  ],
+  "price": "200 pr (craft 40 pr)",
+  "marques": [
+   "fire tier +1",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Fires started by Incendiary are one tier higher. Tier 3 fire: 8 unsoakable fire damage per turn until 8 AP are spent putting it out; all organic, leather, cloth and wooden items are destroyed.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-impact",
+  "name": "Impact",
+  "lists": [
+   "explosive",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "negates 5 heat/fire soak",
+   "10",
+   "20",
+   "40"
+  ],
+  "text": "Goes through heat protection: negates that much of the target's heat- or fire-based damage soak against this explosion.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-incendiary",
+  "name": "Incendiary",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "T1 fire (2 unsoakable/turn, 2 AP to put out)",
+   "T1 fire (2 unsoakable/turn, 2 AP to put out)",
+   "T2 fire (4/turn, 4 AP; wood/organic/cloth destroyed)",
+   "T2 fire (4/turn, 4 AP; wood/organic/cloth destroyed)"
+  ],
+  "text": "Everything in the blast area that fails to move or dodge catches fire. Resilient materials only get warm; the ground is unaffected unless it burns.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-jumping",
+  "name": "Jumping",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "marques": [
+   "jumps up to 25 ft",
+   "100 ft",
+   "500 ft",
+   "2,500 ft"
+  ],
+  "text": "Right before detonating it blasts straight up to its maximum height (or until it hits something) and detonates. If not set for next turn, it can be set to jump every turn until it hits something.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-leg-spike",
+  "name": "Leg-Spike",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "notes": "for use with mines",
+  "marques": [
+   "+0 Acc & Stk",
+   "+4",
+   "+8",
+   "+12"
+  ],
+  "text": "On detonation the mine makes a called shot (light weapon, DC 4) at a leg of whoever triggered it. It tries to trip: if the victim fails a Dex resist against the spike's Stk, they go prone and can't avoid the mine's explosion.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-line-blast",
+  "name": "Line Blast",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "marques": [
+   "10 ft each way (25 ft line)",
+   "15 ft (35 ft)",
+   "20 ft (45 ft)",
+   "25 ft (55 ft)"
+  ],
+  "text": "Instead of all adjacent spaces, the blast runs along a straight line chosen by the thrower. Range-expanding effects only lengthen the ends of the line.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-lingering-fires",
+  "name": "Lingering Fires",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Incendiary"
+  ],
+  "marques": [
+   "fires linger 1 extra turn",
+   "2",
+   "3",
+   "5"
+  ],
+  "text": "Incendiary fires stay in the area and set on fire anyone or anything that moves in; fire tier as per Incendiary/High Incendiary.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-linked-fuse",
+  "name": "Linked Fuse",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "within 200 ft",
+   "1,000 ft",
+   "1 mile",
+   "10 miles"
+  ],
+  "text": "All your linked-fuse explosives exchange a radio signal; if one detonates (stops sending), all detonate. Any number, but they must stay within range of each other.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-miniscule",
+  "name": "Miniscule",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Concealable"
+  ],
+  "marques": [
+   "+4 vs being noticed",
+   "+8",
+   "+12",
+   "+16"
+  ],
+  "text": "Marble-sized; can be hidden in a mouth, a sword pommel, or used as a bullet. Bonus against being noticed when concealed; stacks with Concealable.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-muted",
+  "name": "Muted",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "locate by sound: Cunning T2",
+   "T3",
+   "T4",
+   "impossible (T5)"
+  ],
+  "text": "Barely a whisper; locating the blast by sound needs a Cunning roll. Cannot be combined with Banshee.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-proximity-leap",
+  "name": "Proximity Leap",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Jumping",
+   "req. Proximity Fuse"
+  ],
+  "marques": [
+   "leaps at targets within 25 ft",
+   "50 ft",
+   "100 ft",
+   "200 ft"
+  ],
+  "text": "When something triggers its proximity fuse within range, it leaps onto the target's space and detonates.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-roaming",
+  "name": "Roaming",
+  "lists": [
+   "explosive",
+   "firebomb"
+  ],
+  "slots": 1,
+  "marques": [
+   "moves 5 ft/turn",
+   "10 ft",
+   "15 ft",
+   "20 ft"
+  ],
+  "text": "Default: moves once right before detonating, in a direction the activator chooses. Delayed: moves once per turn in a set direction (can't be changed without disarming). Remote-activated: the remote can steer it (1 AP, once per turn). A roaming depth charge moves until it bumps into something, then detonates. Latch/Magnetic and other 'stay in place' augments override it. A proximity fuse triggers on movement of 15 ft, so a mQ III+ roaming explosive with a proximity fuse detonates itself — use only mQ I–II.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-ruinous",
+  "name": "Ruinous",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "destroys T2 materials (wood, ceramics)",
+   "destroys T2 materials (wood, ceramics)",
+   "destroys T3 materials (metals, ores)",
+   "destroys T3 materials (metals, ores)"
+  ],
+  "text": "Destroys everything in the blast radius (including the ground) up to that hardness tier.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-safe-handling",
+  "name": "Safe-Handling",
+  "lists": [
+   "explosive",
+   "firebomb",
+   "squib"
+  ],
+  "slots": 1,
+  "price": "8 pr (craft 2 pr)",
+  "marques": [
+   "can never be set off accidentally",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Can't be set off by squibs, remote hacking or bumping.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-shockwave",
+  "name": "Shockwave",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Knock Back"
+  ],
+  "marques": [
+   "5 ft beyond the blast",
+   "10 ft",
+   "15 ft",
+   "20 ft"
+  ],
+  "text": "The knock back also affects everyone within this distance beyond the blast range.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-shrapnel",
+  "name": "Shrapnel",
+  "lists": [
+   "explosive",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "soak class −1",
+   "−2",
+   "−3",
+   "−4"
+  ],
+  "text": "Victims' soak class is lowered for this attack.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-sinking-crater",
+  "name": "Sinking Crater",
+  "lists": [
+   "explosive",
+   "squib"
+  ],
+  "slots": 1,
+  "marques": [
+   "Dex T2 or prone",
+   "T3",
+   "T4",
+   "impossible (T5)"
+  ],
+  "text": "The person at the blast seat must make a Dex resist or fall prone, losing their stance.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-sky-charges",
+  "name": "Sky Charges",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "marques": [
+   "active 1 week",
+   "1 month",
+   "1 year",
+   "1 decade"
+  ],
+  "text": "Floats up to a set height and hovers until bumped over a space. Height set on activation or changed for 1 AP; adjusts 25 ft/turn. If the height can't be reached (ceiling), it hits the ceiling and explodes.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-super-heated-shrapnel",
+  "name": "Super-Heated Shrapnel",
+  "lists": [
+   "explosive",
+   "squib"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Shrapnel"
+  ],
+  "marques": [
+   "2 heat damage",
+   "4",
+   "6",
+   "8"
+  ],
+  "text": "Shrapnel sticks; at the end of the victim's next turn they take this heat damage (not soakable by normal means) unless they spend 1 AP to remove it first.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-target-processing",
+  "name": "Target-Processing",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "notes": "for use with mines",
+  "qualifiers": [
+   "req. Fuse Box Builder"
+  ],
+  "price": "1,000 pr (craft 200 pr)",
+  "marques": [
+   "decides whom to detonate against",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Basic brainworks: activating takes 3 AP to describe who should and should not trigger it. Learnable with Pyrotechnician and Fuse Box Builder.",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-vast-crater",
+  "name": "Vast Crater",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "qualifiers": [
+   "req. Sinking Crater"
+  ],
+  "price": "200 pr (craft 40 pr)",
+  "marques": [
+   "Sinking Crater also hits all spaces adjacent to the seat",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Everyone adjacent to the blast seat also needs the Dex resist or falls prone, losing their stance.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "section": "Gadgetry – explosives",
+  "slug": "gadgetry-explosive-weaponized",
+  "name": "Weaponized",
+  "lists": [
+   "explosive"
+  ],
+  "slots": 1,
+  "price": "40 pr (craft 8 pr)",
+  "marques": [
+   "can be used as a weapon",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "The explosive also counts as a weapon (sword, rifle, axe…). Weapon augments may be put on it; they use explosive augment slots and are destroyed when it detonates.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-battlefield-scorcher",
+  "name": "Battlefield Scorcher",
+  "slots": 1,
+  "two_marque": true,
+  "qualifiers": [
+   "req. Extended Blast"
+  ],
+  "marques": [
+   "+5 ft",
+   "+5 ft",
+   "+10 ft",
+   "+10 ft"
+  ],
+  "text": "Adds to the range of the firebomb's Extended Blast.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-damaging",
+  "name": "Damaging",
+  "slots": 1,
+  "marques": [
+   "4 dmg per marque",
+   "5",
+   "6",
+   "7"
+  ],
+  "text": "Replaces the normal 3 damage per firebomb marque.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-extended-blast",
+  "name": "Extended Blast",
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "+5 ft",
+   "+5 ft",
+   "+10 ft",
+   "+10 ft"
+  ],
+  "text": "The firebomb's area is larger.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-lingering-fuel",
+  "name": "Lingering Fuel",
+  "slots": 1,
+  "marques": [
+   "flames last 2 turns",
+   "3 turns",
+   "4 turns",
+   "5 turns"
+  ],
+  "text": "Fuel burns longer.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-sparks-in-the-air",
+  "name": "Sparks in the Air",
+  "slots": 1,
+  "price": "30 pr (craft 6 pr)",
+  "marques": [
+   "wet or metal-armored targets can't soak",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Pulses of electricity through the flames. Learnable with Firebomber.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-grasping-flames",
+  "name": "Grasping Flames",
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "Brute T2 or stop",
+   "Brute T2 or stop",
+   "Brute T3 or stop",
+   "Brute T3 or stop"
+  ],
+  "text": "Anyone moving through the fire must make a Brute resist or stop moving.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-magnetic-pulsing",
+  "name": "Magnetic Pulsing",
+  "slots": 1,
+  "qualifiers": [
+   "req. Sparks in the Air"
+  ],
+  "price": "150 pr (craft 30 pr)",
+  "marques": [
+   "double damage to electric vehicles & fuse box automata",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Applies when they move into the area or end their turn within it.",
+  "subsection": "",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Gadgetry",
+  "lists": [
+   "firebomb"
+  ],
+  "section": "Gadgetry – firebombs",
+  "slug": "gadgetry-firebomb-smoking",
+  "name": "Smoking",
+  "slots": 1,
+  "marques": [
+   "smoke ends with the firebomb",
+   "1 turn after",
+   "2 turns after",
+   "3 turns after"
+  ],
+  "text": "Thick smoke blinds those within the area.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Alchemy",
+  "lists": [
+   "squib"
+  ],
+  "section": "Alchemy – squibs",
+  "slug": "alchemy-squib-blast-off",
+  "name": "Blast Off",
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "launched 5 ft up",
+   "launched 5 ft up",
+   "10 ft up",
+   "10 ft up"
+  ],
+  "text": "Launches everything in the target square straight up.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Alchemy",
+  "lists": [
+   "squib"
+  ],
+  "section": "Alchemy – squibs",
+  "slug": "alchemy-squib-damaging",
+  "name": "Damaging",
+  "slots": 2,
+  "marques": [
+   "6 dmg per marque",
+   "7",
+   "8",
+   "9"
+  ],
+  "text": "Takes 2 augment slots. Replaces the normal 5 damage per squib marque.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Alchemy",
+  "lists": [
+   "squib"
+  ],
+  "section": "Alchemy – squibs",
+  "slug": "alchemy-squib-knock-back",
+  "name": "Knock Back",
+  "slots": 1,
+  "two_marque": true,
+  "marques": [
+   "pushed back 5 ft",
+   "pushed back 5 ft",
+   "10 ft",
+   "10 ft"
+  ],
+  "text": "Knocks anyone in the target space away from the thrower.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Alchemy",
+  "lists": [
+   "squib"
+  ],
+  "section": "Alchemy – squibs",
+  "slug": "alchemy-squib-paint-splatter",
+  "name": "Paint Splatter",
+  "slots": 1,
+  "price": "1 pr (craft 2 d)",
+  "marques": [
+   "covers the square in paint",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Paint in a color of your choice. Learnable with Squib Producer.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Alchemy",
+  "lists": [
+   "squib"
+  ],
+  "section": "Alchemy – squibs",
+  "slug": "alchemy-squib-run-away-bomb",
+  "name": "Run-Away Bomb",
+  "slots": 1,
+  "marques": [
+   "moves up to 15 ft",
+   "25 ft",
+   "35 ft",
+   "45 ft"
+  ],
+  "text": "Motorized wheels: one move after hitting the ground, direction and distance of your choice.",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "explosives"
+ },
+ {
+  "skill": "Alchemy",
+  "lists": [
+   "squib"
+  ],
+  "section": "Alchemy – squibs",
+  "slug": "alchemy-squib-sundering",
+  "name": "Sundering",
+  "slots": 1,
+  "price": "25 pr (craft 5 pr)",
+  "marques": [
+   "one held weapon suffers a T1 sunder",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Book says learnable with Pyrotechnician (probably meant Squib Producer).",
+  "subsection": "",
+  "qualifiers": [],
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "explosives"
  }
 ]

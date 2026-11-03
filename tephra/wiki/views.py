@@ -40,7 +40,7 @@ def search(q):
         if ql in d["title"].lower() or ql in d["body"].lower():
             hits.append({"kind": _("Help"), "title": d["title"], "url": f"/wiki/help/{d['slug']}/",
                          "snippet": _snippet(d["body"], q)})
-    for ch in content.reference(lang):
+    for ch in offer(content.reference(lang)):
         for s in ch["sections"]:
             if ql in s["title"].lower() or ql in s["body"].lower():
                 hits.append({"kind": _("Rules"), "title": s["title"], "url": f"/wiki/rules/{ch['slug']}/#{s['slug']}",
@@ -71,7 +71,7 @@ def wiki_index(request):
     hits = search(q)[:200] if len(q) >= 2 else None
     return render(request, "wiki/index.html", {
         "q": q, "hits": hits, "pages": _pages(), "docs": content.docs(lang),
-        "chapters": content.reference(lang), "races": offer(get_registry().races.values())})
+        "chapters": offer(content.reference(lang)), "races": offer(get_registry().races.values())})
 
 
 def page(request, slug):
@@ -117,7 +117,7 @@ def help_page(request, slug):
 
 
 def rules_chapter(request, slug):
-    ch = next((c for c in content.reference(get_language()) if c["slug"] == slug), None)
+    ch = next((c for c in offer(content.reference(get_language())) if c["slug"] == slug), None)
     if not ch:
         raise Http404
     sections = [dict(s, html=content.render(s["body"])) for s in ch["sections"]]

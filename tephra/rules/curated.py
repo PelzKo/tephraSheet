@@ -460,3 +460,23 @@ ONGOING_TRAITS = {
     # Gnome: grow to elf size and use the elf's racial traits and speeds; 1 AP each way (narrator ruling).
     "gnome/growth-intensity": {"start": 1, "upkeep": 0, "stop": 1, "body_race": "elf"},
 }
+
+# Core explosive augments that the Explosives! extension also allows on firebombs (F) and squibs (S). The extra
+# lists are only reachable through its gated crafting specialties.
+_EXPLOSIVE_LISTS = {
+    "banshee": "EFS", "concealable": "EFS", "concussive": "EFS", "delay": "EFS", "flare": "EFS", "flash": "EFS",
+    "flypaper": "EFS", "latch": "EFS", "launching": "EFS", "magnetic": "EFS", "melter": "EFS",
+    "powerful-blast": "EF", "quick-set": "EFS", "remote-activation": "ES", "searing": "EFS", "slippery": "EFS",
+    "smoking": "ES",
+}
+for _name, _codes in _EXPLOSIVE_LISTS.items():
+    AUGMENTS.setdefault(f"gadgetry-explosive-{_name}", {})["lists"] = [
+        {"E": "explosive", "F": "firebomb", "S": "squib"}[c] for c in _codes]
+# Book values (the reference summary had them wrong).
+AUGMENTS["gadgetry-explosive-flare"]["marques"] = [f"light 25 ft (+25 dim) for {n} turns" for n in (2, 4, 6, 8)]
+AUGMENTS.setdefault("gadgetry-explosive-gear-rattler", {})["marques"] = [
+    f"automaton stunned {n} AP / vehicle uncontrollable {n} AP" for n in (1, 2, 3, 4)]
+# Fixed prices of the no-marque explosive augments (Explosives!), buy / craft.
+for _name, _price in {"delay": "8 / 2 pr", "flypaper": "40 / 8 pr", "latch": "40 / 8 pr", "magnetic": "40 / 8 pr",
+                      "proximity-fuse": "40 / 8 pr", "powerful-blast": "40 / 8 pr", "quick-set": "40 / 8 pr"}.items():
+    AUGMENTS.setdefault(f"gadgetry-explosive-{_name}", {})["price"] = _price

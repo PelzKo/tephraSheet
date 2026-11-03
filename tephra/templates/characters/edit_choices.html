@@ -45,7 +45,7 @@
   <h2 style="margin-top:14px">{% t "Stories" %}</h2>
   <details><summary>{% t "{n} selected – show all" n=character.stories|length %}</summary>
     <div class="choice-grid" style="margin-top:8px">{% for s in stories %}
-      <label class="choice"><input type="checkbox" name="stories" value="{{ s.slug }}" {% if s.slug in character.stories %}checked{% endif %}> <b>{{ s.name }}</b> <span class="muted small">{{ s.type|t }}{% if s.group %} · {{ s.group_label }}{% endif %}</span></label>{% endfor %}</div>
+      <label class="choice"><input type="checkbox" name="stories" value="{{ s.slug }}" {% if s.slug in character.stories %}checked{% endif %}> <b>{{ s.name }}</b> {% ext_badge s %} <span class="muted small">{{ s.type|t }}{% if s.group %} · {{ s.group_label }}{% endif %}</span></label>{% endfor %}</div>
   </details>
   <div class="wizard-actions"><span></span><button class="btn primary" name="action" value="save">{% t "Save" %}</button></div>
 </form>
