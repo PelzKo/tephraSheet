@@ -274,3 +274,6 @@ tr.fb-closed td { opacity: .55; }
 .card .stats span { display: block; font-size: 10px; letter-spacing: 0; line-height: 1.15; hyphens: auto; overflow-wrap: anywhere; }
 .card .stats b { white-space: nowrap; font-size: 18px; }
 .card h2 { padding-right: 22px; overflow-wrap: anywhere; }
+.check-dropdown { display: inline-block; min-width: 16em; }
+.check-dropdown summary { cursor: pointer; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+.check-dropdown .check-list { display: flex; flex-direction: column; gap: 2px; max-height: 18em; overflow: auto; margin-top: 4px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }

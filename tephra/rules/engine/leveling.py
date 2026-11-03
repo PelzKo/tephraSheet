@@ -2,6 +2,7 @@
 
 import random as _random
 
+from rules.extensions import offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -53,7 +54,7 @@ def random_levelup_skills(state, rng=None):
 def random_levelup_specialty(state, compute, rng=None):
     rng = rng or _random.Random()
     sheet = compute(state)
-    options = [s for s in get_registry().specialties.values() if check_specialty(s, state, sheet)[0]]
+    options = [s for s in offer(get_registry().specialties.values()) if check_specialty(s, state, sheet)[0]]
     if not options:
         return None
     weights = [1 + (sheet.skills[s["skill"]].total if s["skill"] else 0) for s in options]

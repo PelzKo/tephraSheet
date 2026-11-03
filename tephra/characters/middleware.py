@@ -1,6 +1,8 @@
 from django.utils import translation
 
-from rules import lang
+from rules import extensions, lang
+
+from .models import NarratorSettings
 
 COOKIE = "tephra_lang"
 
@@ -20,7 +22,7 @@ def pick_language(request):
 
 class LanguageMiddleware:
     """Sets the language for templates ({% t %}), Python (rules.lang.gettext), the rule data
-    (get_registry) and Django's own texts."""
+    (get_registry) and Django's own texts, and which extensions/races new choices offer (rules.extensions)."""
 
     def __init__(self, get_response):
         self.get_response = get_response
@@ -30,10 +32,13 @@ class LanguageMiddleware:
         lang.set_language(code)
         translation.activate(code)
         request.LANGUAGE_CODE = code
+        settings = NarratorSettings.get()
+        extensions.set_offer(settings.enabled_extensions, settings.disabled_races)
         try:
             response = self.get_response(request)
         finally:
             lang.set_language(lang.DEFAULT)  # don't leak into the next request/test on this thread
+            extensions.set_offer()
         response.headers.setdefault("Content-Language", code)
         return response
 

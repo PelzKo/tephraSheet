@@ -41,6 +41,8 @@ def translations(lang, kind):
 def _localize(entries, lang, kind):
     for e in entries:
         e["name_en"] = e.get("name", "")
+        if kind == "augments":
+            e["qualifiers_en"] = e.get("qualifiers", [])  # "req. <Name>" checks match English names
         if kind == "stories":
             e["requires_label"] = e.get("requires", "")  # display only; "requires" stays English for matching
             e["group_label"] = e.get("group", "")

@@ -337,6 +337,28 @@ class Command(BaseCommand):
                 }
                 entry.update(curated.AUGMENTS.get(slug, {}))
                 out.append(entry)
+        out += self.build_prosthetic_extras(doc)
+        return out
+
+    def build_prosthetic_extras(self, doc):
+        """Arm/hand/leg/automaton prosthetic augments: book text + curated marque summaries (no table in the md)."""
+        out = []
+        for bt in doc.book_texts:
+            sub = curated.PROSTHETIC_SUBSECTIONS.get(bt.category)
+            if not sub:
+                continue
+            marques, notes, qualifiers, slots = curated.PROSTHETIC_EXTRA[bt.name]
+            part = bt.category.split()[1].lower()  # Prosthetic Arm Augment -> arm, Automaton Torso Augment -> torso
+            slug = slugify(f"automata-prosthetic-{part}-{bt.name}")
+            text = bt.text.split("\nAutomaton-Specific")[0]  # the next block's intro is glued to the last leg text
+            entry = {
+                "slug": slug, "name": bt.name, "skill": "Automata", "lists": ["prosthetic"],
+                "section": "Prosthetics", "subsection": sub, "slots": slots, "qualifiers": list(qualifiers),
+                "accessory": False, "marques": list(marques), "notes": notes, "size": "", "price": "",
+                "text": text, "modifiers": [],
+            }
+            entry.update(curated.AUGMENTS.get(slug, {}))
+            out.append(entry)
         return out
 
     # ------------------------------------------------------------------ catalog seed

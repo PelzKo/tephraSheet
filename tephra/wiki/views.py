@@ -3,6 +3,7 @@ from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.text import slugify
 
+from rules.extensions import is_offered, offer
 from rules.lang import get_language
 from rules.lang import gettext as _
 from rules.registry import get_registry
@@ -45,15 +46,17 @@ def search(q):
                 hits.append({"kind": _("Rules"), "title": s["title"], "url": f"/wiki/rules/{ch['slug']}/#{s['slug']}",
                              "snippet": _snippet(s["body"], q)})
     reg = get_registry()
-    for s in reg.specialties.values():
+    for s in offer(reg.specialties.values()):
         if ql in s["name"].lower() or ql in s["name_en"].lower() or ql in s["effect"].lower():
             hits.append({"kind": _("Specialty"), "title": s["name"], "url": f"/wiki/specialty/{s['slug']}/",
                          "snippet": _snippet(s["effect"], q)})
-    for a in reg.augments.values():
+    for a in offer(reg.augments.values()):
         if ql in a["name"].lower() or ql in a["name_en"].lower() or ql in a["text"].lower():
             hits.append({"kind": _("Augment"), "title": a["name"], "url": f"/catalog/augments/?q={a['name']}",
                          "snippet": _snippet(a["text"], q)})
     for t in reg.traits.values():
+        if not is_offered(reg.races[t["race"]]):
+            continue
         if ql in t["name"].lower() or ql in t["text"].lower():
             hits.append({"kind": _("Racial trait"), "title": f"{t['name']} ({reg.races[t['race']]['name']})",
                          "url": f"/wiki/race/{t['race']}/", "snippet": t["text"]})
@@ -68,7 +71,7 @@ def wiki_index(request):
     hits = search(q)[:200] if len(q) >= 2 else None
     return render(request, "wiki/index.html", {
         "q": q, "hits": hits, "pages": _pages(), "docs": content.docs(lang),
-        "chapters": content.reference(lang), "races": get_registry().races.values()})
+        "chapters": content.reference(lang), "races": offer(get_registry().races.values())})
 
 
 def page(request, slug):

@@ -6,6 +6,7 @@ from django.shortcuts import redirect, render
 from rules.engine import leveling, tables
 from rules.engine.requirements import check_specialty
 from rules.engine.stats import compute
+from rules.extensions import offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -104,6 +105,8 @@ def planner(request, character):
                    for e, probs in checks],
         "rows": rows, "skill_rows": skill_rows, "plan_level": state.level,
         "skills_by_attr": tables.SKILLS,
-        "specialties": sorted(reg.specialties.values(), key=lambda s: (s["skill"] or "~", s["name"])),
-        "augments": sorted(reg.augments.values(), key=lambda a: (a["skill"], a["name"])),
+        "specialties": sorted(offer(reg.specialties.values(), keep={entry.get("specialty")}),
+                             key=lambda s: (s["skill"] or "~", s["name"])),
+        "augments": sorted(offer(reg.augments.values(), keep=entry.get("augments", [])),
+                          key=lambda a: (a["skill"], a["name"])),
     })

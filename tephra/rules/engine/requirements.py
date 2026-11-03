@@ -197,7 +197,7 @@ def check_augment(aug, state, sheet):
     reg = get_registry()
     known_names = {reg.augments[a]["name_en"] for a in state.augments if a in reg.augments}
     names = owned_names(state)
-    for q in aug.get("qualifiers", []):
+    for q in aug.get("qualifiers_en", []):
         if q.startswith("req. "):
             needed = [n.strip() for n in q[5:].split(" or ")]
             if not any(n in known_names or n in names for n in needed):

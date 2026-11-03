@@ -7,6 +7,7 @@ from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
 from rules.engine import leveling, tables
+from rules.extensions import offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -104,7 +105,7 @@ def levelup_options(request, character):
     old = request.POST.get("retrofit_old")
     if old in reg.specialties:
         attr = reg.specialties[old]["attribute"]
-        retrofit_targets = sorted((s for s in reg.specialties.values() if s["attribute"] == attr),
+        retrofit_targets = sorted((s for s in offer(reg.specialties.values()) if s["attribute"] == attr),
                                   key=lambda s: (s["skill"] or "", s["name"]))
     # Info shown next to "New specialty" once one is picked (Alpine in levelup_options.html).
     spec_info = {o["spec"]["slug"]: {"name": o["spec"]["name"], "cost": o["spec"]["cost"],

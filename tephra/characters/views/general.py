@@ -6,7 +6,9 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
+from rules.extensions import EXTENSIONS
 from rules.lang import gettext as _
+from rules.registry import get_registry
 from .. import access
 from ..models import Character, Feedback, NarratorSettings
 
@@ -103,10 +105,22 @@ class GMLoginView(auth_views.LoginView):
 
 
 class SettingsForm(forms.ModelForm):
+    enabled_extensions = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple)
+    disabled_races = forms.MultipleChoiceField(required=False, widget=forms.CheckboxSelectMultiple)
+
     class Meta:
         model = NarratorSettings
         fields = ["allow_choose_random_trait", "allow_reroll_random_trait", "background_story_count",
-                  "max_starting_level", "allow_player_admin_mode"]
+                  "max_starting_level", "allow_player_admin_mode", "enabled_extensions", "disabled_races"]
+
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        ext, races = self.fields["enabled_extensions"], self.fields["disabled_races"]
+        ext.label, races.label = _("Extensions"), _("Disabled races")
+        ext.help_text = _("Switched-on extensions are offered for new choices. Characters keep what they already have.")
+        races.help_text = _("Not offered when creating a new character. Existing characters keep their race.")
+        ext.choices = [(k, _(name)) for k, name in EXTENSIONS.items()]
+        races.choices = sorted(((r["slug"], r["name"]) for r in get_registry().races.values()), key=lambda c: c[1])
 
 
 @staff_member_required(login_url="gm_login")

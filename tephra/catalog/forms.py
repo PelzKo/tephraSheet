@@ -3,6 +3,7 @@ import json
 from django import forms
 
 from rules.engine.tables import VARIANTS
+from rules.extensions import offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -94,5 +95,5 @@ def augment_choices_json():
         out[kind] = [{"slug": a["slug"], "name": a["name"], "slots": a.get("slots") or 0,
                       "marques": a["marques"], "list": "/".join(a["lists"]), "notes": a["notes"],
                       "text": a["text"]}
-                     for a in reg.augments.values() if lists.intersection(a["lists"])]
+                     for a in offer(reg.augments.values()) if lists.intersection(a["lists"])]
     return out

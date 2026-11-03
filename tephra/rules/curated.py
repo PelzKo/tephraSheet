@@ -292,6 +292,45 @@ AUGMENT_SECTIONS = [
     ("Gadgetry – trinkets", ("Gadgetry", ["trinket"])),
 ]
 
+# Arm/hand/leg and automaton-only prosthetic augments: the reference has them only as book texts (no table), so
+# their marque summaries live here. Book text category -> subsection; name -> (marques, notes, qualifiers, slots).
+PROSTHETIC_SUBSECTIONS = {
+    "Prosthetic Arm Augment": "Arm prosthetic augments", "Prosthetic Hand Augment": "Hand prosthetic augments",
+    "Prosthetic Leg Augment": "Leg prosthetic augments", "Automaton Head Augment": "Automaton head augments",
+    "Automaton Torso Augment": "Automaton torso augments",
+}
+_AUTOMATON_ONLY = ["automaton only", "req. Automata Tinkerer"]
+PROSTHETIC_EXTRA = {
+    "Extendable Hand": (["+5 ft reach", "+10 ft reach", "+10 ft reach", "+15 ft reach"],
+                        "1 AP to extend, 0 AP to retract", ["arm with a hand"], 1),
+    "Grasper": (["pincer that wields an item like a hand (no two-handed items)", "–", "–", "–"], "always mQ I", [], 1),
+    "Flame Pores": (["T1 burns (−1 defense)", "T2 burns (−3 defense)", "T3 burns (−5 defense)", "T4 burns (−7 defense)"],
+                    "1 AP after an unarmed hit; burns don't stack", ["req. Furnace"], 1),
+    "Freezing Pores": (["called-shot effects +1 turn", "+2 turns", "+3 turns", "+4 turns"],
+                       "1 AP after an unarmed called shot (hands, feet, head)", ["req. Freezer"], 1),
+    "Hand-Launcher": (["DC 3", "DC 4", "DC 5", "DC 6"], "2 AP, range 50 ft; the hand stays where it lands", [], 1),
+    "Neuromuscular Incapacitator": (["no effect", "stunned 1 AP", "stunned 1 AP", "stunned 2 AP"],
+                                    "unarmed hit; Brute resists (marques down)", [], 1),
+    "Retractable": (["returns within 3 AP", "within 2 AP", "within 1 AP", "returns immediately"], "",
+                    ["req. Hand-Launcher"], 1),
+    "Propellers": (["+10 swim", "+15 swim", "+20 swim", "+25 swim"], "still hindered by armor", [], 1),
+    "Extreme Speed": (["+5 speed", "+5 speed", "+10 speed", "+15 speed"], "", [], 1),
+    "Springs": (["+5 ft jump height", "+10 ft jump height", "+15 ft jump height", "+20 ft jump height"], "", [], 1),
+    "Sensory Transmission": (["broadcast senses up to 200 ft", "up to 2,000 ft", "up to 2 miles", "up to 20 miles"],
+                             "1 AP", _AUTOMATON_ONLY, 1),
+    "Back-Pack": (["rides on an ally's back (1 turn to pack/unpack)", "–", "–", "–"], "always mQ I",
+                  _AUTOMATON_ONLY, 1),
+    "Mass Propulsion": (["+5 ft per move", "+10 ft per move", "+15 ft per move", "+20 ft per move"],
+                        "land and flight speed", _AUTOMATON_ONLY, 1),
+    "Poison Gas Epicenter": (["refill 3 AP", "refill 3 AP", "refill 2 AP", "refill 1 AP"],
+                             "1 AP: one gas vial released around the automaton at the end of its turn; eject 2 AP",
+                             _AUTOMATON_ONLY, 2),
+    "Poison Gas Receptor": (["holds 2 doses", "holds 3 doses", "holds 4 doses", "holds 6 doses"],
+                            "one gas at a time", _AUTOMATON_ONLY + ["req. Poison Gas Epicenter"], 1),
+    "Sensor Array": (["head augments on the torso; sees and hears through the torso", "–", "–", "–"],
+                     "always mQ II", _AUTOMATON_ONLY, 1),
+}
+
 # Augments whose marque values change sheet numbers. scope=weapon applies to the item it is on.
 AUGMENTS = {
     "armsmith-firearm-crossbow-accurate": {"modifiers": [mod("acc", scope="weapon", by_marque=[1, 2, 3, 4])]},
@@ -314,6 +353,10 @@ AUGMENTS = {
     "bio-flux-essence-scaleskin": {"modifiers": [mod("soak", by_marque=[1, 2, 3, 4])]},
     "bio-flux-essence-sixth-sense": {"modifiers": [mod("pri", by_marque=[2, 4, 6, 8])]},
     "bio-flux-essence-stonebones": {"modifiers": [mod("spd", by_marque=[-10, -10, -5, 0])]},
+    "automata-prosthetic-leg-extreme-speed": {"modifiers": [mod("spd", by_marque=[5, 5, 10, 15])]},
+    "automata-prosthetic-leg-propellers": {"modifiers": [mod("swim", by_marque=[10, 15, 20, 25])]},
+    "automata-prosthetic-hand-propellers": {"modifiers": [mod("swim", by_marque=[10, 15, 20, 25])]},
+    "automata-prosthetic-torso-mass-propulsion": {"modifiers": [mod("spd", by_marque=[5, 10, 15, 20])]},
 }
 
 # --------------------------------------------------------------------------- catalog seed

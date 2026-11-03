@@ -2,6 +2,7 @@
 
 import random as _random
 
+from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -97,7 +98,7 @@ def nationality_stories(nationality_slug, race_slug=None):
         return []
     race_name = reg.races[race_slug]["name_en"] if race_slug else None
     out = []
-    for s in reg.stories.values():
+    for s in offer(reg.stories.values()):
         if s["type"] != "nationality" or s["group"] != nat["story_group"]:
             continue
         req = s.get("requires", "")
@@ -110,8 +111,8 @@ def nationality_stories(nationality_slug, race_slug=None):
 def random_race_and_nationality(rng=None):
     rng = rng_or_default(rng)
     reg = get_registry()
-    race = rng.choice(list(reg.races))
-    nats = [n for n in reg.nationalities if n != "other"]
+    race = rng.choice([r["slug"] for r in offer_races(reg.races.values())])
+    nats = [n["slug"] for n in offer(reg.nationalities.values()) if n["slug"] != "other"]
     nat = rng.choice(nats)
     fixed = random_fixed_choice(race, rng)
     random_keys, rolls = roll_random_traits(race, rng=rng)
@@ -154,7 +155,7 @@ def random_specialties(state, compute, count, rng=None):
     level = state.level
     for _i in range(count):
         sheet = compute(state)
-        options = [s for s in reg.specialties.values() if check_specialty(s, state, sheet)[0]]
+        options = [s for s in offer(reg.specialties.values()) if check_specialty(s, state, sheet)[0]]
         if not options:
             break
         # Prefer the character's own skills; weight by skill points so primaries show up more.
@@ -172,7 +173,7 @@ def random_augments(state, compute, rng=None, limit=None):
     sheet = compute(state)
     free = (sheet.stats["aug"].total - len(state.augments)) if limit is None else limit
     for _i in range(max(0, free)):
-        options = [a for a in reg.augments.values() if check_augment(a, state, sheet)[0]]
+        options = [a for a in offer(reg.augments.values()) if check_augment(a, state, sheet)[0]]
         if not options:
             break
         choice = rng.choice(options)
@@ -183,7 +184,7 @@ def random_augments(state, compute, rng=None, limit=None):
 
 # --------------------------------------------------------------------------- step 9 / 10
 def background_stories():
-    return [s for s in get_registry().stories.values() if s["type"] in ("background", "personality")]
+    return [s for s in offer(get_registry().stories.values()) if s["type"] in ("background", "personality")]
 
 
 def random_background(rng=None, count=1):

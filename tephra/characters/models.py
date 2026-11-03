@@ -29,6 +29,9 @@ class NarratorSettings(models.Model):
     max_starting_level = models.PositiveSmallIntegerField(default=1)
     allow_player_admin_mode = models.BooleanField(
         default=True, help_text="Players who unlocked a character may use admin mode on it")
+    # Both only gate new choices (wizard, pickers, random generators); existing characters keep their content.
+    enabled_extensions = models.JSONField(default=list, blank=True)
+    disabled_races = models.JSONField(default=list, blank=True)
 
     class Meta:
         verbose_name_plural = "narrator settings"

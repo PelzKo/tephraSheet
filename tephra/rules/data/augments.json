@@ -10198,5 +10198,492 @@
   "price": "3/15/75/375 (DIY-made never breaks)",
   "text": "",
   "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-arm-extendable-hand",
+  "name": "Extendable Hand",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Arm prosthetic augments",
+  "slots": 1,
+  "qualifiers": [
+   "arm with a hand"
+  ],
+  "accessory": false,
+  "marques": [
+   "+5 ft reach",
+   "+10 ft reach",
+   "+10 ft reach",
+   "+15 ft reach"
+  ],
+  "notes": "1 AP to extend, 0 AP to retract",
+  "size": "",
+  "price": "",
+  "text": "Requires: placed on an arm with an attached hand The hand attached to your augmented appendage can now be extended outward, whether it be with springs, hydraulics, or some other such method. It costs one action point to extend a limb but no action points to retract it. Extended hands function as normal, able to do anything they normally could do.\n+5 feet of reach\n+10 feet of reach\n+10 feet of reach\n+15 feet of reach",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-arm-grasper",
+  "name": "Grasper",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Arm prosthetic augments",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "marques": [
+   "pincer that wields an item like a hand (no two-handed items)",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ I",
+  "size": "",
+  "price": "",
+  "text": "A grasper is a small set of pincers that can wield an item just like a hand. A grasper is not dexterous enough to wield items in conjunction with other limbs, preventing it from being able to use two-handed items.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-hand-flame-pores",
+  "name": "Flame Pores",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Hand prosthetic augments",
+  "slots": 1,
+  "qualifiers": [
+   "req. Furnace"
+  ],
+  "accessory": false,
+  "marques": [
+   "T1 burns (−1 defense)",
+   "T2 burns (−3 defense)",
+   "T3 burns (−5 defense)",
+   "T4 burns (−7 defense)"
+  ],
+  "notes": "1 AP after an unarmed hit; burns don't stack",
+  "size": "",
+  "price": "",
+  "text": "Requires: Furnace augment somewhere on subject’s body activation Cost: 1 AP (after a successful unarmed attack) Holes in the limb make it expel flames from your furnace when it is used in an unarmed strike. As long as your furnace isn’t extinguished, you can spend 1 action point after a successful unarmed attack in order to burn your target. Multiple burns caused by your flame pores will not stack the penalties to a single target’s defense. These burns will go away during the foe’s next breather.\nTier 1 Burns (-1 on all defense rolls)\nTier 2 Burns (-3 on all defense rolls)\nTier 3 Burns (-5 on all defense rolls)\nTier 4 Burns (-7 on all defense rolls)",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-hand-freezing-pores",
+  "name": "Freezing Pores",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Hand prosthetic augments",
+  "slots": 1,
+  "qualifiers": [
+   "req. Freezer"
+  ],
+  "accessory": false,
+  "marques": [
+   "called-shot effects +1 turn",
+   "+2 turns",
+   "+3 turns",
+   "+4 turns"
+  ],
+  "notes": "1 AP after an unarmed called shot (hands, feet, head)",
+  "size": "",
+  "price": "",
+  "text": "Requires: Freezer augment somewhere on subject’s body activation Cost: 1 AP (after a successful unarmed called shot) Holes in the limb make it expel small streams of subzero mist from your freezer which will freeze solid on impact when used in an unarmed attack. As long as your freezer isn’t extinguished, this makes unarmed called shots with this limb ice over the part of your target you hit. This ice will temporarily impede the use of extremities, making called shot effects to extremities (hands, feet, head) last longer.\nEffects of the called shot last an additional turn Effects of the called shot last two additional turns Effects of the called shot last three additional turns Effects of the called shot last four additional turns",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-hand-hand-launcher",
+  "name": "Hand-Launcher",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Hand prosthetic augments",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "marques": [
+   "DC 3",
+   "DC 4",
+   "DC 5",
+   "DC 6"
+  ],
+  "notes": "2 AP, range 50 ft; the hand stays where it lands",
+  "size": "",
+  "price": "",
+  "text": "Activation Cost: 2 AP\nYou are able to fire your hand at an opponent, dealing large amounts of damage, though you do not retain the body part if you fire it (at least until you go find it). The range of your hand is 50 feet.\nDamage class 3\nDamage class 4\nDamage class 5\nDamage class 6",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-hand-neuromuscular-incapacitator",
+  "name": "Neuromuscular Incapacitator",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Hand prosthetic augments",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "marques": [
+   "no effect",
+   "stunned 1 AP",
+   "stunned 1 AP",
+   "stunned 2 AP"
+  ],
+  "notes": "unarmed hit; Brute resists (marques down)",
+  "size": "",
+  "price": "",
+  "text": "Resist: Brute (marques down)\nAn electrical current covering your body part disrupts voluntary muscular control of anyone you hit it with during an unarmed attack.\nYour target vibrates for a second, but is otherwise fine Your target is stunned for one action point\nYour target is stunned for one action point\nYour target is stunned for two action points",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-hand-propellers",
+  "name": "Propellers",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Hand prosthetic augments",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "marques": [
+   "+10 swim",
+   "+15 swim",
+   "+20 swim",
+   "+25 swim"
+  ],
+  "notes": "still hindered by armor",
+  "size": "",
+  "price": "",
+  "text": "Your prosthetic is built with propellers for moving across water, allowing your swim speed to increase based on its marque. Your swim speed is still hindered by your armor.\n+10 swim speed\n+15 swim speed\n+20 swim speed\n+25 swim speed",
+  "modifiers": [
+   {
+    "stat": "swim",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     10,
+     15,
+     20,
+     25
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "automata-prosthetic-hand-retractable",
+  "name": "Retractable",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Hand prosthetic augments",
+  "slots": 1,
+  "qualifiers": [
+   "req. Hand-Launcher"
+  ],
+  "accessory": false,
+  "marques": [
+   "returns within 3 AP",
+   "within 2 AP",
+   "within 1 AP",
+   "returns immediately"
+  ],
+  "notes": "",
+  "size": "",
+  "price": "",
+  "text": "Requires: Hand-Launcher augment applied to the hand You can have your hand tethered to a rope or chain that automatically returns to you after being fired. Though you do not have to do anything, it does take a little bit of time before the hand returns to you.\nReturns within 3 AP\nReturns within 2 AP\nReturns within 1 AP\nReturns immediately",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-leg-extreme-speed",
+  "name": "Extreme Speed",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Leg prosthetic augments",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "marques": [
+   "+5 speed",
+   "+5 speed",
+   "+10 speed",
+   "+15 speed"
+  ],
+  "notes": "",
+  "size": "",
+  "price": "",
+  "text": "The appendage is streamlined for speed, allowing the user to have greater overland velocity.\n+5 speed\n+5 speed\n+10 speed\n+15 speed",
+  "modifiers": [
+   {
+    "stat": "spd",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     5,
+     5,
+     10,
+     15
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "automata-prosthetic-leg-springs",
+  "name": "Springs",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Leg prosthetic augments",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "marques": [
+   "+5 ft jump height",
+   "+10 ft jump height",
+   "+15 ft jump height",
+   "+20 ft jump height"
+  ],
+  "notes": "",
+  "size": "",
+  "price": "",
+  "text": "By melding high-tension springs into your graft, its user gains extra height whenever jumping or leaping.\n+5 feet jump height\n+10 feet jump height\n+15 feet jump height\n+20 feet jump height",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-leg-propellers",
+  "name": "Propellers",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Leg prosthetic augments",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "marques": [
+   "+10 swim",
+   "+15 swim",
+   "+20 swim",
+   "+25 swim"
+  ],
+  "notes": "still hindered by armor",
+  "size": "",
+  "price": "",
+  "text": "Your prosthetic is built with propellers for moving across water, allowing your swim speed to increase based on its marque. Your swim speed is still hindered by your armor.\n+10 swim speed\n+15 swim speed\n+20 swim speed\n+25 swim speed",
+  "modifiers": [
+   {
+    "stat": "swim",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     10,
+     15,
+     20,
+     25
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "automata-prosthetic-head-sensory-transmission",
+  "name": "Sensory Transmission",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Automaton head augments",
+  "slots": 1,
+  "qualifiers": [
+   "automaton only",
+   "req. Automata Tinkerer"
+  ],
+  "accessory": false,
+  "marques": [
+   "broadcast senses up to 200 ft",
+   "up to 2,000 ft",
+   "up to 2 miles",
+   "up to 20 miles"
+  ],
+  "notes": "1 AP",
+  "size": "",
+  "price": "",
+  "text": "The automaton can broadcast its senses to a single device (often held by the user) for 1 action point. The distance it can broadcast is determined by the marque of the augment.\nUp to 200 feet away\nUp to 2,000 feet away\nUp to 2 miles away\nUp to 20 miles away",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-torso-back-pack",
+  "name": "Back-Pack",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Automaton torso augments",
+  "slots": 1,
+  "qualifiers": [
+   "automaton only",
+   "req. Automata Tinkerer"
+  ],
+  "accessory": false,
+  "marques": [
+   "rides on an ally's back (1 turn to pack/unpack)",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ I",
+  "size": "",
+  "price": "",
+  "text": "The automaton has the ability to latch onto an ally’s back, acting as the ally’s backpack. This leaves all of the automaton’s limbs free to act as normal while the ally carries the automaton around. The automaton cannot move while being carried. It takes 1 turn for the automaton to become a back-pack or unpack itself and move under its own power again.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-torso-mass-propulsion",
+  "name": "Mass Propulsion",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Automaton torso augments",
+  "slots": 1,
+  "qualifiers": [
+   "automaton only",
+   "req. Automata Tinkerer"
+  ],
+  "accessory": false,
+  "marques": [
+   "+5 ft per move",
+   "+10 ft per move",
+   "+15 ft per move",
+   "+20 ft per move"
+  ],
+  "notes": "land and flight speed",
+  "size": "",
+  "price": "",
+  "text": "Using a propeller, steamjet, or some other such device attached to the torso’s back, your subject is able to increase their thrust while moving. While this cannot give you the ability to fly, it grants bonuses to both land and flight movement speeds.\n+5 feet per move\n+10 feet per move\n+15 feet per move\n+20 feet per move",
+  "modifiers": [
+   {
+    "stat": "spd",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     5,
+     10,
+     15,
+     20
+    ]
+   }
+  ]
+ },
+ {
+  "slug": "automata-prosthetic-torso-poison-gas-epicenter",
+  "name": "Poison Gas Epicenter",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Automaton torso augments",
+  "slots": 2,
+  "qualifiers": [
+   "automaton only",
+   "req. Automata Tinkerer"
+  ],
+  "accessory": false,
+  "marques": [
+   "refill 3 AP",
+   "refill 3 AP",
+   "refill 2 AP",
+   "refill 1 AP"
+  ],
+  "notes": "1 AP: one gas vial released around the automaton at the end of its turn; eject 2 AP",
+  "size": "",
+  "price": "",
+  "text": "Takes up 2 Augment Slots on the Torso\nActivation Cost: 1 AP\nYou can insert a single vial of alchemical gas into the automaton’s torso. Once you activate this augment, the gas starts taking effect. When you end your turn, the gas releases from the automaton’s torso, affecting those around the automaton. This allows the automaton to move the gas around the battlefield. The automaton serves as the center of the gas’s area of effect, although through clever crafting the automaton doesn’t have to worry about the gas spraying onto itself. The gas lasts as long as it normally would. The amount of action points required to refill the gas supply is based off of the marque of this augment. It costs two action points to eject a dose of gas before it has run out on its own. This will cause it to stay in the space the automaton is currently standing in and will no longer move with the automaton.\n3 AP to refill gas chamber\n3 AP to refill gas chamber\n2 AP to refill gas chamber\n1 AP to refill gas chamber\nNote: For the crafting of gases, see Alchemy.",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-torso-poison-gas-receptor",
+  "name": "Poison Gas Receptor",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Automaton torso augments",
+  "slots": 1,
+  "qualifiers": [
+   "automaton only",
+   "req. Automata Tinkerer",
+   "req. Poison Gas Epicenter"
+  ],
+  "accessory": false,
+  "marques": [
+   "holds 2 doses",
+   "holds 3 doses",
+   "holds 4 doses",
+   "holds 6 doses"
+  ],
+  "notes": "one gas at a time",
+  "size": "",
+  "price": "",
+  "text": "Requires: Torso with the Poison Gas Epicenter augment You’ve upgraded your gas dispenser to hold extra doses of alchemical gases. You still can only release one gas at a time. Maximum of Two Doses\nMaximum of Three Doses\nMaximum of Four Doses\nMaximum of Six Doses",
+  "modifiers": []
+ },
+ {
+  "slug": "automata-prosthetic-torso-sensor-array",
+  "name": "Sensor Array",
+  "skill": "Automata",
+  "lists": [
+   "prosthetic"
+  ],
+  "section": "Prosthetics",
+  "subsection": "Automaton torso augments",
+  "slots": 1,
+  "qualifiers": [
+   "automaton only",
+   "req. Automata Tinkerer"
+  ],
+  "accessory": false,
+  "marques": [
+   "head augments on the torso; sees and hears through the torso",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ II",
+  "size": "",
+  "price": "",
+  "text": "You’ve crafted a sensor array into your automaton’s torso. This allows you to place automaton head augments on the torso as well as the ability for the automaton to see and hear through its torso.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "modifiers": []
  }
 ]

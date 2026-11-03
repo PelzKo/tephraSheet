@@ -7,7 +7,8 @@ from django.core.management.base import BaseCommand
 
 from catalog.models import ItemTemplate
 from characters import services
-from characters.models import Character
+from characters.models import Character, NarratorSettings
+from rules import extensions
 
 
 class Command(BaseCommand):
@@ -27,6 +28,8 @@ class Command(BaseCommand):
             return
         if not ItemTemplate.objects.exists():
             call_command("seed_catalog", verbosity=0)
+        settings = NarratorSettings.get()
+        extensions.set_offer(settings.enabled_extensions, settings.disabled_races)
         rng = random.Random(opts["seed"])
         level = max(1, min(12, opts["level"]))
         character = Character.objects.create(name=opts["name"], player_name=opts["player"])

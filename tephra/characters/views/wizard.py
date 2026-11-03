@@ -9,6 +9,7 @@ from catalog.models import ItemTemplate
 from rules.engine import creation, tables
 from rules.engine.requirements import augment_lists, check_augment, check_specialty, specialty_warnings
 from rules.engine.stats import compute
+from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -93,8 +94,8 @@ def ctx_step1(request, character):
     reg = get_registry()
     settings = NarratorSettings.get()
     race = reg.races.get(character.race)
-    ctx = {"races": list(reg.races.values()), "race": race, "settings": settings,
-           "nationalities": list(reg.nationalities.values()), "religions": services.RELIGIONS,
+    ctx = {"races": offer_races(reg.races.values(), keep={character.race}), "race": race, "settings": settings,
+           "nationalities": offer(reg.nationalities.values(), keep={character.nationality}), "religions": services.RELIGIONS,
            "attributes": tables.ATTRIBUTES}
     if race:
         slots = creation.trait_slots(race["slug"])
@@ -126,7 +127,7 @@ def save_step1(request, character, action):
     p = request.POST
     errors = []
     race = p.get("race", character.race)
-    if race in reg.races:
+    if race in {r["slug"] for r in offer_races(reg.races.values(), keep={character.race})}:
         services.set_race(character, race)
     if action == "race":
         character.save()
@@ -249,7 +250,7 @@ def specialty_options(character, level=None, extra_state=None):
     reg = get_registry()
     owned = {s for s, _ in state.specialties}
     groups = {}
-    for spec in reg.specialties.values():
+    for spec in offer(reg.specialties.values(), keep=owned):
         skill = spec["skill"] or "General (Sciences)"
         if spec["skill"] and sheet.skills[spec["skill"]].total < 1 and spec["slug"] not in owned:
             continue
@@ -296,7 +297,7 @@ def augment_options(character, state=None):
     reg = get_registry()
     lists = augment_lists(state)
     groups = {}
-    for aug in reg.augments.values():
+    for aug in offer(reg.augments.values(), keep=state.augments):
         if not lists.intersection(aug["lists"]):
             continue
         ok, reasons = check_augment(aug, state, sheet)
@@ -400,7 +401,7 @@ def ctx_step9(request, character):
     reg = get_registry()
     settings = NarratorSettings.get()
     by_type = {}
-    for s in reg.stories.values():
+    for s in offer(reg.stories.values(), keep=character.stories):
         if s["type"] == "nationality":
             continue
         by_type.setdefault(s["type"], []).append(s)

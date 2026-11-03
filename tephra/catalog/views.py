@@ -9,6 +9,7 @@ from django.views.decorators.http import require_POST
 from characters import access, services
 from characters.models import Character, InventoryItem
 from rules.engine import tables
+from rules.extensions import offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -49,9 +50,10 @@ def catalog_list(request):
 def augment_reference(request):
     """All augments with every marque and the book text, grouped like the book."""
     groups = {}
-    for a in get_registry().augments.values():
+    augments = offer(get_registry().augments.values())
+    for a in augments:
         groups.setdefault(f"{a['skill']} – {a['section']}", []).append(a)
-    lists = sorted({li for a in get_registry().augments.values() for li in a["lists"]})
+    lists = sorted({li for a in augments for li in a["lists"]})
     return render(request, "catalog/augments.html", {"groups": list(groups.items()), "lists": lists,
                                                      "q": request.GET.get("q", "")})
 

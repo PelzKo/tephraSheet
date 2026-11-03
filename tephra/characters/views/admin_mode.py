@@ -5,6 +5,7 @@ from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
 
 from rules.engine import tables
+from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -122,12 +123,13 @@ def edit_choices(request, character):
         return redirect("edit_choices", pk=character.pk)
     race = reg.races.get(character.race)
     all_traits = [t for t in reg.traits.values()]
-    specialties = sorted(reg.specialties.values(), key=lambda s: (s["attribute"], s["skill"] or "", s["name"]))
-    essence = [a for a in reg.augments.values() if set(a["lists"]) & {"essence", "prosthetic"}]
+    specialties = sorted(offer(reg.specialties.values(), keep={s for s, _l in character.specialties}), key=lambda s: (s["attribute"], s["skill"] or "", s["name"]))
+    essence = [a for a in offer(reg.augments.values(), keep={s for s, _m in character.body_augments})
+               if set(a["lists"]) & {"essence", "prosthetic"}]
     return render(request, "characters/edit_choices.html", {
-        "character": character, "races": reg.races.values(), "race": race,
-        "nationalities": reg.nationalities.values(), "all_traits": all_traits,
-        "skills_by_attr": tables.SKILLS, "stories": reg.stories.values(),
+        "character": character, "races": offer_races(reg.races.values(), keep={character.race}), "race": race,
+        "nationalities": offer(reg.nationalities.values(), keep={character.nationality}), "all_traits": all_traits,
+        "skills_by_attr": tables.SKILLS, "stories": offer(reg.stories.values(), keep=character.stories),
         "owned": [(reg.specialties[s], lvl) for s, lvl in character.specialties if s in reg.specialties],
         "specialties": specialties, "body_augments": [(reg.augments[s], m) for s, m in character.body_augments
                                                       if s in reg.augments],
