@@ -57,6 +57,16 @@ STATUS = [
      "modifiers": _mods({"acc": -1, "eva": -1, "stk": -1, "def": -1}) + [
          {"stat": "spd", "value": 5, "op": "set", "when": "always", "scope": "character"}]},
     {"slug": "stunned", "name": "Stunned", "text": "Lose X AP from the current pool; can still evade and resist."},
+    # Aether extension
+    {"slug": "irradiated", "name": "Irradiated", "extension": "aether",
+     "text": "−2 on all rolls until 1–4 AP (by the augment's marque) are spent.", "modifiers": _all_rolls(-2)},
+    *[{"slug": f"highly-irradiated-{t}", "name": f"Highly Irradiated T{t}", "extension": "aether",
+       "text": f"−{t + 2} on all rolls until the AP of Irradiated are spent.", "modifiers": _all_rolls(-(t + 2))}
+      for t in (1, 2, 3, 4)],
+    {"slug": "radiation-burns", "name": "Radiation Burns", "extension": "aether",
+     "text": "Unsoakable HP damage at the start of the next turn, 1 less each turn after; renewed by a new hit."},
+    {"slug": "static-shock", "name": "Static Shock", "extension": "aether",
+     "text": "−2/−4/−6/−8 (by marque) on the next Evade roll within the next turn."},
 ]
 
 # d12 location numbers on the silhouette -> chart location slug.
@@ -177,7 +187,10 @@ def called_label(kind):
 
 
 def status_list():
-    return [get(f"status:{s['slug']}") | {"slug": s["slug"]} for s in STATUS]
+    """Status effects offered in the effect picker (extension ones only while switched on)."""
+    from rules.extensions import offer
+
+    return [get(f"status:{s['slug']}") | {"slug": s["slug"]} for s in offer(STATUS)]
 
 
 def called_key(number, kind):

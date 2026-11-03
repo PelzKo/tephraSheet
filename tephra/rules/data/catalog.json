@@ -834,6 +834,75 @@
   "description": "AP: 3; HP: 11; Wounds: 8; Pri: +0; Speed: 25 ft, 45 ft flight; Eva: +1; Def: +0; Soak (T1–T4): 0 (unarmored); Attack: Talon 2 AP, natural light, Acc +3, Stk +1, dmg 4/8/12/16; after 10+ ft dive target Brute resist vs Agility (+2) or prone"
  },
  {
+  "name": "Aether Resonator",
+  "kind": "resonator",
+  "size": "heavy",
+  "hands": 0,
+  "price_dukes": 300,
+  "is_starting_gear": true,
+  "description": "Gathers aether; worn as a backpack (2 hands to carry otherwise). Light sources near it shine 5× as far; the carrier ignores the ill effects of cold weather. Sync/desync with a weapon or glove: 3 AP. 3 augment slots (beta 5).",
+  "extension": "aether"
+ },
+ {
+  "name": "Manipulator Glove",
+  "kind": "gear",
+  "hands": 0,
+  "price_dukes": 100,
+  "is_starting_gear": true,
+  "description": "Shape aether into a melee or thrown weapon for 1 AP without taking damage (without it: 10 HP damage, only basic soak). While worn, your unarmed attacks use your aether. A prosthetic hand counts as a glove.",
+  "extension": "aether"
+ },
+ {
+  "name": "Aether-Shaped Weapon",
+  "kind": "melee",
+  "size": "medium",
+  "variants": [
+   "aether"
+  ],
+  "price_dukes": 0,
+  "description": "Shaped from aether (1 AP; pick the size). Up to 3 augments (5 with Beta Weapons), 1 AP per slot: Accurate, Aerodynamic, Bone-Shattering, Damaging, Deflecting, Horrifying, Inspiring, Luminous (×5), Powerful, Propelled, Reach, Returning, Signature Weapon (no Custom needed), Streamlined, Tangling – any known weapon augment with Aetherform Modules. Dissipates when released; can't be sundered unless its resonator is.",
+  "extension": "aether"
+ },
+ {
+  "name": "State-of-the-Art Resonator",
+  "kind": "resonator",
+  "size": "light",
+  "hands": 1,
+  "concealable": true,
+  "price_dukes": 7800,
+  "augments": [
+   [
+    "gadgetry-resonator-micro-resonator",
+    3
+   ],
+   [
+    "gadgetry-resonator-self-lit",
+    1
+   ]
+  ],
+  "description": "Light, concealable, self-lit resonator. 780 pr to buy, 156 pr to craft; not maintained through DIY.",
+  "extension": "aether"
+ },
+ {
+  "name": "Self-Lit Resonator (medium)",
+  "kind": "resonator",
+  "size": "medium",
+  "hands": 1,
+  "price_dukes": 600,
+  "augments": [
+   [
+    "gadgetry-resonator-micro-resonator",
+    1
+   ],
+   [
+    "gadgetry-resonator-self-lit",
+    1
+   ]
+  ],
+  "description": "Medium-sized self-lit resonator. 60 pr to buy, 12 pr to craft.",
+  "extension": "aether"
+ },
+ {
   "name": "Turret (basic)",
   "kind": "firearm",
   "size": "super-heavy",

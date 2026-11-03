@@ -236,5 +236,9 @@
  "{augment} only fits a turret.": "{augment} passt nur auf ein Geschütz.",
  "Turret": "Geschütz",
  "firebomb": "Brandbombe",
- "squib": "Knallkörper"
+ "squib": "Knallkörper",
+ "Aether resonator": "Ätherresonator",
+ "Aether-shaped": "Äthergeformt",
+ "Aether-synced": "Äthergekoppelt",
+ "resonator": "Resonator"
 }

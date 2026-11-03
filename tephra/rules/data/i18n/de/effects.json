@@ -23,7 +23,14 @@
  "nausea": {"name": "Übelkeit", "text": "−2 auf alle Würfe, bis 3 AP ausgegeben wurden."},
  "paralyzed": {"name": "Gelähmt", "text": "Hilflos; Schaden geht direkt auf Wunden; keine Aktionen."},
  "prone": {"name": "Liegend", "text": "−1 Genauigkeit/Ausweichen/Schlagkraft/Verteidigung; Tempo 5 ft; Aufstehen kostet 1 AP (löst Reflexe aus)."},
- "stunned": {"name": "Betäubt", "text": "Verliere X AP aus dem aktuellen Vorrat; du kannst weiterhin ausweichen und Widerstand leisten."}
+ "stunned": {"name": "Betäubt", "text": "Verliere X AP aus dem aktuellen Vorrat; du kannst weiterhin ausweichen und Widerstand leisten."},
+ "irradiated": {"name": "Verstrahlt", "text": "−2 auf alle Würfe, bis 1–4 AP (je nach Marque des Augments) ausgegeben wurden."},
+ "highly-irradiated-1": {"name": "Stark verstrahlt S1", "text": "−3 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
+ "highly-irradiated-2": {"name": "Stark verstrahlt S2", "text": "−4 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
+ "highly-irradiated-3": {"name": "Stark verstrahlt S3", "text": "−5 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
+ "highly-irradiated-4": {"name": "Stark verstrahlt S4", "text": "−6 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
+ "radiation-burns": {"name": "Strahlenverbrennung", "text": "Nicht absorbierbarer TP-Schaden zu Beginn des nächsten Zuges, danach jeden Zug 1 weniger; ein neuer Treffer erneuert sie."},
+ "static-shock": {"name": "Statischer Schock", "text": "−2/−4/−6/−8 (je nach Marque) auf den nächsten Ausweichwurf innerhalb des nächsten Zuges."}
 },
 "LOCATION_LABELS": {"1": "Kopf", "2": "Augen", "3": "Ohren", "4": "Hals", "5": "Torso", "6": "Unterleib", "7": "Linker Arm", "8": "Rechter Arm", "9": "Linke Hand", "10": "Rechte Hand", "11": "Linkes Bein", "12": "Rechtes Bein"},
 "CALLED_LABELS": {"normal": "Normal", "wound": "Wundeffekt", "fatal": "Tödlich"},

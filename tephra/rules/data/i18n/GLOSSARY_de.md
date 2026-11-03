@@ -162,3 +162,22 @@ Marionette Strings → Marionettenfäden.
 | achievement (story type) | Errungenschaft |
 | BombRat(s) | BombRat(s) – unchanged |
 | Walking Bomb | Wandelnde Bombe |
+
+## Aether
+| English | German |
+|---|---|
+| aether / luminiferous aether | Äther / Lichtäther |
+| (aether) resonator | (Äther-)Resonator |
+| Manipulator Glove | Manipulatorhandschuh |
+| aether-shaped / aetherform weapon | Ätherwaffe |
+| shape / shaping (aether) | formen / Formen (group: Ätherformung) |
+| sync / desync | synchronisieren / entsynchronisieren |
+| Crafting Resonators / Resonator Designer | Resonatoren herstellen / Resonatorkonstrukteur |
+| State-of-the-Art | hochmodern |
+| Self-Lit / Micro-Resonator | Selbstleuchtend / Mikroresonator |
+| Black Trap | Schwarze Falle |
+| Irradiated / Highly Irradiated | Verstrahlt / Stark verstrahlt |
+| Radiation Burns | Strahlenverbrennung |
+| Static Shock (status) / Static Shocking (augment) | Statischer Schock / Statischer Schlag |
+| Light-Absorbing | Lichtschluckend |
+| Burning (resonator augment) | Sengend (status Burning stays Brennend) |

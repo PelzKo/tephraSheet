@@ -162,6 +162,10 @@ VARIANTS = {
     "throwing": {"label": "Throwing", "dc": -1, "note": "can be thrown"},
     "impromptu": {"label": "Impromptu", "dc": 0, "acc": -3, "stk": -3, "note": "not designed as a weapon"},
     "double-barreled": {"label": "Double-barreled", "dc": 0, "note": "fire twice before readying"},
+    "aether": {"label": "Aether-shaped", "dc": 0, "extension": "aether",
+               "note": "shaped from aether; your resonator's effects apply"},
+    "synced": {"label": "Aether-synced", "dc": 0, "extension": "aether",
+               "note": "shoots aether instead of ammunition; your resonator's effects apply"},
     "turret": {"label": "Turret", "dc": 0, "extension": "armsmith-extra",
                "note": "assemble 3 AP; Footing stance to fire; 15 wounds, soak 1, light cover"},
 }

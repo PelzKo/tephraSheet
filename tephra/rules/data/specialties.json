@@ -13117,6 +13117,243 @@
   "modifiers": []
  },
  {
+  "slug": "gadgetry-resonator-designer",
+  "name": "Resonator Designer",
+  "attribute": "Sciences",
+  "skill": "Gadgetry",
+  "general": false,
+  "group": "Crafting Resonators",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 5
+  },
+  "cost": "Passive (crafting)",
+  "requires_text": "",
+  "requires": [],
+  "tags": "[AUG] [DIY] [CRAFT:resonator]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [
+   "resonator"
+  ],
+  "effect": "You've studied luminiferous aether and can now build aether resonators. Without spending any money, you can build and maintain a number of resonators based on your current DIY score. Resonators can be upgraded with augments. You learn 2 augments from this specialty (from \"Resonator Augments\"). These augments have marques; at lower levels you start with Marque I augments.\nEach resonator can be upgraded with 3 augments. Some augments take multiple slots.\nNumber of resonators you can maintain (built from spare parts, must be maintained by you, stop working soon after leaving your care; build/augment during any downtime):\nDIY 1:1, 2:1, 3:2, 4:2, 5:2, 6:3, 7:3, 8:4, 9:4, 10:4, 11:5, 12:5\nThe cost of resonators: a resonator without augments has a base cost of 20 princes (bought); crafting an unaugmented resonator costs 4 princes. Augment market price by marque: I 30, II 150, III 750, IV 3750 pr. Building it yourself you pay 1/5 (= market price one marque lower); material cost of a Marque I augment is 6 pr.",
+  "modifiers": [],
+  "extension": "aether"
+ },
+ {
+  "slug": "gadgetry-beta-resonators",
+  "name": "Beta Resonators",
+  "attribute": "Sciences",
+  "skill": "Gadgetry",
+  "general": false,
+  "group": "Crafting Resonators",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "4 Gadgetry; Resonator Designer",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Gadgetry",
+    "min": 4
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Resonator Designer"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Requires: 4 skill points in Gadgetry & Resonator Designer specialty\nYour resonators are now beta and can be augmented with two more augment slots (up to five augments). Anybody other than you who attempts to use one of your beta resonators must succeed in rolling a Sciences result one tier higher than the highest marque on the resonator. With a Marque IV augment it is impossible (unless they can get a tier 5 Sciences result).",
+  "modifiers": [],
+  "extension": "aether"
+ },
+ {
+  "slug": "gadgetry-prototype-resonators",
+  "name": "Prototype Resonators",
+  "attribute": "Sciences",
+  "skill": "Gadgetry",
+  "general": false,
+  "group": "Crafting Resonators",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires_text": "16 Gadgetry; Resonator Designer; Beta Resonators",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Gadgetry",
+    "min": 16
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Resonator Designer"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Beta Resonators"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Requires: 16 skill points in Gadgetry, Resonator Designer and Beta Resonators specialties\nYou've perfected your beta resonators and made them work for everybody. Anybody can use a resonator that you designate as a prototype.",
+  "modifiers": [],
+  "extension": "aether"
+ },
+ {
+  "slug": "gadgetry-resonator-basics",
+  "name": "Resonator Basics",
+  "attribute": "Sciences",
+  "skill": "Gadgetry",
+  "general": false,
+  "group": "Crafting Resonators",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 5
+  },
+  "cost": "Passive",
+  "requires_text": "Resonator Designer",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Resonator Designer"
+    ]
+   }
+  ],
+  "tags": "[AUG] [REQ]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "grants_augments": [
+   "gadgetry-resonator-burning",
+   "gadgetry-resonator-flash-cloak",
+   "gadgetry-resonator-light-absorbing",
+   "gadgetry-resonator-micro-resonator",
+   "gadgetry-resonator-self-lit"
+  ],
+  "effect": "Requires: Resonator Designer specialty\nYou learn the following augments: Burning, Flash Cloak, Light-Absorbing, Micro-Resonator, and Self-Lit. If you already had any of these augments, you can instead learn a new one.",
+  "modifiers": [],
+  "extension": "aether"
+ },
+ {
+  "slug": "gadgetry-state-of-the-art-resonators",
+  "name": "State-of-the-Art Resonators",
+  "attribute": "Sciences",
+  "skill": "Gadgetry",
+  "general": false,
+  "group": "Crafting Resonators",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires_text": "Resonator Designer; 4 Gadgetry",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Resonator Designer"
+    ]
+   },
+   {
+    "type": "skill",
+    "skill": "Gadgetry",
+    "min": 4
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Requires: Resonator Designer specialty & 4 skill points in Gadgetry\nWhen you make a resonator, it is automatically a light item (one hand to wield, easily concealed) and always functions in complete darkness (own internal light source). This functions exactly like the Micro-Resonator and Self-Lit augments. If you already know Micro-Resonator or Self-Lit, you can learn new augments to replace them.\nCost to craft: a state-of-the-art resonator costs 780 pr to buy or 156 pr to craft yourself (if you know this specialty), but cannot be crafted from your DIY. Alternatively a medium-sized self-lit resonator: 60 pr to buy, 12 pr to craft. You don't have to make resonators state-of-the-art; crafted with your DIY there is no additional cost and it takes up no augment slots.",
+  "modifiers": [],
+  "grants_augments": [
+   "gadgetry-resonator-micro-resonator",
+   "gadgetry-resonator-self-lit"
+  ],
+  "extension": "aether"
+ },
+ {
+  "slug": "armsmith-fast-shaping",
+  "name": "Fast Shaping",
+  "attribute": "Sciences",
+  "skill": "Armsmith",
+  "general": false,
+  "group": "Aether Shaping",
+  "bonuses": {
+   "aug": 1,
+   "eva": 2,
+   "hp": 8
+  },
+  "cost": "Passive",
+  "requires_text": "Weapon Smith",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Weapon Smith"
+    ]
+   }
+  ],
+  "tags": "[PASSIVE] [REQ]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Requires: Weapon Smith specialty\nYou no longer need to spend extra action points to add augments to an aether-shaped weapon; you add them during the 1 action point required to initially shape the weapon.",
+  "modifiers": [],
+  "extension": "aether"
+ },
+ {
+  "slug": "armsmith-aetherform-modules",
+  "name": "Aetherform Modules",
+  "attribute": "Sciences",
+  "skill": "Armsmith",
+  "general": false,
+  "group": "Aether Shaping",
+  "bonuses": {
+   "aug": 1,
+   "eva": 1,
+   "hp": 9
+  },
+  "cost": "Passive",
+  "requires_text": "Weapon Smith",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Weapon Smith"
+    ]
+   }
+  ],
+  "tags": "[PASSIVE] [REQ]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Requires: Weapon Smith specialty\nYou can now apply all weapon augments that you know to aetherformed weapons (e.g. Cryothermal). Description: modules are small odd gadgets attached to the weapon (a cryothermal module: a fist-sized cold engine that makes the weapon icy; a jackhammer module: floating gears revolving around the weapon). Describe yours creatively.",
+  "modifiers": [],
+  "extension": "aether"
+ },
+ {
   "slug": "armsmith-munitions-crafter",
   "name": "Munitions Crafter",
   "group": "Crafting Munitions",

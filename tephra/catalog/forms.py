@@ -3,7 +3,7 @@ import json
 from django import forms
 
 from rules.engine.tables import VARIANTS
-from rules.extensions import is_offered, offer
+from rules.extensions import enabled, is_offered, offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -39,6 +39,8 @@ class ItemForm(forms.ModelForm):
             self.initial["variants"] = inst.variants
             self.initial["augments_json"] = json.dumps(inst.augments or [])
             self.initial["price_princes"] = (inst.price_dukes or 0) / 10
+        if "aether" not in enabled() and inst.kind != "resonator":  # kind of an extension (Aether)
+            self.fields["kind"].choices = [c for c in self.fields["kind"].choices if c[0] != "resonator"]
         self.fields["variants"].choices = [(k, v["label"]) for k, v in VARIANTS.items()
                                            if is_offered(v) or k in (inst.variants or [])]
         for name in ("ap_use", "ap_ready", "dc", "reach", "range", "increment", "soak", "eva_penalty",

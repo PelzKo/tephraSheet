@@ -148,6 +148,8 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
         notes.append(_("Enter the Footing stance to avoid −3."))
 
     reach_bonus = _apply_scoped(sheet, item, kind, acc, stk, dc, notes)
+    if {"aether", "synced"} & set(item.variants):
+        notes += _aether_notes(state)
     dc.floor = 0
 
     ap_use = Value()
@@ -206,6 +208,22 @@ def unarmed_block(sheet) -> WeaponBlock:
     dc.floor = 0
     ap_use = Value()
     ap_use.set_base(_("Unarmed"), tables.MELEE["unarmed"]["ap"])
+    notes = [_("Can't be augmented by armsmiths.")]
+    if any(i.name == "Manipulator Glove" and i.slot == "worn" for i in sheet.state.items):
+        notes += _aether_notes(sheet.state)
     return WeaponBlock(item=item, name=_("Unarmed"), kind="unarmed", size=_("Unarmed"), type_label=_("Unarmed"),
-                       reach=_("Adjacent"), ap_use=ap_use, ap_ready=None, acc=acc, stk=stk, dc=dc,
-                       notes=[_("Can't be augmented by armsmiths.")])
+                       reach=_("Adjacent"), ap_use=ap_use, ap_ready=None, acc=acc, stk=stk, dc=dc, notes=notes)
+
+
+def _aether_notes(state):
+    """The worn resonators' augments (Aether): they apply to aether-shaped/synced weapons and gloved fists."""
+    reg = get_registry()
+    out = []
+    for r in state.items:
+        if r.kind == "resonator" and r.slot not in ("carried", "stored", ""):
+            for slug, marque in r.augments:
+                a = reg.augments.get(slug)
+                if a:
+                    out.append(_("Aether: {name} mQ {marque} – {effect}", name=a["name"],
+                                 marque="I II III IV".split()[marque - 1], effect=a["marques"][marque - 1]))
+    return out

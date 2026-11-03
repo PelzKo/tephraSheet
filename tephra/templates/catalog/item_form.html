@@ -22,7 +22,7 @@
   <template x-if="isWeapon">
     <div>
       <h3 style="margin-top:12px">{% t "Weapon" %}</h3>
-      <div class="row" x-show="kind==='melee' || kind==='firearm'">{% for cb in form.variants %}<label>{{ cb.tag }} {{ cb.choice_label|t }}</label>{% endfor %}</div>
+      <div class="row" x-show="['melee', 'firearm', 'bow', 'crossbow'].includes(kind)">{% for cb in form.variants %}<label>{{ cb.tag }} {{ cb.choice_label|t }}</label>{% endfor %}</div>
       <div class="form-grid" style="margin-top:8px">
         <div class="field"><label>{% t "Hands" %}</label><select name="hands">
           <option value="" {% if form.hands.value is None or form.hands.value == "" %}selected{% endif %} x-text="tt('auto ({v})', {v: autoHands()})">{% t "auto" %}</option>
