@@ -84,3 +84,16 @@ def test_augment_requirement_checked_in_german(db):
     finally:
         lang.set_language(lang.DEFAULT)
     assert not ok and len(reasons) == 1
+
+
+def test_air_tunnel_slug_migration(db):
+    from importlib import import_module
+
+    from django.apps import apps
+    rename = import_module("characters.migrations.0014_air_tunnel_slug").rename
+    c = Character.objects.create(augments=["automata-prosthetic-air-funnel"],
+                                 body_augments=[["automata-prosthetic-air-funnel", 2]])
+    rename(apps, None)
+    c.refresh_from_db()
+    assert c.augments == ["automata-prosthetic-air-tunnel"]
+    assert c.body_augments == [["automata-prosthetic-air-tunnel", 2]]

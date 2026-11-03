@@ -3134,7 +3134,7 @@ DIY → prosthetics maintained: DIY 1:2, 2:3, 3:3, 4:3, 5:4, 6:4, 7:4, 8:5, 9:5,
 | Acid Sprayer | 1 | holds 2 acid doses | 3 | 4 | 6 | unarmed attack sprays 1 dose; refill 3 AP |
 | Air Blaster | 1 | push 5 ft (25 ft range, no evade) | 5 | 10 | 15 | 1 AP; Brute resist |
 | Air Conditioner (req. Air Blaster) | 1 | +2 heat/cold dmg | 4 | 6 | 8 | 1 AP toggle |
-| Air Funnel (req. Air Blaster) | 1 | +5 ft range (+5 ft push) | +10 | +15 | +20 | |
+| Air Tunnel (req. Air Blaster) | 1 | +5 ft range (+5 ft push) | +10 | +15 | +20 | |
 | Barbed | 1 | +2 evade vs grabs on it | +4 | +6 | +8 | |
 | Brute Enhancement | 1 | +2 Brute (rolls using it) | +4 | +6 | +8 | |
 | Cold Iron (metal; req. Freezer) | 1 | toucher −3 resist vs heat/cold effects | −6 | −9 | −12 | until breather |

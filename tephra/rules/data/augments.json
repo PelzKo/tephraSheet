@@ -5148,8 +5148,8 @@
   "modifiers": []
  },
  {
-  "slug": "automata-prosthetic-air-funnel",
-  "name": "Air Funnel",
+  "slug": "automata-prosthetic-air-tunnel",
+  "name": "Air Tunnel",
   "skill": "Automata",
   "lists": [
    "prosthetic"
@@ -5170,7 +5170,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "",
+  "text": "Requires: Prosthetic with the Air Blaster augment Your air blaster has been overclocked, causing its normal gust of wind to become a miniature tornado erupting from your body part. Whenever you successfully push back your target with your air blaster, they are moved an additional 5 feet backwards. In addition, this augment increases your air blaster’s range.\n5 additional feet of range\n10 additional feet of range\n15 additional feet of range\n20 additional feet of range",
   "modifiers": []
  },
  {
