@@ -125,3 +125,51 @@ def test_suulraili_character_keeps_nationality_when_disabled(admin_client):
     c = Character.objects.create(race="human", nationality="suulraili", stories=["tech-bootlegger"], status="active")
     page = admin_client.get(c.get_absolute_url()).content.decode()
     assert "Tech-Bootlegger" in page and "Suulraili" in page
+
+
+def _prosthetician(**kw):
+    return Character.objects.create(race="human", skills={"Automata": 3}, specialties=[["automata-prosthetician", 1]], **kw)
+
+
+def test_granted_augments_are_known_and_free(db, monkeypatch):
+    from characters import services
+    from rules.engine.requirements import augments_used, check_augment, known_augments
+    from rules.engine.stats import compute
+    reg = get_registry()
+    monkeypatch.setitem(reg.specialties["automata-prosthetician"], "grants_augments",
+                        ["automata-prosthetic-barbed", "automata-prosthetic-glowing"])
+    c = _prosthetician(augments=["automata-prosthetic-barbed", "automata-prosthetic-air-blaster"])
+    state = c.to_state()
+    assert {"automata-prosthetic-barbed", "automata-prosthetic-glowing"} <= known_augments(state)
+    assert augments_used(state) == 1  # Barbed was chosen before, now granted: its slot is free again
+    ok, reasons = check_augment(reg.augments["automata-prosthetic-glowing"], state, compute(state))
+    assert not ok and "already known" in reasons
+    ok, _ = check_augment(reg.augments["automata-prosthetic-overglow"], state, compute(state))  # req. Glowing
+    assert ok
+    chosen, granted = services.known_augment_entries(c)
+    assert [a["slug"] for a in chosen] == ["automata-prosthetic-air-blaster"]
+    assert {a["granted_by"] for a in granted} == {"Prosthetician"}
+
+
+def test_augment_and_race_requirement_clauses(db):
+    from rules.engine.requirements import check_specialty
+    from rules.engine.stats import compute
+    spec = dict(get_registry().specialties["automata-prosthetician"], slug="x", requires=[
+        {"type": "augment", "any": ["automata-prosthetic-barbed"]}, {"type": "race", "any": ["gnome"]}])
+    state = _prosthetician().to_state()
+    ok, reasons = check_specialty(spec, state, compute(state))
+    assert not ok and len(reasons) == 2
+    state = _prosthetician(augments=["automata-prosthetic-barbed"]).to_state()
+    state.race = "gnome"
+    assert check_specialty(spec, state, compute(state))[0]
+
+
+def test_achievement_stories_not_offered_in_wizard(admin_client, monkeypatch):
+    story = get_registry().stories["royalist"]
+    monkeypatch.setitem(story, "type", "achievement")
+    c = Character.objects.create(race="human", stories=["royalist"])
+    url = reverse("wizard_step", args=[c.pk, 9])
+    assert 'value="royalist"' not in admin_client.get(url).content.decode()
+    admin_client.post(url, {"action": "save", "stories": ["militarist"]})
+    c.refresh_from_db()
+    assert "royalist" in c.stories  # narrator-granted story survives the wizard

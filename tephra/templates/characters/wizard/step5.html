@@ -3,7 +3,7 @@
 {% block intro %}<p class="muted">{% t "Every “Aug +X” from your specialties lets you learn X augments from lists unlocked by your crafting specialties (e.g. Gunsmith, Acid Brewer). You can learn them regardless of slot size." %}</p>{% endblock %}
 {% block step %}
 <p><b>{% t "Known {n} / {max}" n=known|length max=capacity %}</b>
-  {% for a in known %}<span class="chip on">{{ a.name }} <button class="val" name="action" value="remove:{{ a.slug }}" formnovalidate style="color:inherit;cursor:pointer" title="{% t "Remove" %}">✕</button></span>{% endfor %}</p>
+  {% for a in known %}<span class="chip on">{{ a.name }} <button class="val" name="action" value="remove:{{ a.slug }}" formnovalidate style="color:inherit;cursor:pointer" title="{% t "Remove" %}">✕</button></span>{% endfor %}{% for a in granted %}<span class="chip on" title="{% t "Granted by {source}" source=a.granted_by %}">{{ a.name }} <span class="muted small">({{ a.granted_by }})</span></span>{% endfor %}</p>
 {% if not capacity %}
   <p class="muted">{% t "Your specialties grant no augments – there is nothing to choose here." %}</p>
 {% elif not lists %}

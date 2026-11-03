@@ -70,7 +70,7 @@ def levelup(request, character):
             character.money_on_hand = services.starting_money(character.level)
             character.save(update_fields=["money_on_hand"])
         sheet = character.compute()
-        if sheet.stats["aug"].total > len(character.augments):
+        if sheet.stats["aug"].total > len(services.known_augment_entries(character)[0]):
             messages.info(request, _("You can learn new augments."))
             return redirect("augments", pk=character.pk)
         if _catch_up(character):
@@ -148,10 +148,10 @@ def augments_view(request, character):
         character.save()
         return redirect("augments", pk=character.pk)
     sheet, groups, lists = augment_options(character)
-    reg = get_registry()
+    known, granted = services.known_augment_entries(character)
     return render(request, "characters/augments.html", {
         "character": character, "sheet": sheet, "groups": groups, "lists": lists,
         "capacity": sheet.stats["aug"].total,
-        "known": [reg.augments[a] for a in character.augments if a in reg.augments],
+        "known": known, "granted": granted,
         "admin_mode": access.in_admin_mode(request, character),
     })

@@ -6,7 +6,7 @@ from django.db import transaction
 
 from catalog.models import ItemTemplate
 from rules.engine import creation, leveling, tables
-from rules.engine.requirements import check_augment, check_specialty
+from rules.engine.requirements import check_augment, check_specialty, granted_augments
 from rules.engine.stats import compute
 from rules.lang import gettext as _
 from rules.registry import get_registry
@@ -14,6 +14,7 @@ from rules.registry import get_registry
 from .models import Character, InventoryItem, LevelLog, NarratorSettings
 
 NATIONALITY_TYPES = {"nationality"}
+NARRATOR_STORY_TYPES = {"achievement"}  # granted by the narrator in admin mode, never picked in the wizard
 RELIGIONS = ["", "Tailemy", "Free Will", "Jinzium (Eternal Church)", "Jinzium (Revivalist)",
              "Infernal Jinzium", "Harabe Mavi", "Path of Gilkoroh", "None / agnostic"]
 
@@ -184,6 +185,14 @@ def set_augments(character, slugs):
     return errors
 
 
+def known_augment_entries(character):
+    """(chosen, granted): chosen augments use capacity; granted ones carry ``granted_by`` (the source's name)."""
+    reg = get_registry()
+    granted = granted_augments(character.to_state())
+    chosen = [reg.augments[a] for a in character.augments if a in reg.augments and a not in granted]
+    return chosen, [dict(reg.augments[a], granted_by=src) for a, src in granted.items() if a in reg.augments]
+
+
 def random_augments(character, rng):
     state = character.to_state()
     creation.random_augments(state, compute, rng)
@@ -342,7 +351,8 @@ def random_gear(character, rng):
 # --------------------------------------------------------------------------- step 9/10
 def set_background_stories(character, slugs):
     reg = get_registry()
-    keep = [s for s in character.stories if reg.stories.get(s, {}).get("type") in NATIONALITY_TYPES]
+    keep = [s for s in character.stories
+            if reg.stories.get(s, {}).get("type") in NATIONALITY_TYPES | NARRATOR_STORY_TYPES]
     character.stories = keep + [s for s in slugs if s in reg.stories and s not in keep]
 
 

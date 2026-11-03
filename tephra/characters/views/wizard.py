@@ -7,7 +7,7 @@ from django.shortcuts import redirect, render
 
 from catalog.models import ItemTemplate
 from rules.engine import creation, tables
-from rules.engine.requirements import augment_lists, check_augment, check_specialty, specialty_warnings
+from rules.engine.requirements import augment_lists, check_augment, check_specialty, known_augments, specialty_warnings
 from rules.engine.stats import compute
 from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
@@ -296,12 +296,13 @@ def augment_options(character, state=None):
     sheet = compute(state)
     reg = get_registry()
     lists = augment_lists(state)
+    known_slugs = known_augments(state)
     groups = {}
     for aug in offer(reg.augments.values(), keep=state.augments):
         if not lists.intersection(aug["lists"]):
             continue
         ok, reasons = check_augment(aug, state, sheet)
-        known = aug["slug"] in state.augments
+        known = aug["slug"] in known_slugs
         key = f"{aug['skill']} – {aug['section']}"
         groups.setdefault(key, []).append({"aug": aug, "ok": ok or known, "reasons": reasons, "known": known,
                                            "marque": tables.marque_for_points(sheet.skills[aug["skill"]].total)})
@@ -310,9 +311,9 @@ def augment_options(character, state=None):
 
 def ctx_step5(request, character):
     sheet, groups, lists = augment_options(character)
-    reg = get_registry()
+    known, granted = services.known_augment_entries(character)
     return {"sheet": sheet, "groups": groups, "lists": lists, "capacity": sheet.stats["aug"].total,
-            "known": [reg.augments[a] for a in character.augments if a in reg.augments]}
+            "known": known, "granted": granted}
 
 
 def save_step5(request, character, action):
@@ -402,7 +403,7 @@ def ctx_step9(request, character):
     settings = NarratorSettings.get()
     by_type = {}
     for s in offer(reg.stories.values(), keep=character.stories):
-        if s["type"] == "nationality":
+        if s["type"] == "nationality" or s["type"] in services.NARRATOR_STORY_TYPES:
             continue
         by_type.setdefault(s["type"], []).append(s)
     return {"by_type": by_type, "selected": set(character.stories), "count": settings.background_story_count}
@@ -410,7 +411,8 @@ def ctx_step9(request, character):
 
 def save_step9(request, character, action):
     reg = get_registry()
-    picked = [s for s in request.POST.getlist("stories") if s in reg.stories]
+    picked = [s for s in request.POST.getlist("stories")
+              if s in reg.stories and reg.stories[s]["type"] not in services.NARRATOR_STORY_TYPES]
     count = NarratorSettings.get().background_story_count
     backgrounds = [s for s in picked if reg.stories[s]["type"] in ("background", "personality")]
     errors = []

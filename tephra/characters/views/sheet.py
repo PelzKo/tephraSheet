@@ -54,7 +54,7 @@ def sheet_context(request, character):
         slots.append({"level": lvl, "row": row})
     for row in remaining:  # extra specialties (admin additions) go at the end
         slots.append({"level": row["level"], "row": row})
-    augments = [reg.augments[a] for a in character.augments if a in reg.augments]
+    augments, granted_augments = services.known_augment_entries(character)
     stories = [reg.stories[s] for s in character.stories if s in reg.stories]
     items = list(character.items.all())
     locations = {n: [] for n in fx.LOCATION_LABELS}
@@ -93,7 +93,7 @@ def sheet_context(request, character):
         "battle_theme": battle_theme_state(character),
         "specialty_slots": slots,
         "stat_cols": tables.COMBAT_STATS, "stat_labels": tables.COMBAT_STAT_LABELS,
-        "augments": augments, "stories": stories,
+        "augments": augments, "granted_augments": granted_augments, "stories": stories,
         "items": items,
         "item_kinds": [(v, label) for v, label in KIND_CHOICES if any(i.kind == v for i in items)],
         "carried": [i for i in items if i.slot in ("carried", "worn")],

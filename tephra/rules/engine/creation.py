@@ -7,7 +7,7 @@ from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import tables
-from .requirements import check_augment, check_specialty
+from .requirements import augments_used, check_augment, check_specialty
 
 STEPS = [
     (1, "Race & Nationality"),
@@ -171,7 +171,7 @@ def random_augments(state, compute, rng=None, limit=None):
     reg = get_registry()
     picked = []
     sheet = compute(state)
-    free = (sheet.stats["aug"].total - len(state.augments)) if limit is None else limit
+    free = (sheet.stats["aug"].total - augments_used(state)) if limit is None else limit
     for _i in range(max(0, free)):
         options = [a for a in offer(reg.augments.values()) if check_augment(a, state, sheet)[0]]
         if not options:

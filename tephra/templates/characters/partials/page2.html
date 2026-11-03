@@ -73,6 +73,7 @@
     <h3>{% t "Augments" %}</h3>
     <div class="lines">
       {% for a in augments %}<div title="{{ a.text|default:a.notes }}">{{ a.name }} <span class="muted">({{ a.lists|join:"/" }})</span></div>{% endfor %}
+      {% for a in granted_augments %}<div title="{{ a.text|default:a.notes }}">{{ a.name }} <span class="muted">({{ a.granted_by }})</span></div>{% endfor %}
       {% for a in character.body_augments %}{% with aug=a.0|augment %}<div>{{ aug.name }} mQ {{ a.1|roman }} <span class="muted">({% t "installed" %})</span></div>{% endwith %}{% endfor %}
       {% if sheet.stats.aug.total > augments|length %}<div><a href="{% url 'augments' character.pk %}">{% t "Learn augments ({n}/{max})" n=augments|length max=sheet.stats.aug.total %}</a></div>{% endif %}
       {% for _ in blank_lines.augments %}<div></div>{% endfor %}

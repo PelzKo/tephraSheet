@@ -26,6 +26,36 @@ def owned_names(state):
     return {reg.specialties[s]["name_en"] for s, _l in state.specialties if s in reg.specialties}
 
 
+def race_family(race_slug):
+    """The race plus the races it counts as for requirements (hybrid parents, base race of a variant)."""
+    race = get_registry().races.get(race_slug) or {}
+    return {race_slug, *race.get("counts_as", [])}
+
+
+def granted_augments(state):
+    """{augment slug: source name} for augments a specialty or racial trait grants ("grants_augments").
+    They are known without using augment capacity; a chosen augment that is also granted frees its slot
+    (the book's "if you already know it, learn another one instead")."""
+    reg = get_registry()
+    sources = [reg.specialties.get(s) for s, _l in state.specialties]
+    sources += [reg.traits.get(k) for k in [*state.fixed_traits, *state.random_traits]]
+    out = {}
+    for src in sources:
+        for slug in (src or {}).get("grants_augments", []):
+            out.setdefault(slug, src["name"])
+    return out
+
+
+def known_augments(state):
+    return set(state.augments) | set(granted_augments(state))
+
+
+def augments_used(state):
+    """How much augment capacity the chosen augments use (granted ones are free)."""
+    granted = granted_augments(state)
+    return sum(1 for a in state.augments if a not in granted)
+
+
 def check_specialty(spec, state, sheet, ignore_owned=False):
     """Return (ok, reasons). ``sheet`` is the computed Sheet of ``state``."""
     reg = get_registry()
@@ -74,6 +104,14 @@ def check_specialty(spec, state, sheet, ignore_owned=False):
             have = tables.action_points(state.level)
             if have < clause["min"]:
                 reasons.append(_("needs {min} AP per turn (has {have})", min=clause["min"], have=have))
+        elif t == "augment":  # by slug: same-name augments on different lists are different augments
+            if not known_augments(state).intersection(clause["any"]):
+                reasons.append(_("needs {names}", names=_(" or ").join(
+                    reg.augments[a]["name"] if a in reg.augments else a for a in clause["any"])))
+        elif t == "race":
+            if not race_family(state.race).intersection(clause["any"]):
+                reasons.append(_("only for {races}", races=_(" or ").join(
+                    reg.races[r]["name"] if r in reg.races else r for r in clause["any"])))
         elif t == "skill_specialty":
             if not any(reg.specialties[s]["skill"] == clause["skill"] and s != spec["slug"]
                        for s in owned if s in reg.specialties):
@@ -187,7 +225,8 @@ def augment_lists(state):
 
 def check_augment(aug, state, sheet):
     reasons = []
-    if aug["slug"] in state.augments:
+    known = known_augments(state)
+    if aug["slug"] in known:
         reasons.append(_("already known"))
     lists = augment_lists(state)
     if not lists.intersection(aug["lists"]):
@@ -195,7 +234,7 @@ def check_augment(aug, state, sheet):
     if sheet.skills[aug["skill"]].total < 1:
         reasons.append(_("needs points in {skill}", skill=_(aug["skill"])))
     reg = get_registry()
-    known_names = {reg.augments[a]["name_en"] for a in state.augments if a in reg.augments}
+    known_names = {reg.augments[a]["name_en"] for a in known if a in reg.augments}
     names = owned_names(state)
     for q in aug.get("qualifiers_en", []):
         if q.startswith("req. "):

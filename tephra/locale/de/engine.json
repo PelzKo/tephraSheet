@@ -180,5 +180,7 @@
  "Bio-Flux": "Bio-Flux",
  "Engineer": "Ingenieur",
  "Gadgetry": "Tüftelei",
- "General": "Allgemein"
+ "General": "Allgemein",
+ "only for {races}": "nur für {races}",
+ "Granted by {source}": "Gewährt durch {source}"
 }

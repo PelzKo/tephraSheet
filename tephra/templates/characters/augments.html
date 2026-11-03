@@ -4,7 +4,7 @@
   <div class="row spread"><h1>{% t "Augments – {name}" name=character.name %}</h1>
     <div class="row"><button class="btn dice" name="action" value="random"> {% t "Random" %}</button><a class="btn" href="{% url 'augment_reference' %}">{% t "Augment reference" %}</a><a class="btn" href="{% url 'sheet' character.pk %}">{% t "Back to sheet" %}</a></div></div>
   <p><b>{% t "Known {n} / {max}" n=known|length max=capacity %}</b> {% t "(from the Aug bonuses of your specialties). Whenever you learn a new augment, you may swap one known augment from the same skill." %}</p>
-  <div class="row">{% for a in known %}<span class="chip on">{{ a.name }}{% if admin_mode %} <button class="val" name="action" value="remove" onclick="this.form.slug.value='{{ a.slug }}'" style="color:inherit;cursor:pointer">✕</button>{% endif %}</span>{% endfor %}</div>
+  <div class="row">{% for a in known %}<span class="chip on">{{ a.name }}{% if admin_mode %} <button class="val" name="action" value="remove" onclick="this.form.slug.value='{{ a.slug }}'" style="color:inherit;cursor:pointer">✕</button>{% endif %}</span>{% endfor %}{% for a in granted %}<span class="chip on" title="{% t "Granted by {source}" source=a.granted_by %}">{{ a.name }} <span class="muted small">({{ a.granted_by }})</span></span>{% endfor %}</div>
   <input type="hidden" name="slug" value="">
   {% if known and known|length >= capacity %}
     <details style="margin-top:10px"><summary>{% t "Swap an augment (retrofit)" %}</summary>
