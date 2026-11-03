@@ -11,7 +11,9 @@ Only pickers, wizards and random generators filter. Lookups by slug (``get_regis
 import contextvars
 
 # key -> English name; a key is added together with its content.
-EXTENSIONS = {}
+EXTENSIONS = {
+    "suulrai": "Suulrai",
+}
 
 _offer = contextvars.ContextVar("tephra_offer", default=(frozenset(), frozenset()))
 

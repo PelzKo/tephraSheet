@@ -18,6 +18,7 @@ from rules.mdparse import jsonl_block, parse, strip_md
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 SOURCE = DATA_DIR / "source" / "Tephra_Reference_full.md"
+EXT_DIR = DATA_DIR / "ext"  # <key>/<kind>.json: extension content, merged after the core data
 
 STAT_WORDS = {
     "accuracy": "acc", "evade": "eva", "strike": "stk", "defense": "def", "priority": "pri",
@@ -39,6 +40,7 @@ class Command(BaseCommand):
             "augments": self.build_augments(doc),
             "catalog": self.build_catalog(doc),
         }
+        self.merge_extensions(out)
         for name, data in out.items():
             data = fix_smallcaps(data)
             path = DATA_DIR / f"{name}.json"
@@ -46,6 +48,24 @@ class Command(BaseCommand):
             self.stdout.write(f"{path.name}: {len(data)} entries")
         for w in self.warnings:
             self.stdout.write(self.style.WARNING(w))
+
+    def merge_extensions(self, out):
+        """Add every rules/data/ext/<key>/<kind>.json, marked with "extension": <key>. Nationalities go before
+        "other", which stays last in the wizard."""
+        for folder in sorted(p for p in EXT_DIR.glob("*") if p.is_dir()):
+            for kind, entries in out.items():
+                path = folder / f"{kind}.json"
+                if not path.exists():
+                    continue
+                known = {e["slug"] for e in entries}
+                new = []
+                for e in json.loads(path.read_text(encoding="utf8")):
+                    if e["slug"] in known:
+                        self.warnings.append(f"{path}: duplicate slug {e['slug']}")
+                        continue
+                    new.append(dict(e, extension=e.get("extension", folder.name)))
+                at = next((i for i, e in enumerate(entries) if e["slug"] == "other"), len(entries))
+                entries[at:at] = new
 
     # ------------------------------------------------------------------ specialties
     def build_specialties(self, doc):

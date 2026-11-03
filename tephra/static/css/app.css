@@ -277,3 +277,4 @@ tr.fb-closed td { opacity: .55; }
 .check-dropdown { display: inline-block; min-width: 16em; }
 .check-dropdown summary { cursor: pointer; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
 .check-dropdown .check-list { display: flex; flex-direction: column; gap: 2px; max-height: 18em; overflow: auto; margin-top: 4px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
+.tag.ext { border-color: var(--info); color: var(--info); font-size: 11px; }

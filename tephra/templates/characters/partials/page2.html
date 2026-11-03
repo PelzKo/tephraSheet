@@ -49,7 +49,7 @@
 
   <div class="lined box" style="--x:190;--y:606;--w:572;--h:106;border-top:0">
     <b>{% t "Stories:" %}</b>
-    <ul>{% for s in stories %}<li><b>{{ s.name }}</b>{% if s.group %} <span class="muted">({{ s.group_label }})</span>{% endif %} – {{ s.text }}</li>{% endfor %}
+    <ul>{% for s in stories %}<li><b>{{ s.name }}</b> {% ext_badge s %}{% if s.group %} <span class="muted">({{ s.group_label }})</span>{% endif %} – {{ s.text }}</li>{% endfor %}
       {% for m in character.custom_modifiers.all %}<li><b>{{ m.source }}</b> – {{ m.get_stat_display|t }} {{ m.value|signed }}{% if m.when == "toggle" %} {% t "(toggle)" %}{% endif %}</li>{% endfor %}</ul>
   </div>
   <div class="lined box" style="--x:190;--y:712;--w:572;--h:66;border-bottom:0">

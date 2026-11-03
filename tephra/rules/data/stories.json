@@ -973,5 +973,49 @@
   "text": "Never fatigued in presence of a winged farishtaa.",
   "tags": "[COND]",
   "modifiers": []
+ },
+ {
+  "slug": "displaced-suulraili-scientist",
+  "name": "Displaced Suulraili Scientist",
+  "type": "nationality",
+  "group": "Suulrai",
+  "requires": "",
+  "text": "Scientist who fled Suulrai during the Stray Gods Coup; values the craft, can't live at home anymore, seeks a new home or waits for Suulrai to come to its senses.",
+  "tags": "[NARR]",
+  "modifiers": [],
+  "extension": "suulrai"
+ },
+ {
+  "slug": "keyin-druid",
+  "name": "Keyin Druid",
+  "type": "nationality",
+  "group": "Suulrai",
+  "requires": "Gnome",
+  "text": "Surviving gnome of Siddeodru (or a descendant) from Keyindru, the city swollen with gnomes fleeing the fallout of the Stray Gods Coup.",
+  "tags": "[NARR]",
+  "modifiers": [],
+  "extension": "suulrai"
+ },
+ {
+  "slug": "tech-bootlegger",
+  "name": "Tech-Bootlegger",
+  "type": "nationality",
+  "group": "Suulrai",
+  "requires": "",
+  "text": "Knows the Suulraili black tech-market: how to get and sell illegal devices and what technology people are likely to have.",
+  "tags": "[NARR]",
+  "modifiers": [],
+  "extension": "suulrai"
+ },
+ {
+  "slug": "technological-purist",
+  "name": "Technological Purist",
+  "type": "nationality",
+  "group": "Suulrai",
+  "requires": "",
+  "text": "Suffered at the hands of the Stray Gods; refuses to have rampant technology in their home or on their person; an honest, pure, tough life.",
+  "tags": "[NARR]",
+  "modifiers": [],
+  "extension": "suulrai"
  }
 ]

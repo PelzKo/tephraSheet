@@ -73,7 +73,7 @@
 <div class="form-grid">
   <div class="field"><label for="nat">{% t "Nationality" %}</label>
     <select id="nat" name="nationality" onchange="this.form.querySelector('[name=action][value=save]').click()">
-      <option value="">–</option>{% for n in nationalities %}<option value="{{ n.slug }}" {% if n.slug == character.nationality %}selected{% endif %}>{{ n.name }}</option>{% endfor %}
+      <option value="">–</option>{% for n in nationalities %}<option value="{{ n.slug }}" {% if n.slug == character.nationality %}selected{% endif %}>{{ n.name }}{% if n.extension %} ({{ n|ext_name }}){% endif %}</option>{% endfor %}
     </select></div>
   {% if character.nationality == "other" %}<div class="field"><label>{% t "Custom nationality" %}</label><input type="text" name="nationality_custom" value="{{ character.nationality_custom }}"></div>{% endif %}
   <div class="field"><label>{% t "Religion" %}</label>
@@ -85,7 +85,7 @@
   <div class="choice-grid">
     <label class="choice"><input type="radio" name="nationality_story" value="" {% if not nat_story %}checked{% endif %}> {% t "None" %}</label>
     {% for s in nat_stories %}<label class="choice"><input type="radio" name="nationality_story" value="{{ s.slug }}" {% if s.slug == nat_story %}checked{% endif %}>
-      <b>{{ s.name }}</b>{% if s.requires %} <span class="tag">{{ s.requires_label }}</span>{% endif %}<div class="small">{{ s.text }}</div></label>{% endfor %}
+      <b>{{ s.name }}</b> {% ext_badge s %}{% if s.requires %} <span class="tag">{{ s.requires_label }}</span>{% endif %}<div class="small">{{ s.text }}</div></label>{% endfor %}
   </div>
 {% endif %}
 {% endblock %}

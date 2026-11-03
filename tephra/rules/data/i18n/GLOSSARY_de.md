@@ -107,3 +107,11 @@ Place names, nations, religions, brand names (Spendo, Burgenhind Industries …)
 stay unchanged. Specialty, augment, trait and story *names* are translated (short, punchy, like a
 German rulebook would do it), e.g. Battle Theme → Schlachthymne, Victory Theme → Siegeshymne,
 Marionette Strings → Marionettenfäden.
+
+## Extensions
+| English | German |
+|---|---|
+| Suulrai / Suulraili | Suulrai / Suulraili – unchanged |
+| Stray Gods (Coup) | Streunende Götter (Putsch der Streunenden Götter) |
+| the Arbiter | der Schlichter |
+| Keyindru, Siddeodru | unchanged |

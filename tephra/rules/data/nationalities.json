@@ -35,6 +35,14 @@
   "story_group": "Zelhost"
  },
  {
+  "slug": "suulraili",
+  "name": "Suulraili",
+  "summary": "Youngest, smallest and most technologically backward nation of Rilausia (about 70 years old): refugees who crossed the ocean in huge junks and settled the tropical mountains and jungles of western Rilausia (former Siddeodru land). Fishing and subsistence farming. After the Stray Gods Coup the mutated ruler, the Arbiter, banned advanced science; bootlegged tech is smuggled from hidden jungle factories. Gnomish refugees live mostly in Keyindru, where the tech ban is barely enforced.",
+  "relations": "Almost no relations with other nations. Satyr clans of Arakrith feud with them over land. Evangless leaves Suulrai alone; Suulraili scientists flee there and bootlegged tech flows across the border. Seen by many as primitives.",
+  "story_group": "Suulrai",
+  "extension": "suulrai"
+ },
+ {
   "slug": "other",
   "name": "Other",
   "summary": "Custom nationality (narrator approval).",

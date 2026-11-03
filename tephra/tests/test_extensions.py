@@ -97,3 +97,31 @@ def test_air_tunnel_slug_migration(db):
     c.refresh_from_db()
     assert c.augments == ["automata-prosthetic-air-tunnel"]
     assert c.body_augments == [["automata-prosthetic-air-tunnel", 2]]
+
+
+def test_suulrai_gated_in_wizard_and_random(admin_client):
+    reg = get_registry()
+    assert reg.nationalities["suulraili"]["extension"] == "suulrai"
+    assert list(reg.nationalities)[-1] == "other"
+    c = Character.objects.create(race="human")
+    url = reverse("wizard_step", args=[c.pk, 1])
+    assert 'value="suulraili"' not in admin_client.get(url).content.decode()
+    assert all(creation.random_race_and_nationality()["nationality"] != "suulraili" for _ in range(40))
+    s = NarratorSettings.get()
+    s.enabled_extensions = ["suulrai"]
+    s.save()
+    page = admin_client.get(url).content.decode()
+    assert 'value="suulraili"' in page and "(Suulrai)" in page
+
+
+def test_keyin_druid_only_for_gnomes():
+    extensions.set_offer(["suulrai"])
+    assert "keyin-druid" in {s["slug"] for s in creation.nationality_stories("suulraili", "gnome")}
+    human = {s["slug"] for s in creation.nationality_stories("suulraili", "human")}
+    assert "keyin-druid" not in human and "tech-bootlegger" in human
+
+
+def test_suulraili_character_keeps_nationality_when_disabled(admin_client):
+    c = Character.objects.create(race="human", nationality="suulraili", stories=["tech-bootlegger"], status="active")
+    page = admin_client.get(c.get_absolute_url()).content.decode()
+    assert "Tech-Bootlegger" in page and "Suulraili" in page

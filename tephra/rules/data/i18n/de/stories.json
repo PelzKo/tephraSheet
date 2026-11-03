@@ -92,5 +92,9 @@
 "soul-of-sol": {"name": "Seele von Sol", "text": "Darf für die Kirche sprechen.", "group": "Jinzium", "requires": "Archon"},
 "orthodox-jinzist": {"name": "Orthodoxer Jinzist", "text": "Eine Predigt von Igi festigt deinen Glauben vollständig.", "group": "Jinzium"},
 "starborn-traditionalist": {"name": "Sternengeborener Traditionalist", "text": "Rituale faszinieren Agnostiker.", "group": "Jinzium"},
-"angel-fever": {"name": "Engelsfieber", "text": "Nie erschöpft in Gegenwart einer geflügelten Farishtaa.", "group": "Jinzium"}
+"angel-fever": {"name": "Engelsfieber", "text": "Nie erschöpft in Gegenwart einer geflügelten Farishtaa.", "group": "Jinzium"},
+"displaced-suulraili-scientist": {"name": "Vertriebener Suulraili-Wissenschaftler", "group": "Suulrai", "text": "Wissenschaftler, der während des Putsches der Streunenden Götter aus Suulrai floh; schätzt sein Handwerk, kann nicht mehr in der Heimat leben und sucht eine neue Heimat oder wartet, bis Suulrai zur Vernunft kommt."},
+"keyin-druid": {"name": "Keyin-Druide", "group": "Suulrai", "requires": "Gnom", "text": "Überlebender Gnom aus Siddeodru (oder ein Nachfahre) aus Keyindru, der Stadt, die mit Gnomen auf der Flucht vor den Folgen des Putsches der Streunenden Götter angeschwollen ist."},
+"tech-bootlegger": {"name": "Technikschmuggler", "group": "Suulrai", "text": "Kennt den Suulraili-Schwarzmarkt für Technik: wie man illegale Geräte bekommt und verkauft und welche Technik die Leute wahrscheinlich haben."},
+"technological-purist": {"name": "Technikpurist", "group": "Suulrai", "text": "Hat unter den Streunenden Göttern gelitten; duldet keine wuchernde Technik in seinem Zuhause oder am Körper; ein ehrliches, reines, hartes Leben."}
 }

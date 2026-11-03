@@ -5,12 +5,12 @@
   <form method="post" class="stack">{% csrf_token %}
     {% for field in form %}
       {% if field.name == "enabled_extensions" or field.name == "disabled_races" %}
-        <div><span class="field-label">{{ field.label }}</span>
+        <div><div>{{ field.label }}:</div>
           <details class="check-dropdown"><summary>{% t "{n} selected" n=field.value|length %}</summary>
             <div class="check-list">{% for box in field %}<label>{{ box.tag }} {{ box.choice_label }}</label>{% empty %}<span class="muted">{% t "None available yet." %}</span>{% endfor %}</div>
           </details>
           <div class="helptext">{{ field.help_text }}</div></div>
-      {% else %}{{ field.as_field_group }}{% endif %}
+      {% else %}<div>{{ field.as_field_group }}</div>{% endif %}
     {% endfor %}
     <button class="btn primary">{% t "Save settings" %}</button></form>
 </div>
