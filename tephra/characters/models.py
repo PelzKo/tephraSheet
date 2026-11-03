@@ -179,6 +179,7 @@ class InventoryItem(ItemFields):
     slot = models.CharField(max_length=20, choices=SLOT_CHOICES, default="carried")
     quantity = models.PositiveIntegerField(default=1)
     notes = models.CharField(max_length=255, blank=True)
+    wounds_taken = models.PositiveSmallIntegerField(default=0, help_text="turrets: wounds the turret has taken")
 
     class Meta:
         ordering = ["slot", "name"]
@@ -191,6 +192,10 @@ class InventoryItem(ItemFields):
         if not self.is_weapon and self.kind != "deflection":
             return ""
         return {0: "no hand", 1: "one-handed", 2: "two-handed"}[tables.item_hands(self.to_item_state())]
+
+    @property
+    def turret_wounds_left(self):
+        return tables.TURRET_WOUNDS - self.wounds_taken if "turret" in (self.variants or []) else None
 
     @classmethod
     def from_template(cls, character, template, slot="carried", quantity=1):

@@ -33,7 +33,7 @@ def _target_character(request):
 
 def catalog_list(request):
     character = _target_character(request)
-    qs = ItemTemplate.objects.all()
+    qs = ItemTemplate.offered()
     q = request.GET.get("q", "").strip()
     kind = request.GET.get("kind", "")
     if q:

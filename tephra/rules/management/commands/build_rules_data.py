@@ -13,7 +13,7 @@ from django.core.management.base import BaseCommand
 from django.utils.text import slugify
 
 from rules import curated
-from rules.engine.tables import ALL_SKILLS, BOOK_STAT_KEYS
+from rules.engine.tables import ALL_SKILLS, BOOK_STAT_KEYS, SKILLS
 from rules.mdparse import jsonl_block, parse, strip_md
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
@@ -49,22 +49,40 @@ class Command(BaseCommand):
         for w in self.warnings:
             self.stdout.write(self.style.WARNING(w))
 
+    EXT_DEFAULTS = {
+        "specialties": {"general": False, "group": "", "bonuses": {}, "cost": "Passive", "requires_text": "",
+                        "requires": [], "tags": "", "stance": False, "repeatable": False, "crafts": [],
+                        "modifiers": []},
+        "augments": {"subsection": "", "slots": 1, "qualifiers": [], "accessory": False, "notes": "", "size": "",
+                     "price": "", "text": "", "modifiers": []},
+        "stories": {"group": "", "requires": "", "tags": "", "modifiers": []},
+    }
+
     def merge_extensions(self, out):
-        """Add every rules/data/ext/<key>/<kind>.json, marked with "extension": <key>. Nationalities go before
-        "other", which stays last in the wizard."""
+        """Add every rules/data/ext/<key>/<kind>.json, marked with "extension": <key> and filled with the core
+        defaults. curated.py still wins. Nationalities go before "other", which stays last in the wizard."""
+        attribute_of = {skill: attr for attr, skills in SKILLS.items() for skill in skills}
+        curated_by_kind = {"specialties": curated.SPECIALTIES, "augments": curated.AUGMENTS,
+                           "stories": curated.STORIES}
         for folder in sorted(p for p in EXT_DIR.glob("*") if p.is_dir()):
             for kind, entries in out.items():
                 path = folder / f"{kind}.json"
                 if not path.exists():
                     continue
-                known = {e["slug"] for e in entries}
+                key = "name" if kind == "catalog" else "slug"
+                known = {e[key] for e in entries}
                 new = []
                 for e in json.loads(path.read_text(encoding="utf8")):
-                    if e["slug"] in known:
-                        self.warnings.append(f"{path}: duplicate slug {e['slug']}")
+                    if e[key] in known:
+                        self.warnings.append(f"{path}: duplicate {key} {e[key]}")
                         continue
-                    new.append(dict(e, extension=e.get("extension", folder.name)))
-                at = next((i for i, e in enumerate(entries) if e["slug"] == "other"), len(entries))
+                    e = {**e, **{k: v for k, v in self.EXT_DEFAULTS.get(kind, {}).items() if k not in e},
+                         "extension": e.get("extension", folder.name)}
+                    if kind == "specialties":
+                        e.setdefault("attribute", attribute_of.get(e["skill"], "Sciences"))
+                    e.update(curated_by_kind.get(kind, {}).get(e.get("slug"), {}))
+                    new.append(e)
+                at = next((i for i, e in enumerate(entries) if e.get("slug") == "other"), len(entries))
                 entries[at:at] = new
 
     # ------------------------------------------------------------------ specialties

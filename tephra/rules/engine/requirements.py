@@ -163,6 +163,8 @@ def soft_clause_met(clause, state):
             held = [i for i in (layout["left"], layout["right"]) if i is not None]
             return len(held) == 1 and layout["free"] == 1 and fits(held[0])
         return any(fits(w) for w in state.weapons)
+    if t == "specialty":
+        return bool(owned_names(state).intersection(clause["any"]))
     if t == "deflection":
         d = state.deflection
         return d is not None and (not clause.get("shield") or _is_shield(d))
@@ -174,7 +176,10 @@ def specialty_warnings(spec, state):
     warnings = []
     for clause in spec.get("requires", []):
         if clause.get("soft") and not soft_clause_met(clause, state):
-            warnings.append(_("needs {what}", what=_(clause["text"])) + _currently(clause, state))
+            if clause.get("note"):  # the clause brings its own sentence
+                warnings.append(_(clause["note"]))
+            else:
+                warnings.append(_("needs {what}", what=_(clause["text"])) + _currently(clause, state))
     return warnings
 
 

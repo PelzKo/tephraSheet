@@ -40,7 +40,7 @@
          data-size="{{ item.size|size_rank }}" data-price="{{ item.price_dukes|default:0 }}" data-qty="{{ item.quantity }}"
          data-text="{{ item.name|item_name|lower }} {{ item.get_kind_display|t|lower }} {{ item|item_desc|lower }} {{ item.notes|lower }}">
       <div>
-        <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name|item_name }}</b>
+        <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name|item_name }}</b> {% ext_badge item %}
         <span class="tag">{{ item.get_kind_display|t }}{% if item.size %} · {{ item.get_size_display|t }}{% endif %}{% if item.hands_label %} · {{ item.hands_label|t }}{% endif %}{% if item.concealable %} · {% t "concealable" %}{% endif %}</span>
         {% if item.slot != "carried" %}<span class="tag ok">{{ item.get_slot_display|t }}</span>{% endif %}
         <div class="meta">
@@ -49,6 +49,9 @@
           {% if item.description %} · {{ item|item_desc|truncatechars:140 }}{% endif %}
           {% if item.notes %} · {{ item.notes }}{% endif %}
         </div>
+        {% if item.turret_wounds_left is not None %}<div class="row small">{% t "Turret wounds: {left} / {max}" left=item.turret_wounds_left max=turret_wounds %}
+          <button class="btn small" hx-post="{% url 'play' character.pk 'item_wounds' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "The turret takes a wound" %}">−</button>
+          <button class="btn small" hx-post="{% url 'play' character.pk 'item_wounds' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "-1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Repair one wound" %}">+</button></div>{% endif %}
       </div>
       <div class="inv-actions">
         <form hx-post="{% url 'play' character.pk 'equip' %}" hx-target="#sheet-body" hx-swap="outerHTML" hx-trigger="change">

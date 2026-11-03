@@ -46,8 +46,8 @@ KINDS = {k for k, _ in KIND_CHOICES}
 SIZES = {s for s, _ in SIZE_CHOICES}
 MATERIALS = {m for m, _ in MATERIAL_CHOICES}
 ROMAN = {"i": 1, "ii": 2, "iii": 3, "iv": 4, "1": 1, "2": 2, "3": 3, "4": 4}
-AUGMENT_LISTS_BY_KIND = {"melee": {"melee"}, "firearm": {"firearm"}, "crossbow": {"crossbow"}, "bow": {"bow"},
-                         "armor": {"armor"}, "deflection": {"armor"}}
+AUGMENT_LISTS_BY_KIND = {"melee": {"melee"}, "firearm": {"firearm", "turret"}, "crossbow": {"crossbow"},
+                         "bow": {"bow"}, "armor": {"armor"}, "deflection": {"armor", "shield"}, "ammo": {"munition"}}
 
 
 def template_csv():

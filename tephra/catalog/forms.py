@@ -3,7 +3,7 @@ import json
 from django import forms
 
 from rules.engine.tables import VARIANTS
-from rules.extensions import offer
+from rules.extensions import is_offered, offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -39,6 +39,8 @@ class ItemForm(forms.ModelForm):
             self.initial["variants"] = inst.variants
             self.initial["augments_json"] = json.dumps(inst.augments or [])
             self.initial["price_princes"] = (inst.price_dukes or 0) / 10
+        self.fields["variants"].choices = [(k, v["label"]) for k, v in VARIANTS.items()
+                                           if is_offered(v) or k in (inst.variants or [])]
         for name in ("ap_use", "ap_ready", "dc", "reach", "range", "increment", "soak", "eva_penalty",
                      "spd_penalty", "climb_swim_penalty", "deflect_bonus"):
             self.fields[name].widget.attrs["placeholder"] = "auto"
@@ -70,8 +72,10 @@ class ItemForm(forms.ModelForm):
             aug = reg.augments[slug]
             if lists and not lists.intersection(aug["lists"]):
                 self.add_error(None, _("{augment} can't be placed on a {kind}.", augment=aug["name"], kind=kind))
+            elif "turret" in aug["lists"] and "turret" not in (data.get("variants") or []):
+                self.add_error(None, _("{augment} only fits a turret.", augment=aug["name"]))
             used += aug.get("slots") or 0
-        tmp = ItemTemplate(material=data.get("material") or "metal", beta=bool(data.get("beta")))
+        tmp = ItemTemplate(kind=kind or "", material=data.get("material") or "metal", beta=bool(data.get("beta")))
         if used > tmp.slot_count:
             self.add_error(None, _("Augments need {used} slots, the item has {slots}.", used=used, slots=tmp.slot_count))
         return data
@@ -94,6 +98,6 @@ def augment_choices_json():
     for kind, lists in AUGMENT_LISTS_BY_KIND.items():
         out[kind] = [{"slug": a["slug"], "name": a["name"], "slots": a.get("slots") or 0,
                       "marques": a["marques"], "list": "/".join(a["lists"]), "notes": a["notes"],
-                      "text": a["text"]}
+                      "text": a["text"], "two_marque": a.get("two_marque", False)}
                      for a in offer(reg.augments.values()) if lists.intersection(a["lists"])]
     return out

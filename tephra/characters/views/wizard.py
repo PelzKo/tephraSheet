@@ -328,7 +328,7 @@ def save_step5(request, character, action):
 
 # --------------------------------------------------------------------------- step 6
 def ctx_step6(request, character):
-    templates = ItemTemplate.objects.all()
+    templates = ItemTemplate.offered()
     equipped = {i.slot: i for i in character.items.filter(slot__in=["weapon1", "weapon2", "armor", "deflection"])}
     return {"weapons": templates.filter(kind__in=["melee", "firearm", "bow", "crossbow"]),
             "armors": templates.filter(kind="armor"), "deflections": templates.filter(kind="deflection"),
@@ -364,7 +364,7 @@ def save_step6(request, character, action):
 
 # --------------------------------------------------------------------------- step 7
 def ctx_step7(request, character):
-    gear = ItemTemplate.objects.filter(is_starting_gear=True)
+    gear = ItemTemplate.offered().filter(is_starting_gear=True)
     have = {i.template_id: i for i in character.items.filter(slot="carried")}
     return {"gear": [{"t": g, "item": have.get(g.pk)} for g in gear],
             "money": tables.format_money(character.money_on_hand or services.starting_money(1))}

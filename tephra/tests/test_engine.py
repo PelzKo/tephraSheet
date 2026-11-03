@@ -24,7 +24,7 @@ def human(**kw):
 
 
 def test_data_counts():
-    assert len(REG.specialties) == 462
+    assert len([s for s in REG.specialties.values() if not s.get("extension")]) == 462  # core book
     assert len(REG.races) == 6
     per_skill = {}
     for s in REG.specialties.values():

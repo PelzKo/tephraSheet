@@ -162,7 +162,10 @@ VARIANTS = {
     "throwing": {"label": "Throwing", "dc": -1, "note": "can be thrown"},
     "impromptu": {"label": "Impromptu", "dc": 0, "acc": -3, "stk": -3, "note": "not designed as a weapon"},
     "double-barreled": {"label": "Double-barreled", "dc": 0, "note": "fire twice before readying"},
+    "turret": {"label": "Turret", "dc": 0, "extension": "armsmith-extra",
+               "note": "assemble 3 AP; Footing stance to fire; 15 wounds, soak 1, light cover"},
 }
+TURRET_WOUNDS = 15
 SUPER_HEAVY_NO_FOOTING = -3
 
 # Armor (p.80). penalties are positive numbers that get subtracted.

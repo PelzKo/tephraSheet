@@ -312,7 +312,7 @@ def equip_template(character, template, slot):
 def random_weapons_and_armor(character, rng):
     sheet = character.compute()
     skills = {s: v.total for s, v in sheet.skills.items()}
-    weapons = list(ItemTemplate.objects.filter(kind__in=["melee", "firearm", "bow", "crossbow"]))
+    weapons = list(ItemTemplate.offered().filter(kind__in=["melee", "firearm", "bow", "crossbow"]))
     # Pick weapons that match the character's strongest combat skills.
     prefs = {"Marksmanship": ["firearm", "bow", "crossbow"], "Swashbuckling": ["melee"], "Overpower": ["melee"],
              "Espionage": ["melee"], "Frenzy": ["melee"], "Brawl": ["melee"], "Ace": ["firearm"]}
@@ -325,11 +325,11 @@ def random_weapons_and_armor(character, rng):
     left = equip_template(character, second, "carried")
     if item_hands(character, left) == 1 and item_hands(character, character.items.get(slot="weapon1")) == 1:
         equip(character, left, "weapon2")
-    armors = list(ItemTemplate.objects.filter(kind="armor", size__in=["minimal", "light", "medium"]))
+    armors = list(ItemTemplate.offered().filter(kind="armor", size__in=["minimal", "light", "medium"]))
     if armors:
         equip_template(character, rng.choice(armors), "armor")
     if rng.random() < 0.4 and first.kind == "melee":
-        defl = list(ItemTemplate.objects.filter(kind="deflection"))
+        defl = list(ItemTemplate.offered().filter(kind="deflection"))
         if defl:
             equip_template(character, rng.choice(defl), "deflection")
 
@@ -340,7 +340,7 @@ def starting_money(level):
 
 def random_gear(character, rng):
     InventoryItem.objects.filter(character=character, slot="carried", template__is_starting_gear=True).delete()
-    gear = list(ItemTemplate.objects.filter(is_starting_gear=True))
+    gear = list(ItemTemplate.offered().filter(is_starting_gear=True))
     must = [g for g in gear if g.name in ("Backpack", "Bedroll", "Rations (1 day)", "Clothing (working)")]
     extra = rng.sample([g for g in gear if g not in must], min(4, len(gear) - len(must)))
     for g in must + extra:

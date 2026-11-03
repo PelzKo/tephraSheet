@@ -308,5 +308,7 @@
  "Done": "Erledigt",
  "Won't fix": "Wird nicht behoben",
  "None available yet.": "Noch keine verfügbar.",
- "{n} selected": "{n} ausgewählt"
+ "{n} selected": "{n} ausgewählt",
+ "This augment only has mQ I and mQ III.": "Dieses Augment gibt es nur in mQ I und mQ III.",
+ "mQ I/III": "mQ I/III"
 }

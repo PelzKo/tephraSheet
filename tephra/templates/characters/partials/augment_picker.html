@@ -9,7 +9,7 @@
           <header>
             {% if o.known %}<span class="tag ok">{% t "known" %}</span>
             {% elif o.ok and known|length < capacity %}<button class="btn small primary" name="action" value="add:{{ o.aug.slug }}" formnovalidate>{% t "Learn" %}</button>{% endif %}
-            <b>{{ o.aug.name }}</b>
+            <b>{{ o.aug.name }}</b> {% ext_badge o.aug %}{% if o.aug.two_marque %} <span class="tag" title="{% t "This augment only has mQ I and mQ III." %}">{% t "mQ I/III" %}</span>{% endif %}
             <span class="tag">{% if o.aug.slots == 1 %}{% t "1 slot" %}{% else %}{% t "{n} slots" n=o.aug.slots|default_if_none:"?" %}{% endif %}</span>
             {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
             <span class="cost">{% t "your marque: {m}" m=o.marque|roman %}</span>

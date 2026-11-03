@@ -79,7 +79,7 @@ def sheet_context(request, character):
         "blank_lines": {k: range(max(0, BARREL_LINES - n)) for k, n in
                         (("gear", gear_count), ("augments", aug_count), ("notes", notes_count))},
         "spec_data": spec_data,
-        "slot_choices": InventoryItem._meta.get_field("slot").choices,
+        "slot_choices": InventoryItem._meta.get_field("slot").choices, "turret_wounds": tables.TURRET_WOUNDS,
         "effects": effects,
         "effect_boxes": [("Wound Effects", [e for e in effects if e.kind == "wound"]),
                          ("Fatal Effects", [e for e in effects if e.kind == "fatal"]),
@@ -258,6 +258,11 @@ def play_action(request, character, action):
             else:
                 item.quantity = q
                 item.save(update_fields=["quantity"])
+    elif action == "item_wounds":  # turret wounds: +1 = one more wound taken, −1 = repaired
+        item = InventoryItem.objects.filter(character=character, pk=_int(p.get("id"))).first()
+        if item:
+            item.wounds_taken = max(0, min(tables.TURRET_WOUNDS, item.wounds_taken + _int(p.get("delta"))))
+            item.save(update_fields=["wounds_taken"])
     elif action == "add_item":
         name = p.get("name", "").strip()[:120]
         if name:

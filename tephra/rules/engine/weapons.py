@@ -138,7 +138,10 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
         acc.add(_("Item: {name}", name=item.name), item.acc_bonus)
     if item.stk_bonus and stk is not None:
         stk.add(_("Item: {name}", name=item.name), item.stk_bonus)
-    if row.get("footing") and state.stance != "footing":
+    if "turret" in item.variants:
+        if state.stance != "footing" and not any(s == "armsmith-fast-mounting" for s, _l in state.specialties):
+            notes.append(_("Footing stance needed to fire the turret."))
+    elif row.get("footing") and state.stance != "footing":
         acc.add(_("Super-heavy without Footing"), tables.SUPER_HEAVY_NO_FOOTING)
         if stk is not None and kind == "melee":
             stk.add(_("Super-heavy without Footing"), tables.SUPER_HEAVY_NO_FOOTING)
@@ -159,6 +162,9 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
             notes.append(_("Ready 0 AP when held with two hands."))
         for label, amount in sheet.ap_ready_mods:
             ap_ready.add(label, amount)
+        for src, m in sheet.scoped:  # e.g. Belt Fed on this turret
+            if m["stat"] == "ap_ready" and _scope_applies(m.get("scope"), kind, src, item):
+                ap_ready.add(src.label, mod_amount(m, sheet.variables, m.get("marque")))
         ap_ready.floor = 0
 
     if kind in tables.RANGED_KINDS:

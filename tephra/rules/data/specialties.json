@@ -13115,5 +13115,566 @@
   ],
   "effect": "You can create trinkets, a catch-all term for small contraptions that do some really unique things.\nNumber of trinkets you Can maintain\nWithout needing to buy pieces or parts, you can build some trinkets entirely out of scraps. These trinkets must be constantly maintained by you and stop working soon after leaving your care. You may build and maintain a number of trinkets based on your DIY score. You may build new trinkets or replace old ones during any period of downtime you have.\nyour Diy: 1 2 3 4 5 6\nyou Can Build: 4 5 5 6 6 7\nyour Diy: 7 8 9 10 11 12\nyou Can Build: 7 8 8 9 9 10\nthe Cost of trinkets\nIf you need to build a trinket that you can’t build for free from your DIY score, you will need to buy the materials for it. Each trinket has a slight variation in cost, and that cost will be noted below the trinket (in a chart showing the market prices).\nIf you are building the trinket, you pay 1/5th the price, which is the same as if you were buying a trinket one marque lower. (As in, the material cost for a Marque III trinket is the market price fo a Marque II trinket.) The material cost for a Marque\n1 trinket is 1/5th the price of the Marque I trinket.",
   "modifiers": []
+ },
+ {
+  "slug": "armsmith-munitions-crafter",
+  "name": "Munitions Crafter",
+  "group": "Crafting Munitions",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 4
+  },
+  "cost": "Passive (crafting)",
+  "requires_text": "",
+  "requires": [],
+  "tags": "[AUG] [DIY] [CRAFT:munition]",
+  "crafts": [
+   "munition"
+  ],
+  "effect": "You may now craft munitions for firearms, crossbows or bows. Crafted munitions are made in bulk: one munition type lasts you for quite some time. Switching ammunition type costs 1 AP (bows: free). Without spending money you can build and maintain several munitions based on your DIY score; each takes a single augment.\nDIY 1–12 → munition types: 1, 2, 2, 3, 3, 4, 5, 6, 6, 7, 7, 8.\nIf you need more, buy the materials: augment market price mQ I 5 / II 25 / III 125 / IV 625 princes; crafting it yourself costs 1/5 (= price one marque lower; mQ I material 1 prince).",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-beta-munitions",
+  "name": "Beta Munitions",
+  "group": "Crafting Munitions",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 5
+  },
+  "cost": "Passive",
+  "requires_text": "4 Armsmith; Munitions Crafter",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Armsmith",
+    "min": 4
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Munitions Crafter"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "crafts": [],
+  "effect": "Your munitions have two more augment slots (3 total). Beta munitions are not made in bulk: each is a single round, arrow or bolt, gone once fired. DIY 1–12 → beta munitions: 3, 3, 4, 4, 5, 6, 6, 7, 8, 8, 9, 10. Cost to craft beta munitions = buying in bulk.\nAnyone else using one must roll a Sciences result one tier higher than its highest marque (mQ IV: impossible without a tier 5 result).",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-prototype-munitions",
+  "name": "Prototype Munitions",
+  "group": "Crafting Munitions",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "16 Armsmith; Munitions Crafter; Beta Munitions",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Armsmith",
+    "min": 16
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Munitions Crafter"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Beta Munitions"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "crafts": [],
+  "effect": "You've perfected your beta munitions and made them user-friendly. Anybody can use a munition you designate as a prototype.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-shield-forger",
+  "name": "Shield Forger",
+  "group": "Crafting Shields",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 6
+  },
+  "cost": "Passive (crafting)",
+  "requires_text": "",
+  "requires": [],
+  "tags": "[AUG] [DIY] [CRAFT:shield]",
+  "crafts": [
+   "shield"
+  ],
+  "effect": "You are a forger of shields (Shield: +4 Evade on deflection vs melee and ranged; can hold things in the shield hand but then can't deflect; metal, organic or wood; 4 princes). Without spending money you can build and maintain several shields based on your DIY score and upgrade them with augments. You learn 2 shield augments from this specialty. Each shield has 3 augment slots (wood 2, organic 1); some augments take several slots.\nDIY 1–12 → shields: 2, 3, 3, 4, 4, 5, 5, 6, 6, 7, 7, 8.\nAugment market price mQ I 10 / II 50 / III 250 / IV 1,250 princes; crafting costs 1/5 (mQ I material 2 princes).",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-beta-shields",
+  "name": "Beta Shields",
+  "group": "Crafting Shields",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires_text": "4 Armsmith; Shield Forger",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Armsmith",
+    "min": 4
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Shield Forger"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "crafts": [],
+  "effect": "Your shields have two more augment slots. Anyone else using one of your beta shields must roll a Sciences result one tier higher than its highest marque (mQ IV: impossible without tier 5).",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-prototype-shields",
+  "name": "Prototype Shields",
+  "group": "Crafting Shields",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 8
+  },
+  "cost": "Passive",
+  "requires_text": "16 Armsmith; Shield Forger; Beta Shields",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Armsmith",
+    "min": 16
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Shield Forger"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Beta Shields"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "crafts": [],
+  "effect": "You've perfected your beta shields and made them user-friendly. Anybody can use a shield you designate as a prototype.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-shield-crafting-basics",
+  "name": "Shield Crafting Basics",
+  "group": "Crafting Shields",
+  "bonuses": {
+   "eva": 1,
+   "diy": 1,
+   "hp": 5
+  },
+  "cost": "Passive",
+  "requires_text": "Shield Forger",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Shield Forger"
+    ]
+   }
+  ],
+  "tags": "[REQ]",
+  "crafts": [],
+  "grants_augments": [
+   "armsmith-shield-bulletproofing",
+   "armsmith-shield-improved-deflection",
+   "armsmith-shield-retractable",
+   "armsmith-shield-sling-shield",
+   "armsmith-shield-standing-shield",
+   "armsmith-shield-weaponized"
+  ],
+  "effect": "You learn the following augments: Bulletproofing, Improved Deflection, Retractable, Sling Shield, Standing Shield & Weaponized.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-turret-builder",
+  "name": "Turret Builder",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 4
+  },
+  "cost": "Passive (crafting)",
+  "requires_text": "Gunsmith",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Gunsmith"
+    ]
+   }
+  ],
+  "tags": "[AUG] [DIY] [CRAFT:turret] [REQ]",
+  "crafts": [
+   "turret"
+  ],
+  "effect": "You can build turrets (basic turret: assemble 3 AP, fire 2 AP, ready 2 AP, range 300 ft, DC 12, user must be in Footing stance to fire, 15 wounds, soak 1, grants light cover even when broken; can't fire on its own). Without spending money you can build and maintain several turrets based on your DIY score and upgrade them with augments. You learn 2 turret augments. Each turret has 3 augment slots (wood 2, organic 1).\nDIY 1–12 → turrets: 1, 1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5.\nAugment market price mQ I 40 / II 200 / III 1,000 / IV 5,000 princes; crafting costs 1/5 (mQ I material 4 princes).",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-beta-turrets",
+  "name": "Beta Turrets",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 5
+  },
+  "cost": "Passive",
+  "requires_text": "4 Armsmith; Gunsmith; Turret Builder",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Armsmith",
+    "min": 4
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Gunsmith"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "crafts": [],
+  "effect": "Your turrets have two more augment slots. Anyone else using one of your beta turrets must roll a Sciences result one tier higher than its highest marque (mQ IV: impossible without tier 5).",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-prototype-turrets",
+  "name": "Prototype Turrets",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "16 Armsmith; Gunsmith; Turret Builder; Beta Turrets",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Armsmith",
+    "min": 16
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Gunsmith"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Beta Turrets"
+    ]
+   }
+  ],
+  "tags": "[CRAFT] [REQ]",
+  "crafts": [],
+  "effect": "You've perfected your beta turrets and made them user-friendly. Anybody can use a turret you designate as a prototype.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-artillery",
+  "name": "Artillery",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "acc": 1,
+   "aug": 1,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires_text": "",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ],
+    "soft": true,
+    "note": "Without Turret Builder you can only use this on turrets that already exist; you need Turret Builder to set one up."
+   }
+  ],
+  "tags": "[COND]",
+  "crafts": [],
+  "effect": "You can load a turret with unconventional devices (explosives, firebombs, alchemical substances, …) without destroying the firearm or harming the turret. This raises the turret's readying cost by 1 AP and lowers its damage class by 2. If the target is hit, the launched device goes off as though it had been activated and thrown at the target.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-fast-mounting",
+  "name": "Fast Mounting",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "acc": 1,
+   "aug": 1,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ],
+    "soft": true,
+    "note": "Without Turret Builder you can only use this on turrets that already exist; you need Turret Builder to set one up."
+   }
+  ],
+  "tags": "[PASSIVE]",
+  "crafts": [],
+  "effect": "You no longer need to enter Footing stance to fire a turret.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-master-assembler",
+  "name": "Master Assembler",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "acc": 1,
+   "aug": 1,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ],
+    "soft": true,
+    "note": "Without Turret Builder you can only use this on turrets that already exist; you need Turret Builder to set one up."
+   }
+  ],
+  "tags": "[PASSIVE]",
+  "crafts": [],
+  "effect": "Assembling turrets costs you 1 less action point.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-theyre-all-guns-to-me",
+  "name": "They're All Guns to Me",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "acc": 1,
+   "aug": 1,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "Gunsmith; Turret Builder",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Gunsmith"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ]
+   }
+  ],
+  "tags": "[REQ]",
+  "crafts": [],
+  "effect": "You may apply Gunsmith (firearm) augments to your turret as though it were a standard firearm.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-turret-crafting-basics",
+  "name": "Turret Crafting Basics",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "acc": 1,
+   "diy": 1,
+   "hp": 4
+  },
+  "cost": "Passive",
+  "requires_text": "Turret Builder",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ]
+   }
+  ],
+  "tags": "[REQ]",
+  "crafts": [],
+  "grants_augments": [
+   "armsmith-turret-armored",
+   "armsmith-turret-belt-fed",
+   "armsmith-turret-bunker",
+   "armsmith-turret-mobile",
+   "armsmith-turret-tempered"
+  ],
+  "effect": "You learn the following augments: Armored, Belt Fed, Bunker, Mobile and Tempered.",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
+ },
+ {
+  "slug": "armsmith-turret-repairs",
+  "name": "Turret Repairs",
+  "group": "Crafting Turrets",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 7
+  },
+  "cost": "2 AP",
+  "requires_text": "",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Turret Builder"
+    ],
+    "soft": true,
+    "note": "Without Turret Builder you can only use this on turrets that already exist; you need Turret Builder to set one up."
+   }
+  ],
+  "tags": "[ACTION]",
+  "crafts": [],
+  "effect": "Cost: 2 AP\nYou make quick on-the-spot repairs to your turret to keep it running.\nYou repair 5 damage dealt to the turret\nYou repair 10 damage dealt to the turret\nYou repair 15 damage dealt to the turret\nYou repair 20 damage dealt to the turret",
+  "skill": "Armsmith",
+  "general": false,
+  "stance": false,
+  "repeatable": false,
+  "modifiers": [],
+  "extension": "armsmith-extra",
+  "attribute": "Sciences"
  }
 ]

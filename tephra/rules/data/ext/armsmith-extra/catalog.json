@@ -1,0 +1,5 @@
+[
+ {"name": "Turret (basic)", "kind": "firearm", "size": "super-heavy", "variants": ["turret"], "hands": 2, "ap_use": 2, "ap_ready": 2, "dc": 12, "range": 300, "soak": 1, "material": "metal", "price_dukes": 0, "description": "Turret kit: assemble 3 AP (Master Assembler −1). Must be in Footing stance to fire (Fast Mounting: not needed). Turret: 15 wounds, soak 1, gives its user light cover (also when broken). Can't fire on its own (Automated augment)."},
+ {"name": "Crafted munitions (bulk)", "kind": "ammo", "price_dukes": 0, "description": "Crafted firearm/crossbow/bow ammo type, 1 augment slot. Switching type 1 AP (bows free)."},
+ {"name": "Beta munition (single round)", "kind": "ammo", "beta": true, "price_dukes": 0, "description": "Single crafted round/arrow/bolt, 3 augment slots; gone once fired. Others need Sciences one tier above its highest marque."}
+]

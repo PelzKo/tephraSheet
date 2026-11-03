@@ -63,6 +63,7 @@ class ItemFields(models.Model):
     modifiers = models.JSONField(default=list, blank=True)
     price_dukes = models.IntegerField(default=0)
     description = models.TextField(blank=True)
+    extension = models.CharField(max_length=40, blank=True, help_text="rule extension key; empty = core")
 
     class Meta:
         abstract = True
@@ -70,7 +71,7 @@ class ItemFields(models.Model):
     ITEM_FIELDS = ["name", "kind", "size", "variants", "material", "beta", "concealable", "hands", "ap_use", "ap_ready",
                    "dc", "reach", "range", "increment", "soak", "eva_penalty", "spd_penalty",
                    "climb_swim_penalty", "deflect_bonus", "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "augments",
-                   "modifiers", "price_dukes", "description"]
+                   "modifiers", "price_dukes", "description", "extension"]
 
     def item_values(self):
         return {f: getattr(self, f) for f in self.ITEM_FIELDS}
@@ -83,7 +84,8 @@ class ItemFields(models.Model):
     def slot_count(self):
         from rules.engine.tables import MATERIAL_SLOTS
 
-        return MATERIAL_SLOTS.get(self.material, 3) + (2 if self.beta else 0)
+        base = 1 if self.kind == "ammo" else MATERIAL_SLOTS.get(self.material, 3)  # crafted munitions: 1 slot
+        return base + (2 if self.beta else 0)
 
     def to_item_state(self, slot=""):
         return ItemState(
@@ -115,3 +117,10 @@ class ItemTemplate(ItemFields):
 
     def __str__(self):
         return self.name
+
+    @classmethod
+    def offered(cls):
+        """Templates new choices may use: core plus switched-on extensions (rules.extensions)."""
+        from rules.extensions import enabled
+
+        return cls.objects.filter(extension__in=["", *enabled()])

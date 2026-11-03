@@ -832,5 +832,38 @@
   "price_text": "45 pr",
   "is_starting_gear": false,
   "description": "AP: 3; HP: 11; Wounds: 8; Pri: +0; Speed: 25 ft, 45 ft flight; Eva: +1; Def: +0; Soak (T1–T4): 0 (unarmored); Attack: Talon 2 AP, natural light, Acc +3, Stk +1, dmg 4/8/12/16; after 10+ ft dive target Brute resist vs Agility (+2) or prone"
+ },
+ {
+  "name": "Turret (basic)",
+  "kind": "firearm",
+  "size": "super-heavy",
+  "variants": [
+   "turret"
+  ],
+  "hands": 2,
+  "ap_use": 2,
+  "ap_ready": 2,
+  "dc": 12,
+  "range": 300,
+  "soak": 1,
+  "material": "metal",
+  "price_dukes": 0,
+  "description": "Turret kit: assemble 3 AP (Master Assembler −1). Must be in Footing stance to fire (Fast Mounting: not needed). Turret: 15 wounds, soak 1, gives its user light cover (also when broken). Can't fire on its own (Automated augment).",
+  "extension": "armsmith-extra"
+ },
+ {
+  "name": "Crafted munitions (bulk)",
+  "kind": "ammo",
+  "price_dukes": 0,
+  "description": "Crafted firearm/crossbow/bow ammo type, 1 augment slot. Switching type 1 AP (bows free).",
+  "extension": "armsmith-extra"
+ },
+ {
+  "name": "Beta munition (single round)",
+  "kind": "ammo",
+  "beta": true,
+  "price_dukes": 0,
+  "description": "Single crafted round/arrow/bolt, 3 augment slots; gone once fired. Others need Sciences one tier above its highest marque.",
+  "extension": "armsmith-extra"
  }
 ]

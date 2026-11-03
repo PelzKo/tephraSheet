@@ -182,5 +182,12 @@
  "Gadgetry": "Tüftelei",
  "General": "Allgemein",
  "only for {races}": "nur für {races}",
- "Granted by {source}": "Gewährt durch {source}"
+ "Granted by {source}": "Gewährt durch {source}",
+ "Footing stance needed to fire the turret.": "Zum Feuern mit dem Geschütz brauchst du die Haltung Fester Stand.",
+ "Without Turret Builder you can only use this on turrets that already exist; you need Turret Builder to set one up.": "Ohne Geschützbauer kannst du das nur bei bereits bestehenden Geschützen nutzen; um eines aufzubauen, brauchst du Geschützbauer.",
+ "munition": "Munition",
+ "shield": "Schild",
+ "turret": "Geschütz",
+ "The Armsmith Extra": "Waffenschmied-Erweiterung",
+ "Turret": "Geschütz"
 }

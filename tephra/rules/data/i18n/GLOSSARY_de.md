@@ -115,3 +115,24 @@ Marionette Strings → Marionettenfäden.
 | Stray Gods (Coup) | Streunende Götter (Putsch der Streunenden Götter) |
 | the Arbiter | der Schlichter |
 | Keyindru, Siddeodru | unchanged |
+
+## Armsmith Extra
+| English | German |
+|---|---|
+| munition(s) | Munition (Munitionsart, Geschoss for a single round) |
+| turret | Geschütz (Pl. Geschütze) |
+| Footing (stance) | Fester Stand (prose: Haltung Fester Stand) |
+| deflection / deflect | Parade / parieren (Schildparade) |
+| ready / readying cost | bereitmachen / Kosten zum Bereitmachen |
+| assemble (turret) | aufbauen (Aufbau) |
+| automated / set to automatic | Automatikbetrieb / auf automatisch stellen |
+| unsoakable damage | Schaden ohne Schutz (Schutz hilft nicht) |
+| sunder | zerschmettern |
+| cover: poor / light / medium / heavy | schwache / leichte / mittlere / schwere Deckung |
+| primed (explosive) | scharf |
+| two marques (I/III) | zwei Marques (I/III) |
+| Cost to craft: no marques | Herstellungskosten: keine Marques |
+| learnable by anyone with X | erlernbar für jeden mit X |
+| downtime | Auszeit |
+| Crafting Munitions / Shields / Turrets | Munition / Schilde / Geschütze herstellen |
+| Munitions Crafter / Shield Forger / Turret Builder | Munitionsmacher / Schildschmied / Geschützbauer |

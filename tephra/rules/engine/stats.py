@@ -301,6 +301,10 @@ def compute(state: CharacterState) -> Sheet:
             bonus.set_base(_("Item: {name}", name=d.name), d.deflect_bonus)
         else:
             bonus.set_base(_("{label} (standard)", label=_(default["label"])) if default else _("No bonus set"), default["bonus"] if default else 0)
+        for src, m in sheet.scoped:  # augments on the deflection item (Improved Deflection, Barricading …)
+            if m["stat"] == "deflect" and src.item_id is not None and src.item_id == d.id:
+                label = src.label + (f" ({_(m['label'])})" if m.get("label") else "")
+                bonus.add(label, mod_amount(m, variables, m.get("marque")))
         sheet.deflection = {"item": d, "name": d.name, "bonus": bonus,
                             "ranged": d.deflect_ranged, "melee": d.deflect_melee}
 

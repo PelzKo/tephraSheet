@@ -13,6 +13,7 @@ import contextvars
 # key -> English name; a key is added together with its content.
 EXTENSIONS = {
     "suulrai": "Suulrai",
+    "armsmith-extra": "The Armsmith Extra",
 }
 
 _offer = contextvars.ContextVar("tephra_offer", default=(frozenset(), frozenset()))
@@ -20,6 +21,10 @@ _offer = contextvars.ContextVar("tephra_offer", default=(frozenset(), frozenset(
 
 def set_offer(extensions=(), disabled_races=()):
     _offer.set((frozenset(extensions), frozenset(disabled_races)))
+
+
+def enabled():
+    return _offer.get()[0]
 
 
 def is_offered(entry):

@@ -2,7 +2,7 @@
 "Light melee weapon (dagger, knife)": {"name": "Leichte Nahkampfwaffe (Dolch, Messer)"},
 "Medium melee weapon (sword, axe, mace)": {"name": "Mittlere Nahkampfwaffe (Schwert, Axt, Streitkolben)"},
 "Heavy melee weapon (greatsword, great axe)": {"name": "Schwere Nahkampfwaffe (Zweihänder, Großaxt)"},
-"Super-heavy melee weapon (massive hammer)": {"name": "Überschwere Nahkampfwaffe (gewaltiger Hammer)", "description": "Benötigt die Haltung Standfestigkeit; ohne sie −3 Genauigkeit und Schlagkraft."},
+"Super-heavy melee weapon (massive hammer)": {"name": "Überschwere Nahkampfwaffe (gewaltiger Hammer)", "description": "Benötigt die Haltung Fester Stand; ohne sie −3 Genauigkeit und Schlagkraft."},
 "Whip": {"name": "Peitsche"},
 "Flail / chain": {"name": "Flegel / Kette"},
 "Spear": {"name": "Speer"},
@@ -92,5 +92,8 @@
 "The Fashionable Arrival (flight pack)": {"name": "Der Modische Auftritt (Flugpack)", "description": "Das Neueste an persönlichen Transport-Clankern von Burgenhind Industries: Dieses von einer Graviton-Sphäre angetriebene Pack hat eine stilvolle Messingoberfläche und sitzt bequem auf dem Rücken jedes Frackes oder Korsetts. Für jeden Aktionspunkt, den du für seine Bewegung ausgibst, fliegt der Modische Auftritt bis zu 40 Fuß. Er hat 12 Wunden und verliert bei jedem Schaden 5 Fuß Bewegung. Wenn du nicht modisch ankommst, warum dann überhaupt erscheinen? Burgenhind Industries: Brauchst du eine Mitfahrgelegenheit?"},
 "Horse": {"name": "Pferd", "description": "AP: 3; TP: 16; Wunden: 9; Ini: +0; Tempo: 50 ft (×2, wenn alle AP für Bewegung ausgegeben werden); Aus: −1; Ver: +1; Schutz (S1–S4): 3/6/9/12 (Fell); Angriff: Huf 2 AP, natürlich mittel, Gen +0, Sch +1, Schaden 6/12/18/24"},
 "Canine": {"name": "Hund", "description": "AP: 3; TP: 12; Wunden: 8; Ini: +0; Tempo: 40 ft; Aus: +0; Ver: +0; Schutz (S1–S4): 2/4/6/8 (Fell); Angriff: Biss 2 AP, natürlich mittel, Gen +1, Sch +3, Schaden 6/12/18/24; +1 Sch pro Verbündetem innerhalb von 25 ft mit Rudelinstinkt; kann sich bewegen–angreifen–bewegen"},
-"Bird of prey": {"name": "Raubvogel", "description": "AP: 3; TP: 11; Wunden: 8; Ini: +0; Tempo: 25 ft, 45 ft Flug; Aus: +1; Ver: +0; Schutz (S1–S4): 0 (ungepanzert); Angriff: Kralle 2 AP, natürlich leicht, Gen +3, Sch +1, Schaden 4/8/12/16; nach einem Sturzflug von 10+ ft: Widerstand Kraft des Ziels gegen Akrobatik (+2), sonst liegend"}
+"Bird of prey": {"name": "Raubvogel", "description": "AP: 3; TP: 11; Wunden: 8; Ini: +0; Tempo: 25 ft, 45 ft Flug; Aus: +1; Ver: +0; Schutz (S1–S4): 0 (ungepanzert); Angriff: Kralle 2 AP, natürlich leicht, Gen +3, Sch +1, Schaden 4/8/12/16; nach einem Sturzflug von 10+ ft: Widerstand Kraft des Ziels gegen Akrobatik (+2), sonst liegend"},
+"Turret (basic)": {"name": "Geschütz (einfach)", "description": "Geschützbausatz: Aufbau 3 AP (Meistermonteur −1). Zum Schießen in der Haltung Fester Stand (Schnellmontage: nicht nötig). Geschütz: 15 Wunden, Schutz 1, gibt seinem Benutzer leichte Deckung (auch wenn es kaputt ist). Kann nicht von selbst feuern (Augment Automatisiert)."},
+"Crafted munitions (bulk)": {"name": "Hergestellte Munition (Menge)", "description": "Hergestellte Munitionsart für Schusswaffe/Armbrust/Bogen, 1 Augment-Platz. Art wechseln 1 AP (Bögen kostenlos)."},
+"Beta munition (single round)": {"name": "Beta-Munition (einzelnes Geschoss)", "description": "Einzelne hergestellte Patrone/Pfeil/Bolzen, 3 Augment-Plätze; nach dem Abfeuern verbraucht. Andere brauchen Wissenschaften eine Stufe über der höchsten Marque."}
 }

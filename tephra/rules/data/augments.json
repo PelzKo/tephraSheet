@@ -10685,5 +10685,1466 @@
   "price": "",
   "text": "You’ve crafted a sensor array into your automaton’s torso. This allows you to place automaton head augments on the torso as well as the ability for the automaton to see and hear through its torso.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
   "modifiers": []
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-aerodynamic",
+  "name": "Aerodynamic",
+  "marques": [
+   "+1 Acc this shot",
+   "+1 Acc this shot",
+   "+2 Acc this shot",
+   "+2 Acc this shot"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "A sleeker bullet designed for a more accurate and cleaner shot.\n+1 onto the accuracy of this shot\n+2 onto the accuracy of this shot",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-anti-personnel",
+  "name": "Anti-Personnel",
+  "marques": [
+   "+1 DC vs organic",
+   "+1 DC vs organic",
+   "+2 DC vs organic",
+   "+2 DC vs organic"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "Flattened heads and other modifications give more stopping power against organic creatures and people.\n+1 damage class when hitting an organic creature\n+2 damage class when hitting an organic creature",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-anti-tank",
+  "name": "Anti-Tank",
+  "marques": [
+   "+1 DC vs vehicles",
+   "+1 DC vs vehicles",
+   "+2 DC vs vehicles",
+   "+2 DC vs vehicles"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "Designed to cut through the alloys common in vehicles.\n+1 damage class when hitting a vehicle\n+2 damage class when hitting a vehicle",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-automaton-destroying",
+  "name": "Automaton-Destroying",
+  "marques": [
+   "+1 DC vs automatons",
+   "+1 DC vs automatons",
+   "+2 DC vs automatons",
+   "+2 DC vs automatons"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "Hard, rounded rounds that ricochet through a machine's inner workings after piercing its plating.\n+1 damage class when hitting an automaton\n+2 damage class when hitting an automaton",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-banshee-bullets",
+  "name": "Banshee Bullets",
+  "marques": [
+   "T2 resist vs T1 fear",
+   "T2 resist vs T1 fear",
+   "T3 resist vs T1 fear",
+   "T3 resist vs T1 fear"
+  ],
+  "notes": "two marques (I/III); Spirit or Cunning resist",
+  "text": "Long, perforated rounds that scream through the air. All enemies in earshot must resist tier 1 fear; a Spirit or Cunning resist negates it.\nTier 2 resist\nTier 3 resist",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-demolition-rounds",
+  "name": "Demolition Rounds",
+  "marques": [
+   "+1 tier vs stationary objects",
+   "+1 tier vs stationary objects",
+   "+2 tiers vs stationary objects",
+   "+2 tiers vs stationary objects"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "Large, unwieldy munitions for destroying doors, walls and structures. When determining damage to stationary objects, the attack's tier is higher.\nThe shot is 1 tier higher\nThe shot is 2 tiers higher",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-devastating-shot",
+  "name": "Devastating Shot",
+  "marques": [
+   "+1 DC",
+   "+1 DC",
+   "+2 DC",
+   "+2 DC"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "Easily readied ammunition that adds substantial damaging force.\nThe damage class of the shot is increased by 1\nThe damage class of the shot is increased by 2",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-drill-shot",
+  "name": "Drill Shot",
+  "marques": [
+   "target soak −1",
+   "target soak −1",
+   "target soak −2",
+   "target soak −2"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "Spirals on impact, penetrating armor.\nThe target soak is lowered by 1 for this attack\nThe target soak is lowered by 2 for this attack",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-electrically-charged",
+  "name": "Electrically Charged",
+  "marques": [
+   "+1 electric dmg",
+   "+1 electric dmg",
+   "+2 electric dmg",
+   "+2 electric dmg"
+  ],
+  "notes": "two marques (I/III); unsoakable if target wet or in metal armor",
+  "text": "A small capacitor and metal coating charge the round. Deals additional electrical damage that is unsoakable when the target is wet or in metallic armor.\nDeals 1 additional electric damage\nDeals 2 additional electric damage",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-explosive",
+  "name": "Explosive",
+  "marques": [
+   "+1 unsoakable",
+   "+2 unsoakable",
+   "+3 unsoakable",
+   "+4 unsoakable"
+  ],
+  "notes": "only if the hit dealt damage",
+  "text": "After hitting and damaging the target, the round explodes for additional unsoakable damage. If the hit dealt no damage, it does not explode.\nThe explosion deals 1 unsoakable damage\nThe explosion deals 2 unsoakable damage\nThe explosion deals 3 unsoakable damage\nThe explosion deals 4 unsoakable damage",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-flash-bangs",
+  "name": "Flash-Bangs",
+  "marques": [
+   "stun 1 AP (T2 Cunning negates)",
+   "stun 1 AP (T2 Cunning negates)",
+   "stun 1 AP (T3 Cunning negates)",
+   "stun 1 AP (T3 Cunning negates)"
+  ],
+  "notes": "two marques (I/III); contains a substance (no Split Shot)",
+  "text": "Filled with flash powder; on contact a bright flash stuns the opponent for 1 action point. A Cunning resist negates it.\nTier 2 cunning negates\nTier 3 cunning negates",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-flesh-rending",
+  "name": "Flesh-Rending",
+  "marques": [
+   "bleed 1",
+   "bleed 2",
+   "bleed 3",
+   "bleed 4"
+  ],
+  "notes": "only if the hit dealt damage",
+  "text": "Tears through what it hits, leaving large bleeding wounds. No bleeding if the hit dealt no damage.\nThe target bleeds for 1\nThe target bleeds for 2\nThe target bleeds for 3\nThe target bleeds for 4",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-heavy",
+  "name": "Heavy",
+  "marques": [
+   "Brute resist vs your Acc tier as a torso called shot",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ III (125 pr / craft 25 pr); learnable by anyone with Munitions Crafter",
+  "text": "Rounds that knock the target backwards with massive impact. Targets hit must make a Brute resist against the shooter's accuracy tier as though hit with a called shot to the torso.\nCost to craft: no marques; learnable by anyone with the Munitions Crafter specialty. 125 princes to buy or 25 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-inkshot",
+  "name": "Inkshot",
+  "marques": [
+   "blinded (T2 resist)",
+   "blinded (T2 resist)",
+   "blinded (T3 resist)",
+   "blinded (T3 resist)"
+  ],
+  "notes": "two marques (I/III); Brute or Dexterity resist; eyewear +6; contains a substance",
+  "text": "Explodes on impact, staining the target with thick black ink (common in war games). If the target is struck by a called shot above the neck (head, ears or eyes), they are blinded until they spend 3 AP removing the ink, in addition to the normal called-shot effect. A Brute or Dexterity resist negates it; a target wearing eyewear gets +6 on this save.\nTier 2 resist\nTier 3 resist",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-rubberized",
+  "name": "Rubberized",
+  "marques": [
+   "non-lethal: fatal hit → unconscious",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ I (5 pr / craft 1 pr); learnable by anyone with Munitions Crafter",
+  "text": "Rubber bullets do not kill, though they may still inflict wound effects. A target in fatals struck by a rubber bullet is knocked unconscious and does not roll on the fatal wounds chart.\nCost to craft: no marques; 5 princes to buy or 1 prince to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-shrapnel-breaker",
+  "name": "Shrapnel-Breaker",
+  "marques": [
+   "wounds/fatals only heal by surgery",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ II (25 pr / craft 5 pr); learnable by anyone with Munitions Crafter",
+  "text": "Breaks apart on impact. Wound or fatal effects (and their damage) caused by it can only be healed through surgery, never naturally over time.\nCost to craft: no marques; 25 princes to buy or 5 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-split-shot",
+  "name": "Split Shot",
+  "marques": [
+   "hits twice at half DC (one Acc roll)",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ II (25 pr / craft 5 pr); learnable by anyone with Munitions Crafter; not with substance rounds",
+  "text": "The shot splits in half and strikes twice (accuracy rolled once). Damage class is halved (round down). The victim soaks each hit separately but must also resist any effects twice (e.g. a split shot to the right leg must be resisted twice to avoid falling prone). Cannot be applied to rounds containing a substance (Syringed, Inkshot, Flash-Bangs, …).\nCost to craft: no marques; 25 princes to buy or 5 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-super-heated",
+  "name": "Super-Heated",
+  "marques": [
+   "T2 Brute or T1 burns (−1 Def)",
+   "T3 Brute or T1 burns (−1 Def)",
+   "T3 Brute or T2 burns (−3 Def)",
+   "T4 Brute or T2 burns (−3 Def)"
+  ],
+  "notes": "burns last until the target's next breather",
+  "text": "The casing rips off when fired and the round ignites. Targets hit must overcome a Brute resist or be burned until their next breather.\nTier 2 brute resist or suffer tier 1 burns (−1 on defense)\nTier 3 brute resist or suffer tier 1 burns (−1 on defense)\nTier 3 brute resist or suffer tier 2 burns (−3 on defense)\nTier 4 brute resist or suffer tier 2 burns (−3 on defense)",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "munition"
+  ],
+  "section": "Munition augments",
+  "slug": "armsmith-munition-syringed",
+  "name": "Syringed",
+  "marques": [
+   "carries a substance with 1 augment",
+   "… with 2 augments",
+   "… with 3 augments",
+   "… with 5 augments"
+  ],
+  "notes": "weapon DC −2; injects only if the hit dealt damage; contains a substance",
+  "text": "Delivers alchemical substances directly into the bloodstream (tranquilizing animals, delivering medicine, …). Syringed munitions lower the damage class of the weapon firing them by 2. If the hit dealt no damage, nothing is injected.\nCan carry an alchemical substance with 1 augment\nCan carry an alchemical substance with 2 augments\nCan carry an alchemical substance with 3 augments\nCan carry an alchemical substance with 5 augments",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-barricading",
+  "name": "Barricading",
+  "marques": [
+   "+3 Eva on deflection",
+   "+4",
+   "+5",
+   "+6"
+  ],
+  "notes": "deflection +1 AP (normally 2 AP reflexively)",
+  "text": "Cost: Deflection +1 AP (normally 2 AP reflexively)\nFolded panels and extra width. For 1 additional AP when deflecting, add more to the evade roll; stacks with the normal deflection bonus.\n+3 on the evade roll\n+4 on the evade roll\n+5 on the evade roll\n+6 on the evade roll",
+  "modifiers": [
+   {
+    "stat": "deflect",
+    "op": "add",
+    "when": "toggle",
+    "scope": "weapon",
+    "label": "barricade (+1 AP)",
+    "by_marque": [
+     3,
+     4,
+     5,
+     6
+    ]
+   }
+  ],
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-bio-zapper-proofed",
+  "name": "Bio-Zapper Proofed",
+  "marques": [
+   "+2 Eva deflecting bio-zappers",
+   "+4",
+   "+6",
+   "+8"
+  ],
+  "notes": "[COND]",
+  "text": "Your shield can deflect the essence-manipulating rays of bio-zappers. In addition to the normal deflection bonus it gains an extra evade deflection bonus against bio-zappers.\n+2 on the evade roll\n+4 on the evade roll\n+6 on the evade roll\n+8 on the evade roll",
+  "modifiers": [
+   {
+    "stat": "note",
+    "op": "add",
+    "when": "note",
+    "scope": "character",
+    "label": "deflection Evade vs bio-zappers",
+    "by_marque": [
+     2,
+     4,
+     6,
+     8
+    ]
+   }
+  ],
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-blast-protection",
+  "name": "Blast Protection",
+  "marques": [
+   "+3 to resist explosions",
+   "+6",
+   "+9",
+   "+12"
+  ],
+  "notes": "while wielding the shield, Dexterity resists vs explosions",
+  "text": "Large enough to circumvent explosions and built to withstand blasts. If you wield the shield while using Dexterity to resist an explosion, you get an automatic bonus.\n+3 to resist explosions\n+6 to resist explosions\n+9 to resist explosions\n+12 to resist explosions",
+  "modifiers": [
+   {
+    "stat": "roll:Dexterity",
+    "op": "add",
+    "when": "note",
+    "scope": "character",
+    "label": "resist explosions (shield wielded)",
+    "by_marque": [
+     3,
+     6,
+     9,
+     12
+    ]
+   }
+  ],
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-breaker-shield",
+  "name": "Breaker Shield",
+  "marques": [
+   "+4 Stk for sunder tier",
+   "+8",
+   "+12",
+   "+16"
+  ],
+  "notes": "2 AP reflexively after a successful deflection vs a melee weapon",
+  "text": "Cost: 2 AP reflexively\nRough edges catch a melee weapon and snap it. After successfully deflecting a melee-weapon attack, you can reflexively make a sunder attempt for 2 AP. The sunder automatically hits; roll Strike to determine the tier (normally lowering the weapon's damage class by the tier result), with a bonus by marque.\n+4 on the strike roll to determine tier of the sunder\n+8 on the strike roll to determine tier of the sunder\n+12 on the strike roll to determine tier of the sunder\n+16 on the strike roll to determine tier of the sunder",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-bulletproofing",
+  "name": "Bulletproofing",
+  "marques": [
+   "+2 Eva deflecting firearms",
+   "+4",
+   "+6",
+   "+8"
+  ],
+  "notes": "[COND]",
+  "text": "The shield is designed to take bullets. When shot by a firearm, the user gains an additional bonus on the evade roll if the shield is used in a deflection.\n+2 on the evade roll\n+4 on the evade roll\n+6 on the evade roll\n+8 on the evade roll",
+  "modifiers": [
+   {
+    "stat": "deflect",
+    "op": "add",
+    "when": "toggle",
+    "scope": "weapon",
+    "label": "vs firearms",
+    "by_marque": [
+     2,
+     4,
+     6,
+     8
+    ]
+   }
+  ],
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-concealable",
+  "name": "Concealable",
+  "marques": [
+   "+4 vs Cunning to detect",
+   "+8",
+   "+12",
+   "+16"
+  ],
+  "notes": "conceals like a light weapon",
+  "text": "Small and easily disguised. Unlike most shields it can be concealed (like a light weapon) and gains a bonus against Cunning rolls to detect it.\n+4 against cunning rolls to detect the shield\n+8 against cunning rolls to detect the shield\n+12 against cunning rolls to detect the shield\n+16 against cunning rolls to detect the shield",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-electric-deterrent",
+  "name": "Electric Deterrent",
+  "marques": [
+   "+2 Eva vs electric attacks",
+   "+4",
+   "+6",
+   "+8"
+  ],
+  "notes": "pure-electric attacks become deflectable",
+  "text": "Any attack made purely of electric energy (certain weapons, lightning) can be deflected with your shield. You gain the shield's normal deflection bonus plus an extra bonus by marque.\n+2 on evade rolls against electric attacks\n+4 on evade rolls against electric attacks\n+6 on evade rolls against electric attacks\n+8 on evade rolls against electric attacks",
+  "modifiers": [
+   {
+    "stat": "note",
+    "op": "add",
+    "when": "note",
+    "scope": "character",
+    "label": "deflection Evade vs electric attacks",
+    "by_marque": [
+     2,
+     4,
+     6,
+     8
+    ]
+   }
+  ],
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-gas-purifier",
+  "name": "Gas Purifier",
+  "marques": [
+   "cleans mQ I gases",
+   "mQ II gases",
+   "mQ III gases",
+   "mQ IV gases"
+  ],
+  "notes": "",
+  "text": "A small purification system cleans the air in the shield's space, protecting its owner from gases. Gases with a higher marque than this augment are unaffected.\ncleans the air of Marque I gases for the wielder\ncleans the air of Marque II gases for the wielder\ncleans the air of Marque III gases for the wielder\ncleans the air of Marque IV gases for the wielder",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-improved-deflection",
+  "name": "Improved Deflection",
+  "marques": [
+   "+1 Eva on deflection (5 total)",
+   "+2 (6 total)",
+   "+3 (7 total)",
+   "+4 (8 total)"
+  ],
+  "notes": "[STAT:deflect]",
+  "text": "Finely tuned for greater blocking power. When used in a deflection it grants a higher bonus on the evade roll.\n+1 on the evade roll (normally for a +5 total)\n+2 on the evade roll (normally for a +6 total)\n+3 on the evade roll (normally for a +7 total)\n+4 on the evade roll (normally for a +8 total)",
+  "modifiers": [
+   {
+    "stat": "deflect",
+    "op": "add",
+    "when": "always",
+    "scope": "weapon",
+    "by_marque": [
+     1,
+     2,
+     3,
+     4
+    ]
+   }
+  ],
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-injector",
+  "name": "Injector",
+  "marques": [
+   "holds 1 potion",
+   "holds 2 potions",
+   "holds 3 potions",
+   "holds 4 potions"
+  ],
+  "notes": "inject 0 AP reflexively, reload 5 AP",
+  "text": "Cost: 0 AP reflexively\nA trigger system and a liquid injector along the forearm let the wearer inject himself with a dose of a chemical at the push of a button (0 AP). Reloading a dose costs 5 AP. The shield holds only so many chemicals at once.\n1 alchemical potion\n2 alchemical potions\n3 alchemical potions\n4 alchemical potions",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-installed-explosive",
+  "name": "Installed Explosive",
+  "marques": [
+   "1 installed, 0 primed",
+   "1 primed (rotate in 2 AP)",
+   "2 primed (rotate in 1 AP)",
+   "3 primed (rotate in 0 AP reflexively)"
+  ],
+  "notes": "triggers on a successful shield deflection; explodes forward only",
+  "text": "An explosive installed in the shield activates when you make a shield deflection that causes the attack to miss. The explosion originates in the space adjacent to you toward the assailant and only goes forward, away from you. mQ I holds 1 installed explosive; higher marques keep extra explosives primed, rotated in after the installed one discharges (primed explosives never go off on their own).\n0 explosives primed\n1 explosive primed (rotate the next one in for 2 AP)\n2 explosives primed (rotate the next one in for 1 AP)\n3 explosives primed (rotate the next one in for 0 AP reflexively after the installed one discharges)\nNote: explosives are built with Gadgetry (Explosive Crafting).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-installed-firearm",
+  "name": "Installed Firearm",
+  "marques": [
+   "ready 4 AP",
+   "ready 3 AP",
+   "ready 2 AP",
+   "ready 1 AP"
+  ],
+  "notes": "fire 1 AP reflexively after a successful deflection; DC 4, 100 ft; firearm augments allowed (use shield slots)",
+  "text": "Cost: 1 AP reflexively\nA firearm built into the shield, triggered by the shield being hit. It counts as a medium firearm (DC 4, accurate out to 100 ft). If readied and the shield was successfully used in a deflection (the attack missed), it can be fired for 1 AP at the attacker; roll your accuracy to hit and for the damage tier. Afterwards it must be readied again (cost by marque). Snap Reload reduces the readying time. Once installed, firearm augments can be placed on the shield, using the shield's slots.\n4 AP to ready\n3 AP to ready\n2 AP to ready\n1 AP to ready",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-retractable",
+  "name": "Retractable",
+  "marques": [
+   "draw for 0 AP (not reflexively)",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ I (10 pr / craft 2 pr); learnable by anyone with Shield Forger; with Sling Shield: sling costs 0 AP",
+  "text": "Cost: 0 AP\nThe shield can be drawn for 0 AP. This can't be done reflexively – you still must have it drawn to deflect. On a shield with Sling Shield, the sling's cost is negated.\nCost to craft: no marques; 10 princes to buy or 2 princes to craft yourself (if you know the augment). (The PDF says \"sling shield\" in this cost line – copy error.)",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-sling-shield",
+  "name": "Sling Shield",
+  "marques": [
+   "worn on back/upper arm; +1 AP reflexively to deflect",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ I (10 pr / craft 2 pr); learnable by anyone with Shield Forger; with Retractable: 0 AP",
+  "text": "Cost: 1 AP reflexively\nThe shield sits on your back or upper arm and leaves your hand free. For 1 AP reflexively you activate the sling and deflect with it (the deflection effectively costs 1 extra AP). You may keep holding the shield afterwards (no further sling cost) or let it slide back; if you let go it slides back into the sling. With Retractable, the sling cost is negated.\nCost to craft: no marques; 10 princes to buy or 2 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-split-second-shield",
+  "name": "Split-Second Shield",
+  "marques": [
+   "decide on deflection after the evade roll",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ II (50 pr / craft 10 pr); learnable by anyone with Shield Forger; not on a rolled 1",
+  "text": "You can make a shield deflection after seeing your evade roll and modify the result (normally you must decide before rolling). Can't improve a rolled 1.\nCost to craft: no marques; 50 princes to buy or 10 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-standing-shield",
+  "name": "Standing Shield",
+  "marques": [
+   "poor cover (+2 Eva)",
+   "light cover (+4)",
+   "medium cover (+6)",
+   "heavy cover (+8)"
+  ],
+  "notes": "1 AP to plant/move/pick up; planted = no deflection",
+  "text": "Cost: 1 AP\nFor 1 AP you plant the shield in the ground. All attacks from that side (any angle) treat you as having cover. Moving it to another side or picking it up costs 1 AP. While planted it can't be used to deflect.\nprovides poor cover (+2 on evade rolls)\nprovides light cover (+4 on evade rolls)\nprovides medium cover (+6 on evade rolls)\nprovides heavy cover (+8 on evade rolls)",
+  "modifiers": [
+   {
+    "stat": "eva",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "planted shield (attacks from that side)",
+    "by_marque": [
+     2,
+     4,
+     6,
+     8
+    ]
+   }
+  ],
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-weaponized",
+  "name": "Weaponized",
+  "marques": [
+   "shield counts as a medium weapon",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ I (10 pr / craft 2 pr); learnable by anyone with Shield Forger; melee augments allowed (use shield slots)",
+  "text": "Bladed edge, spikes, a flail and a bashing plate: the shield can be treated as a medium weapon. You may put weapon augments on it; they use the shield's augment slots.\nCost to craft: no marques; 10 princes to buy or 2 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "shield"
+  ],
+  "section": "Shield augments",
+  "slug": "armsmith-shield-welded-weapon",
+  "name": "Welded Weapon",
+  "marques": [
+   "weapon + shield drawn together",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ I (10 pr / craft 2 pr); learnable by anyone with Shield Forger",
+  "text": "The shield is attached to a weapon. They act as separate items (weapon augments on the weapon, shield augments on the shield) but are drawn at the same time. If one breaks, the other still works normally.\nCost to craft: no marques; 10 princes to buy or 2 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-armored",
+  "name": "Armored",
+  "marques": [
+   "turret soak +1",
+   "+2",
+   "+3",
+   "+4"
+  ],
+  "notes": "",
+  "text": "Heavily reinforced armoring keeps the turret functioning longer.\nThe turret's soak class is increased by 1\nThe turret's soak class is increased by 2\nThe turret's soak class is increased by 3\nThe turret's soak class is increased by 4",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-automated",
+  "name": "Automated",
+  "qualifiers": [],
+  "marques": [
+   "T2 Dex to resist",
+   "T3 Dex to resist",
+   "T4 Dex to resist",
+   "irresistible (unless T5 Dex)"
+  ],
+  "notes": "requires 1 Automata point & turret readying cost 0 AP; set automatic: 2 AP",
+  "text": "Requires: 1 skill point in Automata & turret has a 0 AP readying cost\nFor 2 AP you set the turret to automatic: choose a space within range. Anyone passing through or occupying it must roll a Dexterity resist or take the turret's tier 1 damage (soakable). Damage for occupying the space happens when the victim's action points refresh. Automated shots can't hit a victim in cover. Specialties that negate area damage (e.g. Blast Proof) also negate it.\nTier 2 Dexterity to resist\nTier 3 Dexterity to resist\nTier 4 Dexterity to resist\nIrresistible (unless the target can somehow get a tier 5 Dexterity result)",
+  "subsection": "",
+  "slots": 1,
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-belt-fed",
+  "name": "Belt Fed",
+  "marques": [
+   "ready −1 AP",
+   "ready −1 AP",
+   "ready −2 AP",
+   "ready −2 AP"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "An ammunition box on the side radically lowers the time needed to ready the turret.\nThe turret's readying cost is lowered by 1 AP\nThe turret's readying cost is lowered by 2 AP",
+  "modifiers": [
+   {
+    "stat": "ap_ready",
+    "op": "add",
+    "when": "always",
+    "scope": "weapon",
+    "by_marque": [
+     -1,
+     -1,
+     -2,
+     -2
+    ]
+   }
+  ],
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-bunker",
+  "name": "Bunker",
+  "marques": [
+   "medium cover",
+   "medium cover",
+   "heavy cover",
+   "heavy cover"
+  ],
+  "notes": "two marques (I/III)",
+  "text": "A larger metal shield around the turret hides its user better.\nThe turret grants medium cover\nThe turret grants heavy cover",
+  "two_marque": true,
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-body-part-seeker",
+  "name": "Body-Part Seeker",
+  "qualifiers": [
+   "req. Automated"
+  ],
+  "marques": [
+   "T2 resist",
+   "T3 resist",
+   "T3 resist",
+   "T4 resist"
+  ],
+  "notes": "",
+  "text": "Requires: Automated turret\nWhen setting the turret to automated, choose a called-shot location. Victims hit must resist that called shot as though hit with it.\nTier 2 resist\nTier 3 resist\nTier 3 resist\nTier 4 resist",
+  "subsection": "",
+  "slots": 1,
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-deadly-accurate",
+  "name": "Deadly Accurate",
+  "qualifiers": [
+   "req. Automated"
+  ],
+  "marques": [
+   "Automated: tier 2 damage",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ II (200 pr / craft 40 pr); learnable by anyone with Turret Builder",
+  "text": "Requires: Automated turret\nWhen automated, the turret deals tier 2 damage.\nCost to craft: no marques; 200 princes to buy or 40 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-devastatingly-accurate",
+  "name": "Devastatingly Accurate",
+  "qualifiers": [
+   "req. Automated",
+   "req. Deadly Accurate"
+  ],
+  "marques": [
+   "Automated: tier 3 damage",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ III (1,000 pr / craft 200 pr); learnable by anyone with Turret Builder",
+  "text": "Requires: Automated turret with Deadly Accurate augment\nWhen automated, the turret deals tier 3 damage.\nCost to craft: no marques; 1,000 princes to buy or 200 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-fortified",
+  "name": "Fortified",
+  "marques": [
+   "turret +2 Def",
+   "+4",
+   "+6",
+   "+8"
+  ],
+  "notes": "",
+  "text": "Steel bones welded in just the right places fortify the turret's natural armoring.\nThe turret gains +2 defense\nThe turret gains +4 defense\nThe turret gains +6 defense\nThe turret gains +8 defense",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-mobile",
+  "name": "Mobile",
+  "marques": [
+   "moves 5 ft",
+   "10 ft",
+   "15 ft",
+   "20 ft"
+  ],
+  "notes": "free move each turn while mounted",
+  "text": "Small treads let the turret move a little each turn as long as it's mounted.\nThe turret freely moves 5 feet\nThe turret freely moves 10 feet\nThe turret freely moves 15 feet\nThe turret freely moves 20 feet",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-reactive-armor",
+  "name": "Reactive Armor",
+  "marques": [
+   "breaks on ≥5 dmg",
+   "≥10 dmg",
+   "≥15 dmg",
+   "≥20 dmg"
+  ],
+  "notes": "turret soak 0 while active; repair only in downtime",
+  "text": "Armor that breaks off and absorbs a major attack. While active the turret's soak class is 0; instead, all damage is negated, and the attack that destroys the reactive armor is negated too. Only repairable during downtime.\nArmor is destroyed when hit with 5 or more damage\nArmor is destroyed when hit with 10 or more damage\nArmor is destroyed when hit with 15 or more damage\nArmor is destroyed when hit with 20 or more damage",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-reflective-armor",
+  "name": "Reflective Armor",
+  "marques": [
+   "turret +1 Eva",
+   "+2",
+   "+3",
+   "+4"
+  ],
+  "notes": "",
+  "text": "Angled plating deflects incoming shots.\nThe turret gains +1 to evade\nThe turret gains +2 to evade\nThe turret gains +3 to evade\nThe turret gains +4 to evade",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-riot-turret",
+  "name": "Riot Turret",
+  "marques": [
+   "knockback 5 ft, T2 Brute resists",
+   "T3 Brute",
+   "T4 Brute",
+   "irresistible (unless T5 Brute)"
+  ],
+  "notes": "Water: DC −2, can deal lethal effects, puts out fires",
+  "text": "A spare canister draws water from the air so the turret can blast water. Water shots can deal lethal effects and lower the turret's damage class by 2. The victim is knocked back 5 ft unless they resist with Brute. A hit puts out fires.\nTier 2 Brute to resist\nTier 3 Brute to resist\nTier 4 Brute to resist\nIrresistible (unless the target can somehow get a tier 5 Brute result)",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-seek-destroy-system",
+  "name": "Seek & Destroy System",
+  "qualifiers": [
+   "req. Automated"
+  ],
+  "marques": [
+   "Automated: target a creature instead of a space",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ II (200 pr / craft 40 pr); learnable by anyone with Turret Builder; change target 2 AP",
+  "text": "Requires: Automated augment\nWhen setting the turret to automated, choose a target instead of a space. If the target is in range, the turret attacks it once when your action points refresh; otherwise it acts like a normal automated turret. Changing the target costs 2 AP.\nCost to craft: no marques; 200 princes to buy or 40 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-spray-shots",
+  "name": "Spray Shots",
+  "qualifiers": [
+   "req. Automated"
+  ],
+  "marques": [
+   "+1 adjacent space",
+   "+2",
+   "+3",
+   "+4"
+  ],
+  "notes": "",
+  "text": "Requires: Automated augment\nThe turret swivels, covering a wider area less accurately. When set to automatic, you choose additional spaces; all must be within range and adjacent to each other. Anyone passing through or occupying one must roll a Dexterity resist or take the turret's tier 1 damage, at most once per turn (moving through several spaces doesn't provoke several attacks). Damage for occupying happens when the victim's AP refresh.\n1 additional adjacent space\n2 additional adjacent spaces\n3 additional adjacent spaces\n4 additional adjacent spaces",
+  "subsection": "",
+  "slots": 1,
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-targeting-system",
+  "name": "Targeting System",
+  "qualifiers": [
+   "req. Automated"
+  ],
+  "marques": [
+   "Automated: resist needs one tier higher",
+   "–",
+   "–",
+   "–"
+  ],
+  "notes": "always mQ III (1,000 pr / craft 200 pr); learnable by anyone with Turret Builder",
+  "text": "Requires: Automated augment\nThe target must now get a Dexterity resist one tier higher to avoid an automated turret.\nCost to craft: no marques; 1,000 princes to buy or 200 princes to craft yourself (if you know the augment).",
+  "subsection": "",
+  "slots": 1,
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
+ },
+ {
+  "skill": "Armsmith",
+  "lists": [
+   "turret"
+  ],
+  "section": "Turret augments",
+  "slug": "armsmith-turret-tempered",
+  "name": "Tempered",
+  "marques": [
+   "turret +5 HP",
+   "+10",
+   "+15",
+   "+20"
+  ],
+  "notes": "",
+  "text": "Designed to keep working as pieces get blown off.\nThe turret gains 5 hit points\nThe turret gains 10 hit points\nThe turret gains 15 hit points\nThe turret gains 20 hit points",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [],
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "armsmith-extra"
  }
 ]

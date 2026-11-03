@@ -25,7 +25,7 @@
                 {% if known|length < capacity %}<button class="btn small primary" name="action" value="add" onclick="this.form.slug.value='{{ o.aug.slug }}'">{% t "Learn" %}</button>
                 {% else %}<button class="btn small" name="action" value="swap" onclick="this.form.slug.value='{{ o.aug.slug }}'">{% t "Swap in" %}</button>{% endif %}
               {% endif %}
-              <b>{{ o.aug.name }}</b> <span class="tag">{% if o.aug.slots == 1 %}{% t "1 slot" %}{% else %}{% t "{n} slots" n=o.aug.slots|default_if_none:"?" %}{% endif %}</span>
+              <b>{{ o.aug.name }}</b> {% ext_badge o.aug %}{% if o.aug.two_marque %} <span class="tag" title="{% t "This augment only has mQ I and mQ III." %}">{% t "mQ I/III" %}</span>{% endif %} <span class="tag">{% if o.aug.slots == 1 %}{% t "1 slot" %}{% else %}{% t "{n} slots" n=o.aug.slots|default_if_none:"?" %}{% endif %}</span>
               {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
               <span class="cost">{% t "your marque: {n}" n=o.marque|roman %}</span>
             </header>

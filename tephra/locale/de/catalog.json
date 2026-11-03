@@ -232,5 +232,7 @@
  "Prosthetic": "Prothese",
  "clanker": "Clanker",
  "Clanker": "Clanker",
- "Auto": "Automat"
+ "Auto": "Automat",
+ "{augment} only fits a turret.": "{augment} passt nur auf ein Geschütz.",
+ "Turret": "Geschütz"
 }
