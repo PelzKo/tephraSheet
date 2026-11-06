@@ -96,6 +96,9 @@ def sheet_context(request, character):
         "memento_count": sum(1 for i in items if i.memento),
         "released_liquids": released_liquids, "wet": fx.get("status:wet"),
         "pets": pet_cards(character), "pets_enabled": "pets-and-predators" in enabled(),
+        "automatons": automaton_cards(character),
+        "can_build_automatons": any(c in ("steamer", "fusebox", "clockwork") for s, _l in character.specialties
+                                    for c in reg.specialties.get(s, {}).get("crafts", [])),
         "liquid_max": tables.max_liquids(sheet.stats["diy"].total)
         if any(s == "alchemy-liquid-life-giver" for s, _l in character.specialties) else 0,
         "liquid_count": sum(i.quantity for i in items if i.kind == "living-liquid") + len(released),
@@ -299,6 +302,24 @@ def play_action(request, character, action):
             .exclude(slot="released").first()
         if vial:
             release_liquid(request, character, vial, improper=p.get("improper") == "1", tier=_int(p.get("awaken")))
+    elif action in ("auto_damage", "auto_toggle"):
+        auto = character.automatons.filter(pk=_int(p.get("id"))).first()
+        if auto and action == "auto_toggle":
+            key = p.get("key", "")
+            auto.toggles = [k for k in auto.toggles if k != key] if key in auto.toggles else auto.toggles + [key]
+            auto.save(update_fields=["toggles"])
+        elif auto:
+            amount = max(0, _int(p.get("amount")))
+            hp_max = auto.compute()["stats"]["hp"].total
+            if p.get("sign") == "-1":  # repair: wounds first, then HP
+                fix = min(amount, auto.wounds_taken)
+                auto.wounds_taken -= fix
+                auto.hp_lost = max(0, auto.hp_lost - (amount - fix))
+            else:  # damage: HP first, then wounds
+                to_hp = min(amount, max(0, hp_max - auto.hp_lost))
+                auto.hp_lost += to_hp
+                auto.wounds_taken += amount - to_hp
+            auto.save(update_fields=["hp_lost", "wounds_taken"])
     elif action in ("pet_hp", "pet_wound", "pet_venom"):
         pet = character.pets.filter(pk=_int(p.get("id"))).first()
         if pet:
@@ -350,6 +371,15 @@ def end_unavailable(request, character):
             return
         character.toggles = [k for k in character.toggles if k not in {o["key"] for o in stale}]
         messages.info(request, _("Ended: {items}.", items=", ".join(o["label"] for o in stale)))
+
+
+def automaton_cards(character):
+    out = []
+    for a in character.automatons.all():
+        s = a.compute()
+        out.append({"a": a, "s": s, "hp_left": max(0, s["stats"]["hp"].total - a.hp_lost),
+                    "wounds_left": max(0, s["stats"]["wnd"].total - a.wounds_taken)})
+    return out
 
 
 def pet_cards(character):

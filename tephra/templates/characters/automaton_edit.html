@@ -1,0 +1,62 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block content %}
+<div class="paper">
+  <div class="row spread"><h1>{% if auto %}{% t "Automaton – {name}" name=auto.name %}{% else %}{% t "New automaton" %}{% endif %}</h1>
+    <a class="btn" href="{% url 'sheet' character.pk %}?tab=pets">{% t "Back to sheet" %}</a></div>
+  {% if sheet.warnings %}<div class="warn-banner" role="alert">{% for w in sheet.warnings %}<div>{{ w }}</div>{% endfor %}</div>{% endif %}
+  <form method="post" class="stack">{% csrf_token %}
+    <div class="form-grid">
+      <div class="field"><label>{% t "Name" %}</label><input type="text" name="name" value="{{ auto.name }}" required></div>
+      <div class="field"><label>{% t "Type" %}</label><select name="type">{% for v, l in types %}<option value="{{ v }}" {% if auto.type == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select></div>
+      <div class="field"><label>{% t "Marque (fuse box specialties)" %}</label><select name="marque">{% for n in "1234" %}<option value="{{ n }}" {% if auto.marque|stringformat:"s" == n %}selected{% endif %}>mQ {{ n }}</option>{% endfor %}</select></div>
+      <div class="field"><label><input type="checkbox" name="advanced" {% if auto.advanced %}checked{% endif %}> {% t "Beta / advanced core (+2 slots)" %}</label>
+        <label><input type="checkbox" name="diy" {% if not auto or auto.diy %}checked{% endif %}> {% t "Built with DIY (not bought)" %}</label></div>
+      <div class="field"><label>{% t "Torso" %}</label><select name="move-torso"><option value="">–</option>{% for m in movement %}<option value="{{ m }}" {% if auto.movement.torso == m %}selected{% endif %}>{{ m|t }}</option>{% endfor %}</select></div>
+      <div class="field"><label>{% t "Groin" %}</label><select name="move-groin"><option value="">–</option>{% for m in movement %}{% if m != "arms" %}<option value="{{ m }}" {% if auto.movement.groin == m %}selected{% endif %}>{{ m|t }}</option>{% endif %}{% endfor %}</select></div>
+    </div>
+
+    {% if auto %}
+    <h3>{% t "Core process" %} <span class="muted small">{{ sheet.type.core_label|t }} · {% t "{n} slots" n=sheet.core_slots %}</span></h3>
+    <input type="hidden" name="core_rows" value="{{ core_rows|length }}">
+    {% for r in core_rows %}<div class="row">
+      <select name="core{{ r.i }}-slug"><option value="">–</option>{% for a in core_options %}<option value="{{ a.slug }}" {% if r.slug == a.slug %}selected{% endif %}>{% if a.slug in known %}✓ {% endif %}{{ a.name }} ({% if a.slots == 1 or a.slots is None %}{% t "1 slot" %}{% else %}{% t "{n} slots" n=a.slots %}{% endif %})</option>{% endfor %}</select>
+      <select name="core{{ r.i }}-mq">{% for n in "1234" %}<option value="{{ n }}" {% if r.mq|stringformat:"s" == n %}selected{% endif %}>mQ {{ n }}</option>{% endfor %}</select></div>{% endfor %}
+
+    <h3>{% t "Limbs" %} <span class="muted small">{% t "prosthetic augments; ✓ = known by you" %}</span></h3>
+    <input type="hidden" name="limb_count" value="{{ limbs|length }}">
+    {% for l in limbs %}<div class="paper" style="padding:8px 12px;margin-bottom:8px">
+      <div class="row"><input type="text" name="limb{{ l.i }}-name" value="{{ l.name }}" aria-label="{% t "Limb" %}">
+        <select name="limb{{ l.i }}-material">{% for m in materials %}<option value="{{ m }}" {% if l.material == m %}selected{% endif %}>{{ m|t }}</option>{% endfor %}</select>
+        <label><input type="checkbox" name="limb{{ l.i }}-beta" {% if l.beta %}checked{% endif %}> {% t "Beta (+2 slots)" %}</label>
+        <label><input type="checkbox" name="limb{{ l.i }}-remove"> {% t "Remove" %}</label></div>
+      <input type="hidden" name="limb{{ l.i }}-rows" value="{{ l.rows|length }}">
+      {% for r in l.rows %}<div class="row"><select name="limb{{ l.i }}-aug{{ r.i }}-slug"><option value="">–</option>{% for a in limb_options %}<option value="{{ a.slug }}" {% if r.slug == a.slug %}selected{% endif %}>{% if a.slug in known %}✓ {% endif %}{{ a.name }}{% if a.subsection %} ({{ a.subsection }}){% endif %}</option>{% endfor %}</select>
+        <select name="limb{{ l.i }}-aug{{ r.i }}-mq">{% for n in "1234" %}<option value="{{ n }}" {% if r.mq|stringformat:"s" == n %}selected{% endif %}>mQ {{ n }}</option>{% endfor %}</select></div>{% endfor %}
+    </div>{% endfor %}
+    <button class="btn small" name="action" value="add_limb">{% t "Add limb" %}</button>
+
+    {% if auto.type == "fusebox" %}
+      <h3>{% t "Fuse box specialties" %}</h3>
+      <select name="specialties" multiple size="8">{% for s in specialties %}<option value="{{ s.slug }}" {% if s.slug in auto.specialties %}selected{% endif %}>{% if s.skill %}{{ s.skill|t }}: {% endif %}{{ s.name }}</option>{% endfor %}</select>
+    {% endif %}
+
+    <h3>{% t "Attack and armor" %}</h3>
+    <div class="form-grid">
+      <div class="field"><label>{% t "Weapon (from your inventory)" %}</label><select name="weapon"><option value="">–</option>{% for i in weapons %}<option value="{{ i.pk }}" {% if auto.weapon_id == i.pk %}selected{% endif %}>{{ i.name|item_name }}</option>{% endfor %}</select></div>
+      <div class="field"><label>{% t "Armor (from your inventory)" %}</label><select name="armor"><option value="">–</option>{% for i in armors %}<option value="{{ i.pk }}" {% if auto.armor_id == i.pk %}selected{% endif %}>{{ i.name|item_name }}</option>{% endfor %}</select></div>
+    </div>
+    <h3>{% t "Misc" %}</h3>
+    <div class="row">{% for k in misc_stats %}<label>{{ stat_labels|get:k|default:k|t }} <input type="number" name="misc-{{ k }}" value="{{ auto.misc|get:k|default:0 }}" style="width:5em"></label>{% endfor %}</div>
+    {% endif %}
+
+    <div class="field"><label>{% t "Other equipment" %}</label><textarea name="equipment" rows="2">{{ auto.equipment }}</textarea></div>
+    <div class="field"><label>{% t "Notes" %}</label><textarea name="notes" rows="3">{{ auto.notes }}</textarea></div>
+    <div class="row">
+      <button class="btn" name="action" value="save">{% t "Save and recalculate" %}</button>
+      <button class="btn primary" name="action" value="done">{% t "Save and back to the sheet" %}</button>
+      {% if auto %}<button class="btn danger" name="action" value="delete" formnovalidate onclick="return confirm('{% t "Remove {name}?" name=auto.name|escapejs %}')">{% t "Remove automaton" %}</button>{% endif %}
+    </div>
+  </form>
+</div>
+{% if auto %}<div class="paper">{% include "characters/partials/automaton_card.html" with a=auto s=sheet editor=True %}</div>{% endif %}
+{% endblock %}

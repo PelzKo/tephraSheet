@@ -243,6 +243,55 @@ class Pet(models.Model):
                         origin=self.origin, wild=self.wild, stance=self.stance, levels=self.levels)
 
 
+class Automaton(models.Model):
+    """An automaton built by a character (core Automata rules; record like the Automaton Crafting Sheet).
+    No password: reachable only from its owner's sheet. Numbers come from rules/engine/automaton.py."""
+
+    TYPE_CHOICES = [("steamer", "Steamer"), ("fusebox", "Fuse box"), ("clockwork", "Clockwork")]
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="automatons")
+    name = models.CharField(max_length=80)
+    type = models.CharField(max_length=10, choices=TYPE_CHOICES, default="steamer")
+    marque = models.PositiveSmallIntegerField(default=1, help_text="fuse box: number of specialties by marque")
+    advanced = models.BooleanField(default=False, help_text="Beta Boilers / Advanced Brainworks / Advanced Analytics")
+    diy = models.BooleanField(default=True, help_text="built and maintained with DIY (not bought)")
+    core_augments = models.JSONField(default=list, blank=True)
+    limbs = models.JSONField(default=list, blank=True)
+    movement = models.JSONField(default=dict, blank=True)
+    specialties = models.JSONField(default=list, blank=True)
+    misc = models.JSONField(default=dict, blank=True)
+    weapon = models.ForeignKey("InventoryItem", null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
+    armor = models.ForeignKey("InventoryItem", null=True, blank=True, on_delete=models.SET_NULL, related_name="+")
+    equipment = models.TextField(blank=True)
+    notes = models.TextField(blank=True)
+    hp_lost = models.PositiveIntegerField(default=0)
+    wounds_taken = models.PositiveIntegerField(default=0)
+    toggles = models.JSONField(default=list, blank=True)
+
+    class Meta:
+        ordering = ["pk"]
+
+    def __str__(self):
+        return self.name
+
+    def to_state(self):
+        from rules.engine.automaton import AutomatonState
+
+        return AutomatonState(type=self.type, marque=self.marque, advanced=self.advanced, diy=self.diy,
+                              core_augments=[list(a) for a in self.core_augments], limbs=list(self.limbs),
+                              movement=dict(self.movement), specialties=list(self.specialties), misc=dict(self.misc),
+                              toggles=list(self.toggles),
+                              armor=self.armor.to_item_state() if self.armor else None,
+                              weapon=self.weapon.to_item_state() if self.weapon else None)
+
+    def compute(self):
+        from rules.engine.automaton import compute_automaton
+
+        owner = self.character.compute()
+        return compute_automaton(self.to_state(), [s for s, _l in self.character.specialties], owner.stats,
+                                 set(self.character.augments))
+
+
 class EffectEntry(models.Model):
     """An active status effect or called-shot (wounded/fatal) effect. ``key`` points into
     ``rules/engine/effects.py``; custom status effects have no key and no mechanical effect."""

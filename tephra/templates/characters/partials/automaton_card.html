@@ -1,0 +1,37 @@
+{% load sheet_tags %}{# One automaton; a = Automaton, s = compute_automaton result #}
+<div class="pet-card">
+  <div class="row spread"><h3 style="margin:0">{{ a.name }} <span class="muted small">{{ a.get_type_display|t }} · mQ {{ a.marque }}{% if a.advanced %} · {% t "advanced" %}{% endif %}</span></h3>
+    {% if not editor %}<a class="btn small" href="{% url 'automaton_edit' character.pk a.pk %}">{% t "Edit" %}</a>{% endif %}</div>
+  {% if s.warnings and not editor %}<p class="small warn">{{ s.warnings|join:" · " }}</p>{% endif %}
+  <div class="pet-stats">
+    <span>{% t "AP" %} {% if s.has_ap %}{% stat s.stats.ap %}{% else %}<span title="{% t "No own AP: acts on its controller's AP or its directives" %}">–</span>{% endif %}</span>
+    <span>{% t "HP" %} <b>{{ hp_left|default_if_none:s.stats.hp.total }}</b> / {% stat s.stats.hp %}</span>
+    <span>{% t "Wounds" %} <b>{{ wounds_left|default_if_none:s.stats.wnd.total }}</b> / {% stat s.stats.wnd %}</span>
+    <span>{% t "Soak" %} {% stat s.stats.soak %} <span class="muted">({{ s.soak_tiers|join:"|" }})</span></span>
+    <span>{% t "Priority" %} {% stat s.stats.pri signed=True %}</span>
+  </div>
+  <div class="pet-stats">
+    <span>{% t "Speed" %} {% stat s.stats.spd %}</span><span>{% t "Swim" %} {% stat s.stats.swim %}</span>
+    <span>{% t "Climb" %} {% stat s.stats.climb %}</span><span>{% t "Fly" %} {% stat s.stats.fly %}</span>
+    <span>{% t "Accuracy" %} {% stat s.stats.acc signed=True %}</span><span>{% t "Evade" %} {% stat s.stats.eva signed=True %}</span>
+    <span>{% t "Strike" %} {% stat s.stats.stk signed=True %}</span><span>{% t "Defense" %} {% stat s.stats.def signed=True %}</span>
+    {% for at, v in s.attrs.items %}{% if v.total %}<span>{{ at|t }} {% stat v signed=True %}</span>{% endif %}{% endfor %}
+  </div>
+  {% if s.weapon %}<p class="small"><b>{{ s.weapon.name|item_name }}</b>: {% t "AP" %} {{ s.weapon.ap }} · {% t "Acc" %} {% stat s.weapon.acc signed=True %} · {% t "Stk" %} {% stat s.weapon.stk signed=True %} · {% t "DC" %} {% stat s.weapon.dc %} → {{ s.weapon.dmg|join:"|" }}</p>{% endif %}
+  {% if s.toggles %}<div class="row small">{% for tg in s.toggles %}
+    {% if editor %}<span class="tag">{{ tg.label }}</span>{% else %}<button class="btn small{% if tg.on %} primary{% endif %}" hx-post="{% url 'play' character.pk 'auto-toggle' %}" hx-vals='{"id": "{{ a.pk }}", "key": "{{ tg.key }}", "tab": "pets"}' hx-target="#sheet-body" hx-swap="outerHTML">{{ tg.label }}</button>{% endif %}{% endfor %}</div>{% endif %}
+  {% if not editor %}
+    <div class="row">
+      <form class="row" style="gap:4px" hx-post="{% url 'play' character.pk 'auto-damage' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+        <input type="hidden" name="id" value="{{ a.pk }}"><input type="hidden" name="tab" value="pets">
+        <input type="number" name="amount" placeholder="{% t "dmg" %}" aria-label="{% t "Damage amount" %}" style="width:5em" required>
+        <button class="btn small" name="sign" value="1" title="{% t "Damage goes to HP first, then wounds" %}">{% t "Damage" %}</button>
+        <button class="btn small" name="sign" value="-1" title="{% t "Repair: wounds first, then HP" %}">{% t "Repair" %}</button></form>
+    </div>
+  {% endif %}
+  <details class="small"><summary>{% t "Core and limbs" %}</summary>
+    <div><b>{{ s.type.core_label|t }}</b>: {% for x in a.core_augments %}{% with aug=x.0|augment %}{{ aug.name }} mQ {{ x.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% empty %}–{% endfor %}</div>
+    {% for l in a.limbs %}<div><b>{{ l.name }}</b> ({{ l.material|t }}{% if l.beta %}, beta{% endif %}): {% for x in l.augments %}{% with aug=x.0|augment %}{{ aug.name }} mQ {{ x.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% empty %}–{% endfor %}</div>{% endfor %}
+    {% if a.equipment %}<div>{{ a.equipment }}</div>{% endif %}{% if a.notes %}<p>{{ a.notes|linebreaksbr }}</p>{% endif %}
+  </details>
+</div>

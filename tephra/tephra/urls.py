@@ -4,7 +4,7 @@ from django.urls import path
 
 from catalog import views as catalog_views
 from wiki import views as wiki_views
-from characters.views import admin_mode, feedback, general, levelup, pets, planner, sheet, wizard
+from characters.views import admin_mode, automatons, feedback, general, levelup, pets, planner, sheet, wizard
 
 urlpatterns = [
     path("", general.character_list, name="character_list"),
@@ -23,6 +23,8 @@ urlpatterns = [
     path("c/<int:pk>/augments/", levelup.augments_view, name="augments"),
     path("c/<int:pk>/pets/new/", pets.pet_edit, name="pet_new"),
     path("c/<int:pk>/pets/<int:pet_id>/", pets.pet_edit, name="pet_edit"),
+    path("c/<int:pk>/automatons/new/", automatons.automaton_edit, name="automaton_new"),
+    path("c/<int:pk>/automatons/<int:auto_id>/", automatons.automaton_edit, name="automaton_edit"),
     path("c/<int:pk>/admin-mode/", admin_mode.toggle_admin, name="toggle_admin"),
     path("c/<int:pk>/misc/", admin_mode.misc_adjust, name="misc_adjust"),
     path("c/<int:pk>/edit/", admin_mode.edit_choices, name="edit_choices"),
