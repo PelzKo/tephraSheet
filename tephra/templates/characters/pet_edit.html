@@ -1,0 +1,70 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block content %}
+<div class="paper">
+  <div class="row spread"><h1>{% if pet %}{% t "Animal – {name}" name=pet.name %}{% else %}{% t "New animal" %}{% endif %}</h1>
+    <a class="btn" href="{% url 'sheet' character.pk %}?tab=pets">{% t "Back to sheet" %}</a></div>
+  {% if messages %}<ul class="messages">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>{% endif %}
+
+  {% if not pet %}
+    <form method="post" class="stack" style="margin-bottom:16px">{% csrf_token %}
+      <h2>{% t "Start from a sample animal" %}</h2>
+      <div class="row"><select name="preset">{% for p in presets %}<option value="{{ p.slug }}">{{ p.name }}{% if p.family %} ({{ p.family }}){% endif %}</option>{% endfor %}</select>
+        <input type="text" name="name" placeholder="{% t "Name (optional)" %}">
+        <button class="btn primary">{% t "Create" %}</button></div>
+    </form>
+    <h2>{% t "… or build one step by step" %}</h2>
+  {% endif %}
+
+  <form method="post" class="stack">{% csrf_token %}
+    <div class="form-grid">
+      <div class="field"><label>{% t "Name" %}</label><input type="text" name="name" value="{{ pet.name }}" required></div>
+      <div class="field"><label>{% t "Origin" %}</label><select name="origin">{% for v, l in origins %}<option value="{{ v }}" {% if pet.origin == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select></div>
+      <div class="field"><label><input type="checkbox" name="wild" {% if pet.wild %}checked{% endif %}> {% t "Wild (untamed): extra AP at SP marque 2 and 4" %}</label></div>
+      <div class="field"><label>{% t "Bonus SP" %}</label><input type="number" name="sp_bonus" value="{{ pet.sp_bonus|default:0 }}" style="width:6em"></div>
+      <div class="field"><label>{% t "Levels (bio-engineered)" %}</label><input type="number" name="levels" value="{{ pet.levels|default:0 }}" min="0" style="width:6em"></div>
+    </div>
+
+    <h3>{% t "1. Size and niche" %}</h3>
+    <div class="choice-grid">{% for t in animals.templates.values %}
+      <label class="choice"><input type="radio" name="template" value="{{ t.slug }}" {% if pet.template == t.slug or not pet and forloop.first %}checked{% endif %}>
+        <b>{{ t.name }}</b><div class="small muted">{% t "HP {hp} · Wounds {wnd}" hp=t.hp wnd=t.wnd %} · {{ t.attack.name }} {% t "DC {n}" n=t.attack.dmg_class %}</div></label>{% endfor %}</div>
+
+    <h3>{% t "2. Movement" %}</h3>
+    <div class="choice-grid">{% for m in animals.movement.values %}
+      <label class="choice"><input type="checkbox" name="movement" value="{{ m.slug }}" {% if m.slug in pet.movement %}checked{% endif %}>
+        <b>{{ m.name }}</b><div class="small">{{ m.text }}</div></label>{% endfor %}</div>
+
+    <h3>{% t "3. Special traits (1 SP each) and training stories" %}</h3>
+    <details {% if pet %}open{% endif %}><summary>{% t "{n} traits chosen" n=pet.traits|length %}</summary>
+    <div class="choice-grid">{% for t in traits %}{% if not t.auto %}
+      <label class="choice"><input type="checkbox" name="traits" value="{{ t.slug }}" {% if t.slug in chosen %}checked{% endif %}>
+        <b>{{ t.name }}</b> <span class="tag">{{ t.group|t }}</span>{% if t.requires %} <span class="tag">{% t "needs {x}" x=t.requires_names|join:", " %}</span>{% endif %}
+        {% if t.choice %}<input type="text" name="choice:{{ t.slug }}" value="{{ chosen|get:t.slug|default_if_none:'' }}" placeholder="{{ t.choice }}">{% endif %}
+        <div class="small">{{ t.text }}</div></label>{% endif %}{% endfor %}</div></details>
+    <div class="choice-grid" style="margin-top:8px">{% for s in animals.stories.values %}
+      <label class="choice"><input type="checkbox" name="stories" value="{{ s.slug }}" {% if s.slug in pet.stories %}checked{% endif %}>
+        <b>{{ s.name }}</b> <span class="tag">{% t "{n} SP" n=s.sp %}</span><div class="small">{{ s.text }}</div></label>{% endfor %}</div>
+
+    {% if pet %}
+      <h3>{% t "4. Derived statistics" %} <span class="muted small">{% t "one row per SP (bio-engineered: per level): 4 attribute points, +2 to one stat, +1 to another" %}</span></h3>
+      <input type="hidden" name="row_count" value="{{ rows|length }}">
+      <div class="table-scroll"><table class="data">
+        <tr data-nosort><th>#</th>{% for a, _v in rows.0.attrs %}<th>{{ a|t }}</th>{% endfor %}<th>{% t "+2 / +4 Pri / +5 Speed" %}</th><th>{% t "+1 / +2 Pri" %}</th></tr>
+        {% for r in rows %}<tr><td>{{ r.n|add:1 }}</td>
+          {% for a, v in r.attrs %}<td><input type="number" name="row{{ r.n }}-{{ a }}" value="{{ v }}" min="0" max="4" style="width:4em"></td>{% endfor %}
+          <td><select name="row{{ r.n }}-major"><option value="">–</option>{% for k, l in majors %}<option value="{{ k }}" {% if r.major == k %}selected{% endif %}>{{ stat_labels|get:k|t }} {{ l }}</option>{% endfor %}</select></td>
+          <td><select name="row{{ r.n }}-minor"><option value="">–</option>{% for k, l in minors %}<option value="{{ k }}" {% if r.minor == k %}selected{% endif %}>{{ stat_labels|get:k|t }} {{ l }}</option>{% endfor %}</select></td></tr>
+        {% empty %}<tr><td colspan="8" class="muted">{% t "Choose special traits first: each one adds a row." %}</td></tr>{% endfor %}
+      </table></div>
+    {% endif %}
+
+    <div class="field"><label>{% t "Notes, lore, other stories" %}</label><textarea name="notes" rows="3">{{ pet.notes }}</textarea></div>
+    <div class="row">
+      <button class="btn" name="action" value="save">{% t "Save and recalculate" %}</button>
+      <button class="btn primary" name="action" value="done">{% t "Save and back to the sheet" %}</button>
+      {% if pet %}<button class="btn danger" name="action" value="delete" formnovalidate onclick="return confirm('{% t "Remove {name}?" name=pet.name|escapejs %}')">{% t "Remove animal" %}</button>{% endif %}
+    </div>
+  </form>
+</div>
+{% if pet %}<div class="paper">{% include "characters/partials/pet_card.html" with p=pet s=sheet editor=True %}</div>{% endif %}
+{% endblock %}

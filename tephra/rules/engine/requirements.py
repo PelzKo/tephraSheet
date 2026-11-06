@@ -90,17 +90,20 @@ def check_specialty(spec, state, sheet, ignore_owned=False):
     elif spec["general"]:
         if not any(sheet.skills[s].total >= 1 for s in tables.SCIENCE_SKILLS):
             reasons.append(_("needs at least 1 point in a Science skill"))
-    elif sheet.skills[spec["skill"]].total < 1:
-        reasons.append(_("needs at least 1 point in {skill}", skill=_(spec["skill"])))
+    elif max(sheet.skills[s].total for s in spec.get("skill_any") or [spec["skill"]]) < 1:
+        reasons.append(_("needs at least 1 point in {skill}",
+                         skill=_(" or ").join(_(s) for s in spec.get("skill_any") or [spec["skill"]])))
     names = owned_names(state)
     for clause in spec.get("requires", []):
         if clause.get("soft"):
             continue
         t = clause["type"]
-        if t == "skill":
-            have = sheet.skills[clause["skill"]].total
+        if t == "skill":  # "skill" may list alternatives (Expertise or Shamanism)
+            skills = clause["skill"] if isinstance(clause["skill"], list) else [clause["skill"]]
+            have = max(sheet.skills[s].total for s in skills)
             if have < clause["min"]:
-                reasons.append(_("needs {min} points in {skill} (has {have})", min=clause["min"], skill=_(clause["skill"]), have=have))
+                reasons.append(_("needs {min} points in {skill} (has {have})", min=clause["min"],
+                                 skill=_(" or ").join(_(s) for s in skills), have=have))
         elif t == "attribute":
             have = sheet.attributes[clause["attribute"]].total
             if have < clause["min"]:

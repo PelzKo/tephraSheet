@@ -20,6 +20,7 @@ EXTENSIONS = {
     "aether": "Aether",
     "mementos": "Mementos",
     "living-liquids": "Living Liquids",
+    "pets-and-predators": "Pets & Predators",
 }
 
 _offer = contextvars.ContextVar("tephra_offer", default=(frozenset(), frozenset()))

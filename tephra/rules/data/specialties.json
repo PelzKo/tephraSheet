@@ -16125,6 +16125,845 @@
   "extension": "mementos"
  },
  {
+  "slug": "animal-animal-tamer",
+  "name": "Animal Tamer",
+  "skill": "Expertise",
+  "bonuses": {
+   "eva": 1,
+   "def": 1,
+   "hp": 9
+  },
+  "cost": "Passive (downtime)",
+  "requires": [],
+  "tags": "[PASSIVE] [PET:tame]",
+  "effect": "You can tame beasts of the wilderness. When you can corral an animal and herd it into steady captivity where it can be fed regularly, you can start taming it during your downtime. (Taming: see Part 1. Start-of-game animal: see sidebar.)",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "animal-ap-trainer",
+  "name": "AP Trainer",
+  "skill": "Expertise",
+  "bonuses": {
+   "eva": 2,
+   "pri": 3,
+   "hp": 8
+  },
+  "cost": "Passive (training)",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": [
+     "Expertise",
+     "Shamanism"
+    ],
+    "min": 10
+   }
+  ],
+  "requires_text": "10 skill points in Expertise or Shamanism",
+  "tags": "[PASSIVE] [PET:story:additional-ap-1]",
+  "effect": "The animal gains the Additional AP 1 story (+1 SP). Only one animal tamed by you at a time.",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "animal-advanced-ap-trainer",
+  "name": "Advanced AP Trainer",
+  "skill": "Expertise",
+  "bonuses": {
+   "eva": 1,
+   "pri": 3,
+   "hp": 10
+  },
+  "cost": "Passive (training)",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": [
+     "Expertise",
+     "Shamanism"
+    ],
+    "min": 20
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "AP Trainer"
+    ]
+   }
+  ],
+  "requires_text": "20 skill points in Expertise or Shamanism and the AP Trainer specialty",
+  "tags": "[PASSIVE] [PET:story:additional-ap-2]",
+  "effect": "The animal gains the Additional AP 2 story (+1 SP). Can be done on one animal tamed by you at any time. Alternatively give the Additional AP 1 story to two animals tamed by you.",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "animal-battle-trainer",
+  "name": "Battle Trainer",
+  "skill": "Expertise",
+  "bonuses": {
+   "eva": 1,
+   "def": 2,
+   "hp": 10
+  },
+  "cost": "Passive (training)",
+  "requires": [],
+  "tags": "[PASSIVE] [PET:story:armorable] [PET:trait:called-shot]",
+  "effect": "Your animal gains the Armorable story and one Special Called Shot trait (Pounce, Slam, Winding Attack). These give 1 SP. If it already has all of them, or you don't want the trait, it gains 1 additional SP instead.",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "animal-animal-equipment-training",
+  "name": "Animal Equipment Training",
+  "skill": "Expertise",
+  "bonuses": {
+   "acc": 1,
+   "eva": 1,
+   "hp": 8
+  },
+  "cost": "Passive (training)",
+  "requires": [],
+  "requires_text": "The trained animal must have the Prehensile Limbs special trait",
+  "tags": "[PASSIVE] [PET:trait:tool-user]",
+  "effect": "You trained your animal in basic scientific equipment and weapons. It gains the Tool User special trait.",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "animal-lab-assistant-training",
+  "name": "Lab Assistant Training",
+  "skill": "Expertise",
+  "bonuses": {
+   "eva": 1,
+   "aug": 1,
+   "hp": 7
+  },
+  "cost": "Passive (training)",
+  "requires": [],
+  "requires_text": "The trained animal must have the Prehensile Limbs and Tool User special traits",
+  "tags": "[PASSIVE] [PET:story:wild-lab-assistant]",
+  "effect": "Your animal learns what not to eat in the lab and to fetch tools and caffeinated drinks. It gains the Wild Lab Assistant story (+1 SP).",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "animal-socialization-trainer",
+  "name": "Socialization Trainer",
+  "skill": "Expertise",
+  "bonuses": {
+   "eva": 1,
+   "pri": 3,
+   "hp": 6
+  },
+  "cost": "Passive (training)",
+  "requires": [],
+  "tags": "[PASSIVE] [PET:story:socialized]",
+  "effect": "You may give animals you tame the Socialized story (+1 SP).",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "animal-sequenced-orders-training",
+  "name": "Sequenced Orders Training",
+  "skill": "Expertise",
+  "bonuses": {
+   "acc": 1,
+   "eva": 1,
+   "hp": 8
+  },
+  "cost": "Passive (training)",
+  "requires": [],
+  "tags": "[PASSIVE] [PET:story:sequenced-orders]",
+  "effect": "Animals you tame gain the Sequenced Orders story (+1 SP).",
+  "attribute": "Cunning",
+  "skill_any": [
+   "Expertise",
+   "Shamanism"
+  ],
+  "options": {
+   "label": "Learned with which skill?",
+   "options": {
+    "Expertise": "Expertise (Cunning)",
+    "Shamanism": "Shamanism (Spirit)"
+   }
+  },
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "shamanism-fireproof",
+  "name": "Fireproof",
+  "skill": "Shamanism",
+  "attribute": "Spirit",
+  "bonuses": {
+   "eva": 1,
+   "def": 3,
+   "hp": 11
+  },
+  "cost": "Passive",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Fire Resistance"
+    ]
+   }
+  ],
+  "requires_text": "Fire Resistance specialty",
+  "tags": "[COND]",
+  "effect": "Any time you are subject to fire damage or a burn, the tier of your resist improves by 1. The heat and fire soak from your Fire Resistance is doubled (6/12/18/24).",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "shamanism-one-with-the-world",
+  "name": "One with the World",
+  "skill": "Shamanism",
+  "attribute": "Spirit",
+  "bonuses": {
+   "acc": 1,
+   "eva": 1,
+   "hp": 10
+  },
+  "cost": "Passive; resist Spirit (negates)",
+  "requires": [
+   {
+    "type": "skill_specialty",
+    "skill": "Shamanism"
+   }
+  ],
+  "requires_text": "any one Shamanism specialty this specialty can apply toward",
+  "tags": "[PASSIVE]",
+  "effect": "You can use many of your Shamanism abilities without moving and without others noticing. To notice that you use a Shamanism specialty, a person must roll a Spirit resist against your Shamanism. Applies to any specialty that calls upon animals through speaking, dancing or other movements.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "shamanism-pack-humanoid",
+  "name": "Pack Humanoid",
+  "skill": "Shamanism",
+  "attribute": "Spirit",
+  "bonuses": {
+   "acc": 1,
+   "stk": 1,
+   "hp": 11
+  },
+  "cost": "Passive",
+  "requires": [],
+  "tags": "[PASSIVE]",
+  "effect": "You can act as if you had both the Herd Instincts and Pack Instincts stories at all times (+1 Eva per herd ally / +1 Stk per pack ally within 25 ft).",
+  "modifiers": [
+   {
+    "stat": "eva",
+    "value": 1,
+    "when": "note",
+    "label": "per Herd Instincts ally within 25 ft"
+   },
+   {
+    "stat": "stk",
+    "value": 1,
+    "when": "note",
+    "label": "per Pack Instincts ally within 25 ft"
+   }
+  ],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "shamanism-deer-dance",
+  "name": "Deer Dance",
+  "skill": "Shamanism",
+  "attribute": "Spirit",
+  "bonuses": {
+   "eva": 2,
+   "pri": 3,
+   "hp": 6
+  },
+  "cost": "2 AP to activate + 1 AP per turn upkeep",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Pack Humanoid"
+    ]
+   }
+  ],
+  "requires_text": "Pack Humanoid specialty",
+  "tags": "[ACTION]",
+  "effect": "Trance as a true herd animal: all allies benefiting from your Herd Instincts gain +2 Evade while you dance and until the end of your turn after you stop the upkeep. You also gain this bonus.",
+  "modifiers": [
+   {
+    "stat": "eva",
+    "value": 2,
+    "when": "toggle"
+   }
+  ],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1,
+   "stop": 0
+  },
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "shamanism-pack-furor",
+  "name": "Pack Furor",
+  "skill": "Shamanism",
+  "attribute": "Spirit",
+  "bonuses": {
+   "stk": 2,
+   "pri": 3,
+   "hp": 9
+  },
+  "cost": "2 AP to activate + 1 AP per turn upkeep",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Pack Humanoid"
+    ]
+   }
+  ],
+  "requires_text": "Pack Humanoid specialty",
+  "tags": "[ACTION]",
+  "effect": "All allies benefiting from your Pack Instincts gain +3 Strike while you use this and until the end of your turn after you stop the upkeep. You also gain this bonus.",
+  "modifiers": [
+   {
+    "stat": "stk",
+    "value": 3,
+    "when": "toggle"
+   }
+  ],
+  "ongoing": {
+   "start": 2,
+   "upkeep": 1,
+   "stop": 0
+  },
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "shamanism-scarab",
+  "name": "Scarab",
+  "skill": "Shamanism",
+  "attribute": "Spirit",
+  "bonuses": {
+   "acc": 1,
+   "eva": 1,
+   "hp": 8
+  },
+  "cost": "3 AP",
+  "requires": [],
+  "tags": "[ACTION]",
+  "effect": "Roll Accuracy vs an adjacent opponent's Evade; on a hit a scarab burrows into their skin. At the end of your turn it makes a random, irresistible called shot against them, and again every turn until the opponent spends 1 AP to remove it.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "shamanism-entrenched-bloodwalker",
+  "name": "Entrenched Bloodwalker",
+  "skill": "Shamanism",
+  "attribute": "Spirit",
+  "bonuses": {
+   "acc": 1,
+   "eva": 1,
+   "hp": 7
+  },
+  "cost": "Passive (modifies Scarab)",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Scarab"
+    ]
+   }
+  ],
+  "requires_text": "Scarab specialty",
+  "tags": "[COND] [REQ]",
+  "effect": "The scarab must be cut out: removing it costs 1 AP and causes bleeding from that turn on, every turn until stopped. Bleeding is unsoakable; 1 AP patching stops 5 points.\nBleeds 3 damage\nBleeds 6 damage\nBleeds 9 damage\nBleeds 12 damage",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "alchemy-venom-harvester",
+  "name": "Venom Harvester",
+  "skill": "Alchemy",
+  "attribute": "Sciences",
+  "bonuses": {
+   "eva": 1,
+   "aug": 1,
+   "hp": 10
+  },
+  "cost": "3 AP to harvest",
+  "requires": [],
+  "tags": "[ACTION]",
+  "effect": "From a tamed, well-contained or freshly dead animal: roll Sciences (Understand); its tier is the highest venom marque you can extract. Then spend 3 AP to get one dose. Repeat for other venoms of the same animal. Max one dose of each venom kind per animal per downtime. Extracted venoms can be used by anyone like a poison.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "alchemy-expert-venom-extraction",
+  "name": "Expert Venom Extraction",
+  "skill": "Alchemy",
+  "attribute": "Sciences",
+  "bonuses": {
+   "eva": 1,
+   "aug": 1,
+   "hp": 10
+  },
+  "cost": "Passive",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Venom Harvester"
+    ]
+   }
+  ],
+  "requires_text": "Venom Harvester specialty",
+  "tags": "[PASSIVE] [REQ]",
+  "effect": "You can harvest one additional dose of venom from an animal between downtimes, if available.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "alchemy-venom-chemist",
+  "name": "Venom Chemist",
+  "skill": "Alchemy",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 8
+  },
+  "cost": "Passive (crafting)",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Venom Harvester"
+    ]
+   }
+  ],
+  "requires_text": "Venom Harvester specialty",
+  "tags": "[PASSIVE] [REQ]",
+  "effect": "Mix two doses of different venoms into a new venom class (cannot be mixed further, otherwise normal). Usable with the Venomized augment for doubly-venomized poisons.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-bio-engineer",
+  "name": "Bio-Engineer",
+  "skill": "Bio-Flux",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 1,
+   "diy": 1,
+   "hp": 5
+  },
+  "cost": "Passive (crafting)",
+  "requires": [],
+  "crafts": [
+   "animal-trait"
+  ],
+  "tags": "[AUG] [DIY] [CRAFT:animal-trait] [PET:bioengineer]",
+  "effect": "You can build your own animal from the ground up; only one animal (any size) at a time regardless of DIY. It starts with one special trait known by you; small animals one more. Traits come from a pertinent Special Traits list and are learned with augment points like normal augments; each must give no more than 1 SP. Special traits give no derived stats: instead the animal starts with 1 level + 1 per 2 of your levels, and levels up with you at every 2nd character level after its creation. It acts right before or after you in priority, or on any later turn (your choice). It is tamed by you at once but has no special taming abilities, so it acts as a normal tamed animal.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-bio-engineered-chimaeras",
+  "name": "Bio-Engineered Chimaeras",
+  "skill": "Bio-Flux",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Bio-Engineer"
+    ]
+   },
+   {
+    "type": "skill",
+    "skill": "Bio-Flux",
+    "min": 5
+   }
+  ],
+  "requires_text": "Bio-Engineer specialty and 5 skill points in Bio-Flux",
+  "tags": "[PASSIVE] [REQ] [PET:bioengineer+2]",
+  "effect": "Your bio-engineered animals may have two more special traits each, same rules as Bio-Engineer.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-bio-engineered-abominations",
+  "name": "Bio-Engineered Abominations",
+  "skill": "Bio-Flux",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Bio-Engineer"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Bio-Engineered Chimaeras"
+    ]
+   },
+   {
+    "type": "skill",
+    "skill": "Bio-Flux",
+    "min": 15
+   }
+  ],
+  "requires_text": "Bio-Engineer, Bio-Engineered Chimaeras, 15 skill points in Bio-Flux",
+  "tags": "[PASSIVE] [REQ] [PET:bioengineer+2]",
+  "effect": "Two more special traits per bio-engineered animal, same rules.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-bio-engineered-monstrosities",
+  "name": "Bio-Engineered Monstrosities",
+  "skill": "Bio-Flux",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Bio-Engineer"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Bio-Engineered Chimaeras"
+    ]
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Bio-Engineered Abominations"
+    ]
+   },
+   {
+    "type": "skill",
+    "skill": "Bio-Flux",
+    "min": 25
+   }
+  ],
+  "requires_text": "Bio-Engineer, Chimaeras, Abominations, 25 skill points in Bio-Flux",
+  "tags": "[PASSIVE] [REQ] [PET:bioengineer+2]",
+  "effect": "Two more special traits per bio-engineered animal, same rules.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-bio-engineer-extra-animals",
+  "name": "Bio-Engineer Extra Animals",
+  "skill": "Bio-Flux",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 5
+  },
+  "cost": "Passive",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Bio-Engineer"
+    ]
+   }
+  ],
+  "requires_text": "Bio-Engineer specialty",
+  "tags": "[PASSIVE] [REQ] [SCALE:DIY]",
+  "effect": "One additional bio-engineered animal per 6 DIY (2 animals at DIY 6, 3 at DIY 12); identical or unique.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-essence-adjustments",
+  "name": "Animal Essence Adjustments",
+  "skill": "Bio-Flux",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 6
+  },
+  "cost": "During a breather",
+  "requires": [],
+  "tags": "[PASSIVE] [PET:adjust]",
+  "effect": "During any breather you may change any Primary (size/niche), Movement or Special traits of any animal you have tamed. Changed animals count as bio-engineered for other bio-engineering specialties.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "requires_text": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-captive-animal-adjustments",
+  "name": "Captive Animal Adjustments",
+  "skill": "Bio-Flux",
+  "attribute": "Sciences",
+  "bonuses": {
+   "aug": 2,
+   "diy": 1,
+   "hp": 8
+  },
+  "cost": "During a breather; resist Spirit (negates)",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Animal Essence Adjustments"
+    ]
+   }
+  ],
+  "requires_text": "Animal Essence Adjustments specialty",
+  "tags": "[PASSIVE] [REQ]",
+  "effect": "You can use Animal Essence Adjustments on untamed, captive animals (an unwilling animal resists with Spirit). They don't count as bio-engineered until tamed.",
+  "modifiers": [],
+  "general": false,
+  "group": "",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "extension": "pets-and-predators"
+ },
+ {
   "slug": "manticore-venom-carrier",
   "name": "Venom Carrier",
   "attribute": "Brute",

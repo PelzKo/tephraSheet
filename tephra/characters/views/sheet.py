@@ -7,7 +7,8 @@ from django.views.decorators.http import require_POST
 from catalog.models import KIND_CHOICES, ItemTemplate
 from rules.engine import effects as fx
 from rules.lang import gettext as _
-from rules.engine import liquids, tables
+from rules.engine import liquids, pets, tables
+from rules.extensions import enabled
 from rules.engine.requirements import character_warnings
 from rules.registry import get_registry
 
@@ -16,7 +17,7 @@ from ..templatetags.sheet_tags import effect_html
 from .. import access, journal, services
 from ..models import EffectEntry, InventoryItem
 
-TAB_NAMES = ("page1", "page2", "inventory", "story")
+TAB_NAMES = ("page1", "page2", "inventory", "story", "pets")
 BARREL_LINES = 14
 # Silhouette positions (svg units, see page1.html) of the called-shot locations.
 BODY_POSITIONS = {1: (65, 12), 2: (65, 31), 3: (82, 22), 4: (65, 55), 5: (65, 105), 6: (65, 165),
@@ -43,7 +44,9 @@ def sheet_context(request, character):
     hp = character.current_hp if character.current_hp is not None else sheet.max_hp
     wounds = character.wounds_taken
     effects = list(character.effects.filter(active=True))
-    rows = list(sheet.specialty_rows)
+    # Expertise-or-Shamanism specialties show the skill they were learned with.
+    rows = [dict(r, skill=character.specialty_choices.get(r["slug"]) or r.get("skill"))
+            if reg.specialties.get(r["slug"], {}).get("skill_any") else r for r in sheet.specialty_rows]
     # Sheet p.2 has rows L1, L1, L1, L2 … L12.
     slots = []
     remaining = list(rows)
@@ -72,7 +75,8 @@ def sheet_context(request, character):
     for row in sheet.specialty_rows:
         sp = row["specialty"]
         spec_data[row["slug"]] = {
-            "slug": row["slug"], "name": sp["name"], "skill": sp["skill"] or "General (Sciences)", "cost": sp["cost"],
+            "slug": row["slug"], "name": sp["name"], "cost": sp["cost"],
+            "skill": (sp.get("skill_any") and character.specialty_choices.get(row["slug"])) or sp["skill"] or "General (Sciences)",
             "requires": sp["requires_text"], "effect": sp["effect"], "effect_html": effect_html(sp["effect"]), "usage_note": sp.get("usage_note", ""),
             "options": sp.get("options"), "choice": character.specialty_choices.get(row["slug"], ""),
             "bonuses": ", ".join(f"{_(tables.COMBAT_STAT_LABELS[k])} {v:+d}" for k, v in sp["bonuses"].items()),
@@ -91,6 +95,7 @@ def sheet_context(request, character):
         if any(s == "luck-mementos" for s, _l in character.specialties) else 0,
         "memento_count": sum(1 for i in items if i.memento),
         "released_liquids": released_liquids, "wet": fx.get("status:wet"),
+        "pets": pet_cards(character), "pets_enabled": "pets-and-predators" in enabled(),
         "liquid_max": tables.max_liquids(sheet.stats["diy"].total)
         if any(s == "alchemy-liquid-life-giver" for s, _l in character.specialties) else 0,
         "liquid_count": sum(i.quantity for i in items if i.kind == "living-liquid") + len(released),
@@ -294,6 +299,16 @@ def play_action(request, character, action):
             .exclude(slot="released").first()
         if vial:
             release_liquid(request, character, vial, improper=p.get("improper") == "1", tier=_int(p.get("awaken")))
+    elif action in ("pet_hp", "pet_wound", "pet_venom"):
+        pet = character.pets.filter(pk=_int(p.get("id"))).first()
+        if pet:
+            if action == "pet_hp":
+                pet.hp_damage = max(0, pet.hp_damage + _int(p.get("amount")) * (-1 if p.get("sign") == "-1" else 1))
+            elif action == "pet_wound":
+                pet.wounds_taken = max(0, pet.wounds_taken + _int(p.get("delta")))
+            else:
+                pet.venom_used = max(0, pet.venom_used + _int(p.get("delta")))
+            pet.save(update_fields=["hp_damage", "wounds_taken", "venom_used"])
     elif action in ("liquid_damage", "liquid_end_turn"):
         liquid = InventoryItem.objects.filter(character=character, pk=_int(p.get("id")), slot="released").first()
         if liquid:
@@ -335,6 +350,14 @@ def end_unavailable(request, character):
             return
         character.toggles = [k for k in character.toggles if k not in {o["key"] for o in stale}]
         messages.info(request, _("Ended: {items}.", items=", ".join(o["label"] for o in stale)))
+
+
+def pet_cards(character):
+    out = []
+    for p in character.pets.all():
+        s = pets.compute_pet(p.to_state())
+        out.append({"p": p, "s": s, "hp_left": max(0, s["stats"]["hp"].total - p.hp_damage)})
+    return out
 
 
 def release_liquid(request, character, vial, improper=False, tier=0):

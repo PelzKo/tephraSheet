@@ -33,7 +33,8 @@
 
 /* In landscape (laptop 3:2) both pages are shown side by side; in portrait one at a time. */
 .pages[data-tab="inventory"] .page, .pages[data-tab="inventory"] .page-wings,
-.pages[data-tab="story"] .page, .pages[data-tab="story"] .page-wings { display: none; }
+.pages[data-tab="story"] .page, .pages[data-tab="story"] .page-wings,
+.pages[data-tab="pets"] .page, .pages[data-tab="pets"] .page-wings { display: none; }
 @media (orientation: portrait), (max-width: 900px) {
   .pages { --pw: min(100%, calc((100vh - 120px) * 952 / 1232 * 1.35)); flex-direction: column; align-items: center; }
   .pages[data-tab="page1"] .page2, .pages[data-tab="page2"] .page1, .pages[data-tab="page2"] .page-wings { display: none; }

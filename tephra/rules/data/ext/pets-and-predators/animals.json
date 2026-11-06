@@ -1,0 +1,2514 @@
+{
+ "templates": [
+  {
+   "slug": "small-land",
+   "name": "Small Land",
+   "size": "small",
+   "niche": "land",
+   "hp": 6,
+   "wnd": 6,
+   "speed": {
+    "land": 30,
+    "climb": 5,
+    "swim": 10,
+    "fly": 0
+   },
+   "attrs": {
+    "Brute": 1,
+    "Dexterity": 3
+   },
+   "eva": 2,
+   "def": 0,
+   "soak_class": 1,
+   "attack": {
+    "name": "Bite & Claws",
+    "ap": 2,
+    "acc": 3,
+    "stk": 0,
+    "dmg_class": 2
+   },
+   "ride": ""
+  },
+  {
+   "slug": "medium-land",
+   "name": "Medium Land",
+   "size": "medium",
+   "niche": "land",
+   "hp": 9,
+   "wnd": 9,
+   "speed": {
+    "land": 40,
+    "climb": 5,
+    "swim": 15,
+    "fly": 0
+   },
+   "attrs": {
+    "Brute": 2,
+    "Dexterity": 1
+   },
+   "eva": 1,
+   "def": 1,
+   "soak_class": 2,
+   "attack": {
+    "name": "Bite & Claws",
+    "ap": 2,
+    "acc": 1,
+    "stk": 1,
+    "dmg_class": 4
+   },
+   "ride": "gnome"
+  },
+  {
+   "slug": "large-land",
+   "name": "Large Land",
+   "size": "large",
+   "niche": "land",
+   "hp": 12,
+   "wnd": 12,
+   "speed": {
+    "land": 35,
+    "climb": 5,
+    "swim": 10,
+    "fly": 0
+   },
+   "attrs": {
+    "Brute": 4,
+    "Dexterity": 0
+   },
+   "eva": 0,
+   "def": 4,
+   "soak_class": 2,
+   "attack": {
+    "name": "Bite & Claws",
+    "ap": 2,
+    "acc": 0,
+    "stk": 3,
+    "dmg_class": 6
+   },
+   "ride": "person"
+  },
+  {
+   "slug": "small-underwater",
+   "name": "Small Underwater",
+   "size": "small",
+   "niche": "water",
+   "hp": 6,
+   "wnd": 6,
+   "speed": {
+    "land": 0,
+    "climb": 0,
+    "swim": 30,
+    "fly": 0
+   },
+   "attrs": {
+    "Brute": 0,
+    "Dexterity": 4
+   },
+   "eva": 3,
+   "def": 0,
+   "soak_class": 1,
+   "attack": {
+    "name": "Bite",
+    "ap": 2,
+    "acc": 3,
+    "stk": 0,
+    "dmg_class": 2
+   },
+   "ride": ""
+  },
+  {
+   "slug": "medium-underwater",
+   "name": "Medium Underwater",
+   "size": "medium",
+   "niche": "water",
+   "hp": 9,
+   "wnd": 9,
+   "speed": {
+    "land": 0,
+    "climb": 0,
+    "swim": 40,
+    "fly": 0
+   },
+   "attrs": {
+    "Brute": 2,
+    "Dexterity": 2
+   },
+   "eva": 2,
+   "def": 1,
+   "soak_class": 1,
+   "attack": {
+    "name": "Bite",
+    "ap": 2,
+    "acc": 2,
+    "stk": 1,
+    "dmg_class": 4
+   },
+   "ride": "gnome"
+  },
+  {
+   "slug": "large-underwater",
+   "name": "Large Underwater",
+   "size": "large",
+   "niche": "water",
+   "hp": 12,
+   "wnd": 12,
+   "speed": {
+    "land": 0,
+    "climb": 0,
+    "swim": 40,
+    "fly": 0
+   },
+   "attrs": {
+    "Brute": 3,
+    "Dexterity": 2
+   },
+   "eva": 0,
+   "def": 4,
+   "soak_class": 2,
+   "attack": {
+    "name": "Bite",
+    "ap": 2,
+    "acc": 0,
+    "stk": 3,
+    "dmg_class": 6
+   },
+   "ride": "person"
+  },
+  {
+   "slug": "small-flying",
+   "name": "Small Flying",
+   "size": "small",
+   "niche": "air",
+   "hp": 4,
+   "wnd": 4,
+   "speed": {
+    "land": 10,
+    "climb": 0,
+    "swim": 5,
+    "fly": 25
+   },
+   "attrs": {
+    "Brute": 0,
+    "Dexterity": 4
+   },
+   "eva": 3,
+   "def": 0,
+   "soak_class": 1,
+   "attack": {
+    "name": "Bite & Claws",
+    "ap": 2,
+    "acc": 3,
+    "stk": 0,
+    "dmg_class": 2
+   },
+   "ride": ""
+  },
+  {
+   "slug": "medium-flying",
+   "name": "Medium Flying",
+   "size": "medium",
+   "niche": "air",
+   "hp": 7,
+   "wnd": 7,
+   "speed": {
+    "land": 10,
+    "climb": 0,
+    "swim": 5,
+    "fly": 35
+   },
+   "attrs": {
+    "Brute": 1,
+    "Dexterity": 3
+   },
+   "eva": 2,
+   "def": 1,
+   "soak_class": 1,
+   "attack": {
+    "name": "Bite & Claws",
+    "ap": 2,
+    "acc": 1,
+    "stk": 1,
+    "dmg_class": 4
+   },
+   "ride": ""
+  },
+  {
+   "slug": "large-flying",
+   "name": "Large Flying",
+   "size": "large",
+   "niche": "air",
+   "hp": 10,
+   "wnd": 10,
+   "speed": {
+    "land": 10,
+    "climb": 0,
+    "swim": 5,
+    "fly": 45
+   },
+   "attrs": {
+    "Brute": 2,
+    "Dexterity": 2
+   },
+   "eva": 1,
+   "def": 2,
+   "soak_class": 1,
+   "attack": {
+    "name": "Bite & Claws",
+    "ap": 2,
+    "acc": 0,
+    "stk": 3,
+    "dmg_class": 6
+   },
+   "ride": ""
+  }
+ ],
+ "movement": [
+  {
+   "slug": "amphibious",
+   "name": "Amphibious",
+   "text": "For a land or flying animal: swim speed +30 ft. For a water animal: land speed +25 ft. Can breathe air and water."
+  },
+  {
+   "slug": "climbing",
+   "name": "Climbing",
+   "text": "Climb speed +20 ft (or 20 ft if it had none)."
+  },
+  {
+   "slug": "gliding",
+   "name": "Gliding",
+   "text": "Can drop from heights and glide down at its primary speed, falling 10 ft per turn. No fall damage. Negated if its limbs are bound."
+  },
+  {
+   "slug": "jumping",
+   "name": "Jumping",
+   "text": "Once per turn a free jump (5 ft per Brute tier) if it attacks this turn and has made no other move; only right before or after the attack."
+  },
+  {
+   "slug": "stable",
+   "name": "Stable",
+   "text": "No penalties for uneven or unstable terrain."
+  },
+  {
+   "slug": "swift",
+   "name": "Swift",
+   "text": "Primary movement +20 ft."
+  },
+  {
+   "slug": "water-skimming",
+   "name": "Water Skimming",
+   "text": "Land animals only: moves across water as if it were unsteady terrain."
+  }
+ ],
+ "traits": [
+  {
+   "slug": "adaptive-versatility",
+   "name": "Adaptive Versatility",
+   "group": "general",
+   "text": "Gives no ability. Instead +2 to two of its combat stats and +6 HP. Anything that modifies HP gained from SP also affects this HP (Hardy → +10, Extra Hardy → +14).",
+   "choice": "two combat stats",
+   "mods": [
+    {
+     "stat": "<choice1>",
+     "value": 2
+    },
+    {
+     "stat": "<choice2>",
+     "value": 2
+    },
+    {
+     "stat": "hp",
+     "formula": "hp_per_sp"
+    }
+   ]
+  },
+  {
+   "slug": "blooded",
+   "name": "Blooded",
+   "group": "general",
+   "text": "When it becomes aware of a bleeding opponent on the battlefield: +1 Strike, plus +2 Strike more when attacking that opponent. Can stack for several bleeding opponents.",
+   "mods": [
+    {
+     "stat": "stk",
+     "value": 1,
+     "when": "note",
+     "label": "per bleeding opponent; +2 more vs that opponent"
+    }
+   ]
+  },
+  {
+   "slug": "boneless",
+   "name": "Boneless",
+   "group": "general",
+   "stance": true,
+   "text": "Contorts into spaces much smaller than its body. Gains the effects of Cover Expert (espionage-cover-expert) and can squeeze to one size tier smaller; a small animal can squeeze through openings a few inches wide."
+  },
+  {
+   "slug": "camouflage",
+   "name": "Camouflage",
+   "group": "general",
+   "stance": true,
+   "text": "Active camouflage: can hide in plain sight. Bonus to its Hide roll equal to 2 × SP.",
+   "mods": [
+    {
+     "stat": "roll:Hide",
+     "formula": "2*sp",
+     "when": "stance"
+    }
+   ]
+  },
+  {
+   "slug": "crushing-grab",
+   "name": "Crushing Grab",
+   "group": "general",
+   "text": "Can use the effect of the Crushing Grip specialty (brawl-crushing-grip) with its natural weapons."
+  },
+  {
+   "slug": "constricting",
+   "name": "Constricting",
+   "group": "general",
+   "text": "When it holds an opponent, the opponent must make a Breath Holding check as if they had no last breath. While held they suffocate and pass out when their time runs out unless they break the grab."
+  },
+  {
+   "slug": "defensive-advantage",
+   "name": "Defensive Advantage",
+   "group": "general",
+   "text": "+2 soak class on its natural armor.",
+   "mods": [
+    {
+     "stat": "soak_class",
+     "value": 2
+    }
+   ]
+  },
+  {
+   "slug": "defensive-curl",
+   "name": "Defensive Curl",
+   "group": "general",
+   "stance": true,
+   "text": "Curls into a ball: +6 soak class and +10 Defense. No actions except leaving the stance.",
+   "mods": [
+    {
+     "stat": "soak_class",
+     "value": 6,
+     "when": "stance"
+    },
+    {
+     "stat": "def",
+     "value": 10,
+     "when": "stance"
+    }
+   ]
+  },
+  {
+   "slug": "deflection",
+   "name": "Deflection",
+   "group": "general",
+   "cost": "As a shield deflection (normally 1 AP)",
+   "text": "Deflects attacks with its body as if it had a shield."
+  },
+  {
+   "slug": "disinfectant",
+   "name": "Disinfectant",
+   "group": "general",
+   "text": "Secretes enzymes or eats dead flesh: allies' wounds heal at twice the normal rate (does not stack with several animals). Cancels all necrotizing effects on the player."
+  },
+  {
+   "slug": "disorienting-attack",
+   "name": "Disorienting Attack",
+   "group": "general",
+   "resist": "Spirit (concentration, tiers down)",
+   "cost": "Attack + 1 AP (usually 3 AP)",
+   "text": "Its attack disorients the opponent for 1 turn per strike tier."
+  },
+  {
+   "slug": "echolocating",
+   "name": "Echolocating",
+   "group": "general",
+   "text": "Can hear anything it could ordinarily see, except colors and textures."
+  },
+  {
+   "slug": "fearsome",
+   "name": "Fearsome",
+   "group": "general",
+   "resist": "Brute or Spirit (their choice, tiers down)",
+   "cost": "Replaces Brute Intimidate",
+   "text": "Instead of Brute Intimidate it has Brute Terrify: the opponent takes a fear result by the animal's Brute roll, tiered down by their resist."
+  },
+  {
+   "slug": "feign-death",
+   "name": "Feign Death",
+   "group": "general",
+   "resist": "Cunning (negates)",
+   "stance": true,
+   "text": "Gains all abilities of Feign Fatal Wounds (espionage-feign-fatal-wounds), but enters the stance reflexively and cannot act in it except to leave. Can leave reflexively when attacked and gets a free attack on the attacker (AP-costing attack modifiers still cost AP). Uses Cunning for the stance's effectiveness."
+  },
+  {
+   "slug": "flesh-tearing",
+   "name": "Flesh Tearing",
+   "group": "general",
+   "requires": [
+    "piercing-attacks"
+   ],
+   "text": "When it inflicts a called-shot effect that ends after a time or after actions, that effect does not end until the opponent's bleeding has also been patched."
+  },
+  {
+   "slug": "forcible-will",
+   "name": "Forcible Will",
+   "group": "general",
+   "resist": "Spirit (negates)",
+   "stance": true,
+   "text": "Gains the benefits of Force of Self (grace-force-of-self), using Spirit instead of the Grace skill."
+  },
+  {
+   "slug": "gallop",
+   "name": "Gallop",
+   "group": "general",
+   "text": "If it spends at least 3 AP moving in a turn, it moves at twice its normal speed.",
+   "mods": [
+    {
+     "stat": "spd",
+     "when": "note",
+     "label": "×2 if ≥3 AP moving"
+    }
+   ]
+  },
+  {
+   "slug": "hardy",
+   "name": "Hardy",
+   "group": "general",
+   "text": "Gains 10 HP per SP instead of 6.",
+   "mods": [
+    {
+     "stat": "hp_per_sp",
+     "value": 10,
+     "op": "set"
+    }
+   ]
+  },
+  {
+   "slug": "extra-hardy",
+   "name": "Extra Hardy",
+   "group": "general",
+   "requires": [
+    "hardy"
+   ],
+   "text": "Gains 14 HP per SP instead of 10.",
+   "mods": [
+    {
+     "stat": "hp_per_sp",
+     "value": 14,
+     "op": "set"
+    }
+   ]
+  },
+  {
+   "slug": "herd-instincts",
+   "name": "Herd Instincts",
+   "group": "general",
+   "text": "+1 Evade for each other allied animal within 25 ft that has the Herd Instincts trait or story.",
+   "mods": [
+    {
+     "stat": "eva",
+     "value": 1,
+     "when": "note",
+     "label": "per herd ally within 25 ft"
+    }
+   ]
+  },
+  {
+   "slug": "howl",
+   "name": "Howl",
+   "group": "general",
+   "text": "Guttural howl: +1 per SP marque on all rolls of the next attack, or the next evade and defense attempt, of an ally within 25 ft.",
+   "marques": [
+    "+1",
+    "+2",
+    "+3",
+    "+4"
+   ]
+  },
+  {
+   "slug": "hypnotic",
+   "name": "Hypnotic",
+   "group": "general",
+   "resist": "Spirit (negates)",
+   "stance": true,
+   "text": "Hypnotic gaze: benefits from Connection (grace-connection), using Spirit instead of Grace for the bonus."
+  },
+  {
+   "slug": "ink",
+   "name": "Ink",
+   "group": "general",
+   "resist": "As a called shot to the eyes (usually Dexterity)",
+   "cost": "2 AP",
+   "text": "Called shot to the eyes with ink using only its Accuracy, for 2 AP. No damage; if not resisted the target is blinded and acts as if fighting in darkness until they spend 2 AP to clean it out. Uses per breather = SP marque; anything that changes its venom dose count changes this too.",
+   "uses": "marque"
+  },
+  {
+   "slug": "intimidating",
+   "name": "Intimidating",
+   "group": "general",
+   "cost": "As a Brute Intimidate",
+   "text": "Its Brute intimidations are one tier more effective. Above T4: +1 to the AP that cannot be used to attack it. With Fearsome: fear effect +1 tier (max T4)."
+  },
+  {
+   "slug": "loud",
+   "name": "Loud",
+   "group": "general",
+   "resist": "Spirit (concentration, negates)",
+   "stance": true,
+   "text": "Loud aggressive noises: opponents must roll concentration (Spirit) against the animal's Cunning to notice silent movement or hear allies' vocal cues."
+  },
+  {
+   "slug": "mobile",
+   "name": "Mobile",
+   "group": "general",
+   "repeatable": true,
+   "text": "Gains an additional movement trait. Can be taken several times; no movement trait more than once.",
+   "choice": "movement trait"
+  },
+  {
+   "slug": "offensive-advantage",
+   "name": "Offensive Advantage",
+   "group": "general",
+   "text": "Its natural attacks gain +2 damage class.",
+   "mods": [
+    {
+     "stat": "dmg_class",
+     "value": 2,
+     "scope": "natural"
+    }
+   ]
+  },
+  {
+   "slug": "pack-instincts",
+   "name": "Pack Instincts",
+   "group": "general",
+   "text": "+1 Strike for each other allied animal within 25 ft that has the Pack Instincts trait or story.",
+   "mods": [
+    {
+     "stat": "stk",
+     "value": 1,
+     "when": "note",
+     "label": "per pack ally within 25 ft"
+    }
+   ]
+  },
+  {
+   "slug": "phase-step",
+   "name": "Phase Step",
+   "group": "general",
+   "resist": "Cunning (negates)",
+   "cost": "As a move (usually 1 AP)",
+   "text": "Benefits of Phase Step (agility-phase-step), using Dexterity instead of Agility."
+  },
+  {
+   "slug": "piercing-attacks",
+   "name": "Piercing Attacks",
+   "group": "general",
+   "text": "All its attacks make the opponent bleed 2 additional HP per turn per strike tier.",
+   "mods": [
+    {
+     "stat": "bleed_per_tier",
+     "value": 2,
+     "scope": "natural"
+    }
+   ]
+  },
+  {
+   "slug": "predatory-instinct",
+   "name": "Predatory Instinct",
+   "group": "general",
+   "repeatable": true,
+   "choice": "opponent type",
+   "text": "Against one opponent type (e.g. Humanoids, Automatons, Vehicles, Land Animals, Abominations, Birds, Fishes, Living Liquids): +1 per SP marque on all combat rolls and +2 to all damage classes. Repeatable once per type; an opponent fitting several types is only affected once.",
+   "marques": [
+    "+1",
+    "+2",
+    "+3",
+    "+4"
+   ]
+  },
+  {
+   "slug": "revitalizing",
+   "name": "Revitalizing",
+   "group": "general",
+   "cost": "2 AP",
+   "text": "Acts as a natural bio-invigorator (core Bio-Flux) that uses its Spirit attribute to determine healing."
+  },
+  {
+   "slug": "sharp-senses",
+   "name": "Sharp Senses",
+   "group": "general",
+   "text": "Camouflaged opponents, or opponents hidden behind cover, get no hide bonus against it from those effects."
+  },
+  {
+   "slug": "social",
+   "name": "Social",
+   "group": "general",
+   "text": "Part of a social unit (domesticated, hivemind, pride, pack…), capable of rudimentary communication; tamed as if it had half its SP (rounded up).",
+   "mods": [
+    {
+     "stat": "taming_tier",
+     "formula": "ceil(sp/2)",
+     "op": "set"
+    }
+   ]
+  },
+  {
+   "slug": "stink",
+   "name": "Stink",
+   "group": "general",
+   "resist": "Brute or Spirit (their choice, negates)",
+   "cost": "2 AP",
+   "text": "Sprays an enemy within 10 ft: rolls to hit, then the target resists (Brute or Spirit) against its Accuracy; on a failure the target is nauseated. Uses = SP marque (per breather); anything that changes its venom dose count changes this too.",
+   "uses": "marque"
+  },
+  {
+   "slug": "tough-body",
+   "name": "Tough Body",
+   "group": "general",
+   "text": "+2 Wounds per SP.",
+   "mods": [
+    {
+     "stat": "wnd",
+     "formula": "2*sp"
+    }
+   ]
+  },
+  {
+   "slug": "trample",
+   "name": "Trample",
+   "group": "general",
+   "text": "+2 damage class with any melee or unarmed weapon against a prone opponent; +2 soak class against melee attacks of a prone opponent. Mostly unimpeded by prone opponents (narrator).",
+   "mods": [
+    {
+     "stat": "dmg_class",
+     "value": 2,
+     "when": "note",
+     "label": "vs prone"
+    },
+    {
+     "stat": "soak_class",
+     "value": 2,
+     "when": "note",
+     "label": "vs prone attackers (melee)"
+    }
+   ]
+  },
+  {
+   "slug": "verbally-reactive",
+   "name": "Verbally Reactive",
+   "group": "general",
+   "text": "Understands basic language (cannot talk back); benefits from all specialties that involve talking."
+  },
+  {
+   "slug": "versatile-essence",
+   "name": "Versatile Essence",
+   "group": "general",
+   "cost": "1 AP",
+   "text": "Knows three 1-slot essence augments (core essence list) and switches between them for 1 AP; only one active at a time; uses no essence slot. Augment marque = SP marque.",
+   "choice": "three 1-slot essence augments"
+  },
+  {
+   "slug": "vocal",
+   "name": "Vocal",
+   "group": "general",
+   "resist": "Cunning (negates)",
+   "text": "Imitates normal speech convincingly without understanding it. Telling whether it speaks real words: Cunning vs the animal's Cunning."
+  },
+  {
+   "slug": "pounce",
+   "name": "Pounce",
+   "group": "called-shot",
+   "requires": [
+    "size:medium+"
+   ],
+   "cost": "As a called shot (usually 3 AP)",
+   "text": "Called shots to the chest can knock the opponent back and prone, landing in the opponent's square. While there, the opponent counts as grabbed and cannot stand up until they break the grab or the animal disengages."
+  },
+  {
+   "slug": "slam",
+   "name": "Slam",
+   "group": "called-shot",
+   "requires": [
+    "size:medium+"
+   ],
+   "cost": "As a called shot (usually 3 AP)",
+   "text": "Called shots to the chest knock the opponent back an additional 5 ft and prone."
+  },
+  {
+   "slug": "winding-attack",
+   "name": "Winding Attack",
+   "group": "called-shot",
+   "cost": "As a called shot (usually 3 AP)",
+   "text": "Modifies a called shot to the chest: opponents who are drowning/suffocating, or start to within a turn of a successful winding attack, lose half (rounded up) of the time they could hold their breath and cannot take a last breath. The opponent counts as suffocating for the rest of their turn, so repeated Winding Attacks can suffocate them."
+  },
+  {
+   "slug": "prehensile-limbs",
+   "name": "Prehensile Limbs",
+   "group": "prehensile",
+   "text": "Grasping limbs: can use basic melee weapons, polearms and throwing weapons, and basic alchemical potions (medicine, poison, acid; no beta alchemy). Gains a 1 AP unarmed attack with the limbs at damage class 2, so it can grab for 1 AP.",
+   "attack": {
+    "name": "Unarmed (limbs)",
+    "ap": 1,
+    "dmg_class": 2
+   }
+  },
+  {
+   "slug": "hurl",
+   "name": "Hurl",
+   "group": "prehensile",
+   "requires": [
+    "prehensile-limbs"
+   ],
+   "resist": "Brute or Dexterity (their choice, tiers down)",
+   "cost": "2 AP",
+   "text": "With an opponent grabbed: throw them 5 ft per Brute tier, dealing 5 damage per tier. A throw of more than 10 ft knocks the victim prone; throwing into a solid object/wall deals +3 damage per Brute tier.",
+   "attack": {
+    "name": "Hurl",
+    "ap": 2,
+    "uses": "Brute",
+    "dmg": [
+     5,
+     10,
+     15,
+     20
+    ],
+    "distance": [
+     5,
+     10,
+     15,
+     20
+    ]
+   }
+  },
+  {
+   "slug": "tool-user",
+   "name": "Tool User",
+   "group": "prehensile",
+   "requires": [
+    "prehensile-limbs"
+   ],
+   "cost": "1 AP to understand machines",
+   "text": "Understands and uses complex tools: basic ranged weapons (firearms, bows, crossbows). Can use the Sciences ability Understand to figure out any crafted item; cannot hack beta items."
+  },
+  {
+   "slug": "extra-venoms",
+   "name": "Extra Venoms",
+   "group": "venom",
+   "requires": [
+    "any-venom"
+   ],
+   "text": "+1 venom dose per SP marque.",
+   "mods": [
+    {
+     "stat": "venom_doses",
+     "formula": "marque"
+    }
+   ]
+  },
+  {
+   "slug": "nematocysts",
+   "name": "Nematocysts",
+   "group": "venom",
+   "requires": [
+    "any-venom"
+   ],
+   "cost": "As a grab + 1 AP (usually 3 AP)",
+   "text": "When it grabs an opponent it may spend 1 AP to apply its poison."
+  },
+  {
+   "slug": "poisonous-spit",
+   "name": "Poisonous Spit",
+   "group": "venom",
+   "requires": [
+    "any-venom"
+   ],
+   "cost": "1 AP",
+   "text": "Delivers its poison to an opponent up to 10 ft away; the opponent may evade the spit.",
+   "attack": {
+    "name": "Poison Spit",
+    "ap": 1,
+    "range": 10
+   }
+  },
+  {
+   "slug": "acidic",
+   "name": "Acidic",
+   "group": "venom",
+   "is_venom": true,
+   "requires": [
+    "poisonous-spit|nematocysts"
+   ],
+   "resist": "As a sundering resist, or Dexterity (tiers down)",
+   "text": "Dissolves most untreated organic material. An acid spit/nematocyst grab may target an opponent or an item at the normal cost. Against a dissolvable item = normal sundering attempt with Accuracy +1 tier. Against a person in dissolvable armor: Dexterity vs the animal's Accuracy; soak class −1 per Accuracy tier, tiered down by the Dexterity roll."
+  },
+  {
+   "slug": "blinding",
+   "name": "Blinding",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Blinded status for a number of turns by SP marque.",
+   "marques": [
+    "1 turn",
+    "2 turns",
+    "3 turns",
+    "4 turns"
+   ],
+   "effect": "blinded"
+  },
+  {
+   "slug": "burn-inducing",
+   "name": "Burn Inducing",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Brute (marques down)",
+   "text": "Burnt status at a tier by SP marque.",
+   "marques": [
+    "Tier 1 Burns",
+    "Tier 2 Burns",
+    "Tier 3 Burns",
+    "Tier 4 Burns"
+   ],
+   "effect": "burnt-<marque>"
+  },
+  {
+   "slug": "deafening",
+   "name": "Deafening",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Deafened status for a number of turns by SP marque.",
+   "marques": [
+    "1 turn",
+    "2 turns",
+    "3 turns",
+    "4 turns"
+   ],
+   "effect": "deafened"
+  },
+  {
+   "slug": "local-swelling",
+   "name": "Local Swelling",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Brute (negates)",
+   "text": "When delivering the poison it picks a called-shot location; the target gets that location's Wound effect until their next breather or an antitoxin. Once per opponent at a time (a new use replaces the old one). If delivered by a called shot, that location is used; eyes/ears/neck → head wound effect, groin → chest wound effect."
+  },
+  {
+   "slug": "maddening",
+   "name": "Maddening",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Rage: the victim spends AP (by SP marque) attacking wildly, first whoever recently attacked them, then anyone nearby.",
+   "marques": [
+    "3 AP",
+    "5 AP",
+    "7 AP",
+    "9 AP"
+   ],
+   "effect": "enraged"
+  },
+  {
+   "slug": "mentally-clouding",
+   "name": "Mentally Clouding",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Penalty to Cunning and Sciences rolls for a number of turns by SP marque.",
+   "marques": [
+    "1 turn, -4 penalty",
+    "2 turns, -6 penalty",
+    "3 turns, -8 penalty",
+    "4 turns, -10 penalty"
+   ]
+  },
+  {
+   "slug": "muscle-relaxing",
+   "name": "Muscle Relaxing",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "The victim falls prone involuntarily and cannot get up for a time by SP marque.",
+   "marques": [
+    "1 turn",
+    "1 turn",
+    "2 turns",
+    "2 turns"
+   ],
+   "effect": "prone",
+   "note": "PDF p.21 prints only Mq I '1 turn' and Mq III '2 turns'; II/IV assumed equal to the row above"
+  },
+  {
+   "slug": "nauseating",
+   "name": "Nauseating",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Brute (marques down)",
+   "text": "Nausea status, but it lasts until the victim has spent AP by SP marque.",
+   "marques": [
+    "3 AP to purge",
+    "4 AP to purge",
+    "5 AP to purge",
+    "6 AP to purge"
+   ],
+   "effect": "nausea"
+  },
+  {
+   "slug": "necrosis",
+   "name": "Necrosis",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Brute (negates)",
+   "text": "Any wound effect the victim gets while poisoned is permanent until a doctor treats it or it is otherwise healed."
+  },
+  {
+   "slug": "neurotoxin",
+   "name": "Neurotoxin",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Stunned for an amount of AP by SP marque.",
+   "marques": [
+    "1 AP",
+    "2 AP",
+    "3 AP",
+    "4 AP"
+   ],
+   "effect": "stunned"
+  },
+  {
+   "slug": "painful",
+   "name": "Painful",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Brute (marques down)",
+   "text": "Unsoakable damage by SP marque.",
+   "marques": [
+    "6 HP",
+    "12 HP",
+    "18 HP",
+    "24 HP"
+   ]
+  },
+  {
+   "slug": "psychoactive",
+   "name": "Psychoactive",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Hallucinations: the target must make a Cunning roll for every action; on a failure it spends 1 AP moving aimlessly (narrator). Difficulty and duration by SP marque.",
+   "marques": [
+    "Tier 2 Cunning results required to move for 1 turn",
+    "Tier 2 Cunning results required to make any actions for 2 turns",
+    "Tier 3 Cunning results required to make any actions for 3 turns",
+    "Tier 3 Cunning results required to make any actions for 4 turns"
+   ]
+  },
+  {
+   "slug": "rusting",
+   "name": "Rusting",
+   "group": "venom",
+   "is_venom": true,
+   "requires": [
+    "poisonous-spit|nematocysts"
+   ],
+   "resist": "Dexterity (negates)",
+   "text": "Rapid rusting agent (common near Mt. Sibrius, Siyesh): on contact, metal armor (including natural metal armor and metal suits) loses 2 soak class and all movement encumbrances worsen by −10 ft."
+  },
+  {
+   "slug": "weakening",
+   "name": "Weakening",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Penalty to Brute and Dexterity rolls for a number of turns by SP marque.",
+   "marques": [
+    "1 turn, -4 penalty",
+    "2 turns, -6 penalty",
+    "3 turns, -8 penalty",
+    "4 turns, -10 penalty"
+   ]
+  },
+  {
+   "slug": "withering",
+   "name": "Withering",
+   "group": "venom",
+   "is_venom": true,
+   "resist": "Spirit (marques down)",
+   "text": "Penalty to Spirit rolls for a number of turns by SP marque.",
+   "marques": [
+    "1 turn, -6 penalty",
+    "2 turns, -9 penalty",
+    "3 turns, -12 penalty",
+    "4 turns, -15 penalty"
+   ]
+  },
+  {
+   "slug": "poisonous-bite",
+   "name": "Poisonous Bite",
+   "group": "venom-ability",
+   "auto": true,
+   "cost": "Attack + 1 AP (usually 3 AP)",
+   "text": "Attack with its natural bite and apply its venom; the attack must deal damage for the venom to take effect."
+  }
+ ],
+ "stories": [
+  {
+   "slug": "additional-ap-1",
+   "name": "Additional AP 1",
+   "sp": 1,
+   "price_pr": 500,
+   "text": "The animal has 4 AP per turn.",
+   "mods": [
+    {
+     "stat": "ap",
+     "value": 4,
+     "op": "set"
+    }
+   ]
+  },
+  {
+   "slug": "additional-ap-2",
+   "name": "Additional AP 2",
+   "sp": 1,
+   "price_pr": 2500,
+   "requires": [
+    "additional-ap-1"
+   ],
+   "text": "The animal has 5 AP per turn.",
+   "mods": [
+    {
+     "stat": "ap",
+     "value": 5,
+     "op": "set"
+    }
+   ]
+  },
+  {
+   "slug": "armorable",
+   "name": "Armorable",
+   "sp": 0,
+   "price_pr": 250,
+   "text": "Can wear any ordinary armor a player could wear. Armor does not add to natural soak: use whichever soak class is higher. May wear augmented armor but cannot use its AP-cost abilities."
+  },
+  {
+   "slug": "mountable",
+   "name": "Mountable",
+   "sp": 1,
+   "price_pr": 10,
+   "requires": [
+    "size:medium+"
+   ],
+   "text": "Usable as a mount: medium → gnome-sized riders only; large → up to elf-sized riders."
+  },
+  {
+   "slug": "socialized",
+   "name": "Socialized",
+   "sp": 1,
+   "price_pr": 500,
+   "text": "Understands humanoid social cues; can use basic social-tells rolls to read others (may miss the context)."
+  },
+  {
+   "slug": "sequenced-orders",
+   "name": "Sequenced Orders",
+   "sp": 1,
+   "price_pr": 1500,
+   "text": "Takes sequences of orders (e.g. scout an area, return if it finds something, show the tamer where it is). If disrupted it can be ordered to fight or return."
+  },
+  {
+   "slug": "wild-lab-assistant",
+   "name": "Wild Lab Assistant",
+   "sp": 1,
+   "price_pr": 1500,
+   "requires": [
+    "prehensile-limbs",
+    "tool-user"
+   ],
+   "text": "While the animal is present and not being trained, its owner gets +3 DIY. Does not stack for several animals; no new training in downtimes where this is used.",
+   "owner_mods": [
+    {
+     "stat": "diy",
+     "value": 3,
+     "when": "toggle"
+    }
+   ]
+  },
+  {
+   "slug": "herd-instincts",
+   "name": "Herd Instincts",
+   "sp": 1,
+   "story_of_trait": true,
+   "text": "Story form of the trait (book mentions 'trait or story'; given by a herd)."
+  },
+  {
+   "slug": "pack-instincts",
+   "name": "Pack Instincts",
+   "sp": 1,
+   "story_of_trait": true,
+   "text": "Story form of the trait (given by a pack)."
+  }
+ ],
+ "printed": [
+  {
+   "slug": "dog",
+   "name": "Dog",
+   "family": "Canines",
+   "template": "medium-land",
+   "movement": [
+    "swift"
+   ],
+   "traits": [
+    "howl",
+    "social",
+    "sharp-senses",
+    "verbally-reactive"
+   ],
+   "stories": [],
+   "pack": "Solitary (easy, level 1 party) or small pack (par, level 1)",
+   "domestication": "Domesticated throughout Rilausia",
+   "ap": 3,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 9,
+   "wnd": 9,
+   "speed": {
+    "land": 60,
+    "climb": 5,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 7,
+    "Cunning": 6,
+    "Dexterity": 6,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": 3,
+   "def": 2,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite & Claws",
+     "ap": 2,
+     "acc": 3,
+     "stk": 3,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    }
+   ],
+   "note": "HP 9 printed although 4 SP (expected 33) – check PDF p.24"
+  },
+  {
+   "slug": "wolf",
+   "name": "Wolf",
+   "family": "Canines",
+   "template": "medium-land",
+   "movement": [
+    "swift"
+   ],
+   "traits": [
+    "blooded",
+    "forcible-will",
+    "howl",
+    "offensive-advantage",
+    "piercing-attacks",
+    "flesh-tearing",
+    "pack-instincts",
+    "sharp-senses"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L1), small pack 2-6 (par L3), large pack 7-12 (par L5)",
+   "domestication": "Very rarely domesticated",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 57,
+   "wnd": 9,
+   "speed": {
+    "land": 65,
+    "climb": 5,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 8,
+    "Cunning": 6,
+    "Dexterity": 7,
+    "Spirit": 8,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": 6,
+   "def": 4,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite & Claws",
+     "ap": 2,
+     "acc": 6,
+     "stk": 8,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "small-feline",
+   "name": "Small Feline",
+   "family": "Felines",
+   "examples": "Bobcat, Caracal, Cat, Jaguarundi, Lynx, Manul, Ocelot, Onza, Pampas Cat",
+   "template": "small-land",
+   "movement": [
+    "swift",
+    "climbing"
+   ],
+   "traits": [
+    "boneless",
+    "mobile",
+    "phase-step",
+    "piercing-attacks",
+    "sharp-senses"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary or pair (par L1), avoids combat",
+   "domestication": "Cats are regularly domesticated",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 36,
+   "wnd": 6,
+   "speed": {
+    "land": 50,
+    "climb": 25,
+    "swim": 10
+   },
+   "attrs": {
+    "Brute": 3,
+    "Cunning": 10,
+    "Dexterity": 11,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "eva": 8,
+   "def": 0,
+   "soak": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attacks": [
+    {
+     "name": "Bite & Claws",
+     "ap": 2,
+     "acc": 3,
+     "stk": 4,
+     "dmg": [
+      2,
+      4,
+      6,
+      8
+     ],
+     "note": "+2 bleeding per strike tier"
+    }
+   ]
+  },
+  {
+   "slug": "cougars-leopards",
+   "name": "Cougars & Leopards",
+   "family": "Felines",
+   "template": "medium-land",
+   "movement": [
+    "swift",
+    "climbing"
+   ],
+   "traits": [
+    "disorienting-attack",
+    "gallop",
+    "mobile",
+    "offensive-advantage",
+    "piercing-attacks",
+    "pounce",
+    "sharp-senses"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L1-2)",
+   "domestication": "Ridden by gnomes (cougars in Old Siddeodru, leopards in Valdru); cougars kept as pets in Izeda",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 51,
+   "wnd": 9,
+   "speed": {
+    "land": 70,
+    "climb": 25,
+    "swim": 10
+   },
+   "attrs": {
+    "Brute": 10,
+    "Cunning": 10,
+    "Dexterity": 11,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": 8,
+   "def": 1,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite & Claws",
+     "ap": 2,
+     "acc": 4,
+     "stk": 6,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ],
+     "note": "+2 bleeding per strike tier"
+    }
+   ]
+  },
+  {
+   "slug": "lions-tigers-jaguars",
+   "name": "Lions, Tigers, & Jaguars",
+   "family": "Felines",
+   "template": "large-land",
+   "movement": [
+    "swift"
+   ],
+   "traits": [
+    "crushing-grab",
+    "offensive-advantage",
+    "piercing-attacks",
+    "pounce",
+    "slam",
+    "winding-attack",
+    "pack-instincts|sharp-senses"
+   ],
+   "trait_notes": "Crushing Grab (Bite); Pack Instincts lion only; Sharp Senses tigers & jaguars only",
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L3-4) or pack of 4 (par L6)",
+   "domestication": "Rarely, except circus animals",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 0,
+   "hp": 60,
+   "wnd": 12,
+   "speed": {
+    "land": 60,
+    "climb": 10,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 18,
+    "Cunning": 8,
+    "Dexterity": 10,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "ride": "person",
+   "eva": 4,
+   "def": 8,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite & Claws",
+     "ap": 2,
+     "acc": 7,
+     "stk": 10,
+     "dmg": [
+      8,
+      16,
+      24,
+      32
+     ],
+     "note": "+2 bleeding per strike tier"
+    }
+   ],
+   "note": "HP 60 = 8 SP but only 7 traits apply per variant"
+  },
+  {
+   "slug": "goats-sheep",
+   "name": "Goats & Sheep",
+   "family": "Hooved Mammals",
+   "template": "medium-land",
+   "movement": [
+    "climbing",
+    "stable"
+   ],
+   "traits": [
+    "herd-instincts",
+    "mobile",
+    "social"
+   ],
+   "stories": [],
+   "pack": "Large herds, avoids combat",
+   "domestication": "Herded in most temperate or cool flatlands",
+   "ap": 3,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 27,
+   "wnd": 9,
+   "speed": {
+    "land": 40,
+    "climb": 25,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 3,
+    "Cunning": 3,
+    "Dexterity": 9,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": "7 (+ herd instincts)",
+   "def": 3,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite & Hooves",
+     "ap": 2,
+     "acc": 1,
+     "stk": 1,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "rams",
+   "name": "Rams",
+   "family": "Hooved Mammals",
+   "template": "medium-land",
+   "movement": [
+    "climbing",
+    "stable",
+    "swift"
+   ],
+   "traits": [
+    "herd-instincts",
+    "mobile",
+    "mobile",
+    "offensive-advantage",
+    "piercing-attacks",
+    "slam",
+    "social",
+    "tough-body"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L2)",
+   "domestication": "Some rugged gnomes scout mountains riding a ram",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 57,
+   "wnd": 25,
+   "speed": {
+    "land": 60,
+    "climb": 25,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 13,
+    "Cunning": 3,
+    "Dexterity": 14,
+    "Spirit": 5,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": "7 (+ herd instincts)",
+   "def": 1,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite, Horns, & Hooves",
+     "ap": 2,
+     "acc": 1,
+     "stk": 1,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "deer-gazelles-zebras",
+   "name": "Deer, Gazelles, & Zebras",
+   "family": "Hooved Mammals",
+   "template": "medium-land",
+   "movement": [
+    "climbing",
+    "stable"
+   ],
+   "traits": [
+    "herd-instincts",
+    "mobile",
+    "revitalizing",
+    "sharp-senses",
+    "social"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Deer: small groups; gazelles & zebras: large herds; avoid combat",
+   "domestication": "Largely undomesticated",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 39,
+   "wnd": 9,
+   "speed": {
+    "land": 40,
+    "climb": 25,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 3,
+    "Cunning": 5,
+    "Dexterity": 9,
+    "Spirit": 6,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": "9 (+ herd instincts)",
+   "def": 3,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite, Horns, Antlers, and Hooves",
+     "ap": 2,
+     "acc": 3,
+     "stk": 3,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "elk-moose",
+   "name": "Elk & Moose",
+   "family": "Hooved Mammals",
+   "template": "large-land",
+   "movement": [
+    "climbing"
+   ],
+   "traits": [
+    "defensive-advantage",
+    "deflection",
+    "hardy",
+    "slam",
+    "winding-attack"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L1) or small herd of 3-5 (par L3)",
+   "domestication": "Unconfirmed legends of Tordryoni moose cavalry",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 0,
+   "hp": 62,
+   "wnd": 12,
+   "speed": {
+    "land": 45,
+    "climb": 25,
+    "swim": 10
+   },
+   "attrs": {
+    "Brute": 14,
+    "Cunning": 4,
+    "Dexterity": 6,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "ride": "person",
+   "eva": 2,
+   "def": 8,
+   "soak": [
+    4,
+    8,
+    12,
+    16
+   ],
+   "attacks": [
+    {
+     "name": "Bite, Antlers, & Hooves",
+     "ap": 2,
+     "acc": 3,
+     "stk": 5,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "horse",
+   "name": "Horse",
+   "family": "Hooved Mammals",
+   "template": "large-land",
+   "movement": [
+    "swift"
+   ],
+   "traits": [
+    "gallop",
+    "hardy",
+    "pounce",
+    "social",
+    "trample"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Maverick (par L1) or stampede",
+   "domestication": "Often domesticated in Rilausia and the islands; a mountable/armorable horse gives low-level characters a big advantage on even terrain",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 0,
+   "hp": 62,
+   "wnd": 12,
+   "speed": {
+    "land": 65,
+    "climb": 5,
+    "swim": 10
+   },
+   "attrs": {
+    "Brute": 12,
+    "Cunning": 0,
+    "Dexterity": 12,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "ride": "person",
+   "eva": 7,
+   "def": 4,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite & Hooves",
+     "ap": 2,
+     "acc": 2,
+     "stk": 5,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "chimpanzee",
+   "name": "Chimpanzee",
+   "family": "Primates",
+   "template": "medium-land",
+   "movement": [
+    "climbing"
+   ],
+   "traits": [
+    "blooded",
+    "loud",
+    "pack-instincts",
+    "piercing-attacks",
+    "prehensile-limbs",
+    "tool-user",
+    "social",
+    "verbally-reactive"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Individual or pair (par L2-3) or group of 3-6 (par L5)",
+   "domestication": "Occasionally exotic pets or performers",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 6,
+   "hp": 57,
+   "wnd": 9,
+   "speed": {
+    "land": 40,
+    "climb": 25,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 12,
+    "Cunning": 6,
+    "Dexterity": 17,
+    "Spirit": 0,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": 7,
+   "def": 5,
+   "soak": [
+    4,
+    8,
+    12,
+    16
+   ],
+   "attacks": [
+    {
+     "name": "Unarmed",
+     "ap": 1,
+     "acc": 6,
+     "stk": 7,
+     "dmg": [
+      2,
+      4,
+      6,
+      8
+     ]
+    },
+    {
+     "name": "Bite",
+     "ap": 2,
+     "acc": 6,
+     "stk": 7,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    },
+    {
+     "name": "Rudimentary Javelin (medium throwing weapon)",
+     "ap": 2,
+     "acc": 6,
+     "stk": 7,
+     "range": 50,
+     "dmg": [
+      5,
+      10,
+      15,
+      20
+     ]
+    }
+   ],
+   "note": "May use any non-crafted melee or thrown weapon as if a gnome. Soak 4/8/12/16 printed without Defensive Advantage – check PDF p.28"
+  },
+  {
+   "slug": "gorilla",
+   "name": "Gorilla",
+   "family": "Primates",
+   "template": "large-land",
+   "movement": [
+    "stable"
+   ],
+   "traits": [
+    "crushing-grab",
+    "defensive-advantage",
+    "hardy",
+    "extra-hardy",
+    "fearsome",
+    "intimidating",
+    "offensive-advantage",
+    "prehensile-limbs",
+    "hurl",
+    "tough-body",
+    "verbally-reactive"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Individual (par L5) or group of 3-6 (par L9)",
+   "domestication": "Hard to corral, rarely tamed",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 4,
+   "hp": 166,
+   "wnd": 34,
+   "speed": {
+    "land": 40,
+    "climb": 5,
+    "swim": 10
+   },
+   "attrs": {
+    "Brute": 22,
+    "Cunning": 10,
+    "Dexterity": 8,
+    "Spirit": 8,
+    "Sciences": 0
+   },
+   "ride": "person",
+   "eva": 0,
+   "def": 15,
+   "soak": [
+    4,
+    8,
+    12,
+    16
+   ],
+   "attacks": [
+    {
+     "name": "Unarmed",
+     "ap": 1,
+     "acc": 8,
+     "stk": 13,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    },
+    {
+     "name": "Bite",
+     "ap": 2,
+     "acc": 8,
+     "stk": 13,
+     "dmg": [
+      8,
+      16,
+      24,
+      32
+     ]
+    },
+    {
+     "name": "Hurl",
+     "ap": 2,
+     "brute": 22,
+     "dmg": [
+      8,
+      16,
+      24,
+      36
+     ],
+     "distance": [
+      5,
+      10,
+      15,
+      20
+     ]
+    }
+   ],
+   "note": "Hurl T4 36 printed (pattern suggests 32)"
+  },
+  {
+   "slug": "vipers",
+   "name": "Vipers",
+   "family": "Snakes",
+   "template": "small-land",
+   "movement": [
+    "jumping"
+   ],
+   "traits": [
+    "boneless",
+    "camouflage",
+    "hypnotic",
+    "extra-venoms",
+    "nauseating",
+    "painful"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L1)",
+   "domestication": "Rarely domesticated",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 0,
+   "hp": 42,
+   "wnd": 6,
+   "speed": {
+    "land": 30,
+    "climb": 5,
+    "swim": 10,
+    "jump": "5 ft per Brute tier"
+   },
+   "attrs": {
+    "Brute": 4,
+    "Cunning": 6,
+    "Dexterity": 9,
+    "Spirit": 8,
+    "Sciences": 0
+   },
+   "eva": 7,
+   "def": 0,
+   "soak": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attacks": [
+    {
+     "name": "Bite (Poisonous Bite 3 AP)",
+     "ap": 2,
+     "acc": 9,
+     "stk": 0,
+     "dmg": [
+      2,
+      4,
+      6,
+      8
+     ]
+    }
+   ],
+   "venoms": {
+    "marque": 2,
+    "doses": 4,
+    "list": [
+     "Nauseating: 4 AP to purge (Brute marques down)",
+     "Painful: 12 HP damage (Brute marques down)"
+    ]
+   }
+  },
+  {
+   "slug": "mambas",
+   "name": "Mambas",
+   "family": "Snakes",
+   "template": "small-land",
+   "movement": [
+    "climbing",
+    "jumping",
+    "swift"
+   ],
+   "traits": [
+    "boneless",
+    "camouflage",
+    "hypnotic",
+    "mobile",
+    "mobile",
+    "extra-venoms",
+    "maddening",
+    "neurotoxin",
+    "painful",
+    "weakening"
+   ],
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L4) or ambush of 3-5 (par L6-8)",
+   "domestication": "Widely feared, undomesticated",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 0,
+   "hp": 66,
+   "wnd": 6,
+   "speed": {
+    "land": 50,
+    "climb": 25,
+    "swim": 10,
+    "jump": "5 ft per Brute tier"
+   },
+   "attrs": {
+    "Brute": 8,
+    "Cunning": 10,
+    "Dexterity": 13,
+    "Spirit": 12,
+    "Sciences": 0
+   },
+   "eva": 10,
+   "def": 0,
+   "soak": [
+    1,
+    2,
+    3,
+    4
+   ],
+   "attacks": [
+    {
+     "name": "Bite (Poisonous Bite 3 AP)",
+     "ap": 2,
+     "acc": 13,
+     "stk": 5,
+     "dmg": [
+      2,
+      4,
+      6,
+      8
+     ]
+    }
+   ],
+   "venoms": {
+    "marque": 3,
+    "doses": 6,
+    "list": [
+     "Maddening: 7 AP (Spirit marques down)",
+     "Neurotoxin: 3 AP (Brute marques down; trait says Spirit)",
+     "Painful: 18 HP damage (Brute marques down)",
+     "Weakening: 3 turns, -8 penalty (Spirit marques down)"
+    ]
+   }
+  },
+  {
+   "slug": "boa-constrictor",
+   "name": "Boa Constrictor",
+   "family": "Snakes",
+   "template": "medium-land",
+   "movement": [
+    "jumping"
+   ],
+   "traits": [
+    "boneless",
+    "camouflage",
+    "crushing-grab",
+    "constricting",
+    "hypnotic"
+   ],
+   "trait_notes": "Crushing Grab (Constrict, Bite)",
+   "stories": [
+    "additional-ap-1"
+   ],
+   "pack": "Solitary (par L2)",
+   "domestication": "Common exotic pet",
+   "ap": 4,
+   "ap_tamed": 3,
+   "pri": 0,
+   "hp": 39,
+   "wnd": 9,
+   "speed": {
+    "land": 40,
+    "climb": 5,
+    "swim": 15,
+    "jump": "5 ft per Brute tier"
+   },
+   "attrs": {
+    "Brute": 8,
+    "Cunning": 2,
+    "Dexterity": 5,
+    "Spirit": 8,
+    "Sciences": 0
+   },
+   "ride": "gnome",
+   "eva": 4,
+   "def": 1,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Bite or Constrict",
+     "ap": 2,
+     "acc": 5,
+     "stk": 8,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    }
+   ]
+  },
+  {
+   "slug": "demi-gnome",
+   "name": "Demi-Gnome \"Goblins\"",
+   "family": "Demi-Species",
+   "template": "medium-land",
+   "movement": [
+    "climbing"
+   ],
+   "traits": [
+    "boneless",
+    "camouflage",
+    "piercing-attacks",
+    "flesh-tearing",
+    "prehensile-limbs",
+    "tool-user",
+    "verbally-reactive",
+    "vocal",
+    "extra-venoms",
+    "poisonous-spit",
+    "acidic",
+    "blinding",
+    "painful",
+    "rusting"
+   ],
+   "stories": [
+    "additional-ap-1",
+    "additional-ap-2"
+   ],
+   "pack": "Individual (par L8) or squad of 3-5 (par L11-12); may attack pre-emptively but leave if offered tribute",
+   "domestication": "Rarely tamed as guards/assistants of powerful scientists (Paldorus, Zelhost, Suulrai); frowned upon in Rilausia",
+   "ap": 5,
+   "ap_tamed": 3,
+   "pri": 10,
+   "hp": 93,
+   "wnd": 9,
+   "speed": {
+    "land": 50,
+    "climb": 25,
+    "swim": 15
+   },
+   "attrs": {
+    "Brute": 6,
+    "Cunning": 20,
+    "Dexterity": 17,
+    "Spirit": 0,
+    "Sciences": 16
+   },
+   "ride": "gnome",
+   "eva": 15,
+   "def": 1,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Unarmed",
+     "ap": 1,
+     "acc": 15,
+     "stk": 6,
+     "dmg": [
+      2,
+      4,
+      6,
+      8
+     ]
+    },
+    {
+     "name": "Bite (can apply poisons)",
+     "ap": 2,
+     "acc": 15,
+     "stk": 6,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    },
+    {
+     "name": "Stolen Medium Firearm",
+     "ap": 2,
+     "ap_ready": 2,
+     "acc": 15,
+     "range": 100,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ]
+    },
+    {
+     "name": "Poison Spit (Dexterity negates)",
+     "ap": 1,
+     "acc": 13,
+     "range": 10
+    }
+   ],
+   "venoms": {
+    "marque": 4,
+    "doses": 8,
+    "list": [
+     "Acidic: -1 soak class per Acc tier or +1 tier sundering (resist as sunder)",
+     "Blinding: 4 turns (Spirit marques down)",
+     "Painful: 24 HP damage (Brute marques down)",
+     "Rusting: -2 soak class and -10 ft move for metal-clad opponents (Dexterity negates)"
+    ]
+   },
+   "note": "Uses any melee/ranged/thrown weapon as if a gnome, usually up to Mq2 augmentation"
+  },
+  {
+   "slug": "demi-ayodin",
+   "name": "Demi-Ayodin \"Carbuncles\"",
+   "family": "Demi-Species",
+   "template": "large-underwater",
+   "movement": [
+    "amphibious"
+   ],
+   "traits": [
+    "boneless",
+    "camouflage",
+    "deflection",
+    "echolocating",
+    "hypnotic",
+    "loud",
+    "phase-step",
+    "prehensile-limbs",
+    "tool-user",
+    "verbally-reactive",
+    "extra-venoms",
+    "poisonous-spit",
+    "maddening",
+    "necrosis"
+   ],
+   "stories": [
+    "additional-ap-1",
+    "additional-ap-2"
+   ],
+   "pack": "Hunting squad of 4-6 (par L10) or squad of 3-5 (par L11-12); strike pre-emptively from forest or underwater cover",
+   "domestication": "Exceedingly rare; frowned upon in Rilausia",
+   "ap": 5,
+   "ap_tamed": 3,
+   "pri": 8,
+   "hp": 96,
+   "wnd": 12,
+   "speed": {
+    "swim": 55,
+    "land": 40
+   },
+   "attrs": {
+    "Brute": 3,
+    "Cunning": 20,
+    "Dexterity": 18,
+    "Spirit": 0,
+    "Sciences": 20
+   },
+   "ride": "person",
+   "eva": 10,
+   "def": 4,
+   "soak": [
+    2,
+    4,
+    6,
+    8
+   ],
+   "attacks": [
+    {
+     "name": "Unarmed",
+     "ap": 1,
+     "acc": 13,
+     "stk": 12,
+     "dmg": [
+      2,
+      4,
+      6,
+      8
+     ]
+    },
+    {
+     "name": "Bite & Claws (can apply venom)",
+     "ap": 2,
+     "acc": 13,
+     "stk": 12,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ]
+    },
+    {
+     "name": "Stolen exotic game hunting spear (Mq3 Prototype Bone-Shattering, Static, Streamlined; medium polearm)",
+     "ap": 1,
+     "acc": 13,
+     "stk": 12,
+     "dmg": [
+      6,
+      12,
+      18,
+      24
+     ],
+     "note": "Static Attack: 1 reflexive AP after a hit: target -3 Evade until wielder's next turn; usable more than once per attack"
+    },
+    {
+     "name": "Poison Spit (Dexterity negates)",
+     "ap": 1,
+     "acc": 13,
+     "range": 10
+    }
+   ],
+   "venoms": {
+    "marque": 4,
+    "doses": 8,
+    "list": [
+     "Necrosis: wounds permanent until tended by a doctor (Brute negates)",
+     "Maddening: 9 AP (Spirit marques down)"
+    ]
+   }
+  },
+  {
+   "slug": "demi-elf",
+   "name": "Demi-Elf \"Ogres\"",
+   "family": "Demi-Species",
+   "template": "large-land",
+   "movement": [
+    "jumping"
+   ],
+   "traits": [
+    "crushing-grab",
+    "constricting",
+    "defensive-advantage",
+    "deflection",
+    "fearsome",
+    "hardy",
+    "intimidating",
+    "offensive-advantage",
+    "pounce",
+    "slam",
+    "winding-attack",
+    "prehensile-limbs",
+    "hurl",
+    "tool-user",
+    "verbally-reactive",
+    "vocal"
+   ],
+   "stories": [
+    "additional-ap-1",
+    "additional-ap-2"
+   ],
+   "pack": "Solitary (par L10) or pair (par L12); uninterested in combat but very territorial",
+   "domestication": "Rumoured tamed in Paldorus; frowned upon in Rilausia",
+   "ap": 5,
+   "ap_tamed": 3,
+   "pri": 10,
+   "hp": 172,
+   "wnd": 12,
+   "speed": {
+    "land": 35,
+    "climb": 5,
+    "swim": 10,
+    "jump": "5 ft per Brute tier"
+   },
+   "attrs": {
+    "Brute": 30,
+    "Cunning": 10,
+    "Dexterity": 20,
+    "Spirit": 0,
+    "Sciences": 8
+   },
+   "ride": "person",
+   "eva": 10,
+   "def": 11,
+   "soak": [
+    4,
+    8,
+    12,
+    16
+   ],
+   "attacks": [
+    {
+     "name": "Unarmed",
+     "ap": 1,
+     "acc": 10,
+     "stk": 20,
+     "dmg": [
+      4,
+      8,
+      12,
+      16
+     ]
+    },
+    {
+     "name": "Bite",
+     "ap": 2,
+     "acc": 10,
+     "stk": 20,
+     "dmg": [
+      8,
+      16,
+      24,
+      32
+     ]
+    },
+    {
+     "name": "Stolen Giant Spear (Mq1 Damaging, Torso-Seeking; super-heavy polearm)",
+     "ap": 2,
+     "acc": 10,
+     "stk": 20,
+     "reach": 10,
+     "dmg": [
+      11,
+      22,
+      33,
+      44
+     ],
+     "note": "Always attacks the torso; elsewhere Acc only +2"
+    }
+   ]
+  }
+ ],
+ "price_per_sp": [
+  15,
+  75,
+  375,
+  1875
+ ],
+ "venom_price": [
+  12,
+  60,
+  300,
+  1500
+ ]
+}

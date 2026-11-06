@@ -3597,7 +3597,20 @@
   "size": "",
   "price": "",
   "text": "Takes up 2 Augment Slots on a Boiler\nYour boiler has armoring built into it so that it won’t impede your steamer in any way. This increases your steamer’s natural soak class.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class\nNote: this augment stacks with the soak class bonus granted from the Brickhouse Boiler augment.",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "soak",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     1,
+     2,
+     3,
+     4
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-steamer-automated-boiler-repair",
@@ -3645,7 +3658,20 @@
   "size": "",
   "price": "",
   "text": "Takes up 2 Augment Slots on a Boiler\nThe walls of your boiler are exceptionally thick and well-insulated, protecting your steamer from damage.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class\nNote: this augment stacks with the soak class\nbonus granted from the Armored Boiler\naugment.",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "soak",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     1,
+     2,
+     3,
+     4
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-steamer-fire-absorbing",
@@ -3717,7 +3743,20 @@
   "size": "",
   "price": "",
   "text": "Takes up 2 Augment Slots on a Boiler\nThe automaton has been outfitted with a graviton sphere, allowing it to float and move. It can now fly, with its speed depending on the marque. Any speed penalties you take from armor will penalize this speed.\n5 feet of fly speed per action point\n10 feet of fly speed per action point\n15 feet of fly speed per action point\n25 feet of fly speed per action point",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "fly",
+    "op": "base",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     5,
+     10,
+     15,
+     25
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-steamer-lightning-resistant",
@@ -3837,7 +3876,20 @@
   "size": "",
   "price": "",
   "text": "The boiler is all-around better built, granting it extra points of wounds.\n+10 wounds\n+20 wounds\n+30 wounds\n+40 wounds",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "wnd",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     10,
+     20,
+     30,
+     40
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-steamer-resilient-boiler",
@@ -3861,7 +3913,20 @@
   "size": "",
   "price": "",
   "text": "Your steamer has a boiler any engineer would be proud of. Durable and reliable, your steamer has extra points of wounds.\n+10 wounds\n+20 wounds\n+30 wounds\n+40 wounds",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "wnd",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     10,
+     20,
+     30,
+     40
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-steamer-remotely-remote-controlled",
@@ -3909,7 +3974,21 @@
   "size": "",
   "price": "",
   "text": "Activation Cost: 2 AP (see below)\nYour automaton can hunker down into a solid dense mass for two of its controller’s action points, allowing it to be easily used as medium cover (+6 to evade against ranged attacks) for the same number of spaces it normally takes up. While in shield mode, your automaton cannot move or act. You can command it to exit this form for two action points. It also gains extra soak class while this ability is active.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "soak",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "hunkered down",
+    "by_marque": [
+     1,
+     2,
+     3,
+     4
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-steamer-tactile-controls",
@@ -4029,7 +4108,20 @@
   "size": "",
   "price": "",
   "text": "Your brainworks is filled with meticulous physics calculators, allowing it to use the power of mind over matter to perform feats of incredible strength. It has a bonus to Brute.\n+3 Brute\n+12 Brute\n+31 Brute\n+47 Brute",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "roll:Brute",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     3,
+     12,
+     31,
+     47
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-dexterity-directory",
@@ -4053,7 +4145,20 @@
   "size": "",
   "price": "",
   "text": "Your brainworks contains a vast directory of motion capture data taken from some of the world’s greatest acrobats and rogues. Whenever it needs them, your brainworks can make your automaton mimic these athletes, granting it a bonus to Dexterity.\n+3 Dexterity\n+12 Dexterity\n+31 Dexterity\n+47 Dexterity",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "roll:Dexterity",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     3,
+     12,
+     31,
+     47
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-easy-repairs",
@@ -4151,7 +4256,20 @@
   "size": "",
   "price": "",
   "text": "Takes up 2 Augment Slots on a Boiler\nThe automaton has been outfitted with a graviton sphere, allowing it to float and move. It can now fly, with its speed depending on the marque. Any speed penalties you take from armor will penalize this speed.\n5 feet of fly speed per action point\n10 feet of fly speed per action point\n15 feet of fly speed per action point\n25 feet of fly speed per action point",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "fly",
+    "op": "base",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     5,
+     10,
+     15,
+     20
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-installed-cunning",
@@ -4175,7 +4293,20 @@
   "size": "",
   "price": "",
   "text": "You’ve given your automaton street-smarts and wit, allowing it to analyze the words of others and its surroundings, as well as allowing it to effectively gather new information. This grants it a bonus to Cunning.\n+3 Cunning\n+12 Cunning\n+31 Cunning\n+47 Cunning",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "roll:Cunning",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     3,
+     12,
+     31,
+     47
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-lightning-soul",
@@ -4247,7 +4378,20 @@
   "size": "",
   "price": "",
   "text": "The fusebox can make precisely timed actions, granting it a bonus on its accuracy rolls.\n+2 Accuracy\n+4 Accuracy\n+6 Accuracy\n+8 Accuracy",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "acc",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     2,
+     4,
+     6,
+     8
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-passenger",
@@ -4343,7 +4487,20 @@
   "size": "",
   "price": "",
   "text": "Your automaton is a walking library of information and has deep understanding on the inner workings of itself and other machines, granting it a bonus to Sciences.\n+3 Sciences\n+12 Sciences\n+31 Sciences\n+47 Sciences",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "roll:Sciences",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     3,
+     12,
+     31,
+     47
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-shock-absorber",
@@ -4391,7 +4548,20 @@
   "size": "",
   "price": "",
   "text": "Your automaton always seems to slip right out from under its attackers. Its sensors are in full usage, fully optimizing the automaton for jumping away from harm. It gains a bonus of evade rolls.\n+2 Evade\n+3 Evade\n+4 Evade\n+5 Evade",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "eva",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     2,
+     3,
+     4,
+     5
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-spiritual-connection",
@@ -4417,7 +4587,20 @@
   "size": "",
   "price": "",
   "text": "Requires: Brainworks built with Personality\nYour brainworks better understands what it means to be ‘alive’ and has been programmed with the mental fortitude of a monk. This allows the automaton to better replicate and control its Tephran emotions, granting it bonuses to Spirit.\n+3 Spirit\n+12 Spirit\n+31 Spirit\n+47 Spirit",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "roll:Spirit",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     3,
+     12,
+     31,
+     47
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-fusebox-targeting-program",
@@ -4441,7 +4624,20 @@
   "size": "",
   "price": "",
   "text": "Your brainworks can zero in on a target, calculating the exact attack trajectory required to hit them.\n+2 Accuracy\n+4 Accuracy\n+6 Accuracy\n+8 Accuracy",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "acc",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     2,
+     4,
+     6,
+     8
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-avenge-me-directive",
@@ -4491,7 +4687,21 @@
   "size": "",
   "price": "",
   "text": "Requires: Analytics with the Avenge-Me Directive augment When your automaton acts out its Avenge-Me Directive it is accurate about doing so. It gains an accuracy bonus on any attacks made while acting out the Avenge-Me Directive.\n+3 Accuracy\n+6 Accuracy\n+9 Accuracy\n+12 Accuracy",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "acc",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "Hit Them",
+    "by_marque": [
+     3,
+     6,
+     9,
+     12
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-hurt-them-subdirective",
@@ -4517,7 +4727,21 @@
   "size": "",
   "price": "",
   "text": "Requires: Analytics with the Avenge-Me Directive augment Your analytical engine is designed to mindlessly put all of its strength into dealing more damage whenever it acts out its Avenge-Me Directive. It gains a strike bonus on any attacks made while acting out the Avenge-Me Directive.\n+4 Strike\n+8 Strike\n+12 Strike\n+16 Strike",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "stk",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "Hurt Them",
+    "by_marque": [
+     4,
+     8,
+     12,
+     16
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-defend-your-area-directive",
@@ -4565,7 +4789,21 @@
   "size": "",
   "price": "",
   "text": "Requires: Analytics with the Defend-Your-Area Directive augment When someone causes your automaton to act out their Defend- Your-Area Directive, your clockwork is pre-programmed to not fail its programmer. It gains an accuracy bonus on any attacks made while acting out the Defend-Your-Area Directive.\n+3 Accuracy\n+6 Accuracy\n+9 Accuracy\n+12 Accuracy",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "acc",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "Hedge Your Area",
+    "by_marque": [
+     3,
+     6,
+     9,
+     12
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-mark-your-area-subdirective",
@@ -4589,7 +4827,21 @@
   "size": "",
   "price": "",
   "text": "Requires: Analytics with the Defend-Your-Area Directive augment When someone causes your automaton to act out their Defend- Your-Area Directive, your clockwork is designed to make their prey regret it. It gains a strike bonus on any attacks made while acting out the Defend-Your-Area Directive.\n+4 Strike\n+8 Strike\n+12 Strike\n+16 Strike",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "stk",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "Mark Your Area",
+    "by_marque": [
+     4,
+     8,
+     12,
+     16
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-secure-your-area-subdirective",
@@ -4661,7 +4913,21 @@
   "size": "",
   "price": "",
   "text": "Requires: Analytics with the Follow-Me Directive augment Your clockwork’s body inanely lurches towards its target as fast as its body will allow. Your automaton can move further per movement whenever it is carrying out its Follow-Me Directive.\n+10 feet of movement\n+20 feet of movement\n+30 feet of movement\n+40 feet of movement",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "spd",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "toward the target",
+    "by_marque": [
+     10,
+     20,
+     30,
+     40
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-shadow-me-subdirective",
@@ -4831,7 +5097,21 @@
   "size": "",
   "price": "",
   "text": "Requires: Analytics with the Protect-Me Directive augment When your automaton acts out its Protect-Me Directive it is better about protecting itself. It gains a defense bonus while acting out the Protect-Me Directive.\n+4 Defense\n+8 Defense\n+12 Defense\n+16 Defense",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "def",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "while protecting",
+    "by_marque": [
+     4,
+     8,
+     12,
+     16
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-shield-yourself-subdirective",
@@ -4855,7 +5135,21 @@
   "size": "",
   "price": "",
   "text": "Requires: Analytics with the Protect-Me Directive augment When your automaton acts out its Protect-Me Directive it won’t take as much damage. It gains a soak class bonus while acting out the Protect-Me Directive.\n+1 soak class\n+2 soak class\n+3 soak class\n+4 soak class",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "soak",
+    "op": "add",
+    "when": "toggle",
+    "scope": "character",
+    "label": "while protecting",
+    "by_marque": [
+     1,
+     2,
+     3,
+     4
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-do-not-die-component",
@@ -4879,7 +5173,20 @@
   "size": "",
   "price": "",
   "text": "Your clockwork is designed to take more hits before its inevitable destruction, not that it cares.\n+10 wounds\n+20 wounds\n+30 wounds\n+40 wounds",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "wnd",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     10,
+     20,
+     30,
+     40
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-stay-alive-component",
@@ -4903,7 +5210,20 @@
   "size": "",
   "price": "",
   "text": "You’ve built your wind-up to continue following its pre-programmed directives well past when most other automatons would have fallen on the battlefield.\n+10 wounds\n+20 wounds\n+30 wounds\n+40 wounds",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "wnd",
+    "op": "add",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     10,
+     20,
+     30,
+     40
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-spring-into-action-component",
@@ -4975,7 +5295,20 @@
   "size": "",
   "price": "",
   "text": "Takes up 2 Augment Slots on a Boiler\nThe automaton has been outfitted with a graviton sphere, allowing it to float and move. It can now fly, with its speed depending on the marque. Any speed penalties you take from armor will penalize this speed.\n5 feet of fly speed per action point\n10 feet of fly speed per action point\n15 feet of fly speed per action point\n25 feet of fly speed per action point",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "fly",
+    "op": "base",
+    "when": "always",
+    "scope": "character",
+    "by_marque": [
+     5,
+     10,
+     15,
+     20
+    ]
+   }
+  ]
  },
  {
   "slug": "automata-clockwork-lightning-resistant",
@@ -16817,6 +17150,1830 @@
   "accessory": false,
   "size": "",
   "extension": "mementos"
+ },
+ {
+  "slug": "alchemy-medicine-antivenom",
+  "name": "Antivenom",
+  "skill": "Alchemy",
+  "lists": [
+   "medicine"
+  ],
+  "section": "Medicine augments",
+  "subsection": "Pets & Predators",
+  "slots": 1,
+  "qualifiers": [],
+  "no_marques": true,
+  "marques": [
+   "While under the effect of an animal venom, take an antivenom potion to re-roll the resist and get a result one tier higher.",
+   "–",
+   "–",
+   "–"
+  ],
+  "price": "buy 4 pr / craft 8 dukes",
+  "notes": "vs animal venoms",
+  "text": "While under the effect of an animal venom, take an antivenom potion to re-roll the resist and get a result one tier higher. Can be tried several times with several potions.",
+  "accessory": false,
+  "size": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "alchemy-medicine-antivenom-plus",
+  "name": "Antivenom Plus",
+  "skill": "Alchemy",
+  "lists": [
+   "medicine"
+  ],
+  "section": "Medicine augments",
+  "subsection": "Pets & Predators",
+  "slots": 2,
+  "qualifiers": [
+   "req. Antivenom"
+  ],
+  "marques": [
+   "+4 to resist venom",
+   "+6 to resist venom",
+   "+8 to resist venom",
+   "+10 to resist venom"
+  ],
+  "notes": "Antivenom must also be on the medicine",
+  "text": "Re-roll the venom resist with two extra tiers, and gain the marque bonus to resist that poison until the next breather.",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "alchemy-sedative",
+  "name": "Sedative",
+  "skill": "Alchemy",
+  "lists": [
+   "poison",
+   "medicine"
+  ],
+  "section": "Poison augments",
+  "subsection": "Pets & Predators",
+  "slots": 3,
+  "qualifiers": [],
+  "no_marques": true,
+  "marques": [
+   "Once per downtime lowers a captive animal's taming tier by 1.",
+   "–",
+   "–",
+   "–"
+  ],
+  "price": "buy 60 pr / craft 12 pr",
+  "notes": "Resist: Spirit (negates); 3 augment slots",
+  "text": "Once per downtime lowers a captive animal's taming tier by 1. The potion maker has one potion fewer after that downtime when it is used.",
+  "accessory": false,
+  "size": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "alchemy-poison-venomized",
+  "name": "Venomized",
+  "skill": "Alchemy",
+  "lists": [
+   "poison"
+  ],
+  "section": "Poison augments",
+  "subsection": "Pets & Predators",
+  "slots": 1,
+  "qualifiers": [],
+  "no_marques": true,
+  "marques": [
+   "Instead of this augment's effect, use the effect of any venom you have extracted, bought or created.",
+   "–",
+   "–",
+   "–"
+  ],
+  "price": "buy 20 pr / craft 4 pr",
+  "notes": "slots not stated, assume 1",
+  "text": "Instead of this augment's effect, use the effect of any venom you have extracted, bought or created.",
+  "accessory": false,
+  "size": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-essence-mobile-animal",
+  "name": "Mobile Animal",
+  "skill": "Bio-Flux",
+  "lists": [
+   "essence"
+  ],
+  "section": "Essence augments",
+  "subsection": "Animal essence augments",
+  "slots": 1,
+  "qualifiers": [
+   "animal only"
+  ],
+  "no_marques": true,
+  "marques": [
+   "The animal gains an additional movement trait.",
+   "–",
+   "–",
+   "–"
+  ],
+  "price": "buy 250 pr / craft 50 pr",
+  "text": "The animal gains an additional movement trait. Not the Mobile special trait; cannot be taken if the animal already has all movement traits.",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-essence-prehensile",
+  "name": "Prehensile",
+  "skill": "Bio-Flux",
+  "lists": [
+   "essence"
+  ],
+  "section": "Essence augments",
+  "subsection": "Animal essence augments",
+  "slots": 1,
+  "qualifiers": [
+   "animal only"
+  ],
+  "no_marques": true,
+  "marques": [
+   "Tendrils, thumbs or other grasping: the animal gains the Prehensile Limbs special trait, but no SP from it.",
+   "–",
+   "–",
+   "–"
+  ],
+  "price": "buy 250 pr / craft 50 pr",
+  "text": "Tendrils, thumbs or other grasping: the animal gains the Prehensile Limbs special trait, but no SP from it.",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-essence-specialized-animal",
+  "name": "Specialized Animal",
+  "skill": "Bio-Flux",
+  "lists": [
+   "essence"
+  ],
+  "section": "Essence augments",
+  "subsection": "Animal essence augments",
+  "slots": 1,
+  "qualifiers": [
+   "animal only",
+   "needs a known animal special trait"
+  ],
+  "no_marques": true,
+  "marques": [
+   "The animal gets one more Special Trait that you know, without SP from it.",
+   "–",
+   "–",
+   "–"
+  ],
+  "price": "buy 250 pr / craft 50 pr",
+  "text": "The animal gets one more Special Trait that you know, without SP from it.",
+  "accessory": false,
+  "notes": "",
+  "size": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-adaptive-versatility",
+  "name": "Adaptive Versatility",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Gives no ability. Instead +2 to two of its combat stats and +6 HP. Anything that modifies HP gained from SP also affects this HP (Hardy → +10, Extra Hardy → +14).",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-blooded",
+  "name": "Blooded",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "When it becomes aware of a bleeding opponent on the battlefield: +1 Strike, plus +2 Strike more when attacking that opponent. Can stack for several bleeding opponents.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-boneless",
+  "name": "Boneless",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Contorts into spaces much smaller than its body. Gains the effects of Cover Expert (espionage-cover-expert) and can squeeze to one size tier smaller; a small animal can squeeze through openings a few inches wide.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-camouflage",
+  "name": "Camouflage",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Active camouflage: can hide in plain sight. Bonus to its Hide roll equal to 2 × SP.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-crushing-grab",
+  "name": "Crushing Grab",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Can use the effect of the Crushing Grip specialty (brawl-crushing-grip) with its natural weapons.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-constricting",
+  "name": "Constricting",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "When it holds an opponent, the opponent must make a Breath Holding check as if they had no last breath. While held they suffocate and pass out when their time runs out unless they break the grab.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-defensive-advantage",
+  "name": "Defensive Advantage",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "+2 soak class on its natural armor.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-defensive-curl",
+  "name": "Defensive Curl",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Curls into a ball: +6 soak class and +10 Defense. No actions except leaving the stance.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-deflection",
+  "name": "Deflection",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Deflects attacks with its body as if it had a shield.",
+  "notes": "As a shield deflection (normally 1 AP)",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-disinfectant",
+  "name": "Disinfectant",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Secretes enzymes or eats dead flesh: allies' wounds heal at twice the normal rate (does not stack with several animals). Cancels all necrotizing effects on the player.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-disorienting-attack",
+  "name": "Disorienting Attack",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Its attack disorients the opponent for 1 turn per strike tier.",
+  "notes": "Attack + 1 AP (usually 3 AP)",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-echolocating",
+  "name": "Echolocating",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Can hear anything it could ordinarily see, except colors and textures.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-fearsome",
+  "name": "Fearsome",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Instead of Brute Intimidate it has Brute Terrify: the opponent takes a fear result by the animal's Brute roll, tiered down by their resist.",
+  "notes": "Replaces Brute Intimidate",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-feign-death",
+  "name": "Feign Death",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Gains all abilities of Feign Fatal Wounds (espionage-feign-fatal-wounds), but enters the stance reflexively and cannot act in it except to leave. Can leave reflexively when attacked and gets a free attack on the attacker (AP-costing attack modifiers still cost AP). Uses Cunning for the stance's effectiveness.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-flesh-tearing",
+  "name": "Flesh Tearing",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [
+   "req. Piercing Attacks"
+  ],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "When it inflicts a called-shot effect that ends after a time or after actions, that effect does not end until the opponent's bleeding has also been patched.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-forcible-will",
+  "name": "Forcible Will",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Gains the benefits of Force of Self (grace-force-of-self), using Spirit instead of the Grace skill.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-gallop",
+  "name": "Gallop",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "If it spends at least 3 AP moving in a turn, it moves at twice its normal speed.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-hardy",
+  "name": "Hardy",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Gains 10 HP per SP instead of 6.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-extra-hardy",
+  "name": "Extra Hardy",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [
+   "req. Hardy"
+  ],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Gains 14 HP per SP instead of 10.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-herd-instincts",
+  "name": "Herd Instincts",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "+1 Evade for each other allied animal within 25 ft that has the Herd Instincts trait or story.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-howl",
+  "name": "Howl",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "+1",
+   "+2",
+   "+3",
+   "+4"
+  ],
+  "text": "Guttural howl: +1 per SP marque on all rolls of the next attack, or the next evade and defense attempt, of an ally within 25 ft.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-hypnotic",
+  "name": "Hypnotic",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Hypnotic gaze: benefits from Connection (grace-connection), using Spirit instead of Grace for the bonus.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-ink",
+  "name": "Ink",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Called shot to the eyes with ink using only its Accuracy, for 2 AP. No damage; if not resisted the target is blinded and acts as if fighting in darkness until they spend 2 AP to clean it out. Uses per breather = SP marque; anything that changes its venom dose count changes this too.",
+  "notes": "2 AP",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-intimidating",
+  "name": "Intimidating",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Its Brute intimidations are one tier more effective. Above T4: +1 to the AP that cannot be used to attack it. With Fearsome: fear effect +1 tier (max T4).",
+  "notes": "As a Brute Intimidate",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-loud",
+  "name": "Loud",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Loud aggressive noises: opponents must roll concentration (Spirit) against the animal's Cunning to notice silent movement or hear allies' vocal cues.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-mobile",
+  "name": "Mobile",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Gains an additional movement trait. Can be taken several times; no movement trait more than once.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-offensive-advantage",
+  "name": "Offensive Advantage",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Its natural attacks gain +2 damage class.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-pack-instincts",
+  "name": "Pack Instincts",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "+1 Strike for each other allied animal within 25 ft that has the Pack Instincts trait or story.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-phase-step",
+  "name": "Phase Step",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Benefits of Phase Step (agility-phase-step), using Dexterity instead of Agility.",
+  "notes": "As a move (usually 1 AP)",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-piercing-attacks",
+  "name": "Piercing Attacks",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "All its attacks make the opponent bleed 2 additional HP per turn per strike tier.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-predatory-instinct",
+  "name": "Predatory Instinct",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "+1",
+   "+2",
+   "+3",
+   "+4"
+  ],
+  "text": "Against one opponent type (e.g. Humanoids, Automatons, Vehicles, Land Animals, Abominations, Birds, Fishes, Living Liquids): +1 per SP marque on all combat rolls and +2 to all damage classes. Repeatable once per type; an opponent fitting several types is only affected once.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-revitalizing",
+  "name": "Revitalizing",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Acts as a natural bio-invigorator (core Bio-Flux) that uses its Spirit attribute to determine healing.",
+  "notes": "2 AP",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-sharp-senses",
+  "name": "Sharp Senses",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Camouflaged opponents, or opponents hidden behind cover, get no hide bonus against it from those effects.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-social",
+  "name": "Social",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Part of a social unit (domesticated, hivemind, pride, pack…), capable of rudimentary communication; tamed as if it had half its SP (rounded up).",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-stink",
+  "name": "Stink",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Sprays an enemy within 10 ft: rolls to hit, then the target resists (Brute or Spirit) against its Accuracy; on a failure the target is nauseated. Uses = SP marque (per breather); anything that changes its venom dose count changes this too.",
+  "notes": "2 AP",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-tough-body",
+  "name": "Tough Body",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "+2 Wounds per SP.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-trample",
+  "name": "Trample",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "+2 damage class with any melee or unarmed weapon against a prone opponent; +2 soak class against melee attacks of a prone opponent. Mostly unimpeded by prone opponents (narrator).",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-verbally-reactive",
+  "name": "Verbally Reactive",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Understands basic language (cannot talk back); benefits from all specialties that involve talking.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-versatile-essence",
+  "name": "Versatile Essence",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Knows three 1-slot essence augments (core essence list) and switches between them for 1 AP; only one active at a time; uses no essence slot. Augment marque = SP marque.",
+  "notes": "1 AP",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-vocal",
+  "name": "Vocal",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Imitates normal speech convincingly without understanding it. Telling whether it speaks real words: Cunning vs the animal's Cunning.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-pounce",
+  "name": "Pounce",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Called shots to the chest can knock the opponent back and prone, landing in the opponent's square. While there, the opponent counts as grabbed and cannot stand up until they break the grab or the animal disengages.",
+  "notes": "As a called shot (usually 3 AP)",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-slam",
+  "name": "Slam",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Called shots to the chest knock the opponent back an additional 5 ft and prone.",
+  "notes": "As a called shot (usually 3 AP)",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-winding-attack",
+  "name": "Winding Attack",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Modifies a called shot to the chest: opponents who are drowning/suffocating, or start to within a turn of a successful winding attack, lose half (rounded up) of the time they could hold their breath and cannot take a last breath. The opponent counts as suffocating for the rest of their turn, so repeated Winding Attacks can suffocate them.",
+  "notes": "As a called shot (usually 3 AP)",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-prehensile-limbs",
+  "name": "Prehensile Limbs",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Grasping limbs: can use basic melee weapons, polearms and throwing weapons, and basic alchemical potions (medicine, poison, acid; no beta alchemy). Gains a 1 AP unarmed attack with the limbs at damage class 2, so it can grab for 1 AP.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-hurl",
+  "name": "Hurl",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [
+   "req. Prehensile Limbs"
+  ],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "With an opponent grabbed: throw them 5 ft per Brute tier, dealing 5 damage per tier. A throw of more than 10 ft knocks the victim prone; throwing into a solid object/wall deals +3 damage per Brute tier.",
+  "notes": "2 AP",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-tool-user",
+  "name": "Tool User",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [
+   "req. Prehensile Limbs"
+  ],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Understands and uses complex tools: basic ranged weapons (firearms, bows, crossbows). Can use the Sciences ability Understand to figure out any crafted item; cannot hack beta items.",
+  "notes": "1 AP to understand machines",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-extra-venoms",
+  "name": "Extra Venoms",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "+1 venom dose per SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-nematocysts",
+  "name": "Nematocysts",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "When it grabs an opponent it may spend 1 AP to apply its poison.",
+  "notes": "As a grab + 1 AP (usually 3 AP)",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-poisonous-spit",
+  "name": "Poisonous Spit",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Delivers its poison to an opponent up to 10 ft away; the opponent may evade the spit.",
+  "notes": "1 AP",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-acidic",
+  "name": "Acidic",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Dissolves most untreated organic material. An acid spit/nematocyst grab may target an opponent or an item at the normal cost. Against a dissolvable item = normal sundering attempt with Accuracy +1 tier. Against a person in dissolvable armor: Dexterity vs the animal's Accuracy; soak class −1 per Accuracy tier, tiered down by the Dexterity roll.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-blinding",
+  "name": "Blinding",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "1 turn",
+   "2 turns",
+   "3 turns",
+   "4 turns"
+  ],
+  "text": "Blinded status for a number of turns by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-burn-inducing",
+  "name": "Burn Inducing",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "Tier 1 Burns",
+   "Tier 2 Burns",
+   "Tier 3 Burns",
+   "Tier 4 Burns"
+  ],
+  "text": "Burnt status at a tier by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-deafening",
+  "name": "Deafening",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "1 turn",
+   "2 turns",
+   "3 turns",
+   "4 turns"
+  ],
+  "text": "Deafened status for a number of turns by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-local-swelling",
+  "name": "Local Swelling",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "When delivering the poison it picks a called-shot location; the target gets that location's Wound effect until their next breather or an antitoxin. Once per opponent at a time (a new use replaces the old one). If delivered by a called shot, that location is used; eyes/ears/neck → head wound effect, groin → chest wound effect.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-maddening",
+  "name": "Maddening",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "3 AP",
+   "5 AP",
+   "7 AP",
+   "9 AP"
+  ],
+  "text": "Rage: the victim spends AP (by SP marque) attacking wildly, first whoever recently attacked them, then anyone nearby.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-mentally-clouding",
+  "name": "Mentally Clouding",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "1 turn, -4 penalty",
+   "2 turns, -6 penalty",
+   "3 turns, -8 penalty",
+   "4 turns, -10 penalty"
+  ],
+  "text": "Penalty to Cunning and Sciences rolls for a number of turns by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-muscle-relaxing",
+  "name": "Muscle Relaxing",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "1 turn",
+   "1 turn",
+   "2 turns",
+   "2 turns"
+  ],
+  "text": "The victim falls prone involuntarily and cannot get up for a time by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-nauseating",
+  "name": "Nauseating",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "3 AP to purge",
+   "4 AP to purge",
+   "5 AP to purge",
+   "6 AP to purge"
+  ],
+  "text": "Nausea status, but it lasts until the victim has spent AP by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-necrosis",
+  "name": "Necrosis",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Any wound effect the victim gets while poisoned is permanent until a doctor treats it or it is otherwise healed.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-neurotoxin",
+  "name": "Neurotoxin",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "1 AP",
+   "2 AP",
+   "3 AP",
+   "4 AP"
+  ],
+  "text": "Stunned for an amount of AP by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-painful",
+  "name": "Painful",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "6 HP",
+   "12 HP",
+   "18 HP",
+   "24 HP"
+  ],
+  "text": "Unsoakable damage by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-psychoactive",
+  "name": "Psychoactive",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "Tier 2 Cunning results required to move for 1 turn",
+   "Tier 2 Cunning results required to make any actions for 2 turns",
+   "Tier 3 Cunning results required to make any actions for 3 turns",
+   "Tier 3 Cunning results required to make any actions for 4 turns"
+  ],
+  "text": "Hallucinations: the target must make a Cunning roll for every action; on a failure it spends 1 AP moving aimlessly (narrator). Difficulty and duration by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-rusting",
+  "name": "Rusting",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "special trait (1 SP)",
+   "–",
+   "–",
+   "–"
+  ],
+  "text": "Rapid rusting agent (common near Mt. Sibrius, Siyesh): on contact, metal armor (including natural metal armor and metal suits) loses 2 soak class and all movement encumbrances worsen by −10 ft.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-weakening",
+  "name": "Weakening",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "1 turn, -4 penalty",
+   "2 turns, -6 penalty",
+   "3 turns, -8 penalty",
+   "4 turns, -10 penalty"
+  ],
+  "text": "Penalty to Brute and Dexterity rolls for a number of turns by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
+ },
+ {
+  "slug": "bio-flux-animal-trait-withering",
+  "name": "Withering",
+  "skill": "Bio-Flux",
+  "lists": [
+   "animal-trait"
+  ],
+  "section": "Animal special traits",
+  "slots": 0,
+  "qualifiers": [],
+  "marques": [
+   "1 turn, -6 penalty",
+   "2 turns, -9 penalty",
+   "3 turns, -12 penalty",
+   "4 turns, -15 penalty"
+  ],
+  "text": "Penalty to Spirit rolls for a number of turns by SP marque.",
+  "notes": "",
+  "subsection": "",
+  "accessory": false,
+  "size": "",
+  "price": "",
+  "modifiers": [],
+  "extension": "pets-and-predators"
  },
  {
   "slug": "alchemy-rage-suppressant",

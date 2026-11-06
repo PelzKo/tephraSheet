@@ -270,7 +270,8 @@ def specialty_options(character, level=None, extra_state=None):
         if spec.get("racial") and spec["racial"] not in race_family(state.race) and spec["slug"] not in owned:
             continue  # other races' racial specialties
         skill = spec["skill"] or ("General (Sciences)" if spec["general"] else spec.get("group") or "Racial")
-        if spec["skill"] and sheet.skills[spec["skill"]].total < 1 and spec["slug"] not in owned:
+        if spec["skill"] and max(sheet.skills[s].total for s in spec.get("skill_any") or [spec["skill"]]) < 1 \
+                and spec["slug"] not in owned:
             continue
         if spec["general"] and not any(sheet.skills[s].total for s in tables.SCIENCE_SKILLS):
             continue

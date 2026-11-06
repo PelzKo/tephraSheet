@@ -1,0 +1,48 @@
+{% load sheet_tags %}{# One animal's stat block; every value explains itself on hover/tap. p = Pet, s = compute_pet result #}
+<div class="pet-card">
+  <div class="row spread"><h3 style="margin:0">{{ p.name }} <span class="muted small">{{ s.template.name }} · {% t "SP {sp} (marque {m})" sp=s.sp.total m=s.marque %}</span></h3>
+    <span>{% ext_badge p %}<span class="tag">{{ p.get_origin_display|t }}</span>{% if p.wild %} <span class="tag">{% t "wild" %}</span>{% endif %}
+      {% if not editor %}<a class="btn small" href="{% url 'pet_edit' character.pk p.pk %}">{% t "Edit" %}</a>{% endif %}</span></div>
+  {% if s.missing_rows %}<p class="small warn">{% t "{n} derived-stat rows not filled in yet." n=s.missing_rows %}</p>{% endif %}
+  <div class="pet-stats">
+    <span>{% t "AP" %} {% stat s.stats.ap %}</span><span>{% t "Priority" %} {% stat s.stats.pri signed=True %}</span>
+    <span>{% t "HP" %} <b>{{ hp_left|default_if_none:s.stats.hp.total }}</b> / {% stat s.stats.hp %}</span>
+    <span>{% t "Wounds" %} {% stat s.stats.wnd %}</span>
+    <span>{% t "Speed" %} {% stat s.stats.spd %}</span><span>{% t "Climb" %} {% stat s.stats.climb %}</span>
+    <span>{% t "Swim" %} {% stat s.stats.swim %}</span>{% if s.stats.fly.total %}<span>{% t "Fly" %} {% stat s.stats.fly %}</span>{% endif %}
+  </div>
+  <div class="pet-stats">
+    {% for a, v in s.attrs.items %}<span>{{ a|t }} {% stat v signed=True %}</span>{% endfor %}
+  </div>
+  <div class="pet-stats">
+    <span>{% t "Evade" %} {% stat s.stats.eva signed=True %}</span><span>{% t "Defense" %} {% stat s.stats.def signed=True %}</span>
+    <span>{% t "Soak" %} {% stat s.stats.soak_class %} <span class="muted">({{ s.soak|join:"|" }})</span></span>
+  </div>
+  <table class="data small"><tr data-nosort><th>{% t "Attack" %}</th><th>{% t "AP" %}</th><th>{% t "Acc" %}</th><th>{% t "Stk" %}</th><th>{% t "Damage" %}</th></tr>
+    {% for a in s.attacks %}<tr><td>{{ a.name|t }}{% if a.note %} <span class="muted">({{ a.note }})</span>{% endif %}</td><td>{{ a.ap }}</td><td>{% stat a.acc signed=True %}</td><td>{% stat a.stk signed=True %}</td>
+      <td>{% if a.dc %}{% stat a.dc %} → {% endif %}{{ a.dmg|join:"|"|default:"–" }}</td></tr>{% endfor %}</table>
+  {% if s.venoms %}<p class="small"><b>{% t "Venoms" %}</b> ({% t "{used} / {max} doses used" used=p.venom_used max=s.venom_doses %}):
+    {% for t in s.venoms %}{{ t.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</p>{% endif %}
+  {% if p.wild %}<p class="small">{% t "Taming tier: {n}" n=s.taming %}</p>{% endif %}
+  {% if not editor %}
+    <div class="row">
+      <form class="row" style="gap:4px" hx-post="{% url 'play' character.pk 'pet-hp' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+        <input type="hidden" name="id" value="{{ p.pk }}"><input type="hidden" name="tab" value="pets">
+        <input type="number" name="amount" placeholder="{% t "dmg" %}" aria-label="{% t "Damage amount" %}" style="width:5em" required>
+        <button class="btn small" name="sign" value="1">{% t "Damage" %}</button><button class="btn small" name="sign" value="-1">{% t "Heal" %}</button></form>
+      <span class="small">{% t "Wounds taken: {n}" n=p.wounds_taken %}</span>
+      <button class="btn small" hx-post="{% url 'play' character.pk 'pet-wound' %}" hx-vals='{"id": "{{ p.pk }}", "delta": "1", "tab": "pets"}' hx-target="#sheet-body" hx-swap="outerHTML">+1</button>
+      <button class="btn small" hx-post="{% url 'play' character.pk 'pet-wound' %}" hx-vals='{"id": "{{ p.pk }}", "delta": "-1", "tab": "pets"}' hx-target="#sheet-body" hx-swap="outerHTML">−1</button>
+      {% if s.venoms %}<button class="btn small" hx-post="{% url 'play' character.pk 'pet-venom' %}" hx-vals='{"id": "{{ p.pk }}", "delta": "1", "tab": "pets"}' hx-target="#sheet-body" hx-swap="outerHTML">{% t "Use a venom dose" %}</button>
+        <button class="btn small" hx-post="{% url 'play' character.pk 'pet-venom' %}" hx-vals='{"id": "{{ p.pk }}", "delta": "-99", "tab": "pets"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Doses refill after a breather" %}">{% t "Refill" %}</button>{% endif %}
+    </div>
+  {% endif %}
+  <details class="small"><summary>{% t "Traits, movement and stories" %}</summary>
+    <ul>{% for m in s.movement %}<li><b>{{ m.name }}</b>: {{ m.text }}</li>{% endfor %}
+      {% for t in s.traits %}<li><b>{{ t.name }}</b>{% if t.choice %} ({{ t.choice }}){% endif %}: {{ t.text }}</li>{% endfor %}
+      {% for st in s.stories %}<li><b>{{ st.name }}</b>: {{ st.text }}</li>{% endfor %}</ul>
+    {% for n in s.notes %}<div class="muted">{{ n.0 }}: {{ n.1 }}</div>{% endfor %}
+    <div class="muted">{% t "Market price: {n} princes" n=s.price_pr %}</div>
+    {% if p.notes %}<p>{{ p.notes|linebreaksbr }}</p>{% endif %}
+  </details>
+</div>

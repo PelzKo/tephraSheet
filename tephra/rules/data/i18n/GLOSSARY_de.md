@@ -262,3 +262,35 @@ Marionette Strings → Marionettenfäden.
 | Disassemble (action) | Zerlegen |
 | essence manipulation slots | Essenzplätze |
 | Pets and Predators (book) | unchanged |
+
+## Pets & Predators
+| English | German |
+|---|---|
+| animal / pet | Tier / Haustier, Begleiter |
+| special trait / movement trait | Besonderes Merkmal / Bewegungsmerkmal |
+| SP (specialization points) | SP (Spezialisierungspunkte) |
+| SP marque | SP-Marque |
+| size / niche | Größe / Lebensraum |
+| Small Land / Medium Underwater / Large Flying … | Kleines Landtier / Mittleres Wassertier / Großes Flugtier … |
+| tame / tamed / tamer / taming tier | zähmen / gezähmt / Zähmer / Zähmungsstufe |
+| wild / captive / captivity | wild / gefangen / Gefangenschaft |
+| directive (to an animal) | Anweisung |
+| bio-engineered / bio-engineering | biotechnisch erschaffen / Biotechnik |
+| Bio-Engineer / Chimaeras / Abominations / Monstrosities | Bio-Ingenieur / Biotechnische Chimären / Abscheulichkeiten / Monstrositäten |
+| venom / dose / venom harvester | Gift, Tiergift (where it must differ from alchemy poison) / Dosis / Giftmelker |
+| antivenom / Venomized | Antivenin / Tiergiftversetzt |
+| Sedative | Beruhigungsmittel |
+| stampede | Stampede |
+| training story | Trainingsgeschichte |
+| Additional AP 1/2 · Armorable · Mountable · Socialized · Sequenced Orders · Wild Lab Assistant | Zusätzliche AP 1/2 · Rüstungsfähig · Reittier · Sozialisiert · Befehlsketten · Wilder Laborassistent |
+| Herd Instincts / Pack Instincts / Pack Humanoid | Herdeninstinkt / Rudelinstinkt / Rudelmensch |
+| Prehensile Limbs / Tool User | Greifgliedmaßen / Werkzeugnutzer |
+| Pounce / Slam / Winding Attack | Anspringen / Rammen / Atemraubender Angriff |
+| Hardy / Extra Hardy | Robust / Extrem robust |
+| Nematocysts / Poisonous Spit / Poisonous Bite | Nesselzellen / Giftspucke / Giftbiss |
+| Brute Intimidate / Brute Terrify | Einschüchtern (Kraft) / Verängstigen (Kraft) |
+| Understand (Sciences ability) | Verstehen |
+| breath holding / last breath | Luftanhalten / letzter Atemzug |
+| resist qualifiers: negates / tiers down / marques down | hebt auf / senkt Stufe / Marques abwärts |
+| purge (nausea) | auswürgen |
+| Demi-Gnome "Goblins" / Demi-Ayodin "Carbuncles" / Demi-Elf "Ogres" | Demi-Gnom „Goblins“ / Demi-Ayodin „Karfunkel“ / Demi-Elf „Oger“ |

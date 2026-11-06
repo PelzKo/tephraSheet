@@ -204,6 +204,45 @@ class InventoryItem(ItemFields):
                    **template.item_values())
 
 
+class Pet(models.Model):
+    """An animal of a character (Pets & Predators). Built from a template, movement, special traits, training
+    stories and derived-stat rows; the stat block comes from rules/engine/pets.py."""
+
+    ORIGIN_CHOICES = [("tamed", "Tamed"), ("bioengineered", "Bio-engineered"), ("bought", "Bought"),
+                      ("preset", "Narrator / sample")]
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="pets")
+    name = models.CharField(max_length=100)
+    origin = models.CharField(max_length=14, choices=ORIGIN_CHOICES, default="tamed")
+    preset = models.CharField(max_length=60, blank=True)
+    template = models.CharField(max_length=30)
+    movement = models.JSONField(default=list, blank=True)
+    traits = models.JSONField(default=list, blank=True, help_text='[["trait-slug", choice or null], ...]')
+    stories = models.JSONField(default=list, blank=True)
+    derived = models.JSONField(default=list, blank=True)
+    sp_bonus = models.SmallIntegerField(default=0)
+    wild = models.BooleanField(default=False, help_text="untamed: gets the wild Additional AP")
+    levels = models.PositiveSmallIntegerField(default=0, help_text="bio-engineered: levels instead of SP")
+    stance = models.CharField(max_length=40, blank=True)
+    hp_damage = models.PositiveSmallIntegerField(default=0)
+    wounds_taken = models.PositiveSmallIntegerField(default=0)
+    venom_used = models.PositiveSmallIntegerField(default=0)
+    notes = models.TextField(blank=True)
+
+    class Meta:
+        ordering = ["pk"]
+
+    def __str__(self):
+        return self.name
+
+    def to_state(self):
+        from rules.engine.pets import PetState
+
+        return PetState(template=self.template, movement=list(self.movement), traits=[list(t) for t in self.traits],
+                        stories=list(self.stories), derived=list(self.derived), sp_bonus=self.sp_bonus,
+                        origin=self.origin, wild=self.wild, stance=self.stance, levels=self.levels)
+
+
 class EffectEntry(models.Model):
     """An active status effect or called-shot (wounded/fatal) effect. ``key`` points into
     ``rules/engine/effects.py``; custom status effects have no key and no mechanical effect."""

@@ -481,3 +481,33 @@ AUGMENTS.setdefault("gadgetry-explosive-gear-rattler", {})["marques"] = [
 for _name, _price in {"delay": "8 / 2 pr", "flypaper": "40 / 8 pr", "latch": "40 / 8 pr", "magnetic": "40 / 8 pr",
                       "proximity-fuse": "40 / 8 pr", "powerful-blast": "40 / 8 pr", "quick-set": "40 / 8 pr"}.items():
     AUGMENTS.setdefault(f"gadgetry-explosive-{_name}", {})["price"] = _price
+
+# Automaton core/limb augments that change the automaton's numbers (only rules/engine/automaton.py applies them).
+_AUTO = {
+    "soak": (["automata-steamer-armored-boiler", "automata-steamer-brickhouse-boiler"], [1, 2, 3, 4], "always"),
+    "wnd": (["automata-steamer-reinforced-boiler", "automata-steamer-resilient-boiler",
+             "automata-clockwork-do-not-die-component", "automata-clockwork-stay-alive-component"],
+            [10, 20, 30, 40], "always"),
+    "acc": (["automata-fusebox-mechanical-sharpness", "automata-fusebox-targeting-program"], [2, 4, 6, 8], "always"),
+    "eva": (["automata-fusebox-slippery-circuits"], [2, 3, 4, 5], "always"),
+}
+for _stat, (_slugs, _values, _when) in _AUTO.items():
+    for _slug in _slugs:
+        AUGMENTS.setdefault(_slug, {})["modifiers"] = [mod(_stat, by_marque=_values)]
+AUGMENTS.setdefault("automata-steamer-flight", {})["modifiers"] = [mod("fly", op="base", by_marque=[5, 10, 15, 25])]
+for _slug in ("automata-fusebox-flight", "automata-clockwork-flight"):
+    AUGMENTS.setdefault(_slug, {})["modifiers"] = [mod("fly", op="base", by_marque=[5, 10, 15, 20])]
+for _slug, _stat, _values, _label in (
+        ("automata-clockwork-hit-them-subdirective", "acc", [3, 6, 9, 12], "Hit Them"),
+        ("automata-clockwork-hedge-your-area-subdirective", "acc", [3, 6, 9, 12], "Hedge Your Area"),
+        ("automata-clockwork-hurt-them-subdirective", "stk", [4, 8, 12, 16], "Hurt Them"),
+        ("automata-clockwork-mark-your-area-subdirective", "stk", [4, 8, 12, 16], "Mark Your Area"),
+        ("automata-clockwork-protect-yourself-subdirective", "def", [4, 8, 12, 16], "while protecting"),
+        ("automata-clockwork-shield-yourself-subdirective", "soak", [1, 2, 3, 4], "while protecting"),
+        ("automata-steamer-shield-mode", "soak", [1, 2, 3, 4], "hunkered down"),
+        ("automata-clockwork-sprint-to-me-subdirective", "spd", [10, 20, 30, 40], "toward the target")):
+    AUGMENTS.setdefault(_slug, {})["modifiers"] = [mod(_stat, when="toggle", label=_label, by_marque=_values)]
+for _slug, _attr in (("automata-fusebox-brute-physics", "Brute"), ("automata-fusebox-dexterity-directory", "Dexterity"),
+                     ("automata-fusebox-installed-cunning", "Cunning"), ("automata-fusebox-scientific-database", "Sciences"),
+                     ("automata-fusebox-spiritual-connection", "Spirit")):
+    AUGMENTS.setdefault(_slug, {})["modifiers"] = [mod(f"roll:{_attr}", by_marque=[3, 12, 31, 47])]

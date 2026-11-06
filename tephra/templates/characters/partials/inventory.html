@@ -5,6 +5,7 @@
     <div class="row">
       <a class="btn small primary" href="{% url 'catalog' %}?for={{ character.pk }}">{% t "Add from catalog" %}</a>
       <a class="btn small" href="{% url 'item_create' %}?for={{ character.pk }}">{% t "Create item" %}</a>
+      {% if pets_enabled %}<a class="btn small" href="{% url 'pet_new' character.pk %}">{% t "New animal" %}</a>{% endif %}
       <a class="btn small" href="{% url 'catalog_import' %}?for={{ character.pk }}">{% t "Bulk import" %}</a>
     </div>
   </div>

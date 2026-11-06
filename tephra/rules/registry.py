@@ -104,6 +104,29 @@ class Registry:
         for s in self.specialties.values():
             self.specialties_by_name.setdefault(s["name_en"], s)
 
+    @property
+    def animals(self):
+        """Pets & Predators animal data: templates, movement, traits, stories by slug (+ price tables), with the
+        current language's names/texts (i18n/<lang>/animals*.json: {section: {slug: {field: text}}})."""
+        if not hasattr(self, "_animals"):
+            raw = json.loads((DATA_DIR / "ext" / "pets-and-predators" / "animals.json").read_text(encoding="utf8"))
+            tr = translations(self.lang, "animals") if self.lang != DEFAULT else {}
+            out = dict(raw)
+            for section in ("templates", "movement", "traits", "stories"):
+                entries = {}
+                for e in raw[section]:
+                    e = dict(e, name_en=e["name"])
+                    e.update({k: v for k, v in tr.get(section, {}).get(e["slug"], {}).items() if v})
+                    entries[e["slug"]] = e
+                out[section] = entries
+            presets = DATA_DIR / "ext" / "pets-and-predators" / "presets.json"
+            out["presets"] = {p["slug"]: p for p in json.loads(presets.read_text(encoding="utf8"))} \
+                if presets.exists() else {}
+            for p in out["presets"].values():
+                p["name"] = tr.get("presets", {}).get(p["slug"], {}).get("name") or p["name"]
+            self._animals = out
+        return self._animals
+
     def specialty(self, slug):
         return self.specialties[slug]
 
