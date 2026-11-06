@@ -57,6 +57,8 @@ STATUS = [
      "modifiers": _mods({"acc": -1, "eva": -1, "stk": -1, "def": -1}) + [
          {"stat": "spd", "value": 5, "op": "set", "when": "always", "scope": "character"}]},
     {"slug": "stunned", "name": "Stunned", "text": "Lose X AP from the current pool; can still evade and resist."},
+    {"slug": "wet", "name": "Wet", "extension": "living-liquids",
+     "text": "Electric damage against you is doubled (Electric Current: unsoakable)."},
     # Aether extension
     {"slug": "irradiated", "name": "Irradiated", "extension": "aether",
      "text": "−2 on all rolls until 1–4 AP (by the augment's marque) are spent.", "modifiers": _all_rolls(-2)},

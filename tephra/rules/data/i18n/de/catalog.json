@@ -127,5 +127,6 @@
 "The Poor Man's Mark": {"name": "Das Mal des armen Mannes", "description": "Schwarze Tinte, einem Opfer als Auge eintätowiert; entfernt man sie, erscheint sie wieder."},
 "The Stray Cat's Eye": {"name": "Das Auge der streunenden Katze", "description": "Grünes Tigerauge in einer alten haudischen Brosche; es ruiniert Diebe (gebunden an jeden, der es stiehlt)."},
 "Ruinous Rifle": {"name": "Verderbliches Gewehr", "description": "Antikes evanglessianisches Militärgewehr, in den Loveless-Kriegen von einem Gnomenpriester verflucht."},
-"Albrecht's Pipe": {"name": "Albrechts Pfeife", "description": "Pfeife, die der Aldamiir-Geck Albrecht von einer verfeindeten Familie geschenkt bekam."}
+"Albrecht's Pipe": {"name": "Albrechts Pfeife", "description": "Pfeife, die der Aldamiir-Geck Albrecht von einer verfeindeten Familie geschenkt bekam."},
+"Living liquid (vial)": {"name": "Lebende Flüssigkeit (Phiole)", "description": "Luftdichte Phiole mit einer lebenden Flüssigkeit. Freisetzen 2 AP (Zerschlagen: 1 AP, unsachgemäß). Füge ihre Augments im Objektersteller hinzu."}
 }

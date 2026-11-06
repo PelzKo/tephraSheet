@@ -117,7 +117,8 @@ def collect_sources(state):
             sources.append(Source(f"body:{slug}", _("Augment: {name} mQ {marque}", name=a["name"], marque=roman(marque)),
                                   [dict(m, marque=marque) for m in a.get("modifiers", [])], kind="augment"))
     # Spirit-skill augments (mementos) on several items count once, at the highest marque.
-    active = [i for i in state.items if i.slot != "stored" and (i.memento or i.slot not in ("carried", ""))]
+    active = [i for i in state.items
+              if i.slot not in ("stored", "released") and (i.memento or i.slot not in ("carried", ""))]
     spirit_best = {}
     for item in active:
         for slug, marque in item.augments:

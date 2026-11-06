@@ -100,5 +100,8 @@
  "{name} reached level {level}!": "{name} hat Level {level} erreicht!",
  "{name} updated.": "{name} aktualisiert.",
  "{trait}: pick a trait from the {race} table.": "{trait}: Wähle ein Merkmal aus der Tabelle {race}.",
- "✓ added": "✓ hinzugefügt"
+ "✓ added": "✓ hinzugefügt",
+ "Perfect Awakening T{tier}": "Perfektes Erwachen S{tier}",
+ "Release {name}": "{name} freisetzen",
+ "{name} has evaporated.": "{name} ist verdunstet."
 }

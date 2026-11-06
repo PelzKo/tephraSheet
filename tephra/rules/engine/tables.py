@@ -172,6 +172,13 @@ VARIANTS = {
 TURRET_WOUNDS = 15
 
 
+DIY_LIQUIDS = [2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6]  # living liquids maintained per DIY 1-12
+
+
+def max_liquids(diy):
+    return DIY_LIQUIDS[min(diy, 12) - 1] if diy >= 1 else 0
+
+
 def max_mementos(luck):
     """Mementos one creates and maintains (Mementos specialty): 1 + 1 per 4 Luck."""
     return 1 + luck // 4 if luck >= 1 else 0

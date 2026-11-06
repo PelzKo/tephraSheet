@@ -246,5 +246,7 @@
  "Memento augments need {used} slots, a memento has {slots}.": "Memento-Augments brauchen {used} Plätze, ein Memento hat {slots}.",
  "Memento: {v} / {w} slots": "Memento: {v} / {w} Plätze",
  "not bound": "nicht gebunden",
- "{augment} only fits a memento.": "{augment} passt nur auf ein Memento."
+ "{augment} only fits a memento.": "{augment} passt nur auf ein Memento.",
+ "Living liquid (vial)": "Lebende Flüssigkeit (Phiole)",
+ "Released (living liquid)": "Freigesetzt (lebende Flüssigkeit)"
 }

@@ -15,6 +15,7 @@ KIND_CHOICES = [
     ("vehicle", "Vehicle"),
     ("general", "General item"),
     ("resonator", "Aether resonator"),
+    ("living-liquid", "Living liquid (vial)"),
 ]
 WEAPON_KINDS = ("melee", "firearm", "bow", "crossbow")
 SIZE_CHOICES = [

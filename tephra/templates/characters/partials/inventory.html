@@ -1,7 +1,7 @@
 {% load sheet_tags %}
 <div class="paper">
   <div class="row spread">
-    <h2>{% t "Inventory" %}{% if memento_max %} <span class="tag" title="{% t "Mementos you can create and maintain: 1 + 1 per 4 Luck" %}">{% t "Mementos: {n} / {max}" n=memento_count max=memento_max %}</span>{% endif %}</h2>
+    <h2>{% t "Inventory" %}{% if liquid_max %} <span class="tag" title="{% t "Living liquids you can maintain (DIY table)" %}">{% t "Living liquids: {n} / {max}" n=liquid_count max=liquid_max %}</span>{% endif %}{% if memento_max %} <span class="tag" title="{% t "Mementos you can create and maintain: 1 + 1 per 4 Luck" %}">{% t "Mementos: {n} / {max}" n=memento_count max=memento_max %}</span>{% endif %}</h2>
     <div class="row">
       <a class="btn small primary" href="{% url 'catalog' %}?for={{ character.pk }}">{% t "Add from catalog" %}</a>
       <a class="btn small" href="{% url 'item_create' %}?for={{ character.pk }}">{% t "Create item" %}</a>
@@ -62,12 +62,21 @@
               {% elif value == "wings" %}{% if has_wings and item.is_weapon and item.hands_label == "one-handed" or item.slot == "wings" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
               {% elif value == "armor" %}{% if item.kind == "armor" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
               {% elif value == "deflection" %}{% if item.kind == "deflection" %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
+              {% elif value == "released" %}
               {% else %}<option value="{{ value }}"{% if item.slot == value %} selected{% endif %}>{{ label|t }}</option>{% endif %}
             {% endfor %}
           </select>
         </form>
         <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "One more" %}">+</button>
         <button class="btn small" hx-post="{% url 'play' character.pk 'quantity' %}" hx-vals='{"id": "{{ item.pk }}", "delta": "-1", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "One less" %}">−</button>
+        {% if item.kind == "living-liquid" %}
+          <form class="row" style="gap:4px" hx-post="{% url 'play' character.pk 'liquid-release' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+            <input type="hidden" name="id" value="{{ item.pk }}"><input type="hidden" name="tab" value="inventory">
+            {% if awakening %}<select name="awaken" aria-label="{% t "Perfect Awakening tier" %}" title="{% t "Perfect Awakening (+1 AP): tier of the release roll, +5 HP per tier" %}"><option value="0">–</option>{% for n in "1234" %}<option value="{{ n }}">T{{ n }}</option>{% endfor %}</select>{% endif %}
+            <button class="btn small primary" name="improper" value="0" title="{% t "Proper release: 2 AP, 20 HP" %}">{% t "Release" %}</button>
+            <button class="btn small" name="improper" value="1" title="{% t "Smash the vial: 1 AP, improper release (10 HP, 10 evaporation per turn)" %}">{% t "Smash" %}</button>
+          </form>
+        {% endif %}
         <a class="btn small" href="{% url 'inventory_item_edit' character.pk item.pk %}">{% t "Edit" %}</a>
         <button class="btn small danger" hx-post="{% url 'play' character.pk 'drop' %}" hx-vals='{"id": "{{ item.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" hx-confirm="{% t "Remove {name}?" name=item.name %}">{% t "Drop" %}</button>
       </div>

@@ -43,8 +43,9 @@ class ItemForm(forms.ModelForm):
         if "mementos" not in enabled() and not inst.memento:  # fields of an extension (Mementos)
             self.fields.pop("memento")
             self.fields.pop("binding")
-        if "aether" not in enabled() and inst.kind != "resonator":  # kind of an extension (Aether)
-            self.fields["kind"].choices = [c for c in self.fields["kind"].choices if c[0] != "resonator"]
+        for kind, ext in (("resonator", "aether"), ("living-liquid", "living-liquids")):  # kinds of extensions
+            if ext not in enabled() and inst.kind != kind:
+                self.fields["kind"].choices = [c for c in self.fields["kind"].choices if c[0] != kind]
         self.fields["variants"].choices = [(k, v["label"]) for k, v in VARIANTS.items()
                                            if is_offered(v) or k in (inst.variants or [])]
         for name in ("ap_use", "ap_ready", "dc", "reach", "range", "increment", "soak", "eva_penalty",

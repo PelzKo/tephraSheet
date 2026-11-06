@@ -1072,6 +1072,13 @@
   "extension": "explosives"
  },
  {
+  "name": "Living liquid (vial)",
+  "kind": "living-liquid",
+  "price_dukes": 0,
+  "description": "Airtight vial with a living liquid. Release 2 AP (smash: 1 AP, improper). Add its augments in the object creator.",
+  "extension": "living-liquids"
+ },
+ {
   "name": "Lord Hazard's Signet",
   "kind": "general",
   "memento": true,

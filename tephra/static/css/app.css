@@ -278,3 +278,6 @@ tr.fb-closed td { opacity: .55; }
 .check-dropdown summary { cursor: pointer; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
 .check-dropdown .check-list { display: flex; flex-direction: column; gap: 2px; max-height: 18em; overflow: auto; margin-top: 4px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 6px; background: var(--paper); }
 .tag.ext { border-color: var(--info); color: var(--info); font-size: 11px; }
+.liquid-cards { display: flex; flex-wrap: wrap; gap: 10px; max-width: 1400px; margin: 0 auto 10px; }
+.liquid-card { flex: 1 1 300px; max-width: 460px; padding: 10px 14px; }
+.liquid-stats { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 6px 0; }

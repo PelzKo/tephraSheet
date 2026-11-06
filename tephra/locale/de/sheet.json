@@ -383,5 +383,18 @@
  "Memento": "Memento",
  "Mementos you can create and maintain: 1 + 1 per 4 Luck": "Mementos, die du herstellen und pflegen kannst: 1 + 1 pro 4 Glück",
  "Mementos: {n} / {max}": "Mementos: {n} / {max}",
- "bound mQ {m}": "gebunden mQ {m}"
+ "bound mQ {m}": "gebunden mQ {m}",
+ "End its turn": "Ihr Zug endet",
+ "Evaporation": "Verdunstung",
+ "Its AP refresh: it takes its evaporation damage": "Ihre AP erneuern sich: sie erleidet ihren Verdunstungsschaden",
+ "Living liquids you can maintain (DIY table)": "Lebende Flüssigkeiten, die du pflegen kannst (DIY-Tabelle)",
+ "Living liquids: {n} / {max}": "Lebende Flüssigkeiten: {n} / {max}",
+ "Perfect Awakening (+1 AP): tier of the release roll, +5 HP per tier": "Perfektes Erwachen (+1 AP): Stufe des Freisetzungswurfs, +5 TP pro Stufe",
+ "Perfect Awakening tier": "Stufe für Perfektes Erwachen",
+ "Proper release: 2 AP, 20 HP": "Sachgemäße Freisetzung: 2 AP, 20 TP",
+ "Release": "Freisetzen",
+ "Smash": "Zerschlagen",
+ "Smash the vial: 1 AP, improper release (10 HP, 10 evaporation per turn)": "Phiole zerschlagen: 1 AP, unsachgemäße Freisetzung (10 TP, 10 Verdunstung pro Runde)",
+ "Unsoakable damage each time its AP refresh": "Schaden ohne Schutz, jedes Mal wenn sich ihre AP erneuern",
+ "improper release": "unsachgemäß freigesetzt"
 }

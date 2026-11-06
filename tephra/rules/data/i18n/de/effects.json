@@ -24,6 +24,7 @@
  "paralyzed": {"name": "Gelähmt", "text": "Hilflos; Schaden geht direkt auf Wunden; keine Aktionen."},
  "prone": {"name": "Liegend", "text": "−1 Genauigkeit/Ausweichen/Schlagkraft/Verteidigung; Tempo 5 ft; Aufstehen kostet 1 AP (löst Reflexe aus)."},
  "stunned": {"name": "Betäubt", "text": "Verliere X AP aus dem aktuellen Vorrat; du kannst weiterhin ausweichen und Widerstand leisten."},
+ "wet": {"name": "Nass", "text": "Elektroschaden gegen dich wird verdoppelt (Elektrischer Strom: ohne Schutz)."},
  "irradiated": {"name": "Verstrahlt", "text": "−2 auf alle Würfe, bis 1–4 AP (je nach Marque des Augments) ausgegeben wurden."},
  "highly-irradiated-1": {"name": "Stark verstrahlt S1", "text": "−3 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
  "highly-irradiated-2": {"name": "Stark verstrahlt S2", "text": "−4 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},

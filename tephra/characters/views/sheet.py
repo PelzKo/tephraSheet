@@ -7,7 +7,7 @@ from django.views.decorators.http import require_POST
 from catalog.models import KIND_CHOICES, ItemTemplate
 from rules.engine import effects as fx
 from rules.lang import gettext as _
-from rules.engine import tables
+from rules.engine import liquids, tables
 from rules.engine.requirements import character_warnings
 from rules.registry import get_registry
 
@@ -57,6 +57,13 @@ def sheet_context(request, character):
     augments, granted_augments = services.known_augment_entries(character)
     stories = [reg.stories[s] for s in character.stories if s in reg.stories]
     items = list(character.items.all())
+    released = [i for i in items if i.slot == "released"]  # living liquids: cards, not inventory rows
+    items = [i for i in items if i.slot != "released"]
+    released_liquids = []
+    for i in released:
+        block = liquids.liquid_block(i.to_item_state())
+        hp_left = max(0, block["stats"]["hp"].total - i.wounds_taken)
+        released_liquids.append({"item": i, "block": block, "hp_left": hp_left})
     locations = {n: [] for n in fx.LOCATION_LABELS}
     for e in effects:
         if e.location:
@@ -83,6 +90,11 @@ def sheet_context(request, character):
         "memento_max": tables.max_mementos(sheet.skills["Luck"].total)
         if any(s == "luck-mementos" for s, _l in character.specialties) else 0,
         "memento_count": sum(1 for i in items if i.memento),
+        "released_liquids": released_liquids, "wet": fx.get("status:wet"),
+        "liquid_max": tables.max_liquids(sheet.stats["diy"].total)
+        if any(s == "alchemy-liquid-life-giver" for s, _l in character.specialties) else 0,
+        "liquid_count": sum(i.quantity for i in items if i.kind == "living-liquid") + len(released),
+        "awakening": any(s == "alchemy-perfect-awakening" for s, _l in character.specialties),
         "effects": effects,
         "effect_boxes": [("Wound Effects", [e for e in effects if e.kind == "wound"]),
                          ("Fatal Effects", [e for e in effects if e.kind == "fatal"]),
@@ -276,6 +288,22 @@ def play_action(request, character, action):
             item.save()
     elif action == "drop":
         InventoryItem.objects.filter(character=character, pk=_int(p.get("id"))).delete()
+    elif action == "liquid_release":
+        vial = InventoryItem.objects.filter(character=character, pk=_int(p.get("id")), kind="living-liquid") \
+            .exclude(slot="released").first()
+        if vial:
+            release_liquid(request, character, vial, improper=p.get("improper") == "1", tier=_int(p.get("awaken")))
+    elif action in ("liquid_damage", "liquid_end_turn"):
+        liquid = InventoryItem.objects.filter(character=character, pk=_int(p.get("id")), slot="released").first()
+        if liquid:
+            block = liquids.liquid_block(liquid.to_item_state())
+            amount = block["stats"]["evaporation"].total if action == "liquid_end_turn" else max(0, _int(p.get("amount")))
+            liquid.wounds_taken = min(32767, liquid.wounds_taken + amount)  # damage taken so far
+            if liquid.wounds_taken >= block["stats"]["hp"].total:
+                messages.info(request, _("{name} has evaporated.", name=liquid.name))
+                liquid.delete()
+            else:
+                liquid.save(update_fields=["wounds_taken"])
     elif action == "story":
         character.story_notes = p.get("story_notes", "")
     elif action == "notes":
@@ -306,6 +334,28 @@ def end_unavailable(request, character):
             return
         character.toggles = [k for k in character.toggles if k not in {o["key"] for o in stale}]
         messages.info(request, _("Ended: {items}.", items=", ".join(o["label"] for o in stale)))
+
+
+def release_liquid(request, character, vial, improper=False, tier=0):
+    """Release one living liquid from ``vial``: proper 2 AP (Speed Release 1, Perfect Awakening +1 AP for
+    +5 HP per tier), smashing the vial 1 AP (improper: 10 HP, 10 evaporation). Uses up the vial."""
+    owned = {s for s, _l in character.specialties}
+    tier = max(0, min(4, tier)) if "alchemy-perfect-awakening" in owned and not improper else 0
+    cost = 1 if improper or "alchemy-speed-release" in owned else 2
+    if not pay_ap(request, character, cost + (1 if tier else 0), _("Release {name}", name=vial.name)):
+        return
+    released = InventoryItem(character=character, slot="released", quantity=1,
+                             **{f: getattr(vial, f) for f in ItemTemplate.ITEM_FIELDS})
+    released.variants = list(vial.variants or []) + (["improper"] if improper else [])
+    if tier:
+        released.modifiers = list(vial.modifiers or []) + [
+            {"stat": "hp", "op": "add", "value": 5 * tier, "label": _("Perfect Awakening T{tier}", tier=tier)}]
+    released.save()
+    if vial.quantity > 1:
+        vial.quantity -= 1
+        vial.save(update_fields=["quantity"])
+    else:
+        vial.delete()
 
 
 def pay_ap(request, character, cost, label, stop=False):

@@ -16,6 +16,7 @@ SLOT_CHOICES = [
     ("worn", "Worn / active"),
     ("carried", "Carried"),
     ("stored", "Stored"),
+    ("released", "Released (living liquid)"),
 ]
 
 

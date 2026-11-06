@@ -196,3 +196,21 @@ Marionette Strings → Marionettenfäden.
 | Social Tells / Gather Intel / Notice | soziale Hinweise / Informationen sammeln / Bemerken |
 | heroics (Spirit) | Heldentaten |
 | Cost to Buy | Kaufpreis |
+
+## Living Liquids
+| English | German |
+|---|---|
+| living liquid(s) | lebende Flüssigkeit(en) |
+| vial | Phiole |
+| release / proper release / improper release | freisetzen, Freisetzung / sachgemäße Freisetzung / unsachgemäße Freisetzung |
+| evaporate / evaporation (damage) | verdunsten / Verdunstung (Verdunstungsschaden) |
+| wet (status) | Nass (prose: nass) |
+| ooze | Schleim |
+| grab / grabbed | packen / gepackt (Packwurf) |
+| bio-invigorator (device) | Bio-Belebter |
+| Liquid Life-Giver | Flüssigkeitsbeleber |
+| Beta / Prototype Living Liquids | Lebende Beta-Flüssigkeiten / Lebende Prototyp-Flüssigkeiten |
+| Perfect Awakening | Perfektes Erwachen |
+| Crafting Living Liquids | Lebende Flüssigkeiten herstellen |
+| Living liquid augments | Augments für lebende Flüssigkeiten |
+| Lighter-than-Air Liquid / Interior Platelets | Leichter als Luft / Innere Plättchen |

@@ -116,6 +116,35 @@
     </div>
   </div>
 
+  {% if released_liquids %}
+    <div class="liquid-cards">
+      {% for l in released_liquids %}{% with s=l.block.stats it=l.item %}
+        <div class="paper liquid-card">
+          <div class="row spread"><b>{{ it.name|item_name }}</b>
+            <span><span class="tag" title="{{ wet.text }}">{{ wet.name }}</span>{% if l.block.improper %} <span class="tag bad">{% t "improper release" %}</span>{% endif %}</span></div>
+          <div class="liquid-stats">
+            <span>{% t "HP" %} <b>{{ l.hp_left }}</b> / {% stat s.hp %}</span>
+            <span>{% t "AP" %} {% stat s.ap %}</span><span>{% t "Speed" %} {% stat s.spd %}</span>
+            {% if s.fly.total %}<span>{% t "Fly" %} {% stat s.fly %}</span>{% endif %}
+            <span>{% t "DC" %} {% stat s.dc %}</span><span>{% t "Soak" %} {% stat s.soak %}</span>
+            <span>{% t "Acc" %} {% stat s.acc signed=True %}</span><span>{% t "Eva" %} {% stat s.eva signed=True %}</span>
+            <span>{% t "Stk" %} {% stat s.stk signed=True %}</span><span>{% t "Def" %} {% stat s.def signed=True %}</span>
+            {% for attr, v in l.block.rolls.items %}{% if v.total %}<span>{{ attr|t }} {% stat v signed=True %}</span>{% endif %}{% endfor %}
+            <span title="{% t "Unsoakable damage each time its AP refresh" %}">{% t "Evaporation" %} {% stat s.evaporation %}</span>
+          </div>
+          {% if l.block.notes %}<ul class="small muted">{% for n in l.block.notes %}<li>{{ n }}</li>{% endfor %}</ul>{% endif %}
+          <div class="row">
+            <form class="row" style="gap:4px" hx-post="{% url 'play' character.pk 'liquid-damage' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+              <input type="hidden" name="id" value="{{ it.pk }}">
+              <input type="number" name="amount" min="0" placeholder="{% t "dmg" %}" aria-label="{% t "Damage amount" %}" required style="width:5em">
+              <button class="btn small">{% t "Damage" %}</button></form>
+            <button class="btn small brass" hx-post="{% url 'play' character.pk 'liquid-end-turn' %}" hx-vals='{"id": "{{ it.pk }}"}' hx-target="#sheet-body" hx-swap="outerHTML"
+                    title="{% t "Its AP refresh: it takes its evaporation damage" %}">{% t "End its turn" %}</button>
+          </div>
+        </div>
+      {% endwith %}{% endfor %}
+    </div>
+  {% endif %}
   <nav class="sheet-tabs" role="tablist">
     <button type="button" class="tab-page1" :class="{on: tab==='page1' || tab==='page2' && window.matchMedia('(orientation: landscape) and (min-width: 901px)').matches}" x-on:click="setTab('page1')"><span class="narrow">{% t "Sheet" %}</span><span class="wide">{% t "Sheet & specialties" %}</span></button>
     <button type="button" class="tab-page2" :class="{on: tab==='page2'}" x-on:click="setTab('page2')">{% t "Specialties & Gear" %}</button>
