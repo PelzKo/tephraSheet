@@ -119,5 +119,13 @@
 "Manipulator Glove": {"name": "Manipulatorhandschuh", "description": "Forme Äther für 1 AP zu einer Nahkampf- oder Wurfwaffe, ohne Schaden zu nehmen (ohne Handschuh: 10 TP Schaden, nur Grundschutz). Solange du ihn trägst, nutzen deine waffenlosen Angriffe deinen Äther. Eine Handprothese zählt als Handschuh."},
 "Aether-Shaped Weapon": {"name": "Ätherwaffe", "description": "Aus Äther geformt (1 AP; wähle die Größe). Bis zu 3 Augments (5 mit Beta-Waffen), 1 AP pro Platz: Präzise, Aerodynamisch, Knochenbrecher, Schadensstark, Abwehrend, Furchteinflößend, Inspirierend, Leuchtend (×5), Kraftvoll, Angetrieben, Reichweite, Rückkehrend, Signaturwaffe (ohne Maßanfertigung), Stromlinienförmig, Verhedderung – mit Ätherform-Modulen jedes bekannte Waffen-Augment. Löst sich auf, wenn du sie loslässt; kann nur zerschmettert werden, wenn ihr Resonator zerschmettert wird."},
 "State-of-the-Art Resonator": {"name": "Hochmoderner Resonator", "description": "Leichter, verbergbarer, selbstleuchtender Resonator. 780 pr im Kauf, 156 pr in der Herstellung; nicht über den DIY-Wert instand gehalten."},
-"Self-Lit Resonator (medium)": {"name": "Selbstleuchtender Resonator (mittel)", "description": "Mittelgroßer selbstleuchtender Resonator. 60 pr im Kauf, 12 pr in der Herstellung."}
+"Self-Lit Resonator (medium)": {"name": "Selbstleuchtender Resonator (mittel)", "description": "Mittelgroßer selbstleuchtender Resonator. 60 pr im Kauf, 12 pr in der Herstellung."},
+"Lord Hazard's Signet": {"name": "Lord Hazards Siegelring", "description": "Goldener Siegelring der Herrscher von Hazard, bei der Krönung an jeden neuen Lord gebunden."},
+"Gambler's Graven Gift": {"name": "Gravierte Gabe des Spielers", "description": "Knöcherner Würfel mit eingravierten Schädeln aus Rilausias Spielhäusern; bringt Glück und Ruin."},
+"The Evanglessian 51st Cavalier Division's Emblem": {"name": "Abzeichen der Evanglessianischen 51. Kavaliersdivision", "description": "Billiges Stahlabzeichen der 51. (Eisenvogel-Piloten); Ruhm im Kampf und eine sichere Heimkehr."},
+"Pike's Feather": {"name": "Pikes Feder", "description": "Feder am Hut des Bankräubers Danny Pike; sie wird nie beschädigt."},
+"The Poor Man's Mark": {"name": "Das Mal des armen Mannes", "description": "Schwarze Tinte, einem Opfer als Auge eintätowiert; entfernt man sie, erscheint sie wieder."},
+"The Stray Cat's Eye": {"name": "Das Auge der streunenden Katze", "description": "Grünes Tigerauge in einer alten haudischen Brosche; es ruiniert Diebe (gebunden an jeden, der es stiehlt)."},
+"Ruinous Rifle": {"name": "Verderbliches Gewehr", "description": "Antikes evanglessianisches Militärgewehr, in den Loveless-Kriegen von einem Gnomenpriester verflucht."},
+"Albrecht's Pipe": {"name": "Albrechts Pfeife", "description": "Pfeife, die der Aldamiir-Geck Albrecht von einer verfeindeten Familie geschenkt bekam."}
 }

@@ -15389,5 +15389,199 @@
   "modifiers": [],
   "extension": "explosives",
   "attribute": "Dexterity"
+ },
+ {
+  "slug": "luck-mementos",
+  "name": "Mementos",
+  "attribute": "Spirit",
+  "skill": "Luck",
+  "general": false,
+  "group": "Mementos",
+  "bonuses": {
+   "eva": 1,
+   "aug": 2,
+   "hp": 6
+  },
+  "cost": "Passive (crafting)",
+  "requires_text": "",
+  "requires": [],
+  "tags": [
+   "AUG",
+   "CRAFT:memento"
+  ],
+  "stance": false,
+  "repeatable": false,
+  "crafts": [
+   "memento"
+  ],
+  "effect": "Creating objects of significance is sometimes not an active, or even intentional, process. Using marques and your ability in luck, you are able to create artifacts, called mementos, which manipulate your luck. These objects often have no visible significance, but their owner attaches their own importance and history to the object.\nYou can maintain a number of mementos based on your current Luck skill: one memento plus 1 per 4 points in Luck. They can then be upgraded with augments. You'll learn 2 augments from this specialty, which can be selected under \"Beneficial Memento Augments\" or \"Cursed Memento Augments\". These augments have marques. At lower levels, you'll start with Marque I augments.\nEach memento can be upgraded with 3 augments. Create new mementos or augment old ones during any downtime. Mementos don't lose their properties over time, but lose their connection to you after one downtime if separated from you and the people connected to you.\nMarket price per augment: mQ I 25 / II 125 / III 625 / IV 3125 princes.",
+  "modifiers": [],
+  "extension": "mementos"
+ },
+ {
+  "slug": "luck-objects-of-fortune",
+  "name": "Objects of Fortune",
+  "attribute": "Spirit",
+  "skill": "Luck",
+  "general": false,
+  "group": "Mementos",
+  "bonuses": {
+   "eva": 1,
+   "aug": 2,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "4 Luck; Mementos",
+  "requires": [
+   {
+    "type": "skill",
+    "skill": "Luck",
+    "min": 4
+   },
+   {
+    "type": "specialty",
+    "any": [
+     "Mementos"
+    ]
+   }
+  ],
+  "tags": [
+   "CRAFT",
+   "REQ"
+  ],
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "You are capable of attaching even more significance to a memento, allowing you to build mementos with even more complex effects. Such mementos can be upgraded with 2 more augments (bringing the total for mementos up to 5 augmentable slots).",
+  "modifiers": [],
+  "extension": "mementos"
+ },
+ {
+  "slug": "luck-memento-binding",
+  "name": "Memento Binding",
+  "attribute": "Spirit",
+  "skill": "Luck",
+  "general": false,
+  "group": "Memento Binding",
+  "bonuses": {
+   "eva": 1,
+   "aug": 1,
+   "hp": 7
+  },
+  "cost": "No AP (when the terms are met); resist Spirit (marques down)",
+  "requires_text": "",
+  "requires": [],
+  "tags": [
+   "REQ"
+  ],
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Resist: Spirit (marques down)\nMementos can be bound to a person, causing the memento to continually wind up in their possession again, no matter how hard they try to get rid of it. Many bind cursed mementos to people they don't like, some bind good mementos to their loved ones for safe-keeping.\nTo bind a memento to someone, it must fall into their possession in some meaningful way (a symbolic gift, tricking them into holding it for a long time, attacking them with it, …); the object must become relatable to that person. You can target yourself if an object becomes of symbolic use to you.\nYou can bind as many mementos as you can create. The binding uses the marque of your Luck skill; the person resists with Spirit, each tier lowering the binding marque. Binding is immediate and costs no AP.\nA bound object returns to its target: mQ I during downtimes (strange deliveries, dropped into bag/pocket; repaired if someone nearby can, else its parts return together or later); mQ II before the day's end, fully repaired (complex repairs up to a downtime); mQ III within a few hours, often uncannily repaired; mQ IV within minutes, maybe hours if complex, unless one-of-a-kind.\nUnbinding: once per bound object per downtime per person, a Spirit roll lowers the binding marque permanently (tier 1 none, tier 2 −1, tier 3 −2, tier 4 −3); at 0 the object is unbound. Broken Sciences-crafted bound objects return as broken parts. Bound objects given to others still count against the creator's maximum.",
+  "modifiers": [],
+  "extension": "mementos"
+ },
+ {
+  "slug": "luck-bound-by-chains",
+  "name": "Bound by Chains",
+  "attribute": "Spirit",
+  "skill": "Luck",
+  "general": false,
+  "group": "Memento Binding",
+  "bonuses": {
+   "acc": 1,
+   "aug": 1,
+   "hp": 6
+  },
+  "cost": "Passive",
+  "requires_text": "Memento Binding",
+  "requires": [
+   {
+    "type": "specialty",
+    "any": [
+     "Memento Binding"
+    ]
+   }
+  ],
+  "tags": [
+   "REQ"
+  ],
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "The old euphemism about tying people by the threads of fate no longer applies to you; you bind mementos to people by the chains of fate. Your mementos are bound to people twice as effectively, basically causing each marque of binding to act as two marques for the purposes of unbinding the object.",
+  "modifiers": [],
+  "extension": "mementos"
+ },
+ {
+  "slug": "luck-fates-thread-cutter",
+  "name": "Fate's Thread-Cutter",
+  "attribute": "Spirit",
+  "skill": "Luck",
+  "general": false,
+  "group": "Memento Binding",
+  "bonuses": {
+   "eva": 1,
+   "pri": 3,
+   "hp": 7
+  },
+  "cost": "Unbind; +1 AP if used with Quick Unbinding",
+  "requires_text": "",
+  "requires": [],
+  "tags": [],
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "The threads that tie a person and his bound memento together are easily severed by you. Any time you make an attempt to unbind an object, you do so with extra precision, destroying the fated tie between the object and person. All unbinding attempts that you make are automatically one tier result higher.\nIf used with the Quick Unbinding specialty during battle, this ability requires 1 action point to activate and can only be used once per unbinding attempt.",
+  "modifiers": [],
+  "extension": "mementos"
+ },
+ {
+  "slug": "luck-quick-unbinding",
+  "name": "Quick Unbinding",
+  "attribute": "Spirit",
+  "skill": "Luck",
+  "general": false,
+  "group": "Memento Binding",
+  "bonuses": {
+   "eva": 1,
+   "pri": 3,
+   "hp": 7
+  },
+  "cost": "3 AP",
+  "requires_text": "",
+  "requires": [],
+  "tags": [
+   "ACTION"
+  ],
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Acutely aware of the strings of fate that bind an object to a person, you are able to cut them at a moment's notice. You may perform unbinding attempts during battle for just 3 action points once per bound object per battle. This unbind counts as your unbind for this downtime, so you must wait until the next downtime to attempt another.",
+  "modifiers": [],
+  "extension": "mementos"
+ },
+ {
+  "slug": "luck-unbinding-hand",
+  "name": "Unbinding Hand",
+  "attribute": "Spirit",
+  "skill": "Luck",
+  "general": false,
+  "group": "Memento Binding",
+  "bonuses": {
+   "eva": 2,
+   "pri": 1,
+   "hp": 5
+  },
+  "cost": "Passive",
+  "requires_text": "",
+  "requires": [],
+  "tags": [],
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "You have honed your energy such that you are capable of performing unbind actions at an increased rate. You may perform two unbinding attempts per downtime on each bound object instead of just one.",
+  "modifiers": [],
+  "extension": "mementos"
  }
 ]

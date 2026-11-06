@@ -65,6 +65,8 @@ class ItemFields(models.Model):
     price_dukes = models.IntegerField(default=0)
     description = models.TextField(blank=True)
     extension = models.CharField(max_length=40, blank=True, help_text="rule extension key; empty = core")
+    memento = models.BooleanField(default=False, help_text="Memento: its Luck augments work while carried")
+    binding = models.PositiveSmallIntegerField(default=0, help_text="Binding marque (0 = not bound)")
 
     class Meta:
         abstract = True
@@ -72,7 +74,7 @@ class ItemFields(models.Model):
     ITEM_FIELDS = ["name", "kind", "size", "variants", "material", "beta", "concealable", "hands", "ap_use", "ap_ready",
                    "dc", "reach", "range", "increment", "soak", "eva_penalty", "spd_penalty",
                    "climb_swim_penalty", "deflect_bonus", "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "augments",
-                   "modifiers", "price_dukes", "description", "extension"]
+                   "modifiers", "price_dukes", "description", "extension", "memento", "binding"]
 
     def item_values(self):
         return {f: getattr(self, f) for f in self.ITEM_FIELDS}
@@ -99,7 +101,7 @@ class ItemFields(models.Model):
             acc_bonus=self.acc_bonus, stk_bonus=self.stk_bonus,
             deflect_ranged=self.deflect_ranged, deflect_melee=self.deflect_melee,
             modifiers=list(self.modifiers or []), augments=[tuple(a) for a in (self.augments or [])],
-            notes=getattr(self, "notes", ""), id=self.pk,
+            notes=getattr(self, "notes", ""), id=self.pk, memento=self.memento,
         )
 
 

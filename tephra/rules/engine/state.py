@@ -30,6 +30,7 @@ class ItemState:
     stk_bonus: int | None = None
     deflect_ranged: bool = False
     deflect_melee: bool = True
+    memento: bool = False  # Mementos: its (Luck) augments work while merely carried
     modifiers: list = field(default_factory=list)
     augments: list = field(default_factory=list)  # [(augment_slug, marque 1-4)]
     notes: str = ""

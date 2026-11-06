@@ -379,5 +379,9 @@
  "The turret takes a wound": "Das Geschütz erleidet eine Wunde",
  "Turret wounds: {left} / {max}": "Geschützwunden: {left} / {max}",
  "Achievement": "Errungenschaft",
- "achievement": "Errungenschaft"
+ "achievement": "Errungenschaft",
+ "Memento": "Memento",
+ "Mementos you can create and maintain: 1 + 1 per 4 Luck": "Mementos, die du herstellen und pflegen kannst: 1 + 1 pro 4 Glück",
+ "Mementos: {n} / {max}": "Mementos: {n} / {max}",
+ "bound mQ {m}": "gebunden mQ {m}"
 }

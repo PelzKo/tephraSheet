@@ -80,6 +80,9 @@ def sheet_context(request, character):
                         (("gear", gear_count), ("augments", aug_count), ("notes", notes_count))},
         "spec_data": spec_data,
         "slot_choices": InventoryItem._meta.get_field("slot").choices, "turret_wounds": tables.TURRET_WOUNDS,
+        "memento_max": tables.max_mementos(sheet.skills["Luck"].total)
+        if any(s == "luck-mementos" for s, _l in character.specialties) else 0,
+        "memento_count": sum(1 for i in items if i.memento),
         "effects": effects,
         "effect_boxes": [("Wound Effects", [e for e in effects if e.kind == "wound"]),
                          ("Fatal Effects", [e for e in effects if e.kind == "fatal"]),

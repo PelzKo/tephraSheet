@@ -240,5 +240,11 @@
  "Aether resonator": "Ätherresonator",
  "Aether-shaped": "Äthergeformt",
  "Aether-synced": "Äthergekoppelt",
- "resonator": "Resonator"
+ "resonator": "Resonator",
+ "Binding marque": "Bindungs-Marque",
+ "Memento (Luck augments work while carried)": "Memento (Glücks-Augments wirken schon beim Mitführen)",
+ "Memento augments need {used} slots, a memento has {slots}.": "Memento-Augments brauchen {used} Plätze, ein Memento hat {slots}.",
+ "Memento: {v} / {w} slots": "Memento: {v} / {w} Plätze",
+ "not bound": "nicht gebunden",
+ "{augment} only fits a memento.": "{augment} passt nur auf ein Memento."
 }

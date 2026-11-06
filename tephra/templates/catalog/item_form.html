@@ -16,7 +16,9 @@
     <div class="field"><label for="{{ form.price_princes.id_for_label }}">{% t "Price (princes)" %}</label>{{ form.price_princes }}</div>
     <div class="field"><label><input type="checkbox" name="beta" x-model="beta" {% if form.beta.value %}checked{% endif %}> {% t "Beta (+2 slots)" %}</label>
       <label>{{ form.concealable }} {% t "Concealable" %}</label>
-      {% if form.is_starting_gear %}<label>{{ form.is_starting_gear }} {% t "Starting gear" %}</label>{% endif %}</div>
+      {% if form.is_starting_gear %}<label>{{ form.is_starting_gear }} {% t "Starting gear" %}</label>{% endif %}
+      {% if form.memento %}<label><input type="checkbox" name="memento" x-model="memento" {% if form.memento.value %}checked{% endif %}> {% t "Memento (Luck augments work while carried)" %}</label>
+        <label x-show="memento">{% t "Binding marque" %} <select name="binding">{% for v in "01234" %}<option value="{{ v }}" {% if form.binding.value|stringformat:"s" == v %}selected{% endif %}>{% if v == "0" %}{% t "not bound" %}{% else %}mQ {{ v }}{% endif %}</option>{% endfor %}</select></label>{% endif %}</div>
   </div>
 
   <template x-if="isWeapon">
@@ -64,6 +66,7 @@
   <template x-if="augOptions.length">
     <div style="margin-top:12px">
       <h3>{% t "Augments" %} <span class="tag" :class="usedSlots > slots ? 'bad' : 'ok'" x-text="tt('{v} / {w} slots', {v: usedSlots, w: slots})"></span>
+        <span class="tag" x-show="memento" :class="usedMementoSlots > mementoSlots ? 'bad' : 'ok'" x-text="tt('Memento: {v} / {w} slots', {v: usedMementoSlots, w: mementoSlots})"></span>
         <a class="small" href="{% url 'augment_reference' %}" target="_blank">{% t "all augments explained" %} ↗</a></h3>
       <template x-for="(a, i) in augs" :key="i">
         <div style="margin-bottom:6px">
@@ -106,6 +109,7 @@ window.itemI18n = {
   "auto ({v})": "{% t "auto ({v})" v="{v}" %}", "auto (−{v})": "{% t "auto (−{v})" v="{v}" %}",
   "one-handed": "{% t "one-handed" %}", "two-handed": "{% t "two-handed" %}",
   "{v} / {w} slots": "{% t "{v} / {w} slots" v="{v}" w="{w}" %}",
+  "Memento: {v} / {w} slots": "{% t "Memento: {v} / {w} slots" v="{v}" w="{w}" %}",
   "{n} slot": "{% t "{n} slot" n="{n}" %}", "{n} slots": "{% t "{n} slots" n="{n}" %}"
 };
 window.itemCreator = function (tables, augChoices) {
@@ -115,13 +119,14 @@ window.itemCreator = function (tables, augChoices) {
       for (const k in vars || {}) out = out.split("{" + k + "}").join(vars[k]);
       return out;
     },
-    tables, augChoices, kind: "", size: "", material: "metal", beta: false, augs: [], pick: "",
+    tables, augChoices, kind: "", size: "", material: "metal", beta: false, memento: false, augs: [], pick: "",
     init() {
       const f = this.$root;
       this.kind = f.querySelector("[name=kind]").value;
       this.size = f.querySelector("[name=size]").value;
       this.material = f.querySelector("[name=material]").value;
       this.beta = f.querySelector("[name=beta]").checked;
+      this.memento = !!f.querySelector("[name=memento]")?.checked;
       try { this.augs = JSON.parse(f.querySelector("[name=augments_json]").getAttribute("value") || "[]"); } catch (e) { this.augs = []; }
     },
     get isWeapon() { return ["melee", "firearm", "bow", "crossbow"].includes(this.kind); },
@@ -133,8 +138,11 @@ window.itemCreator = function (tables, augChoices) {
     autoHands() { const h = this.auto("hands"); return h === 2 ? this.tt("two-handed") : h === 1 ? this.tt("one-handed") : "–"; },
     armor(key) { const row = this.tables.armor[this.size]; return row ? row[key] : "–"; },
     get slots() { return (this.kind === 'ammo' ? 1 : (this.tables.slots[this.material] || 3)) + (this.beta ? 2 : 0); },
-    get augOptions() { return this.augChoices[this.kind] || []; },
-    get usedSlots() { return this.augs.reduce((s, a) => s + ((this.find(a[0]) || {}).slots || 0), 0); },
+    get augOptions() { return (this.augChoices[this.kind] || []).concat(this.memento ? this.augChoices.memento || [] : []); },
+    isMemento(slug) { return (this.find(slug) || {}).list === "memento"; },
+    get usedSlots() { return this.augs.reduce((s, a) => s + (this.isMemento(a[0]) ? 0 : ((this.find(a[0]) || {}).slots || 0)), 0); },
+    get mementoSlots() { return 3 + (this.beta ? 2 : 0); },
+    get usedMementoSlots() { return this.augs.reduce((s, a) => s + (this.isMemento(a[0]) ? ((this.find(a[0]) || {}).slots || 0) : 0), 0); },
     find(slug) { return (this.augOptions || []).find(o => o.slug === slug); },
     nameOf(slug) { const o = this.find(slug); return o ? o.name : slug; },
     effectOf(slug, m) { const o = this.find(slug); return o ? (o.marques[m - 1] || o.marques[0] || "") : ""; },

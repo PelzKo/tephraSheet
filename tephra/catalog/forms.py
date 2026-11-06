@@ -12,7 +12,8 @@ from .models import ItemTemplate
 
 FORM_FIELDS = ["name", "kind", "size", "material", "beta", "concealable", "hands", "ap_use", "ap_ready", "dc", "reach",
                "range", "increment", "soak", "eva_penalty", "spd_penalty", "climb_swim_penalty", "deflect_bonus",
-               "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "price_dukes", "description"]
+               "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "price_dukes", "description", "memento",
+               "binding"]
 
 
 class ItemForm(forms.ModelForm):
@@ -39,6 +40,9 @@ class ItemForm(forms.ModelForm):
             self.initial["variants"] = inst.variants
             self.initial["augments_json"] = json.dumps(inst.augments or [])
             self.initial["price_princes"] = (inst.price_dukes or 0) / 10
+        if "mementos" not in enabled() and not inst.memento:  # fields of an extension (Mementos)
+            self.fields.pop("memento")
+            self.fields.pop("binding")
         if "aether" not in enabled() and inst.kind != "resonator":  # kind of an extension (Aether)
             self.fields["kind"].choices = [c for c in self.fields["kind"].choices if c[0] != "resonator"]
         self.fields["variants"].choices = [(k, v["label"]) for k, v in VARIANTS.items()
@@ -69,15 +73,23 @@ class ItemForm(forms.ModelForm):
         kind = data.get("kind")
         reg = get_registry()
         lists = AUGMENT_LISTS_BY_KIND.get(kind)
-        used = 0
+        used = memento_used = 0
         for slug, _marque in augs:
             aug = reg.augments[slug]
+            if "memento" in aug["lists"]:  # Luck augments, independent of the item's own slots
+                if not data.get("memento"):
+                    self.add_error(None, _("{augment} only fits a memento.", augment=aug["name"]))
+                memento_used += aug.get("slots") or 0
+                continue
             if lists and not lists.intersection(aug["lists"]):
                 self.add_error(None, _("{augment} can't be placed on a {kind}.", augment=aug["name"], kind=kind))
             elif "turret" in aug["lists"] and "turret" not in (data.get("variants") or []):
                 self.add_error(None, _("{augment} only fits a turret.", augment=aug["name"]))
             used += aug.get("slots") or 0
         tmp = ItemTemplate(kind=kind or "", material=data.get("material") or "metal", beta=bool(data.get("beta")))
+        if memento_used > 3 + (2 if data.get("beta") else 0):
+            self.add_error(None, _("Memento augments need {used} slots, a memento has {slots}.", used=memento_used,
+                                   slots=3 + (2 if data.get("beta") else 0)))
         if used > tmp.slot_count:
             self.add_error(None, _("Augments need {used} slots, the item has {slots}.", used=used, slots=tmp.slot_count))
         return data
@@ -97,7 +109,7 @@ def augment_choices_json():
     """Augment options per item kind for the creator's picker."""
     reg = get_registry()
     out = {}
-    for kind, lists in AUGMENT_LISTS_BY_KIND.items():
+    for kind, lists in [*AUGMENT_LISTS_BY_KIND.items(), ("memento", {"memento"})]:
         out[kind] = [{"slug": a["slug"], "name": a["name"], "slots": a.get("slots") or 0,
                       "marques": a["marques"], "list": "/".join(a["lists"]), "notes": a["notes"],
                       "text": a["text"], "two_marque": a.get("two_marque", False)}

@@ -116,14 +116,23 @@ def collect_sources(state):
         if a:
             sources.append(Source(f"body:{slug}", _("Augment: {name} mQ {marque}", name=a["name"], marque=roman(marque)),
                                   [dict(m, marque=marque) for m in a.get("modifiers", [])], kind="augment"))
-    for item in state.items:
-        if item.slot in ("carried", "stored", ""):
-            continue
+    # Spirit-skill augments (mementos) on several items count once, at the highest marque.
+    active = [i for i in state.items if i.slot != "stored" and (i.memento or i.slot not in ("carried", ""))]
+    spirit_best = {}
+    for item in active:
+        for slug, marque in item.augments:
+            if (reg.augments.get(slug) or {}).get("skill") in tables.SKILLS["Spirit"]:
+                spirit_best[slug] = max(spirit_best.get(slug, 0), marque)
+    for item in active:
         key = f"item:{item.id or item.name}"
         if item.modifiers:
             sources.append(Source(key, _("Item: {name}", name=item.name), item.modifiers, kind="item", item_id=item.id))
         for slug, marque in item.augments:
             a = reg.augments.get(slug)
+            if slug in spirit_best:
+                if marque != spirit_best[slug]:  # a weaker copy
+                    continue
+                spirit_best[slug] = None  # counted once
             if a:
                 sources.append(Source(f"{key}:aug:{slug}", _("{item}: {name} mQ {marque}", item=item.name, name=a["name"], marque=roman(marque)),
                                       [dict(m, marque=marque) for m in a.get("modifiers", [])],

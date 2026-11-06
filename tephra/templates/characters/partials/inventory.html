@@ -1,7 +1,7 @@
 {% load sheet_tags %}
 <div class="paper">
   <div class="row spread">
-    <h2>{% t "Inventory" %}</h2>
+    <h2>{% t "Inventory" %}{% if memento_max %} <span class="tag" title="{% t "Mementos you can create and maintain: 1 + 1 per 4 Luck" %}">{% t "Mementos: {n} / {max}" n=memento_count max=memento_max %}</span>{% endif %}</h2>
     <div class="row">
       <a class="btn small primary" href="{% url 'catalog' %}?for={{ character.pk }}">{% t "Add from catalog" %}</a>
       <a class="btn small" href="{% url 'item_create' %}?for={{ character.pk }}">{% t "Create item" %}</a>
@@ -40,7 +40,7 @@
          data-size="{{ item.size|size_rank }}" data-price="{{ item.price_dukes|default:0 }}" data-qty="{{ item.quantity }}"
          data-text="{{ item.name|item_name|lower }} {{ item.get_kind_display|t|lower }} {{ item|item_desc|lower }} {{ item.notes|lower }}">
       <div>
-        <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name|item_name }}</b> {% ext_badge item %}
+        <b>{% if item.quantity > 1 %}{{ item.quantity }}× {% endif %}{{ item.name|item_name }}</b> {% ext_badge item %}{% if item.memento %} <span class="tag">{% t "Memento" %}{% if item.binding %} · {% t "bound mQ {m}" m=item.binding %}{% endif %}</span>{% endif %}
         <span class="tag">{{ item.get_kind_display|t }}{% if item.size %} · {{ item.get_size_display|t }}{% endif %}{% if item.hands_label %} · {{ item.hands_label|t }}{% endif %}{% if item.concealable %} · {% t "concealable" %}{% endif %}</span>
         {% if item.slot != "carried" %}<span class="tag ok">{{ item.get_slot_display|t }}</span>{% endif %}
         <div class="meta">

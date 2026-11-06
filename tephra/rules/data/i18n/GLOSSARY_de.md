@@ -181,3 +181,18 @@ Marionette Strings → Marionettenfäden.
 | Static Shock (status) / Static Shocking (augment) | Statischer Schock / Statischer Schlag |
 | Light-Absorbing | Lichtschluckend |
 | Burning (resonator augment) | Sengend (status Burning stays Brennend) |
+
+## Mementos
+| English | German |
+|---|---|
+| memento(s) | Memento(s) |
+| Memento augments (Neutral / Beneficial / Cursed) | Memento-Augments (Neutral / Segensreich / Verflucht) |
+| binding / bound / bind | Bindung / gebunden / binden (Memento-Bindung) |
+| Unbind / unbinding | Lösen / Lösen (Versuch zum Lösen) |
+| Looking Deeper | Tiefer blicken |
+| Objects of Fortune | Glücksobjekte |
+| holder (of a memento) | Halter |
+| pure / impure roll | reiner / unreiner Wurf |
+| Social Tells / Gather Intel / Notice | soziale Hinweise / Informationen sammeln / Bemerken |
+| heroics (Spirit) | Heldentaten |
+| Cost to Buy | Kaufpreis |

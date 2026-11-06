@@ -16,6 +16,7 @@ EXTENSIONS = {
     "armsmith-extra": "The Armsmith Extra",
     "explosives": "Explosives!",
     "aether": "Aether",
+    "mementos": "Mementos",
 }
 
 _offer = contextvars.ContextVar("tephra_offer", default=(frozenset(), frozenset()))
