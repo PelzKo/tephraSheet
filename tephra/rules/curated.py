@@ -202,6 +202,7 @@ RACES = {
 }
 
 RACIAL_TRAITS = {
+    "ayodin/wings-as-arms": {"extra_hands": {"slots": 1, "one_handed_only": True, "label": "Wings"}},
     "human/favored-attribute": {"choice": "attribute"},
     "human/innovative": {"modifiers": [mod("diy", 1), mod("aug", 2)]},
     "human/relentless": {"modifiers": [mod("hp", formula="3 + specialties")]},

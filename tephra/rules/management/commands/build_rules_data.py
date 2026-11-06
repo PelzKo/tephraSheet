@@ -88,13 +88,14 @@ class Command(BaseCommand):
             except ModuleNotFoundError:
                 ext_curated = None
             for kind, entries in out.items():
-                path = folder / f"{kind}.json"
-                if not path.exists():
+                paths = sorted(folder.glob(f"{kind}.json")) + sorted(folder.glob(f"{kind}_*.json"))
+                if not paths:
                     continue
+                path = paths[0]
                 key = "name" if kind == "catalog" else "slug"
                 known = {e[key] for e in entries}
                 new = []
-                for e in json.loads(path.read_text(encoding="utf8")):
+                for e in [x for p in paths for x in json.loads(p.read_text(encoding="utf8"))]:
                     if e[key] in known:
                         self.warnings.append(f"{path}: duplicate {key} {e[key]}")
                         continue
@@ -111,6 +112,34 @@ class Command(BaseCommand):
                     new.append(e)
                 at = next((i for i, e in enumerate(entries) if e.get("slug") == "other"), len(entries))
                 entries[at:at] = new
+        self.resolve_trait_copies(out["races"])
+
+    def resolve_trait_copies(self, races):
+        """Traits with "copy_of": "<race>/<slug>" (hybrids reusing a core trait, variants inheriting their base race)
+        take everything they don't set themselves from that trait. Races are resolved in file order."""
+        by_key = {}
+        for race in races:
+            for kind in ("fixed", "random"):
+                for t in race[kind]:
+                    src = by_key.get(t.get("copy_of", ""))
+                    if t.get("copy_of") and src is None:
+                        self.warnings.append(f"{race['slug']}: copy_of {t['copy_of']} not found")
+                    for k, v in (src or {}).items():
+                        if k not in ("roll", "copy_of", "slug") and (k not in t or (k == "modifiers" and not t[k])):
+                            t[k] = json.loads(json.dumps(v))
+                    by_key[f"{race['slug']}/{t['slug']}"] = t
+            # Copied negations point at the source race's keys; aim them at this race's copy of that trait.
+            own = {t["slug"] for kind in ("fixed", "random") for t in race[kind]}
+            for kind in ("fixed", "random"):
+                for t in race[kind]:
+                    if t.get("copy_of") and t.get("negates"):
+                        src_race = t["copy_of"].split("/")[0]
+                        t["negates"] = [f"{race['slug']}/{n.split('/', 1)[1]}"
+                                        if n.startswith(src_race + "/") and n.split("/", 1)[1].split(":")[0] in own
+                                        else n for n in t["negates"]]
+            rolls = sorted(t["roll"] for t in race["random"] if t.get("roll") is not None)
+            if race.get("extension") and rolls != list(range(1, 13)):
+                self.warnings.append(f"{race['slug']}: random table rolls {rolls}")
 
     # ------------------------------------------------------------------ specialties
     def build_specialties(self, doc):

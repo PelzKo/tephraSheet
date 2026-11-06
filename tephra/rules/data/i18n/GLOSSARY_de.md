@@ -239,3 +239,26 @@ Marionette Strings → Marionettenfäden.
 | Bloodwood Village | unchanged |
 | Manticore Racial Specialties | Volksspezialisierungen der Mantikore |
 | Progressive Madness | Fortschreitender Wahnsinn |
+
+## Races of Tephra (Part C)
+| English | German |
+|---|---|
+| Ayotaa / Ayotyr / Humdin / Helf / Farin / Hume / Satyn / Eldin / Elm / Eltyr / Gnishtaa / Sashtaa / Gnodin / Gnotyr | unchanged (hybrid names) |
+| Hybrid Vigor / Infertile | Hybridkraft / Unfruchtbar |
+| win all ties | gewinnst alle Gleichstände |
+| Izedan Elf | Izedanischer Elf |
+| Botched Farishtaa / Winged Farishtaa / True-Meld Farishtaa | Verpfuschte Farishtaa / Geflügelte Farishtaa / True-Meld-Farishtaa |
+| Reverted Elf / Fully Regressed Elf | Zurückverwandelter Elf / Vollständig zurückgebildeter Elf |
+| Metal-Deranged Gnome / Chaparral Gnome | Metallgestörter Gnom / Chaparral-Gnom |
+| Antelope & Gazelle / Arakrithian Cliff-Jumping / Bezoar & Oryx / Bull & Yak Satyr | Satyr (Antilope & Gazelle) / Satyr (Arakrith-Klippenspringer) / Satyr (Bezoar & Oryx) / Satyr (Stier & Yak) |
+| True-Meld / meld (with a pet) | True-Meld (unchanged) / sich verbinden (Meld) |
+| the Broken | die Gebrochenen |
+| unarmed DC 4 | waffenlose Schadensklasse 4 |
+| social tells / notice | soziale Hinweise / Bemerken |
+| Heroics | Heldentaten |
+| falling damage / bound, unconscious or in bad weather | Fallschaden / gefesselt, bewusstlos oder bei schlechtem Wetter |
+| drowsiness / fatigue / stunned | Schläfrigkeit / Erschöpfung / Betäubung |
+| difficult / rough terrain | schwieriges / unwegsames Gelände |
+| Disassemble (action) | Zerlegen |
+| essence manipulation slots | Essenzplätze |
+| Pets and Predators (book) | unchanged |

@@ -108,11 +108,12 @@ def ctx_step1(request, character):
         ctx["nat_stories"] = creation.nationality_stories(character.nationality, race["slug"])
         ctx["nat_story"] = next((s for s in character.stories
                                  if reg.stories.get(s, {}).get("type") == "nationality"), "")
-        ctx["choice_traits"] = [reg.traits[k] | {"key": k, "options": creation.choice_options(reg.traits[k]["choice"])}
+        ctx["choice_traits"] = [reg.traits[k] | {"key": k, "options": creation.choice_options(reg.traits[k]["choice"], reg.traits[k])}
                                 for k in active_trait_keys(character.to_state(include_items=False))[0]
                                 if reg.traits[k].get("choice")]
         ctx["can_roll"] = not character.random_traits or settings.allow_reroll_random_trait
-        ctx["choose_max"] = slots["random_count"] if settings.allow_choose_random_trait else slots["random_choose"]
+        ctx["choose_max"] = slots["random_count"] if settings.allow_choose_random_trait or \
+            any(t.get("pick_only") for t in race["random"]) else slots["random_choose"]
         ctx["chosen_keys"] = [k for k in character.random_traits if k.startswith(f"{race['slug']}/")][: ctx["choose_max"] or 0]
         # Farishtaa "Prominent Host": that trait comes with one from the elf table instead.
         host = next((t for t in race["random"] if t.get("reroll_on") and not t["reroll_on"].startswith("@")), None)
@@ -144,8 +145,12 @@ def save_step1(request, character, action):
             picked = picked[: slots["fixed_choose"]]
         character.fixed_traits = picked
     chosen = [k for k in p.getlist("chosen_random") if k in reg.traits and k.startswith(f"{character.race}/")]
+    pick_only = {k for k in chosen if reg.traits[k].get("pick_only")}  # botched/chaparral: picked instead of rolled
+    if pick_only and not settings.allow_choose_random_trait and not slots.get("random_choose"):
+        chosen = [k for k in chosen if k in pick_only]
     if "chosen_random_submitted" in p and slots:
-        limit = slots["random_count"] if settings.allow_choose_random_trait else slots.get("random_choose", 0)
+        limit = slots["random_count"] if settings.allow_choose_random_trait or pick_only \
+            else slots.get("random_choose", 0)
         if len(chosen) > limit:
             errors.append(_("Choose only {count} random racial traits.", count=limit) if limit != 1 else _("Choose only 1 random racial trait."))
             chosen = chosen[:limit]
@@ -164,6 +169,8 @@ def save_step1(request, character, action):
                         errors.append(_("{trait}: pick a trait from the {race} table.", trait=reg.traits[k]["name"], race=reg.races[other]["name"]))
         if settings.allow_choose_random_trait:
             # Narrator lets players pick all random traits instead of rolling.
+            character.random_traits = chosen + extra
+        elif pick_only:
             character.random_traits = chosen + extra
         elif slots.get("random_choose"):
             # Gnome: choose one, roll the rest (the rolled ones are kept unless they duplicate the choice).

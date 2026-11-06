@@ -78,6 +78,8 @@ def active_trait_keys(state):
     else:  # "optional" fixed traits (gnome-sized simulacron) only when picked
         fixed = [f"{race['slug']}/{t['slug']}" for t in race["fixed"]
                  if not t.get("optional") or f"{race['slug']}/{t['slug']}" in state.fixed_traits]
+    if race.get("fixed_choose"):  # traits every member has besides the chosen ones (Farin, Satyn …)
+        fixed += [k for k in (f"{race['slug']}/{t['slug']}" for t in race["fixed"] if t.get("always")) if k not in fixed]
     keys = fixed + [k for k in state.random_traits if k in reg.traits]
     negated = set()
     for k in keys:
@@ -92,15 +94,18 @@ def collect_sources(state):
     for key in trait_keys:
         t = reg.traits[key]
         mods = t.get("modifiers", [])
-        if any("{choice}" in m["stat"] for m in mods):  # e.g. "skill:{choice}" (Daemon Bestial Strength)
+        if t.get("choice"):  # "skill:{choice}" (Daemon Bestial Strength); "if_choice" picks an option's modifiers
             choice = state.trait_choices.get(key)
             mods = [dict(m, stat=m["stat"].replace("{choice}", choice or "")) for m in mods
-                    if choice or "{choice}" not in m["stat"]]
+                    if (choice or "{choice}" not in m["stat"])
+                    and ("if_choice" not in m or choice in ([m["if_choice"]] if isinstance(m["if_choice"], str)
+                                                            else m["if_choice"]))]
         # Partial negation "<trait key>:<stat prefix>": drop only those modifiers (Fruit of the Fallen, Gorilla Build)
         prefixes = tuple(n[len(key) + 1:] for n in negated if n.startswith(key + ":"))
         if prefixes:
             mods = [m for m in mods if not m["stat"].startswith(prefixes)]
-        sources.append(Source(f"trait:{key}", _("Racial trait: {name}", name=t["name"]), mods, kind="trait"))
+        sources.append(Source(f"trait:{key}", _("Racial trait: {name}", name=t["name"]), mods, kind="trait",
+                              stance_slug=f"trait:{key}" if t.get("stance") else ""))  # Ground-Eating Gallop
     for slug, _level in state.specialties:
         s = reg.specialties.get(slug)
         if not s:
@@ -182,7 +187,8 @@ def compute(state: CharacterState) -> Sheet:
         sheet.roll_notes[attr] = []
 
     variables = {var_name(s): sheet.skills[s].total for s in tables.ALL_SKILLS}
-    variables.update(level=state.level, specialties=len(state.specialties))
+    variables.update(level=state.level, specialties=len(state.specialties),
+                     speed_base=body_race(state)["speed"])  # Ground-Eating Gallop
 
     for src in sources:
         for m in src.modifiers:
@@ -218,6 +224,8 @@ def compute(state: CharacterState) -> Sheet:
     stats["swim"].set_base(_("Base ({name})", name=body["name"]), body["swim"])
     stats["climb"].set_base(_("Base ({name})", name=body["name"]), body["climb"])
     stats["dig"].set_base(_("Base ({name})", name=body["name"]), body.get("dig", 0))
+    if body.get("fly"):
+        stats["fly"].set_base(_("Base ({name})", name=body["name"]), body["fly"])
     for key in active_trait_keys(state)[0]:  # Fluoform Pure Strain: the chosen race's speeds
         other = reg.races.get(state.trait_choices.get(key, "")) if reg.traits[key].get("speeds_from_choice") else None
         if other:
@@ -372,7 +380,9 @@ def compute(state: CharacterState) -> Sheet:
             sheet.toggles.append(entry)
         if src.stance_slug:
             stance_mods = [m for m in src.modifiers if m.get("when") == "stance"]
-            sheet.stances.append({"slug": src.stance_slug, "label": reg.specialties[src.stance_slug]["name"],
+            label = reg.traits[src.stance_slug[6:]]["name"] if src.stance_slug.startswith("trait:") \
+                else reg.specialties[src.stance_slug]["name"]
+            sheet.stances.append({"slug": src.stance_slug, "label": label,
                                   "detail": ", ".join(describe_mod(m, variables) for m in stance_mods),
                                   "active": state.stance == src.stance_slug})
     sheet.stances.append({"slug": "footing", "label": _("Footing"), "detail": _("needed for super-heavy items"),

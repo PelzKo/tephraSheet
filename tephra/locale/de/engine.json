@@ -210,5 +210,9 @@
  "acid": "Säure",
  "gas": "Gas",
  "medicine": "Medizin",
- "poison": "Gift"
+ "poison": "Gift",
+ "Heavy without Footing": "Schwer ohne Festen Stand",
+ "Hybrid": "Hybrid",
+ "Variant": "Variante",
+ "Fluoform": "Fluoform"
 }

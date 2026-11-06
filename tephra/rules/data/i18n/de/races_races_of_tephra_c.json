@@ -1,0 +1,260 @@
+{
+"ayotaa": {"name": "Ayotaa", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Ayodin und Farishtaas."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Ayodin und Farishtaas genetisch zu verschieden sind."},
+ "agile-frame": {"name": "Agiler Körperbau", "text": "+2 auf Ausweichwürfe und +2 auf Geschick."},
+ "delicate-structure": {"name": "Zarter Körperbau", "text": "−3 auf Kraft."},
+ "masked-emotions": {"name": "Maskierte Gefühle", "text": "Würfe auf List gegen dich, um soziale Hinweise zu erkennen, erleiden −3."},
+ "comfort-of-the-waves": {"name": "Trost der Wellen", "text": "Schwimmtempo +10 ft."},
+ "hardened-structure": {"name": "Gehärteter Körperbau", "text": "Hebt Zarter Körperbau auf; +2 Verteidigung."},
+ "hidden-fury": {"name": "Verborgene Wut", "text": "+3 Schlagkraft bei Angriffen gegen Ziele, die an dich angrenzen."},
+ "master-of-the-mask": {"name": "Meister der Maske", "text": "+2 auf Widerstände gegen Provokation, Einschüchterung und Furcht."},
+ "seizing-stingers": {"name": "Lähmende Stacheln", "text": "Giftige Stacheln in deiner Haut: Jeder, den du berührst, erhält −4 auf seinen nächsten Schlagkraftwurf (verfällt am Ende seines nächsten Zuges, wenn ungenutzt)."},
+ "sky-and-sea": {"name": "Himmel und Meer", "text": "Mit deinen Flügelflossen gleitest du hinab: kein Fallschaden, außer du bist gefesselt, bewusstlos oder bei schlechtem Wetter."},
+ "wounded-pride": {"name": "Verletzter Stolz", "text": "Nachdem du einen gezielten Angriff erlitten hast, erhält dein nächster Wurf gegen diesen Angreifer +3."}
+}},
+"ayotyr": {"name": "Ayotyr", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Ayodin und Satyrn."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Ayodin und Satyrn genetisch zu verschieden sind."},
+ "with-speed-and-passion": {"name": "Mit Tempo und Leidenschaft", "text": "Bei der Erschaffung je 1 freier Fertigkeitspunkt in Raserei und Akrobatik (Startpunkte können wie üblich hinzugefügt werden)."},
+ "brothers-in-arms": {"name": "Waffenbrüder", "text": "Solange du an einen Ayotyr-Verbündeten angrenzt, erhaltet ihr beide +3 Schlagkraft (nicht kumulativ, wenn der Verbündete dieses Merkmal ebenfalls hat)."},
+ "endless-energy": {"name": "Endlose Energie", "text": "Du kommst bis zu 3 Tage ohne Schlaf und ohne Erschöpfungsabzüge aus. Widerstände gegen Schläfrigkeit sind um eine Stufe verbessert."},
+ "first-in-line": {"name": "Erster in der Reihe", "text": "+4 auf alle Initiativewürfe."},
+ "flowing-speed": {"name": "Fließendes Tempo", "text": "Abzüge für Bewegung durch schwieriges Gelände sind um eine Stufe gesenkt."},
+ "great-vitality": {"name": "Große Vitalität", "text": "+6 TP."},
+ "horrifying-combatant": {"name": "Grauenhafter Kämpfer", "text": "Waffenlose Schadensklasse 4."},
+ "unsettling-touch": {"name": "Verstörende Berührung", "text": "Jeder, den du berührst, erhält −5 auf seinen nächsten Widerstand gegen einen gezielten Angriff (verfällt am Ende seines nächsten Zuges)."},
+ "unstoppable": {"name": "Unaufhaltsam", "text": "Versuche, dich gegen deinen Willen zu bewegen, deine Bewegung aufzuhalten oder sich dagegen zu wehren, von dir bewegt zu werden, erleiden −4."},
+ "weather-the-storm": {"name": "Dem Sturm trotzen", "text": "+2 auf List oder Geist, während du unter Zwang stehst, eingeschüchtert oder provoziert wirst."}
+}},
+"humdin": {"name": "Humdin", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Menschen und Ayodin."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Menschen und Ayodin genetisch zu verschieden sind."},
+ "comfort-of-the-sea": {"name": "Trost des Meeres", "text": "Schwimmen +10 ft."},
+ "dr-omles-fire": {"name": "Dr. Omles Feuer", "text": "Für 1 AP umhüllt dich eine dünne Korona aus grünem, ätherischem Feuer. Es schadet weder dir noch unbelebter Materie, verursacht aber jeden Zug 2 Schaden ohne Schutz bei jedem, den du packst oder der dich packt, solange ihr in Kontakt bleibt. Du kannst es reflexiv für 0 AP löschen."},
+ "engineered-greatness": {"name": "Gezüchtete Größe", "text": "+2 auf Alchemie oder Bio-Flux bei der Erschaffung (deine Wahl); Startpunkte können wie üblich hinzugefügt werden."},
+ "filtered-breathing": {"name": "Gefilterte Atmung", "text": "Du kannst an Land durch deine Kiemen atmen; solange du das tust, sind Widerstände gegen Gase um eine Stufe verbessert. Zu lange in giftiger Luft macht dich schwer krank (der Erzähler bestimmt die Auswirkungen)."},
+ "fluid-thought": {"name": "Fließendes Denken", "text": "+4 auf List oder Wissenschaften, wenn du ein Problem durch Improvisieren löst."},
+ "ice-veins": {"name": "Eisadern", "text": "Kalte Umgebungen beeinträchtigen dich nicht; Widerstände gegen kältebasierte Gegenstände und Fähigkeiten (z. B. das Augment Kryothermisch) sind um eine Stufe verbessert."},
+ "sea-legs": {"name": "Seebeine", "text": "Selbst auf schwankendem Boden standfest; +5 auf alle Widerstände gegen Übelkeit."},
+ "wings-as-weapons": {"name": "Flügel als Waffen", "text": "Waffenlose Angriffe mit deinen Flügelflossen haben Schadensklasse 4."}
+}},
+"helf": {"name": "Helf", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Menschen und Elfen."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Menschen und Elfen genetisch zu verschieden sind."},
+ "partly-weak-soul": {"name": "Teilweise schwache Seele", "text": "−1 auf alle Würfe auf Geist (Attribut, nicht Geist-Fertigkeiten)."},
+ "building-blocks-of-nature": {"name": "Bausteine der Natur", "text": "2 Fertigkeitspunkte in Bio-Flux (weitere können wie üblich hinzugefügt werden)."},
+ "favored-attribute": {"name": "Bevorzugtes Attribut", "text": "Wähle 1 Attribut außer Geist: Bei einer natürlichen 1 mit diesem Attribut addierst du trotzdem die Boni (nicht die der zugehörigen Fertigkeiten)."},
+ "ecosphere": {"name": "Ökosphäre", "text": "+4 auf Wissenschaften, wenn du deine Umgebung und ihre Biologie untersuchst und verstehst. Du darfst Zerlegen auf jeden biologischen Gegenstand anwenden, den du gut genug verstehst (der Erzähler entscheidet)."},
+ "hardy-and-stout": {"name": "Robust & Stämmig", "text": "+6 TP (kumulativ mit Zäh)."},
+ "innovative": {"name": "Innovativ", "text": "+1 DIY, +2 Augments (aus einem Handwerk, das du bei der Erschaffung oder später lernst)."},
+ "long-view-of-time": {"name": "Weiter Blick auf die Zeit", "text": "Zu Beginn eines Kampfes kannst du dich entscheiden, eine 1 auf Initiative zu nehmen; tust du das, erhältst du für diesen Kampf +3 auf alle Würfe und Widerstände auf Geist (Attribut, inkl. Heldentaten)."},
+ "second-sight": {"name": "Zweites Gesicht", "text": "Nutze Geist statt List für alle sozialen Hinweise; Teilweise schwache Seele gilt für diese Würfe nicht."},
+ "tireless-worker": {"name": "Unermüdlicher Arbeiter", "text": "+4 auf Kraft bei körperlicher Arbeit; es dauert doppelt so lange, bis du Erschöpfung erleidest."}
+}},
+"farin": {"name": "Farin", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Menschen und Farishtaas."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Menschen und Farishtaas genetisch zu verschieden sind."},
+ "innovative": {"name": "Innovativ", "text": "+1 DIY, +2 Augments."},
+ "airflow-sense": {"name": "Luftstromsinn", "text": "Du spürst Luftströmungen: +4, um verborgene Türen, Fallen und andere versteckte Dinge zu finden."},
+ "dancers-body": {"name": "Tänzerkörper", "text": "+3 auf Würfe auf Geschick, −1 auf Würfe auf Kraft."},
+ "emotional-availability": {"name": "Gefühlsoffenheit", "text": "+4 auf List, um jemanden zu überzeugen oder zu beschwichtigen."},
+ "energetic": {"name": "Energiegeladen", "text": "Bis zu 3 Tage ohne Schlaf und ohne Erschöpfungsabzüge; Widerstände gegen Schläfrigkeit um eine Stufe verbessert."},
+ "fleet-footed": {"name": "Leichtfüßig", "text": "Landtempo +10 ft (→ 35)."},
+ "inspiring": {"name": "Inspirierend", "text": "Du und alle im Umkreis von 25 ft erhalten +4 auf List im Umgang mit Wissenschaftlern, Erfindern und anderen Technikern oder wenn ihr vor einem Mechanismus mit Augments steht, die du noch nie gesehen hast."},
+ "rocket-science": {"name": "Raketenwissenschaft", "text": "+4 auf Wissenschaften, um Flugmaschinen oder Maschinen nach ähnlichen Prinzipien zu verstehen."},
+ "spark": {"name": "Funke", "text": "2 Fertigkeitspunkte in einer Wissenschaftsfertigkeit deiner Wahl."},
+ "unafraid-to-bond": {"name": "Ohne Bindungsangst", "text": "Furchteffekte sind um eine Stufe gesenkt (immun gegen Furcht der Stufe 1)."}
+}},
+"hume": {"name": "Hume", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Menschen und Gnome."},
+ "artful-dodger": {"name": "Gewiefter Ausweicher", "text": "+1 Ausweichen."},
+ "beast-friend": {"name": "Tierfreund", "text": "+4 auf soziale Interaktionen mit wilden und zahmen Tieren."},
+ "big-voice-little-body": {"name": "Große Stimme, kleiner Körper", "text": "+2 auf List bei sozialen Interaktionen."},
+ "boundless-will": {"name": "Grenzenloser Wille", "text": "+3 auf Geist."},
+ "earthen-sustenance": {"name": "Kraft der Erde", "text": "Im Notfall kannst du aus dem Leben um dich herum schöpfen und Erschöpfung oder Hunger ignorieren. Übermäßiger Gebrauch schadet Pflanzen in der Nähe und dir."},
+ "hardy-and-stout": {"name": "Robust & Stämmig", "text": "+6 TP."},
+ "implausible-pockets": {"name": "Unglaubliche Taschen", "text": "Versuche, einen Gegenstand zu verstecken, den du bei dir trägst, sind um eine Stufe verbessert."},
+ "in-for-the-long-haul": {"name": "Langer Atem", "text": "+3 auf Widerstände mit Kraft und Geist."},
+ "innovative": {"name": "Innovativ", "text": "+1 DIY, +2 Augments (aus einem Handwerk, das du bei der Erschaffung oder später lernst)."},
+ "natural-affinity": {"name": "Natürliche Begabung", "text": "2 Fertigkeitspunkte in Bio-Flux."}
+}},
+"satyn": {"name": "Satyn", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Menschen und Satyrn."},
+ "cloven": {"name": "Paarhufer", "text": "Ziegenbeine: Landtempo 35, Schwimmen 10, Klettern 10."},
+ "iron-foot": {"name": "Eisenfuß", "text": "Menschenbeine mit sehr zähen Sohlen: Standardtempo 25 / 15 / 15."},
+ "brewmaster": {"name": "Braumeister", "text": "2 freie Fertigkeitspunkte in Alchemie."},
+ "inner-resolve": {"name": "Innere Entschlossenheit", "text": "+4 auf Widerstände gegen Betäubung."},
+ "speed-freak": {"name": "Temporausch", "text": "Landtempo +10."},
+ "undying-loyalty": {"name": "Unsterbliche Treue", "text": "Ignoriere im Kampf Erschöpfungseffekte, solange ein enger Verbündeter in Gefahr ist."},
+ "universal-language": {"name": "Universalsprache", "text": "+2 auf alle sozialen Würfe."},
+ "unstoppable": {"name": "Unaufhaltsam", "text": "+6 TP."}
+}},
+"eldin": {"name": "Eldin", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Elfen und Ayodin."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Elfen und Ayodin genetisch zu verschieden sind."},
+ "corded-strength": {"name": "Sehnige Kraft", "text": "+1 auf alle Würfe auf Kraft und +2 Schlagkraft."},
+ "expressive-hair": {"name": "Ausdrucksstarkes „Haar“", "text": "+3 auf List in sozialen Situationen."},
+ "feel-the-flow": {"name": "Den Fluss spüren", "text": "1 Fertigkeitspunkt in Schamanismus; +4 auf List oder Geist, wenn du in einer natürlichen Umgebung nach etwas suchst oder tastest, das nicht dorthin gehört."},
+ "hardened-will": {"name": "Gehärteter Wille", "text": "+3 auf Widerstände gegen Furcht, Einschüchterung oder Provokation."},
+ "land-and-sea": {"name": "Land und Meer", "text": "+5 auf alle Grundtempi."},
+ "natural-advantage": {"name": "Natürlicher Vorteil", "text": "Waffenlose Schadensklasse 4."},
+ "self-catapulting": {"name": "Selbstkatapult", "text": "Würfe zum Springen und zum Widerstehen gegen Fallschaden sind um eine Stufe verbessert."},
+ "silent-stone": {"name": "Stiller Stein", "text": "Nachdem du einen ganzen Zug versteckt warst: +5, um unentdeckt zu bleiben."},
+ "withering-touch": {"name": "Welkende Berührung", "text": "Jeder, den du berührst (wenn du dein Gift freisetzt), erhält −4 auf seinen nächsten Verteidigungswurf (verfällt am Ende seines nächsten Zuges)."}
+}},
+"elm": {"name": "Elm", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Elfen und Gnome."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Elfen und Gnome genetisch zu verschieden sind."},
+ "attuned-to-nature": {"name": "Naturverbunden", "text": "2 Punkte in Schamanismus (Startpunkte können hinzugefügt werden)."},
+ "beast-speech": {"name": "Tiersprache", "text": "Du kannst dich auf einfache Weise mit Tieren unterhalten: +5 auf Interaktionswürfe mit Tieren."},
+ "earthshape": {"name": "Erdformung", "text": "2 AP: Hebe oder senke die Erde um 5 ft in einem Bereich von 5 ft. Ein Elm kann diese Stelle erst wieder formen, wenn sie sich von selbst eingeebnet hat (innerhalb weniger Tage)."},
+ "keen-observer": {"name": "Scharfer Beobachter", "text": "+2 auf List, um Informationen zu sammeln oder dich an sie zu erinnern."},
+ "quiet-observation": {"name": "Stille Beobachtung", "text": "+2 auf List zum Bemerken. Du kannst wählen, in der Initiative als Letzter zu handeln; tust du das, erhältst du +2 auf deinen ersten Wurf gegen jemanden, dessen Handlungen dich direkt betreffen."},
+ "unbound-willpower": {"name": "Ungebundene Willenskraft", "text": "+1 Geist und weitere +3, wenn du ihn für Heldentaten einsetzt."},
+ "unmovable": {"name": "Unverrückbar", "text": "+2 auf Widerstände gegen Einschüchterung, Furcht oder Provokation."}
+}},
+"eltyr": {"name": "Eltyr", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Elfen und Satyrn."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Elfen und Satyrn genetisch zu verschieden sind."},
+ "heavy-hearty-frame": {"name": "Schwerer, kräftiger Körperbau", "text": "+1 Kraft, +3 TP."},
+ "partially-weak-soul": {"name": "Teilweise schwache Seele", "text": "−1 auf Würfe auf Geist."},
+ "internal-resistance": {"name": "Innere Abwehr", "text": "Alle Widerstände gegen Gifte sind um eine Stufe verbessert."},
+ "living-weapon": {"name": "Lebende Waffe", "text": "Waffenlose Schadensklasse 4."},
+ "longstride": {"name": "Langschritt", "text": "Landtempo +10."},
+ "loyal-resolve": {"name": "Treue Entschlossenheit", "text": "Alle angrenzenden Verbündeten erhalten +2 Verteidigung."},
+ "primal-mobility": {"name": "Urtümliche Beweglichkeit", "text": "Abzüge für Bewegung durch unwegsames Gelände sind um eine Stufe gesenkt."},
+ "red-nosed-appetite": {"name": "Rotnasiger Appetit", "text": "Ein paar Gläser Kornbrand ersetzen dir für einen Tag Essen und Wasser."},
+ "resolute": {"name": "Standhaft", "text": "+3 auf Widerstände dagegen, gegen deinen Willen bewegt oder zu Boden geworfen zu werden."},
+ "stubborn-strength": {"name": "Sture Stärke", "text": "Ergebnisse von Heldentaten (Geist) sind um eine Stufe verbessert."},
+ "tireless-effort": {"name": "Unermüdlicher Einsatz", "text": "Es dauert doppelt so lange, bis du Erschöpfung erleidest, unabhängig von den Umständen."},
+ "true-sight": {"name": "Wahrer Blick", "text": "Soziale Hinweise: Würfle zweimal und nimm das höhere Ergebnis."},
+ "wingless-flight": {"name": "Flügelloser Flug", "text": "+5 auf Würfe zum Springen oder zum Widerstehen gegen Fallschaden."}
+}},
+"gnishtaa": {"name": "Gnishtaa", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Farishtaas und Gnome."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Farishtaas und Gnome genetisch zu verschieden sind."},
+ "artful-form": {"name": "Kunstvolle Gestalt", "text": "+2 auf Geschick."},
+ "zero-in": {"name": "Anvisieren", "text": "Fernkampfwaffen schießen doppelt so weit, und du erhältst +2 Genauigkeit mit ihnen."},
+ "absolute-study": {"name": "Absolutes Studium", "text": "+2 auf das Attribut Wissenschaften; 1 Fertigkeitspunkt in einer Wissenschaftsfertigkeit deiner Wahl."},
+ "cateye": {"name": "Katzenauge", "text": "Du siehst selbst in völliger Dunkelheit klar, erhältst aber −4 auf Widerstände gegen Lichtblitze und ähnliche Effekte. Blindheit und künstliche Dunkelheit (Schmuckstücke, Schwarze Fallen aus Äther) wirken weiterhin auf dich."},
+ "cheeky-sneaky": {"name": "Frech & Flink", "text": "+3 auf Schlösserknacken und Taschendiebstahl."},
+ "cherub": {"name": "Cherub", "text": "Verkümmerte Flügel: kein Fallschaden, außer du bist gefesselt, bewusstlos oder bei schlechtem Wetter."},
+ "cloud-deranged": {"name": "Wolkenverrückt", "text": "2 Fertigkeitspunkte in Pilot."},
+ "effortless-motion": {"name": "Mühelose Bewegung", "text": "Lautlose Schritte; Schleichen +1 Stufe."},
+ "pirouette": {"name": "Pirouette", "text": "+1 Ausweichen."},
+ "truly-luminous": {"name": "Wahrhaft strahlend", "text": "+4 auf List, um jemanden zu beschwichtigen oder zu manipulieren, der deine Augen sehen kann (nicht zum Einschüchtern oder Provozieren)."},
+ "unyielding-soul": {"name": "Unbeugsame Seele", "text": "Eine natürliche 1 auf Geist (Attribut) addiert trotzdem die Boni."},
+ "wandering-eye": {"name": "Schweifender Blick", "text": "+4 auf List, um Dinge visuell zu bemerken; du siehst mehrere hundert Fuß weit vollkommen klar."}
+}},
+"sashtaa": {"name": "Sashtaa", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Farishtaas und Satyrn."},
+ "infertile": {"name": "Unfruchtbar", "text": "Du kannst keine Kinder bekommen, weil Farishtaas und Satyrn genetisch zu verschieden sind."},
+ "watchful-wandering-eye": {"name": "Wachsamer, schweifender Blick", "text": "+4 auf Würfe zum Bemerken."},
+ "meld-born": {"name": "Meld-geboren", "text": "+2 Geschick und +2 auf alle sozialen Interaktionen (True-Meld-Elternteil)."},
+ "explosive-wonder": {"name": "Explosives Wunder", "text": "+3 Geist und 4 zusätzliche TP."},
+ "a-small-madness": {"name": "Ein kleiner Wahnsinn", "text": "Bei 0 TP: +4 Genauigkeit und +4 Schlagkraft."},
+ "bladehoof": {"name": "Klingenhuf", "text": "Waffenlose Schadensklasse 4."},
+ "boundless-vitality": {"name": "Grenzenlose Vitalität", "text": "+6 TP."},
+ "bronze-shimmer": {"name": "Bronzeschimmer", "text": "Nie körperlich krank: Du erholst dich doppelt so schnell von Wundeffekten und regenerierst 2 Wunden pro Tag statt 1."},
+ "cloven-angel": {"name": "Gehufter Engel", "text": "Kleine Flügel: kein Fallschaden, außer du bist gefesselt, bewusstlos oder bei schlechtem Wetter."},
+ "first-in-line": {"name": "Erster in der Reihe", "text": "+4 Initiative."},
+ "living-blur": {"name": "Lebender Schemen", "text": "+5 auf alle Bewegungstempi."},
+ "resounding-resolve": {"name": "Widerhallende Entschlossenheit", "text": "Eine natürliche 1 auf Geist (Attribut) addiert trotzdem die Boni."},
+ "skybound-soul": {"name": "Himmelsseele", "text": "2 Fertigkeitspunkte in Pilot."},
+ "unending-glory": {"name": "Unendlicher Ruhm", "text": "Heldentum (Geist): Würfle zweimal und nimm das bessere Ergebnis."}
+}},
+"gnodin": {"name": "Gnodin", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Gnome und Ayodin."},
+ "fluid-motion": {"name": "Fließende Bewegung", "text": "+2 Ausweichen."},
+ "diminutive-form": {"name": "Winzige Gestalt", "text": "−1 auf Würfe auf Kraft. Schwere Waffen benötigen wie überschwere die Haltung Fester Stand; alles, was diese Voraussetzung für überschwere Waffen aufhebt, hebt sie auch für schwere auf."},
+ "adaptive-coloration": {"name": "Anpassungsfärbung", "text": "1 AP (auch reflexiv): Ändere Farbe und Textur deiner Haut, deiner Augen und deines „Haars“; +3 auf List, um dich zu verkleiden. Der Bonus gilt auch fürs Verstecken, wenn du größtenteils oder ganz unbekleidet bist."},
+ "blood-draw": {"name": "Aderlass", "text": "Deine waffenlosen Angriffe verursachen zusätzlich 1 Blutungsschaden (mit sich selbst kumulativ); waffenloses Packen oder bloßer Kontakt mit deinen nackten Händen kann das auch, wenn du willst."},
+ "expressive-flair": {"name": "Ausdrucksstark", "text": "+3 auf List in allen sozialen Situationen."},
+ "layered-lids": {"name": "Doppelte Lider", "text": "Nickhaut: +3 auf Widerstände gegen alles, was deine Sicht schädigen würde (gezielte Angriffe auf die Augen, grelle Blitze, Schmutz, Blut)."},
+ "life-shaper": {"name": "Lebensformer", "text": "2 Fertigkeitspunkte in Alchemie, Bio-Flux oder Schamanismus (deine Wahl)."},
+ "parts-of-nature": {"name": "Gaben der Natur", "text": "3 AP: Erschaffe eine leichte Waffe, ein Werkzeug, eine Fackel oder einen anderen einfachen Gegenstand leichter Größe aus der Natur, wie beim Gnom-Merkmal, aber auch aus Stein oder Koralle."},
+ "still-waters": {"name": "Stille Wasser", "text": "+3 auf Widerstände mit List oder Geist gegen Provokation, Einschüchterung und Furcht."},
+ "talon-tendrils": {"name": "Klauententakel", "text": "1 AP, während du den Boden oder Wasser berührst: Wechsle deine Flügelflossen zwischen normal und riesigen Schulterklauen. Als Klauen funktionieren sie wie Hände zum Packen und für waffenlose Angriffe (keine Gegenstände); waffenlose Schadensklasse 4."},
+ "windcatcher": {"name": "Windfänger", "text": "Kein Fallschaden, außer du bist gefesselt, bewusstlos oder bei schlechtem Wetter."},
+ "wounding-will": {"name": "Verwundender Wille", "text": "1 AP: Versuche, einem Feind innerhalb von 25 ft den Effekt eines gezielten Angriffs zuzufügen, ohne ihn zu berühren. Kein Schaden. Deine Schlagkraft gegen das normale Widerstandsattribut der Trefferzone (das Ziel darf stattdessen mit Geist widerstehen)."}
+}},
+"gnotyr": {"name": "Gnotyr", "traits": {
+ "hybrid-vigor": {"name": "Hybridkraft", "text": "Du gewinnst alle Gleichstände gegen Gnome und Satyrn."},
+ "small-frame": {"name": "Kleiner Körperbau", "text": "−1 auf Kraft."},
+ "hearty-soul": {"name": "Beherzte Seele", "text": "+2 auf Geist."},
+ "cliffside-strider": {"name": "Klippengänger", "text": "+15 Klettertempo."},
+ "everyones-friend": {"name": "Jedermanns Freund", "text": "+4 auf List, um dich aus dem Nahkampf zu lösen oder jemanden zu beschwichtigen."},
+ "extreme-omnivore": {"name": "Extremer Allesfresser", "text": "Du kannst anorganisches Material als Nahrung essen; giftige Stoffe erfordern trotzdem einen Widerstand mit Kraft."},
+ "green-thumb": {"name": "Grüner Daumen", "text": "Je +1 auf Alchemie und Schamanismus."},
+ "implacable": {"name": "Unerbittlich", "text": "+4 auf Widerstände gegen Betäubung."},
+ "jolly-good-fun": {"name": "Mordsspaß", "text": "+1 Ausweichen."},
+ "mini-minotaur": {"name": "Mini-Minotaurus", "text": "Waffenlose Schadensklasse 3 und +2 Schlagkraft."},
+ "rogues-eyes": {"name": "Schurkenaugen", "text": "+2 auf List bei Würfen zum Bemerken und +2 Initiative."},
+ "rooted": {"name": "Verwurzelt", "text": "+4 auf Widerstände dagegen, zu Boden geworfen oder gegen deinen Willen bewegt zu werden."},
+ "surprise-immunity": {"name": "Überraschungsimmunität", "text": "Alkohol wirkt sich nicht negativ auf dich aus."}
+}},
+"izedan-elf": {"name": "Izedanischer Elf", "traits": {
+ "ground-eating-gallop": {"name": "Raumgreifender Galopp", "text": "1 AP: Nimm eine vierbeinige Haltung ein; solange du darin bist, addiere die Hälfte deines normalen Landtempos (aufgerundet), z. B. 30 → 45."},
+ "punishment": {"name": "Strafe", "text": "+1 Wunde (13 statt 12)."},
+ "wind-scarred": {"name": "Windgezeichnet", "text": "+4 auf alle Würfe zum Einschüchtern und Provozieren."},
+ "your-body-is-my-weapon": {"name": "Dein Körper ist meine Waffe", "text": "Keine Abzüge für improvisierte Waffen, wenn du Leichen oder Körperteile von Feinden als Nahkampf- oder Wurfwaffen benutzt. Leicht = Hände, Füße, ganze Gnomgliedmaßen; mittel = Gliedmaßen in Menschengröße oder ganze Gnome; schwer = Teile menschengroßer Leichen; überschwer = ganze Leichen außer Gnomen (Wurfreichweite nur 15 ft). Das kann Verbündete demoralisieren."}
+}},
+"botched-farishtaa": {"name": "Verpfuschte Farishtaa", "traits": {
+ "bloody-essence": {"name": "Blutige Essenz", "text": "Fehlerhafte synthetische Essenz: dunkelrote Haut. Dein Blut kocht, wenn es vergossen wird: + Schlagkraft in Höhe des Blutungsschadens, den du gerade erleidest."},
+ "contortion-trick": {"name": "Schlangenmenschentrick", "text": "Überbeweglich. 1 AP: Renke die Gelenke einer Gliedmaße aus oder wieder ein. Je ausgerenkter Gliedmaße: +4 auf Geschick, um dich durch enge Stellen zu zwängen oder aus einem Griff zu befreien, −6 auf jeden anderen Wurf mit dieser Gliedmaße. Ein ausgerenktes Bein: −15 auf Bewegungstempi (min. 5 ft). Würfelst du eine 1, während du gepackt bist, renkt sich die gepackte Gliedmaße aus und du bist für 1 AP betäubt."},
+ "draconic": {"name": "Drachenhaft", "text": "Feine Schuppen, du häutest dich, schwefliger Atem. 1 AP: Hauche einer angrenzenden Kreatur Schwefel ins Gesicht. Sie würfelt einen Widerstand mit Kraft wie gegen ein Gas oder erleidet den Gifteffekt Desorientierend; Marque I, II ab Charakterstufe 4, III ab Charakterstufe 8. Außerdem hast du einen Hortdrang, der dich zum Stehlen verleiten kann."},
+ "misshapen": {"name": "Missgestaltet", "text": "Qualvoller Flickenkörper: −10 auf alle Bewegungstempi, +5 Kraft. Das häufigste Merkmal unter den Gebrochenen."},
+ "nerve-shock": {"name": "Nervenschock", "text": "Du spürst kaum Schmerz: −4 Geschick; Widerstände gegen gezielte Angriffe und Würfe, um Schmerz zu überwinden, sind um eine Stufe verbessert."},
+ "paralyzed": {"name": "Gelähmt", "text": "Von der Hüfte abwärts gelähmt; Bio-Flux oder Prothesen können das nicht beheben. Du nutzt einen mechanisierten Rollstuhl: Landtempo normal, kein Auftrieb, kann keine senkrechten oder unregelmäßigen Flächen erklimmen, kann kaputtgehen. Ein Ingenieur / Prothesenexperte kann ihn verbessern."},
+ "twists-of-insanity": {"name": "Wendungen des Wahnsinns", "text": "Würfelst du in einem Gespräch eine 1, wechselt deine Persönlichkeit sofort (führe eine Liste). Mit Erlaubnis des Erzählers kann jede Persönlichkeit eigene Spezialisierungen haben, aber Körperwerte (Kraft, TP, Wunden …) bleiben gleich."},
+ "wings-of-death": {"name": "Todesschwingen", "text": "Große, federlose, verschrumpelte Flügel, die nicht fliegen können: +4 auf Einschüchterung und Provokation. Feinde geflügelter Farishtaas nehmen auch dich ins Visier; andere meiden dich."}
+}},
+"reverted-elf": {"name": "Zurückverwandelter Elf"},
+"regressed-elf": {"name": "Vollständig zurückgebildeter Elf", "traits": {
+ "swollen-skeleton": {"name": "Aufgeblähtes Skelett", "text": "+4 auf alle Würfe auf Kraft."},
+ "body-of-the-beast": {"name": "Körper der Bestie", "text": "+8 TP."},
+ "strength-of-monsters": {"name": "Stärke der Ungeheuer", "text": "Waffenlose Angriffe und Nahkampfwaffen +2 Schadensklasse."},
+ "broken-soul": {"name": "Gebrochene Seele", "text": "−6 auf Würfe auf Geist (Attribut, nicht Geist-Fertigkeiten)."},
+ "barren-essence": {"name": "Karge Essenz", "text": "Zwei Essenzplätze weniger."},
+ "an-inevitable-struggle": {"name": "Ein unausweichlicher Kampf", "text": "Bei einer natürlichen 1 auf einen beliebigen Attributwurf verlierst du kurz die Kontrolle über diesen Aspekt (Angriff auf einen Verbündeten, plötzliche Furcht, Wahnvorstellungen, Gleichgewichtsverlust …). Der Erzähler entscheidet; mit den Folgen musst du danach leben."}
+}},
+"winged-farishtaa": {"name": "Geflügelte Farishtaa", "traits": {
+ "flight": {"name": "Flug", "text": "Flugtempo 25 ft pro AP, verringert um die Schwimm-/Kletterabzüge der Rüstung. Kein Fallschaden, außer du bist gefesselt, bewusstlos oder bei schlechtem Wetter. Zwei zusätzliche Trefferzonen: die Flügel (Widerstand: Geschick). Normal: Dieser Flügel ist 1 Zug lang nicht nutzbar; fliegst du, stürzt du ab, kannst aber reflexiv 2 AP ausgeben, um sicher zu landen. Wunde: verstauchter Flügel, unbrauchbar bis zu deiner nächsten Verschnaufpause (kein sicheres Fallen). Tödlich: Der Flügel ist verloren und du verblutest; du stirbst in 3 Zügen, wenn nicht jemand mindestens 3 AP aufwendet, um ihn zu verbinden."}
+}},
+"true-meld": {"name": "True-Meld-Farishtaa", "traits": {
+ "companion-vulture": {"name": "Geier-Gefährte", "text": "Du beginnst mit einem mittelgroßen Eygor-Geier als Gefährten mit 1 Spezialisierungspunkt und 3 besonderen Merkmalen deiner Wahl (siehe Pets and Predators). Er ist zahm, gehorcht dir, und niemand sonst kann sich mit ihm verbinden (Meld) oder ihm Befehle geben."},
+ "a-nose-for-carrion": {"name": "Ein Riecher für Aas", "text": "Du riechst den Tod an verwundeter Beute auf eine Meile oder mehr. Du kannst organische Kreaturen und Personen am Geruch verfolgen; diese Würfe auf List sind um eine Stufe verbessert."},
+ "homing": {"name": "Heimfinder", "text": "Du weißt immer, wo Norden ist; +6, um den Weg zurück zum Ausgangspunkt deiner Reise zu finden."},
+ "long-stride": {"name": "Langer Schritt", "text": "Landtempo +10 (→ 35)."},
+ "scavenger": {"name": "Aasfresser", "text": "+3 auf Widerstände gegen Gifte und Gase; verdorbenes Fleisch macht dich nicht krank."},
+ "upon-shifting-sands": {"name": "Auf wanderndem Sand", "text": "Effekte von schwierigem Gelände sind um eine Stufe gesenkt; kein Geschick-Abzug durch gefährlichen Untergrund."}
+}},
+"metal-deranged-gnome": {"name": "Metallgestörter Gnom", "traits": {
+ "metal-minded": {"name": "Metallsinn", "text": "+3 auf Wissenschaften. Der Erzähler kann den Bonus aufteilen, z. B. +2 Wissenschaften / +1 Geist."},
+ "bones-of-the-city": {"name": "Knochen der Stadt", "text": "2 AP, durch Berührung: Schwäche oder verstärke einen Bereich von 5×5 ft aus bearbeitetem Metall, behauenem Stein oder ähnlichem unbelebtem Material. Der nächste Angriff dagegen richtet Schaden an, der um eine Stufe verbessert (geschwächt) oder gesenkt (verstärkt) ist. Ein Gnom kann diesen Bereich erst nach Stunden oder Tagen wieder verändern (Erzähler)."},
+ "ironblood": {"name": "Eisenblut", "text": "1 AP: Wechsle zwischen deinem normalen Gewicht und dem Gewicht, das du aus massivem Blei hättest. Bleischwer: Du sinkst, −20 Land- und Klettertempo (min. 0), +10 auf Widerstände dagegen, bewegt zu werden, natürlicher Schutz 1 (kumulativ mit Rüstung)."},
+ "scrap-artist": {"name": "Schrottkünstler", "text": "3 AP: Baue aus Ersatzteilen nahegelegener Maschinen eine leichte Waffe, ein Werkzeug oder einen anderen einfachen Gegenstand leichter Größe zusammen. Die Maschinen funktionieren weiter, können aber erst wieder ausgeschlachtet werden, wenn sie vollständig instand gesetzt sind. 3 AP, um den Gegenstand zu zerlegen und die Teile zurückzusetzen."},
+ "the-magnet-touch": {"name": "Magnetische Berührung", "text": "1 AP pro Zug: Deine Hände und Füße haften an Metall; du kletterst ohne Abzug an Metallflächen. Lässt du dieses AP in einem Zug aus, fällst du herunter. Außerdem 1 AP reflexiv: +4, um den Griff an einem Metallgegenstand zu halten. Wirkt nicht bei einer Hand oder einem Fuß mit Wundeffekt."},
+ "boiler-rocketeer": {"name": "Kesselrakete", "text": "2 AP: Katapultiere dich 15 ft in eine beliebige Richtung (auch senkrecht, ohne eine Fläche zu berühren; kein Fliegen)."}
+}},
+"chaparral-gnome": {"name": "Chaparral-Gnom", "traits": {
+ "adjusted-to-extremes": {"name": "An Extreme gewöhnt", "text": "Ignoriere Abzüge durch extreme Hitze, Kälte und ähnliche Umgebungen (Feuer und Lava verletzen trotzdem)."},
+ "desert-fox": {"name": "Wüstenfuchs", "text": "Grabtempo 10 ft; du kannst dich durch Sand und weichen Boden graben."},
+ "lean-living": {"name": "Genügsam", "text": "Du hältst doppelt so lange wie üblich ohne Essen und Wasser durch."},
+ "sandblasted": {"name": "Sandgestrahlt", "text": "Schlagkraftwürfe für Versuche, im Nahkampf etwas zu zerschmettern, sind um eine Stufe verbessert."},
+ "watchful-steps": {"name": "Wachsame Schritte", "text": "+5, um bodengebundene Fallen und Gefahren zu entdecken."}
+}},
+"satyr-antelope": {"name": "Satyr (Antilope & Gazelle)", "traits": {
+ "gazelle-strain": {"name": "Gazellenblut", "text": "+5 Landtempo und +2 Geschick."}
+}},
+"satyr-cliff-jumping": {"name": "Satyr (Arakrith-Klippenspringer)", "traits": {
+ "cliff-jumper": {"name": "Klippenspringer", "text": "Tempo 25 / Schwimmen 10 / Klettern 25; du kannst ohne Hilfe alles erklimmen, was einen Vorsprung von fast beliebiger Breite hat."}
+}},
+"satyr-bezoar": {"name": "Satyr (Bezoar & Oryx)", "traits": {
+ "born-leader": {"name": "Geborener Anführer", "text": "+2 List und +2 Geist."}
+}},
+"satyr-bull": {"name": "Satyr (Stier & Yak)", "traits": {
+ "beast-of-burden": {"name": "Lasttier", "text": "+2 Kraft und +2 TP."}
+}}
+}

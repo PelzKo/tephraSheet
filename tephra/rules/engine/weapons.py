@@ -34,6 +34,14 @@ def extra_hand(state):
     return None
 
 
+def _footing_heavy(state):
+    """Gnodin: heavy items need the Footing stance too."""
+    from .stats import active_trait_keys
+
+    reg = get_registry()
+    return any(reg.traits[k].get("footing_heavy") for k in active_trait_keys(state)[0])
+
+
 def has_wings(state):
     return extra_hand(state) is not None
 
@@ -156,10 +164,11 @@ def weapon_block(sheet, item: ItemState) -> WeaponBlock:
     if "turret" in item.variants:
         if state.stance != "footing" and not any(s == "armsmith-fast-mounting" for s, _l in state.specialties):
             notes.append(_("Footing stance needed to fire the turret."))
-    elif row.get("footing") and state.stance != "footing":
-        acc.add(_("Super-heavy without Footing"), tables.SUPER_HEAVY_NO_FOOTING)
+    elif (row.get("footing") or size == "heavy" and _footing_heavy(state)) and state.stance != "footing":
+        label = _("Super-heavy without Footing") if row.get("footing") else _("Heavy without Footing")
+        acc.add(label, tables.SUPER_HEAVY_NO_FOOTING)
         if stk is not None and kind == "melee":
-            stk.add(_("Super-heavy without Footing"), tables.SUPER_HEAVY_NO_FOOTING)
+            stk.add(label, tables.SUPER_HEAVY_NO_FOOTING)
         notes.append(_("Enter the Footing stance to avoid −3."))
 
     reach_bonus = _apply_scoped(sheet, item, kind, acc, stk, dc, notes)

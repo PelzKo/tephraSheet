@@ -27,7 +27,7 @@ def test_part_a_data():
     ext = [r for r in get_registry().races.values() if r.get("extension") == "races-of-tephra"]
     assert len(ext) >= 8
     for r in ext:
-        assert sorted(t["roll"] for t in r["random"]) == list(range(1, 13)), r["slug"]
+        assert sorted(t["roll"] for t in r["random"] if t["roll"] is not None) == list(range(1, 13)), r["slug"]
 
 
 def test_abyssal_body(db):
@@ -123,3 +123,60 @@ def test_racial_specialty_and_story_race_checks(db):
 def test_being_provoked_toggle(db):
     toggles = char("manticore").compute().toggles
     assert any(t["label"] == "Being provoked" for t in toggles)
+
+
+def test_part_c_data():
+    reg = get_registry()
+    hybrids = [r for r in reg.races.values() if r.get("group") == "Hybrid"]
+    variants = [r for r in reg.races.values() if r.get("group") == "Variant"]
+    assert len(hybrids) == 14 and len(variants) >= 10
+    assert reg.races["helf"]["counts_as"] == ["human", "elf"]
+    assert reg.traits["eldin/wings-as-arms"]["extra_hands"]
+    assert reg.traits["izedan-elf/fruit-of-the-fallen"]["negates"][0] == "izedan-elf/weak-souls"
+
+
+def test_hybrid_traits(db):
+    c = char("farin", fixed_traits=["farin/innovative", "farin/piercing-scrutiny"])
+    c.fixed_traits = ["farin/innovative", "farin/piercing-scrutiny"]
+    c.save()
+    s, h = c.compute(), char("human").compute()
+    assert any(t["key"] == "farin/hybrid-vigor" for t in s.traits)
+    assert s.stats["acc"].total >= 1
+    c = char("humdin", ["engineered-greatness"], trait_choices={"humdin/engineered-greatness": "Bio-Flux"})
+    assert c.compute().skills["Bio-Flux"].total == 2
+    a = char("ayotaa").compute().attr_misc["Brute"].total
+    assert char("ayotaa", ["hardened-structure"]).compute().attr_misc["Brute"].total == a + 3
+    assert services.has_wings(char("eldin", ["wings-as-arms"]))
+
+
+def test_hybrids_count_as_parents_for_stories():
+    from rules.engine.requirements import story_allowed
+    elf_story = get_registry().stories["highborne-elf"]
+    assert story_allowed(elf_story, "helf") and story_allowed(elf_story, "izedan-elf")
+    assert not story_allowed(elf_story, "hume")
+
+
+def test_variants(db):
+    import random
+
+    from rules.engine import creation
+    reg = get_registry()
+    assert char("winged-farishtaa").compute().stats["fly"].total == 25
+    rerolled = set(reg.races["true-meld"]["reroll"])
+    for seed in range(40):
+        keys, _r = creation.roll_random_traits("true-meld", rng=random.Random(seed))
+        assert not rerolled & set(keys)
+    c = char("izedan-elf", ["ground-eating-gallop"])
+    stances = c.compute().stances
+    gallop = next(s for s in stances if s["slug"] == "trait:izedan-elf/ground-eating-gallop")
+    base = c.compute().stats["spd"].total
+    c.stance = gallop["slug"]
+    c.save()
+    assert c.compute().stats["spd"].total > base
+
+
+def test_gnodin_heavy_needs_footing(db):
+    c = char("gnodin")
+    InventoryItem.objects.create(character=c, name="Maul", kind="melee", size="heavy", slot="weapon1")
+    block = c.compute().weapons[0]
+    assert any("Footing" in label for label, _v in block.acc.breakdown)

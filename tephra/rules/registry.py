@@ -66,6 +66,8 @@ def _localize(entries, lang, kind):
 
 def _localize_races(races, lang):
     tr = translations(lang, "races") if lang != DEFAULT else {}
+    copies = {f"{r['slug']}/{t['slug']}": t["copy_of"] for r in races for k in ("fixed", "random")
+              for t in r[k] if t.get("copy_of")}
     for r in races:
         r["name_en"] = r["name"]
         rt = tr.get(r["slug"], {})
@@ -74,6 +76,11 @@ def _localize_races(races, lang):
             for t in r[kind]:
                 t["name_en"] = t["name"]
                 tt = rt.get("traits", {}).get(t["slug"], {})
+                source = t.get("copy_of")
+                while not tt and source:  # inherited/copied trait: the (first) source's translation
+                    race_slug, _s, slug = source.partition("/")
+                    tt = tr.get(race_slug, {}).get("traits", {}).get(slug, {})
+                    source = copies.get(source)
                 t["name"] = tt.get("name") or t["name"]
                 t["text"] = tt.get("text") or t["text"]
     return races
@@ -104,7 +111,7 @@ class Registry:
         return self.traits[key]
 
     def random_table(self, race_slug):
-        return {t["roll"]: t for t in self.races[race_slug]["random"]}
+        return {t["roll"]: t for t in self.races[race_slug]["random"] if t.get("roll") is not None}
 
     def specialties_for_skill(self, skill):
         return [s for s in self.specialties.values() if s["skill"] == skill]

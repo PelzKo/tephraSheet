@@ -68,8 +68,8 @@ def roll_random_traits(race_slug, chosen=(), rng=None):
     while len([k for k in keys if k.startswith(race_slug + "/")]) < slots["random_count"]:
         value = rng.randint(1, 12)
         new, _l = resolve_random_trait(race_slug, value, rng)
-        if new[0] in keys:
-            continue  # re-roll duplicates (gnomes)
+        if new[0] in keys or new[0] in get_registry().races[race_slug].get("reroll", []):
+            continue  # re-roll duplicates (gnomes) and the race's re-roll results (True-Meld)
         rolls.append(value)
         keys.extend(new)
     return keys, rolls
@@ -81,17 +81,24 @@ def random_fixed_choice(race_slug, rng=None):
     n = race.get("fixed_choose")
     if not n:
         return []
-    return [f"{race_slug}/{t['slug']}" for t in rng.sample(race["fixed"], n)]
+    pool = [t for t in race["fixed"] if not t.get("always")]
+    return [f"{race_slug}/{t['slug']}" for t in rng.sample(pool, min(n, len(pool)))]
 
 
 ALCHEMY_LISTS = ["acid", "gas", "medicine", "poison"]
 
 
-def choice_options(kind):
-    """[(value, English label)] for a trait choice: "attribute", "skill:<Attribute>", "race" (core races),
-    "alchemy_list"."""
+def choice_options(kind, trait=None):
+    """[(value, English label)] for a trait choice: "attribute", "skill" (any), "skill:<Attribute>", "race" (core
+    races), "alchemy_list", "option" (the trait's "choice_options"). ``choice_options``/``choice_exclude`` on the
+    trait narrow any kind."""
+    trait = trait or {}
+    if trait.get("choice_options"):
+        return [(o, o) for o in trait["choice_options"]]
     if kind == "attribute":
-        return [(a, a) for a in tables.ATTRIBUTES]
+        return [(a, a) for a in tables.ATTRIBUTES if a not in trait.get("choice_exclude", [])]
+    if kind == "skill":
+        return [(s, s) for s in tables.ALL_SKILLS if s not in trait.get("choice_exclude", [])]
     if kind.startswith("skill:"):
         return [(s, s) for s in tables.SKILLS.get(kind[6:], [])]
     if kind == "race":
@@ -106,7 +113,7 @@ def random_trait_choices(trait_keys, rng=None):
     reg = get_registry()
     out = {}
     for k in trait_keys:
-        options = choice_options(reg.traits[k].get("choice") or "") if k in reg.traits else []
+        options = choice_options(reg.traits[k].get("choice") or "", reg.traits[k]) if k in reg.traits else []
         if options:
             out[k] = rng.choice(options)[0]
     return out
@@ -124,7 +131,8 @@ def nationality_stories(nationality_slug, race_slug=None):
 def random_race_and_nationality(rng=None):
     rng = rng_or_default(rng)
     reg = get_registry()
-    race = rng.choice([r["slug"] for r in offer_races(reg.races.values())])
+    race = rng.choice([r["slug"] for r in offer_races(reg.races.values())
+                       if r.get("group") != "Variant"])  # variants need the narrator's approval
     nats = [n["slug"] for n in offer(reg.nationalities.values()) if n["slug"] != "other"]
     nat = rng.choice(nats)
     fixed = random_fixed_choice(race, rng)
