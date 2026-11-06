@@ -214,3 +214,28 @@ Marionette Strings → Marionettenfäden.
 | Crafting Living Liquids | Lebende Flüssigkeiten herstellen |
 | Living liquid augments | Augments für lebende Flüssigkeiten |
 | Lighter-than-Air Liquid / Interior Platelets | Leichter als Luft / Innere Plättchen |
+
+## Races of Tephra
+| English | German |
+|---|---|
+| Abyssal / Anura / Ezka / Gleedrin / Karshin / Obezyany / Simulacron | unchanged |
+| Crazak Transcendent / Crazak | Transzendenter Crazak / Crazak |
+| Daemon | Dämon |
+| Manticore | Mantikor (Pl. Mantikore) |
+| Fluoform / Khemic / Amorphide / Homunculus | Fluoform (Pl. Fluoformen) / Khemiker / Amorphid (Pl. Amorphide) / Homunkulus |
+| shetora(s) | Shetora(s) – unchanged |
+| pressure suit / mantle (abyssal) | Druckanzug / Mantel |
+| feeding tendril | Fresstentakel |
+| wing-fins | Flügelflossen |
+| called-shot location | Trefferzone |
+| level (character) | Stufe (Charakterstufe where it could be confused with a tier) |
+| provocation / provoked / provoker | Provokation / provoziert / Provokateur |
+| intimidation / pacify | Einschüchterung / beschwichtigen |
+| tier up / tier down (a roll or resist) | +1 Stufe, um eine Stufe verbessert / um eine Stufe gesenkt |
+| Tier 1 fire / set on fire | Feuer der Stufe 1 / in Brand setzen |
+| bio-invigoration | Bio-Belebung |
+| Rage Suppressant (augment) | Wuthemmer |
+| Fury Walkers / Crimson Claws / Manticore Clans | Zornwandler / Purpurklauen / Mantikor-Clans |
+| Bloodwood Village | unchanged |
+| Manticore Racial Specialties | Volksspezialisierungen der Mantikore |
+| Progressive Madness | Fortschreitender Wahnsinn |

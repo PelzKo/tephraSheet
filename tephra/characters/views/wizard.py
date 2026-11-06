@@ -8,8 +8,8 @@ from django.shortcuts import redirect, render
 from catalog.models import ItemTemplate
 from rules.engine import creation, tables
 from rules.engine.requirements import (augment_lists, augment_points, check_augment, check_specialty, known_augments,
-                                      specialty_warnings)
-from rules.engine.stats import compute
+                                      race_family, specialty_warnings, story_allowed)
+from rules.engine.stats import active_trait_keys, compute
 from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
 from rules.registry import get_registry
@@ -102,18 +102,20 @@ def ctx_step1(request, character):
         slots = creation.trait_slots(race["slug"])
         ctx["slots"] = slots
         ctx["fixed"] = [dict(t, key=f"{race['slug']}/{t['slug']}") for t in race["fixed"]]
+        ctx["optional_traits"] = [t for t in ctx["fixed"] if t.get("optional")] if not race.get("fixed_choose") else []
         ctx["random_table"] = [dict(t, key=f"{race['slug']}/{t['slug']}") for t in race["random"]]
         ctx["chosen_random"] = [reg.traits[k] for k in character.random_traits if k in reg.traits]
         ctx["nat_stories"] = creation.nationality_stories(character.nationality, race["slug"])
         ctx["nat_story"] = next((s for s in character.stories
                                  if reg.stories.get(s, {}).get("type") == "nationality"), "")
-        ctx["choice_traits"] = [reg.traits[k] | {"key": k} for k in character.fixed_traits + character.random_traits
-                                if k in reg.traits and reg.traits[k].get("choice")]
+        ctx["choice_traits"] = [reg.traits[k] | {"key": k, "options": creation.choice_options(reg.traits[k]["choice"])}
+                                for k in active_trait_keys(character.to_state(include_items=False))[0]
+                                if reg.traits[k].get("choice")]
         ctx["can_roll"] = not character.random_traits or settings.allow_reroll_random_trait
         ctx["choose_max"] = slots["random_count"] if settings.allow_choose_random_trait else slots["random_choose"]
         ctx["chosen_keys"] = [k for k in character.random_traits if k.startswith(f"{race['slug']}/")][: ctx["choose_max"] or 0]
         # Farishtaa "Prominent Host": that trait comes with one from the elf table instead.
-        host = next((t for t in race["random"] if t.get("reroll_on")), None)
+        host = next((t for t in race["random"] if t.get("reroll_on") and not t["reroll_on"].startswith("@")), None)
         if host:
             other = host["reroll_on"]
             ctx["host"] = {"key": f"{race['slug']}/{host['slug']}", "name": host["name"],
@@ -151,7 +153,7 @@ def save_step1(request, character, action):
         extra = []
         for k in chosen:
             other = reg.traits[k].get("reroll_on")
-            if other:
+            if other and not other.startswith("@"):
                 host = p.get("host_trait", "")
                 if host.startswith(f"{other}/") and host in reg.traits:
                     extra.append(host)
@@ -176,7 +178,12 @@ def save_step1(request, character, action):
                 keep = character.random_traits[: slots.get("random_choose", 0)] if slots.get("random_choose") else []
                 character.random_traits = keep
             services.roll_random_traits(character)
-    for key in list(character.fixed_traits) + list(character.random_traits):
+    race_now = reg.races.get(character.race)
+    if p.get("optional_present") and race_now and not race_now.get("fixed_choose"):
+        optional = {f"{character.race}/{t['slug']}" for t in race_now["fixed"] if t.get("optional")}
+        character.fixed_traits = [k for k in character.fixed_traits if k not in optional] + \
+            [k for k in p.getlist("optional_traits") if k in optional]
+    for key in active_trait_keys(character.to_state(include_items=False))[0]:
         value = p.get(f"choice:{key}")
         if value:
             character.trait_choices = dict(character.trait_choices, **{key: value})
@@ -203,9 +210,10 @@ def save_step1(request, character, action):
         for key in character.fixed_traits + character.random_traits:
             t = reg.traits.get(key)
             if t and t.get("choice") and not character.trait_choices.get(key):
-                errors.append(_("Choose an attribute for {trait}.", trait=t["name"]))
+                errors.append(_("Make the choice for {trait}.", trait=t["name"]))
     services.revalidate(character)
     character.save()
+    services.grant_race_items(character)
     return errors
 
 
@@ -252,7 +260,9 @@ def specialty_options(character, level=None, extra_state=None):
     owned = {s for s, _ in state.specialties}
     groups = {}
     for spec in offer(reg.specialties.values(), keep=owned):
-        skill = spec["skill"] or "General (Sciences)"
+        if spec.get("racial") and spec["racial"] not in race_family(state.race) and spec["slug"] not in owned:
+            continue  # other races' racial specialties
+        skill = spec["skill"] or ("General (Sciences)" if spec["general"] else spec.get("group") or "Racial")
         if spec["skill"] and sheet.skills[spec["skill"]].total < 1 and spec["slug"] not in owned:
             continue
         if spec["general"] and not any(sheet.skills[s].total for s in tables.SCIENCE_SKILLS):
@@ -406,6 +416,8 @@ def ctx_step9(request, character):
     by_type = {}
     for s in offer(reg.stories.values(), keep=character.stories):
         if s["type"] == "nationality" or s["type"] in services.NARRATOR_STORY_TYPES:
+            continue
+        if not story_allowed(s, character.race) and s["slug"] not in character.stories:
             continue
         by_type.setdefault(s["type"], []).append(s)
     return {"by_type": by_type, "selected": set(character.stories), "count": settings.background_story_count}

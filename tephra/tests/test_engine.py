@@ -25,10 +25,11 @@ def human(**kw):
 
 def test_data_counts():
     assert len([s for s in REG.specialties.values() if not s.get("extension")]) == 462  # core book
-    assert len(REG.races) == 6
+    assert len([r for r in REG.races.values() if not r.get("extension")]) == 6
     per_skill = {}
     for s in REG.specialties.values():
-        per_skill[s["skill"]] = per_skill.get(s["skill"], 0) + 1
+        if not s.get("extension"):
+            per_skill[s["skill"]] = per_skill.get(s["skill"], 0) + 1
     assert per_skill["Brawl"] == 21 and per_skill["Showmanship"] == 23 and per_skill[None] == 2
 
 

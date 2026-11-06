@@ -7,7 +7,7 @@ from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import tables
-from .requirements import augments_used, check_augment, check_specialty
+from .requirements import augments_used, check_augment, check_specialty, story_allowed
 
 STEPS = [
     (1, "Race & Nationality"),
@@ -52,7 +52,7 @@ def resolve_random_trait(race_slug, roll_value, rng=None):
     """Map a d12 roll to a trait key, following redirects (Farishtaa Prominent Host → elf table)."""
     reg = get_registry()
     trait = reg.random_table(race_slug)[roll_value]
-    if trait.get("reroll_on"):
+    if trait.get("reroll_on") and not trait["reroll_on"].startswith("@"):  # "@choice" (Pure Strain) is optional
         other = trait["reroll_on"]
         roll2 = rng_or_default(rng).randint(1, 12)
         return [f"{race_slug}/{trait['slug']}", f"{other}/{reg.random_table(other)[roll2]['slug']}"], roll2
@@ -84,11 +84,32 @@ def random_fixed_choice(race_slug, rng=None):
     return [f"{race_slug}/{t['slug']}" for t in rng.sample(race["fixed"], n)]
 
 
+ALCHEMY_LISTS = ["acid", "gas", "medicine", "poison"]
+
+
+def choice_options(kind):
+    """[(value, English label)] for a trait choice: "attribute", "skill:<Attribute>", "race" (core races),
+    "alchemy_list"."""
+    if kind == "attribute":
+        return [(a, a) for a in tables.ATTRIBUTES]
+    if kind.startswith("skill:"):
+        return [(s, s) for s in tables.SKILLS.get(kind[6:], [])]
+    if kind == "race":
+        return [(r["slug"], r["name"]) for r in get_registry().races.values() if not r.get("extension")]
+    if kind == "alchemy_list":
+        return [(x, x) for x in ALCHEMY_LISTS]
+    return []
+
+
 def random_trait_choices(trait_keys, rng=None):
     rng = rng_or_default(rng)
     reg = get_registry()
-    return {k: rng.choice(tables.ATTRIBUTES) for k in trait_keys
-            if k in reg.traits and reg.traits[k].get("choice") == "attribute"}
+    out = {}
+    for k in trait_keys:
+        options = choice_options(reg.traits[k].get("choice") or "") if k in reg.traits else []
+        if options:
+            out[k] = rng.choice(options)[0]
+    return out
 
 
 def nationality_stories(nationality_slug, race_slug=None):
@@ -96,16 +117,8 @@ def nationality_stories(nationality_slug, race_slug=None):
     nat = reg.nationalities.get(nationality_slug)
     if not nat or not nat["story_group"]:
         return []
-    race_name = reg.races[race_slug]["name_en"] if race_slug else None
-    out = []
-    for s in offer(reg.stories.values()):
-        if s["type"] != "nationality" or s["group"] != nat["story_group"]:
-            continue
-        req = s.get("requires", "")
-        if req and req in [r["name_en"] for r in reg.races.values()] and req != race_name:
-            continue
-        out.append(s)
-    return out
+    return [s for s in offer(reg.stories.values())
+            if s["type"] == "nationality" and s["group"] == nat["story_group"] and story_allowed(s, race_slug)]
 
 
 def random_race_and_nationality(rng=None):
@@ -155,7 +168,8 @@ def random_specialties(state, compute, count, rng=None):
     level = state.level
     for _i in range(count):
         sheet = compute(state)
-        options = [s for s in offer(reg.specialties.values()) if check_specialty(s, state, sheet)[0]]
+        options = [s for s in offer(reg.specialties.values())
+                   if not s.get("racial") and check_specialty(s, state, sheet)[0]]
         if not options:
             break
         # Prefer the character's own skills; weight by skill points so primaries show up more.

@@ -16123,5 +16123,171 @@
   "effect": "You have honed your energy such that you are capable of performing unbind actions at an increased rate. You may perform two unbinding attempts per downtime on each bound object instead of just one.",
   "modifiers": [],
   "extension": "mementos"
+ },
+ {
+  "slug": "manticore-venom-carrier",
+  "name": "Venom Carrier",
+  "attribute": "Brute",
+  "skill": null,
+  "general": false,
+  "racial": "manticore",
+  "group": "Manticore Racial Specialties",
+  "bonuses": {
+   "acc": 1,
+   "stk": 2,
+   "hp": 8
+  },
+  "cost": "1 AP reflexively",
+  "requires_text": "Manticore; narrator approval",
+  "requires": [
+   {
+    "type": "race",
+    "any": [
+     "manticore"
+    ]
+   }
+  ],
+  "tags": "[REFLEX] [SCALE:Level]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "After an unarmed tail attack that deals damage, reflexively inject venom (resisted with Brute like a normal poison/venom). Marque by level: I (1–3), II (4–7), III (8–11), IV (12). One dose; it refills at the end of your next turn after use.\nMq I: 4 unsoakable damage, −1 Accuracy and Evade for 1 turn.\nMq II: 8 unsoakable, −1 Acc/Eva for 2 turns.\nMq III: 12 unsoakable, −2 Acc/Eva for 2 turns.\nMq IV: 16 unsoakable, −2 Acc/Eva for 3 turns.\nNote: the venom can be harvested like a normal animal venom (rules in Pets and Predators).",
+  "modifiers": [
+   {
+    "stat": "note",
+    "op": "add",
+    "when": "note",
+    "scope": "character",
+    "label": "venom unsoakable damage (marque by level)",
+    "formula": "4 * (1 + min(1, level // 4) + min(1, level // 8) + level // 12)"
+   }
+  ],
+  "extension": "races-of-tephra"
+ },
+ {
+  "slug": "manticore-airborne-threat",
+  "name": "Airborne Threat",
+  "attribute": "Brute",
+  "skill": null,
+  "general": false,
+  "racial": "manticore",
+  "group": "Manticore Racial Specialties",
+  "bonuses": {
+   "eva": 1,
+   "pri": 3,
+   "hp": 7
+  },
+  "cost": "Passive",
+  "requires_text": "Manticore; narrator approval",
+  "requires": [
+   {
+    "type": "race",
+    "any": [
+     "manticore"
+    ]
+   }
+  ],
+  "tags": "[STAT:Fly 20]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Bat wings: fly speed 20 ft, reduced by armor swim/climb penalties. Unless bound, unconscious or in inclement weather, you take no falling damage. Two new called-shot locations (wings, resisted with Dexterity). Normal: that wing is unusable for 1 turn (you fall if flying; 2 AP reflexive to land safely). Wound: sprained wing, unusable until your next breather, and no safe falling. Fatal: the wing is permanently removed and you bleed out (death in 3 turns unless you spend at least 3 AP bandaging).",
+  "modifiers": [
+   {
+    "stat": "fly",
+    "op": "base",
+    "when": "always",
+    "scope": "character",
+    "value": 20
+   }
+  ],
+  "extension": "races-of-tephra"
+ },
+ {
+  "slug": "manticore-massive-stature",
+  "name": "Massive Stature",
+  "attribute": "Brute",
+  "skill": null,
+  "general": false,
+  "racial": "manticore",
+  "group": "Manticore Racial Specialties",
+  "bonuses": {
+   "stk": 2,
+   "wnd": 1,
+   "hp": 11
+  },
+  "cost": "Passive",
+  "requires_text": "Manticore; narrator approval",
+  "requires": [
+   {
+    "type": "race",
+    "any": [
+     "manticore"
+    ]
+   }
+  ],
+  "tags": "[PASSIVE]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Just over 9 ft tall: melee reach +5 ft, +1 DC on unarmed, melee and thrown attacks.",
+  "modifiers": [
+   {
+    "stat": "reach",
+    "op": "add",
+    "when": "always",
+    "scope": "melee",
+    "value": 5
+   },
+   {
+    "stat": "dc",
+    "op": "add",
+    "when": "always",
+    "scope": "melee",
+    "value": 1,
+    "label": "unarmed/melee/thrown"
+   }
+  ],
+  "extension": "races-of-tephra"
+ },
+ {
+  "slug": "manticore-self-replenishing",
+  "name": "Self-Replenishing",
+  "attribute": "Brute",
+  "skill": null,
+  "general": false,
+  "racial": "manticore",
+  "group": "Manticore Racial Specialties",
+  "bonuses": {
+   "pri": 2,
+   "wnd": 2,
+   "hp": 10
+  },
+  "cost": "Passive",
+  "requires_text": "Manticore; narrator approval",
+  "requires": [
+   {
+    "type": "race",
+    "any": [
+     "manticore"
+    ]
+   }
+  ],
+  "tags": "[PASSIVE]",
+  "stance": false,
+  "repeatable": false,
+  "crafts": [],
+  "effect": "Regain wounds per day equal to your max AP by level (instead of 1). Recover from wound effects at twice the normal rate. You can fully regrow one lost called-shot location over a few weeks.",
+  "modifiers": [
+   {
+    "stat": "note",
+    "op": "add",
+    "when": "note",
+    "scope": "character",
+    "label": "wounds regained per day",
+    "formula": "ap_total"
+   }
+  ],
+  "extension": "races-of-tephra"
  }
 ]

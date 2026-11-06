@@ -103,6 +103,7 @@ def sheet_context(request, character):
                             "hits": locations[n]} for n, label in fx.location_labels().items()],
         "effect_options": effect_options(),
         "spec_warnings": character_warnings(sheet.state),
+        "fatal_is_death": sheet.race.get("fatal_is_death") and any(e.kind == "fatal" for e in effects),
         "missing_options": services.missing_options(character),
         "has_wings": services.has_wings(character),
         "battle_theme": battle_theme_state(character),

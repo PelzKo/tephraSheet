@@ -310,5 +310,11 @@
  "None available yet.": "Noch keine verfügbar.",
  "{n} selected": "{n} ausgewählt",
  "This augment only has mQ I and mQ III.": "Dieses Augment gibt es nur in mQ I und mQ III.",
- "mQ I/III": "mQ I/III"
+ "mQ I/III": "mQ I/III",
+ "(narrator approval)": "(Zustimmung des Erzählers)",
+ "Dig {n}": "Graben {n}",
+ "Exotic race: ask your narrator first. People notice and remember you.": "Exotisches Volk: frag zuerst deinen Erzähler. Man bemerkt dich und erinnert sich an dich.",
+ "Optional racial traits": "Optionale Volksmerkmale",
+ "exotic": "exotisch",
+ "{name}: choose": "{name}: wähle"
 }

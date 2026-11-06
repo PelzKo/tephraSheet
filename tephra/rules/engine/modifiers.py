@@ -99,6 +99,10 @@ def mod_amount(mod, variables, marque=None):
 
 
 def is_active(mod, source, state):
+    if mod.get("armor") is not None:  # only while wearing armor of these sizes ("none" = unarmored)
+        armor = state.armor
+        if (armor.size if armor is not None else "none") not in mod["armor"]:
+            return False
     when = mod.get("when", "always")
     if when == "always":
         return True

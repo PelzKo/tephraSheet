@@ -5,6 +5,7 @@ Parsed data is combined with the curated structured modifiers in
 or the curated data; the generated JSON is committed.
 """
 
+import importlib
 import json
 import re
 from pathlib import Path
@@ -58,6 +59,22 @@ class Command(BaseCommand):
         "stories": {"group": "", "requires": "", "tags": "", "modifiers": []},
     }
 
+    def ext_race(self, race, ext):
+        """Race defaults and trait modifiers (from the extension's curated module, keyed "<race>/<trait>")."""
+        for k, v in {"unarmed_dc": 2, "fixed_choose": None, "random_count": 1, "random_choose": 0, "fixed": [],
+                     "random": []}.items():
+            race.setdefault(k, v)
+        race.update(getattr(ext, "RACES", {}).get(race["slug"], {}))
+        for kind in ("fixed", "random"):
+            for t in race[kind]:
+                t.setdefault("slug", slugify(t["name"]))
+                t.setdefault("modifiers", [])
+                t.setdefault("tags", "")
+                key = f"{race['slug']}/{t['slug']}"
+                t.update(getattr(ext, "RACIAL_TRAITS", {}).get(key, {}))
+                if key in getattr(ext, "ONGOING_TRAITS", {}):
+                    t["ongoing"] = dict(ext.ONGOING_TRAITS[key])
+
     def merge_extensions(self, out):
         """Add every rules/data/ext/<key>/<kind>.json, marked with "extension": <key> and filled with the core
         defaults. curated.py still wins. Nationalities go before "other", which stays last in the wizard."""
@@ -65,6 +82,11 @@ class Command(BaseCommand):
         curated_by_kind = {"specialties": curated.SPECIALTIES, "augments": curated.AUGMENTS,
                            "stories": curated.STORIES}
         for folder in sorted(p for p in EXT_DIR.glob("*") if p.is_dir()):
+            # rules/curated_ext/<key>.py: modifiers for the extension's race traits (dict names as in curated.py)
+            try:
+                ext_curated = importlib.import_module(f"rules.curated_ext.{folder.name.replace('-', '_')}")
+            except ModuleNotFoundError:
+                ext_curated = None
             for kind, entries in out.items():
                 path = folder / f"{kind}.json"
                 if not path.exists():
@@ -84,6 +106,8 @@ class Command(BaseCommand):
                         m = e["marques"]
                         e["marques"] = [m[0], m[0], m[2], m[2]]
                     e.update(curated_by_kind.get(kind, {}).get(e.get("slug"), {}))
+                    if kind == "races":
+                        self.ext_race(e, ext_curated)
                     new.append(e)
                 at = next((i for i, e in enumerate(entries) if e.get("slug") == "other"), len(entries))
                 entries[at:at] = new

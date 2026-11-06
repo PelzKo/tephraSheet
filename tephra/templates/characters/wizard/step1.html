@@ -8,8 +8,9 @@
     <label class="choice">
       <input type="radio" name="race" value="{{ r.slug }}" {% if r.slug == character.race %}checked{% endif %}
              onchange="this.form.querySelector('[name=action][value=race]').click()">
-      <h3 style="display:inline">{{ r.name }}</h3>
-      <div class="small muted">{% t "Speed {speed} · Swim {swim} · Climb {climb}" speed=r.speed swim=r.swim climb=r.climb %}</div>
+      <h3 style="display:inline">{% if r.group %}{{ r.group|t }}: {% endif %}{{ r.name }}</h3> {% ext_badge r %}
+      {% if r.exotic %}<span class="tag" title="{% t "Exotic race: ask your narrator first. People notice and remember you." %}">{% t "exotic" %}</span>{% endif %}
+      <div class="small muted">{% t "Speed {speed} · Swim {swim} · Climb {climb}" speed=r.speed swim=r.swim climb=r.climb %}{% if r.dig %} · {% t "Dig {n}" n=r.dig %}{% endif %}</div>
       <ul class="trait-list">{% for t in r.fixed %}<li><b>{{ t.name }}</b>: {{ t.text|truncatechars:90 }}</li>{% endfor %}</ul>
     </label>
   {% endfor %}
@@ -17,6 +18,13 @@
 <button name="action" value="race" hidden formnovalidate>{% t "Choose race" %}</button>
 
 {% if race %}
+  {% if optional_traits %}
+    <input type="hidden" name="optional_present" value="1">
+    <h3 style="margin-top:16px">{% t "Optional racial traits" %} <span class="muted small">{% t "(narrator approval)" %}</span></h3>
+    <div class="choice-grid">{% for t in optional_traits %}
+      <label class="choice"><input type="checkbox" name="optional_traits" value="{{ t.key }}" {% if t.key in character.fixed_traits %}checked{% endif %}>
+        <b>{{ t.name }}</b><div class="small">{{ t.text }}</div></label>{% endfor %}</div>
+  {% endif %}
   {% if slots.fixed_choose %}
     <h3 style="margin-top:16px">{% t "Racial traits – choose {n}" n=slots.fixed_choose %}</h3>
     <div class="choice-grid">
@@ -64,8 +72,8 @@
   </details>
 
   {% for t in choice_traits %}
-    <div class="field" style="margin-top:10px"><label>{% t "{name}: choose an attribute" name=t.name %}</label>
-      <select name="choice:{{ t.key }}"><option value="">–</option>{% for a in attributes %}<option value="{{ a }}" {% if character.trait_choices|get:t.key == a %}selected{% endif %}>{{ a|t }}</option>{% endfor %}</select></div>
+    <div class="field" style="margin-top:10px"><label>{% if t.choice == "attribute" %}{% t "{name}: choose an attribute" name=t.name %}{% else %}{% t "{name}: choose" name=t.name %}{% endif %}</label>
+      <select name="choice:{{ t.key }}"><option value="">–</option>{% for v, l in t.options %}<option value="{{ v }}" {% if character.trait_choices|get:t.key == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select></div>
   {% endfor %}
 {% endif %}
 

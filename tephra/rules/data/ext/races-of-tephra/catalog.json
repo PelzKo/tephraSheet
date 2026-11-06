@@ -1,0 +1,4 @@
+[
+ {"name": "Abyssal pressure suit", "kind": "armor", "size": "heavy", "soak": 3, "eva_penalty": 0, "spd_penalty": 0, "climb_swim_penalty": 0, "hands": 0, "price_dukes": 0, "description": "The abyssal's biomechanical body (mantle): natural soak 3, no armor penalties. It can't be swapped for other armor, but it can be augmented."},
+ {"name": "Daemon wing-fins", "kind": "deflection", "size": "medium", "hands": 0, "deflect_bonus": 4, "deflect_ranged": true, "deflect_melee": true, "price_dukes": 0, "description": "Built-in Bulwark: the daemon's wing-fins deflect like a shield without using a hand."}
+]

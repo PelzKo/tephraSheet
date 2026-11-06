@@ -19,8 +19,23 @@ def one_handing(state):
 WINGS_TRAIT = "ayodin/wings-as-arms"
 
 
+def extra_hand(state):
+    """The extra one-handed slot (slot "wings") from Wings as Arms or a trait with ``extra_hands``
+    (Crazak Additional Arm, Ezka Faux Hands …): its label, or None."""
+    if WINGS_TRAIT in state.random_traits or WINGS_TRAIT in state.fixed_traits:
+        return _("Wings")
+    from .stats import active_trait_keys
+
+    reg = get_registry()
+    for key in active_trait_keys(state)[0]:
+        extra = reg.traits[key].get("extra_hands")
+        if extra:
+            return _(extra["label"])
+    return None
+
+
 def has_wings(state):
-    return WINGS_TRAIT in state.random_traits or WINGS_TRAIT in state.fixed_traits
+    return extra_hand(state) is not None
 
 
 def hand_layout(state):
@@ -42,7 +57,7 @@ def hand_layout(state):
         blocked_by, reason = defl, _("holding {name}", name=defl.name)
     if blocked_by is not None:
         right = None
-    return {"left": left, "right": right, "wings": wings, "has_wings": has_wings(state),
+    return {"left": left, "right": right, "wings": wings, "has_wings": has_wings(state), "extra_label": extra_hand(state),
             "blocked_by": blocked_by, "blocked_reason": reason, "one_handing": oh,
             "two_handed": blocked_by if blocked_by is left and left is not None else None,
             "free": (left is None) + (right is None and blocked_by is None)}

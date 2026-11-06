@@ -103,5 +103,7 @@
  "✓ added": "✓ hinzugefügt",
  "Perfect Awakening T{tier}": "Perfektes Erwachen S{tier}",
  "Release {name}": "{name} freisetzen",
- "{name} has evaporated.": "{name} ist verdunstet."
+ "{name} has evaporated.": "{name} ist verdunstet.",
+ "Make the choice for {trait}.": "Triff die Auswahl für {trait}.",
+ "Your body is your armor: {race} can't wear other armor.": "Dein Körper ist deine Rüstung: {race} kann keine andere Rüstung tragen."
 }

@@ -13,6 +13,8 @@ import contextvars
 # key -> English name; a key is added together with its content.
 EXTENSIONS = {
     "suulrai": "Suulrai",
+    "races-of-tephra": "Races of Tephra",
+    "simulacrons": "Simulacrons",
     "armsmith-extra": "The Armsmith Extra",
     "explosives": "Explosives!",
     "aether": "Aether",

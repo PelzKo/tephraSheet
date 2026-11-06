@@ -198,5 +198,17 @@
  "Improper release": "Unsachgemäße Freisetzung",
  "Living liquid": "Lebende Flüssigkeit",
  "Living Liquids": "Lebende Flüssigkeiten",
- "living-liquid": "lebende Flüssigkeit"
+ "living-liquid": "lebende Flüssigkeit",
+ "Dig": "Graben",
+ "{n} ft per AP": "{n} ft pro AP",
+ "{trait}: {race}": "{trait}: {race}",
+ "Being provoked": "Provoziert",
+ "Additional arm": "Zusätzlicher Arm",
+ "Shetoras": "Shetoras",
+ "Races of Tephra": "Völker von Tephra",
+ "Simulacrons": "Simulacrons",
+ "acid": "Säure",
+ "gas": "Gas",
+ "medicine": "Medizin",
+ "poison": "Gift"
 }

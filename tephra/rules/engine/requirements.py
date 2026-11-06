@@ -26,6 +26,28 @@ def owned_names(state):
     return {reg.specialties[s]["name_en"] for s, _l in state.specialties if s in reg.specialties}
 
 
+def any_craft_augments(state):
+    from .stats import active_trait_keys
+
+    reg = get_registry()
+    return any(reg.traits[k].get("augments_any_crafting_skill") for k in active_trait_keys(state)[0])
+
+
+def story_allowed(story, race_slug):
+    """A story's race requirement: "Gnome" needs that race (hybrids count as both parents, variants as their
+    base race); "!Manticore" excludes it. Requirements that aren't race names are ignored here."""
+    req = (story.get("requires") or "").strip()
+    if not req:
+        return True
+    reg = get_registry()
+    race_names = {r["name_en"] for r in reg.races.values()}
+    name = req.lstrip("!")
+    if name not in race_names:
+        return True
+    mine = {reg.races[s]["name_en"] for s in race_family(race_slug) if s in reg.races} if race_slug else set()
+    return (name in mine) != req.startswith("!")
+
+
 def race_family(race_slug):
     """The race plus the races it counts as for requirements (hybrid parents, base race of a variant)."""
     race = get_registry().races.get(race_slug) or {}
@@ -63,7 +85,9 @@ def check_specialty(spec, state, sheet, ignore_owned=False):
     owned = [s for s, _l in state.specialties]
     if spec["slug"] in owned and not spec.get("repeatable") and not ignore_owned:
         reasons.append(_("already learned"))
-    if spec["general"]:
+    if spec.get("racial"):
+        pass  # racial specialties (narrator approval) need no skill points, only the race
+    elif spec["general"]:
         if not any(sheet.skills[s].total >= 1 for s in tables.SCIENCE_SKILLS):
             reasons.append(_("needs at least 1 point in a Science skill"))
     elif sheet.skills[spec["skill"]].total < 1:
@@ -263,6 +287,8 @@ def check_augment(aug, state, sheet):
     if aug["slug"] in known:
         reasons.append(_("already known"))
     lists = augment_lists(state)
+    if any_craft_augments(state) and sheet.skills[aug["skill"]].total >= 1:
+        lists = lists | set(aug["lists"])  # Simulacron Mechanical Knowledge: any crafting skill's augments
     if not lists.intersection(aug["lists"]):
         reasons.append(_("needs a crafting specialty for {lists}", lists=" / ".join(_(x) for x in aug["lists"])))
     if augment_points(aug, sheet, lists & set(aug["lists"]) or None) < 1:

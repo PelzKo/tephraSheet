@@ -128,5 +128,7 @@
 "The Stray Cat's Eye": {"name": "Das Auge der streunenden Katze", "description": "Grünes Tigerauge in einer alten haudischen Brosche; es ruiniert Diebe (gebunden an jeden, der es stiehlt)."},
 "Ruinous Rifle": {"name": "Verderbliches Gewehr", "description": "Antikes evanglessianisches Militärgewehr, in den Loveless-Kriegen von einem Gnomenpriester verflucht."},
 "Albrecht's Pipe": {"name": "Albrechts Pfeife", "description": "Pfeife, die der Aldamiir-Geck Albrecht von einer verfeindeten Familie geschenkt bekam."},
-"Living liquid (vial)": {"name": "Lebende Flüssigkeit (Phiole)", "description": "Luftdichte Phiole mit einer lebenden Flüssigkeit. Freisetzen 2 AP (Zerschlagen: 1 AP, unsachgemäß). Füge ihre Augments im Objektersteller hinzu."}
+"Living liquid (vial)": {"name": "Lebende Flüssigkeit (Phiole)", "description": "Luftdichte Phiole mit einer lebenden Flüssigkeit. Freisetzen 2 AP (Zerschlagen: 1 AP, unsachgemäß). Füge ihre Augments im Objektersteller hinzu."},
+"Abyssal pressure suit": {"name": "Abyssal-Druckanzug", "description": "Der biomechanische Körper (Mantel) des Abyssal: natürlicher Schutz 3, keine Rüstungsabzüge. Er kann nicht gegen andere Rüstung getauscht, aber mit Augments versehen werden."},
+"Daemon wing-fins": {"name": "Dämonen-Flügelflossen", "description": "Eingebautes Bollwerk: Die Flügelflossen des Dämons parieren wie ein Schild, ohne eine Hand zu belegen."}
 }

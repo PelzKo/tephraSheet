@@ -6,6 +6,7 @@ from django.db import transaction
 
 from catalog.models import ItemTemplate
 from rules.engine import creation, leveling, tables
+from rules.engine import weapons as weapon_rules
 from rules.engine.requirements import check_augment, check_specialty, granted_augments
 from rules.engine.stats import compute
 from rules.lang import gettext as _
@@ -35,9 +36,36 @@ def set_race(character, race_slug):
     reg = get_registry()
     race = reg.races[race_slug]
     if not race.get("fixed_choose"):
-        character.fixed_traits = [f"{race_slug}/{t['slug']}" for t in race["fixed"]]
+        character.fixed_traits = [f"{race_slug}/{t['slug']}" for t in race["fixed"] if not t.get("optional")]
     # Drop nationality stories restricted to another race.
     character.stories = [s for s in character.stories if reg.stories.get(s, {}).get("type") not in NATIONALITY_TYPES]
+
+
+def race_item_names():
+    """Names of all items that only come with a body (never bought, never randomly equipped)."""
+    reg = get_registry()
+    return {i["name"] for r in reg.races.values() for i in r.get("starting_items", [])} | \
+           {i["name"] for t in reg.traits.values() for i in t.get("starting_items", [])}
+
+
+def grant_race_items(character):
+    """Items that come with the body ("starting_items" of the race or a racial trait: abyssal pressure suit,
+    daemon wing-fins). Granted items the race/traits no longer give are removed; existing ones stay."""
+    if not character.pk or character.race not in get_registry().races:
+        return
+    reg = get_registry()
+    sources = [reg.races[character.race]] + [reg.traits[k] for k in character.fixed_traits + character.random_traits
+                                              if k in reg.traits]
+    wanted = [i for s in sources for i in s.get("starting_items", [])]
+    all_granted = race_item_names()
+    have = set(character.items.filter(name__in=all_granted).values_list("name", flat=True))
+    character.items.filter(name__in=all_granted - {i["name"] for i in wanted}, template__isnull=False).delete()
+    for spec in wanted:
+        if spec["name"] in have:
+            continue
+        template = ItemTemplate.objects.filter(name=spec["name"]).first()
+        if template:
+            InventoryItem.from_template(character, template, slot=spec.get("slot", "carried")).save()
 
 
 def roll_random_traits(character, rng=None, keep_chosen=True):
@@ -215,7 +243,8 @@ def one_handing(character):
 
 
 def has_wings(character):
-    return WINGS_TRAIT in character.random_traits or WINGS_TRAIT in character.fixed_traits
+    """Wings as Arms or another trait with an extra hand slot."""
+    return weapon_rules.has_wings(character.to_state(include_items=False))
 
 
 def item_hands(character, item):
@@ -230,6 +259,10 @@ def equip(character, item, slot):
     - The wings slot (Wings as Arms) only takes one-handed items.
     Returns {"moved": [names put away], "notice": pop-up text or ""}; raises EquipError."""
     moved = []
+    suit = get_registry().races.get(character.race, {}).get("armor_item")
+    if slot == "armor" and suit and item.name != suit:
+        raise EquipError(_("Your body is your armor: {race} can't wear other armor.",
+                           race=get_registry().races[character.race]["name"]))
     others = InventoryItem.objects.filter(character=character)
     if item.pk:
         others = others.exclude(pk=item.pk)
@@ -312,6 +345,7 @@ def equip_template(character, template, slot):
 def random_weapons_and_armor(character, rng):
     sheet = character.compute()
     skills = {s: v.total for s, v in sheet.skills.items()}
+    body = race_item_names()
     weapons = list(ItemTemplate.offered().filter(kind__in=["melee", "firearm", "bow", "crossbow"]))
     # Pick weapons that match the character's strongest combat skills.
     prefs = {"Marksmanship": ["firearm", "bow", "crossbow"], "Swashbuckling": ["melee"], "Overpower": ["melee"],
@@ -320,16 +354,18 @@ def random_weapons_and_armor(character, rng):
     kinds = prefs[ranked[0]] if skills.get(ranked[0]) else ["melee", "firearm"]
     first = rng.choice([w for w in weapons if w.kind in kinds] or weapons)
     second = rng.choice([w for w in weapons if w.kind != first.kind] or weapons)
-    InventoryItem.objects.filter(character=character, slot__in=["weapon1", "weapon2", "armor", "deflection"]).delete()
+    InventoryItem.objects.filter(character=character, slot__in=["weapon1", "weapon2", "armor", "deflection"]) \
+        .exclude(name__in=body).delete()
     equip_template(character, first, "weapon1")
     left = equip_template(character, second, "carried")
     if item_hands(character, left) == 1 and item_hands(character, character.items.get(slot="weapon1")) == 1:
         equip(character, left, "weapon2")
-    armors = list(ItemTemplate.offered().filter(kind="armor", size__in=["minimal", "light", "medium"]))
-    if armors:
+    armors = list(ItemTemplate.offered().filter(kind="armor", size__in=["minimal", "light", "medium"])
+                  .exclude(name__in=body))
+    if armors and not get_registry().races[character.race].get("armor_item"):
         equip_template(character, rng.choice(armors), "armor")
-    if rng.random() < 0.4 and first.kind == "melee":
-        defl = list(ItemTemplate.offered().filter(kind="deflection"))
+    if rng.random() < 0.4 and first.kind == "melee" and not character.items.filter(slot="deflection").exists():
+        defl = list(ItemTemplate.offered().filter(kind="deflection").exclude(name__in=body))
         if defl:
             equip_template(character, rng.choice(defl), "deflection")
 
@@ -376,6 +412,7 @@ def random_step(character, step, rng=None):
     if step == 1:
         random_step1(character, rng)
         character.save()
+        grant_race_items(character)
     elif step == 2:
         character.skills = creation.random_skills(rng)
         revalidate(character)

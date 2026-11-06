@@ -33,6 +33,9 @@
     <div class="warn-banner" role="alert"><b>{% t "Choice needed:" %}</b>
       {% for sp in missing_options %}<button type="button" class="linkish" x-on:click="showSpec('{{ sp.slug }}')">{{ sp.name }} – {{ sp.options.label }}</button>{% endfor %}</div>
   {% endif %}
+  {% if fatal_is_death %}
+    <div class="warn-banner" role="alert"><b>{% t "Suit breach:" %}</b> {% t "any fatal wound breaches the suit – the character dies." %}</div>
+  {% endif %}
   {% if spec_warnings %}
     <div class="warn-banner" role="alert"><b>{% t "Requirements not met:" %}</b>
       {% for name, warnings in spec_warnings %}<span>{{ name }} – {{ warnings|join:"; " }}</span>{% if not forloop.last %} · {% endif %}{% endfor %}</div>
@@ -159,7 +162,8 @@
     {% if sheet.hands.has_wings %}
       {# Wings as Arms: an extra weapon box; shown next to Weapon (Left) or above page 1 (order: -1). #}
       <section class="page-wings" aria-label="{% t "Weapon held with the wings" %}">
-        {% include "characters/partials/weapon_block.html" with x=9 y=10 w=282 label="Weapon (Wings)" w_block=sheet.hands.wings_block held=sheet.hands.wings blocked=None two_handed=None unarmed=None %}
+        {% t "Weapon ({name})" name=sheet.hands.extra_label as extra_title %}
+        {% include "characters/partials/weapon_block.html" with x=9 y=10 w=282 label=extra_title w_block=sheet.hands.wings_block held=sheet.hands.wings blocked=None two_handed=None unarmed=None %}
       </section>
     {% endif %}
   </div>

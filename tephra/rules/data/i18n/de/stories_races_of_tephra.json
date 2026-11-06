@@ -1,0 +1,5 @@
+{
+"fury-walker": {"name": "Zornwandler", "group": "Mantikor-Clans", "requires": "Mantikor", "text": "Mitglied der Zornwandler: jederzeit Hilfe und Unterstützung in Bloodwood Village. Du freundest dich leicht mit jedem Mantikor an, außer mit Purpurklauen. In Bloodwood Village bekommst du regelmäßig ein paar Dosen Medizin mit dem Augment Wuthemmer (Marque nach Ermessen des Erzählers)."},
+"crimson-claw": {"name": "Purpurklaue", "group": "Mantikor-Clans", "requires": "Mantikor", "text": "Der Weg der Blutgier und gewaltsamen Unabhängigkeit. Du darfst jeden Widerstand gegen Provokation freiwillig misslingen lassen, und würfelst du doch, erhältst du −3 auf solche Widerstände. Den Medizin-Augments Wuthemmer und Langsames Herz musst du widerstehen, als wären sie Gifte."},
+"walks-with-the-furious": {"name": "Wandelt mit den Zornigen", "group": "Mantikor-Clans", "requires": "!Mantikor", "text": "Kein Mantikor, aber vertrauenswürdig und in Bloodwood Village willkommen. Zornwandler und viele andere vernünftige Mantikore, die keine Purpurklauen sind, erkennen dich als Freund ihres Volkes an."}
+}

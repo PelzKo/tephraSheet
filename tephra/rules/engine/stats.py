@@ -11,7 +11,7 @@ from .modifiers import Source, Value, is_active, mod_amount
 from .state import CharacterState
 
 CHARACTER_STATS = ["acc", "eva", "stk", "def", "pri", "spd", "swim", "climb", "fly",
-                   "aug", "diy", "wnd", "hp", "soak", "ap", "essence_slots"]
+                   "aug", "diy", "wnd", "hp", "soak", "ap", "essence_slots", "dig"]
 MISC_LABEL = "Manual Misc Change"
 
 
@@ -75,8 +75,9 @@ def active_trait_keys(state):
         fixed = [f"{race['slug']}/{t['slug']}" for t in race["fixed"] if not race.get("fixed_choose")]
     elif race.get("fixed_choose"):
         fixed = [k for k in state.fixed_traits if k in reg.traits]
-    else:
-        fixed = [f"{race['slug']}/{t['slug']}" for t in race["fixed"]]
+    else:  # "optional" fixed traits (gnome-sized simulacron) only when picked
+        fixed = [f"{race['slug']}/{t['slug']}" for t in race["fixed"]
+                 if not t.get("optional") or f"{race['slug']}/{t['slug']}" in state.fixed_traits]
     keys = fixed + [k for k in state.random_traits if k in reg.traits]
     negated = set()
     for k in keys:
@@ -91,8 +92,14 @@ def collect_sources(state):
     for key in trait_keys:
         t = reg.traits[key]
         mods = t.get("modifiers", [])
-        if key == "farishtaa/botched-surgery" and "farishtaa/botched-surgery:weak-souls" in negated:
-            mods = [m for m in mods if not m["stat"].startswith("roll:Spirit")]
+        if any("{choice}" in m["stat"] for m in mods):  # e.g. "skill:{choice}" (Daemon Bestial Strength)
+            choice = state.trait_choices.get(key)
+            mods = [dict(m, stat=m["stat"].replace("{choice}", choice or "")) for m in mods
+                    if choice or "{choice}" not in m["stat"]]
+        # Partial negation "<trait key>:<stat prefix>": drop only those modifiers (Fruit of the Fallen, Gorilla Build)
+        prefixes = tuple(n[len(key) + 1:] for n in negated if n.startswith(key + ":"))
+        if prefixes:
+            mods = [m for m in mods if not m["stat"].startswith(prefixes)]
         sources.append(Source(f"trait:{key}", _("Racial trait: {name}", name=t["name"]), mods, kind="trait"))
     for slug, _level in state.specialties:
         s = reg.specialties.get(slug)
@@ -210,6 +217,13 @@ def compute(state: CharacterState) -> Sheet:
     stats["spd"].set_base(_("Base ({name})", name=body["name"]), body["speed"])
     stats["swim"].set_base(_("Base ({name})", name=body["name"]), body["swim"])
     stats["climb"].set_base(_("Base ({name})", name=body["name"]), body["climb"])
+    stats["dig"].set_base(_("Base ({name})", name=body["name"]), body.get("dig", 0))
+    for key in active_trait_keys(state)[0]:  # Fluoform Pure Strain: the chosen race's speeds
+        other = reg.races.get(state.trait_choices.get(key, "")) if reg.traits[key].get("speeds_from_choice") else None
+        if other:
+            label = _("{trait}: {race}", trait=reg.traits[key]["name"], race=other["name"])
+            for stat, field_ in (("spd", "speed"), ("swim", "swim"), ("climb", "climb")):
+                stats[stat].set_base(label, other[field_])
     stats["wnd"].set_base(_("Base wounds"), tables.BASE_WOUNDS)
     stats["ap"].set_base(_("Level {level}", level=state.level), tables.action_points(state.level))
     stats["essence_slots"].set_base(_("Base"), 0)
@@ -299,6 +313,8 @@ def compute(state: CharacterState) -> Sheet:
             stats[s].override = (_("{label} (stance): set to 0", label=src.label), 0)
 
     sheet.stats = stats
+    if stats["dig"].total:  # no circle on the sheet for it: listed with the notes
+        sheet.notes.append((_("Dig"), _("{n} ft per AP", n=stats["dig"].total)))
     variables.update({f"{s}_total": v.total for s, v in stats.items()})
     sheet.variables = variables
 
@@ -336,7 +352,10 @@ def compute(state: CharacterState) -> Sheet:
     for src in sources:
         toggle_mods = [m for m in src.modifiers if m.get("when") == "toggle" and m.get("toggle_key", src.key) == src.key]
         mods = toggle_mods + linked.get(src.key, [])
-        entry = {"key": src.key, "label": src.label, "detail": ", ".join(describe_mod(m, variables) for m in mods),
+        label = src.label
+        if src.key.startswith("trait:") and reg.traits[src.key[6:]].get("toggle_label"):
+            label = _(reg.traits[src.key[6:]]["toggle_label"])  # Progressive Madness → "Being provoked"
+        entry = {"key": src.key, "label": label, "detail": ", ".join(describe_mod(m, variables) for m in mods),
                  "active": src.key in state.toggles}
         data = ongoing_data(src.key)
         if data:

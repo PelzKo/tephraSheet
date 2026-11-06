@@ -396,5 +396,8 @@
  "Smash": "Zerschlagen",
  "Smash the vial: 1 AP, improper release (10 HP, 10 evaporation per turn)": "Phiole zerschlagen: 1 AP, unsachgemäße Freisetzung (10 TP, 10 Verdunstung pro Runde)",
  "Unsoakable damage each time its AP refresh": "Schaden ohne Schutz, jedes Mal wenn sich ihre AP erneuern",
- "improper release": "unsachgemäß freigesetzt"
+ "improper release": "unsachgemäß freigesetzt",
+ "Suit breach:": "Anzugbruch:",
+ "Weapon ({name})": "Waffe ({name})",
+ "any fatal wound breaches the suit – the character dies.": "jede tödliche Wunde durchbricht den Anzug – der Charakter stirbt."
 }

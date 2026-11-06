@@ -223,7 +223,7 @@ RACIAL_TRAITS = {
     "elf/depleted-essence": {"modifiers": [mod("essence_slots", -1)]},
     "elf/danger-sense": {"modifiers": [mod("pri", 3)]},
     "elf/flight-without-wings": {"modifiers": [mod("spd", 10)]},
-    "elf/fruit-of-the-fallen": {"negates": ["elf/weak-souls", "farishtaa/botched-surgery:weak-souls"],
+    "elf/fruit-of-the-fallen": {"negates": ["elf/weak-souls", "farishtaa/botched-surgery:roll:Spirit"],
                                 "modifiers": [mod("roll:Spirit", 3, when="note", label="when using Heroics")]},
     "elf/noble-creature": {"modifiers": [mod("stk", formula="level", when="toggle", label="attack +1 AP")]},
     "farishtaa/born-to-be-airborne": {"modifiers": [mod("skill:Ace", 2)]},
