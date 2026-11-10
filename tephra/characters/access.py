@@ -9,7 +9,13 @@ from django.shortcuts import get_object_or_404, redirect
 from .models import Character, NarratorSettings
 
 SESSION_KEY = "unlocked_characters"
+STAMP_KEY = "unlocked_stamps"
 ADMIN_KEY = "admin_mode_characters"
+
+
+def _stamp(character):
+    # tail of the password hash: a password change invalidates every earlier unlock
+    return character.password[-16:]
 
 
 def is_gm(request):
@@ -24,6 +30,7 @@ def unlock(request, character):
     ids = unlocked_ids(request)
     ids.add(character.pk)
     request.session[SESSION_KEY] = sorted(ids)
+    request.session[STAMP_KEY] = {**request.session.get(STAMP_KEY, {}), str(character.pk): _stamp(character)}
 
 
 def lock(request, character):
@@ -32,7 +39,8 @@ def lock(request, character):
 
 
 def can_access(request, character):
-    return is_gm(request) or character.pk in unlocked_ids(request)
+    return is_gm(request) or (character.pk in unlocked_ids(request)
+                              and request.session.get(STAMP_KEY, {}).get(str(character.pk)) == _stamp(character))
 
 
 def admin_mode_allowed(request, character):

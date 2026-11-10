@@ -9,6 +9,7 @@ from rules.engine import creation, leveling, tables
 from rules.engine import weapons as weapon_rules
 from rules.engine.requirements import check_augment, check_specialty, granted_augments
 from rules.engine.stats import compute
+from rules.extensions import is_offered
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
@@ -164,6 +165,9 @@ def add_specialties_sequentially(character, slugs, level=1, options=None):
         if not spec:
             errors.append(_("Unknown specialty {slug}.", slug=slug))
             continue
+        if not is_offered(spec):
+            errors.append(_("{name}: not offered by the narrator.", name=spec["name"]))
+            continue
         if options is not None and spec.get("options") and \
                 (options.get(slug) or "") not in spec["options"]["options"]:
             errors.append(f"{spec['name']}: {spec['options']['label']}")
@@ -195,10 +199,14 @@ def set_augments(character, slugs):
     state.augments = []
     sheet = compute(state)
     capacity = sheet.stats["aug"].total
+    owned = set(character.augments)
     kept = []
     for slug in slugs:
         aug = reg.augments.get(slug)
         if not aug:
+            continue
+        if slug not in owned and not is_offered(aug):
+            errors.append(_("{name}: not offered by the narrator.", name=aug["name"]))
             continue
         state.augments = kept
         ok, reasons = check_augment(aug, state, sheet)

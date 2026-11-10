@@ -1,6 +1,7 @@
 """The character sheet and in-play actions (HP, wounds, XP, money, stances, toggles, effects)."""
 
 from django.contrib import messages
+from django.db import transaction
 from django.shortcuts import redirect, render
 from django.views.decorators.http import require_POST
 
@@ -15,7 +16,7 @@ from rules.registry import get_registry
 from ..templatetags.sheet_tags import effect_html
 
 from .. import access, journal, services
-from ..models import EffectEntry, InventoryItem
+from ..models import Character, EffectEntry, InventoryItem
 
 TAB_NAMES = ("page1", "page2", "inventory", "story", "pets")
 BARREL_LINES = 14
@@ -166,7 +167,11 @@ def _int(value, default=0):
 
 @require_POST
 @access.character_view
+@transaction.atomic
 def play_action(request, character, action):
+    # Row lock: overlapping HTMX actions on one character run one after another instead of
+    # overwriting each other's changes (the full save below writes every field).
+    character = Character.objects.select_for_update().get(pk=character.pk)
     action = action.replace("-", "_")  # URL slugs use hyphens (effect-add → effect_add)
     sheet = character.compute()
     p = request.POST

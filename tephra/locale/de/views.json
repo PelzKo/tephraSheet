@@ -65,6 +65,7 @@
  "Too many messages – please wait a few minutes.": "Zu viele Nachrichten – bitte warte ein paar Minuten.",
  "Too many wrong attempts. Wait a few minutes.": "Zu viele Fehlversuche. Warte ein paar Minuten.",
  "Unknown specialty {slug}.": "Unbekannte Spezialisierung {slug}.",
+ "{name}: not offered by the narrator.": "{name}: vom Erzähler nicht freigegeben.",
  "Unlock a character first.": "Schalte zuerst einen Charakter frei.",
  "Upkeep: {paid} AP for {items}.": "Aufrechterhaltung: {paid} AP für {items}.",
  "Wounds damage: roll a called-shot location for the wounded effect.": "Wunden-Schaden: Würfle eine Zone für den gezielten Angriff, um den Wundeffekt zu bestimmen.",

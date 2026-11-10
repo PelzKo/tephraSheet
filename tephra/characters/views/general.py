@@ -84,6 +84,7 @@ def password_view(request, character):
     if request.method == "POST" and form.is_valid():
         character.set_password(form.cleaned_data["password"])
         character.save(update_fields=["password"])
+        access.unlock(request, character)  # keep this session, revoke all others
         messages.success(request, _("Password changed."))
         return redirect("sheet", pk=character.pk)
     return render(request, "characters/password.html", {"character": character, "form": form})

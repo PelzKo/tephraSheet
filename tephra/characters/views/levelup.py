@@ -135,8 +135,10 @@ def augments_view(request, character):
             reg = get_registry()
             if old in character.augments and slug in reg.augments and old in reg.augments and \
                     reg.augments[old]["skill"] == reg.augments[slug]["skill"]:
-                augs = [a for a in character.augments if a != old]
-                errors = services.set_augments(character, augs + [slug])
+                before = list(character.augments)
+                errors = services.set_augments(character, [a for a in before if a != old] + [slug])
+                if errors:
+                    character.augments = before  # a rejected swap keeps the old augment
                 for e in errors:
                     messages.error(request, e)
             else:

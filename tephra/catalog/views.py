@@ -197,9 +197,13 @@ def import_view(request):
             qty = values.pop("quantity", 1)
             starting = values.pop("is_starting_gear", False)
             if target == "catalog" or not character:
+                existing = ItemTemplate.objects.filter(name=values["name"], kind=values["kind"]).first()
+                if existing and existing.source == "book" and not gm:
+                    continue  # only the narrator may change Playing Guide items (see item_edit)
                 obj, was_created = ItemTemplate.objects.update_or_create(
                     name=values["name"], kind=values["kind"],
-                    defaults={**values, "source": "custom", "is_starting_gear": starting and gm})
+                    defaults={**values, "source": existing.source if existing else "custom",
+                              "is_starting_gear": starting and gm})
                 created += was_created
             else:
                 InventoryItem.objects.create(character=character, quantity=max(1, qty), slot="carried", **values)

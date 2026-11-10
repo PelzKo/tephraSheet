@@ -470,3 +470,54 @@ def test_bloodlust_needs_berserker_and_growth_intensity():
     gnome.toggles = {"trait:gnome/growth-intensity"}
     big = compute(gnome)
     assert big.stats["spd"].total == 30 and any(t["key"].startswith("elf/") for t in big.traits)
+
+
+def test_import_cannot_overwrite_book_item(client, catalog):
+    book = ItemTemplate.objects.filter(source="book").exclude(size="heavy").first()
+    text = f"name,kind,size\n{book.name},{book.kind},heavy\n"
+    client.post(reverse("catalog_import"), {"action": "preview", "text": text})
+    client.post(reverse("catalog_import"), {"action": "commit", "target": "catalog"})
+    book.refresh_from_db()
+    assert book.source == "book" and book.size != "heavy"
+
+
+def test_password_change_revokes_other_sessions(client, db):
+    from django.test import Client
+    c = Character.objects.create(name="X", status="active")
+    c.set_password("old")
+    c.save()
+    other = Client()
+    other.post(reverse("unlock", args=[c.pk]), {"password": "old"})
+    assert other.get(reverse("sheet", args=[c.pk])).status_code == 200
+    client.post(reverse("unlock", args=[c.pk]), {"password": "old"})
+    client.post(reverse("password", args=[c.pk]), {"password": "newpw", "confirm": "newpw"})
+    assert client.get(reverse("sheet", args=[c.pk])).status_code == 200
+    assert other.get(reverse("sheet", args=[c.pk])).status_code == 302
+
+
+def test_rejected_augment_swap_keeps_old_augment(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(1))
+    c.augments = ["alchemy-acid-gas-medicine-poison-contact"]
+    c.save()
+    client.post(reverse("augments", args=[c.pk]), {
+        "action": "swap", "old": "alchemy-acid-gas-medicine-poison-contact", "slug": "alchemy-acid-thick-rust"})
+    c.refresh_from_db()
+    assert c.augments == ["alchemy-acid-gas-medicine-poison-contact"]
+
+
+def test_disabled_extension_not_learnable(db):
+    from rules.extensions import set_offer
+    set_offer()
+    c = Character.objects.create()
+    errors = services.add_specialties_sequentially(c, ["gadgetry-resonator-designer"])
+    assert errors and "not offered" in errors[0] and not c.specialties
+
+
+def test_chosen_fixed_traits_own_race_only_and_unique(client_char):
+    client, c = client_char
+    client.post(reverse("wizard_step", args=[c.pk, 1]), {"action": "race", "race": "human"})
+    client.post(reverse("wizard_step", args=[c.pk, 1]), {
+        "action": "save", "fixed_traits": ["elf/tough", "elf/tough", "human/peerless", "human/peerless"]})
+    c.refresh_from_db()
+    assert c.fixed_traits == ["human/peerless"]

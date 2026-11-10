@@ -139,7 +139,8 @@ def save_step1(request, character, action):
     settings = NarratorSettings.get()
     slots = creation.trait_slots(character.race) if character.race else {}
     if slots.get("fixed_choose"):
-        picked = [k for k in p.getlist("fixed_traits") if k in reg.traits]
+        allowed = [f"{character.race}/{t['slug']}" for t in reg.races[character.race]["fixed"] if not t.get("always")]
+        picked = [k for k in allowed if k in p.getlist("fixed_traits")]  # own race only, each once
         if len(picked) > slots["fixed_choose"]:
             errors.append(_("Choose only {count} racial traits.", count=slots["fixed_choose"]))
             picked = picked[: slots["fixed_choose"]]
@@ -474,6 +475,7 @@ def save_step10(request, character, action):
             errors.append(_("Password needs at least 3 characters."))
         else:
             character.set_password(pw)
+            access.unlock(request, character)
     if action == "finish":
         if not character.name:
             errors.append(_("Give your character a name."))
