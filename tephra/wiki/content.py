@@ -1,6 +1,7 @@
 """Read-only wiki content: app docs (docs/<lang>/*.md), the rules reference (chapters 1–5 of the
 reference markdown, German in reference_rules_de.md) and safe markdown rendering."""
 
+import html
 import re
 from functools import cache
 from pathlib import Path
@@ -61,7 +62,9 @@ class _CrossLinks(InlineProcessor):
 def _image(m):
     """Only same-origin images load; external ones become links so readers' IPs don't leak."""
     alt, src = m.groups()
-    if src.startswith("/") and not src.startswith("//"):
+    # Browsers decode entities, drop tabs/newlines and read a backslash as "/" (so "/\host" is external).
+    path = re.sub(r"[\t\n\r]", "", html.unescape(src))
+    if path.startswith("/") and not path.startswith("//") and "\\" not in path:
         return m.group(0)
     return f'<a href="{src}">{alt or src}</a>'
 

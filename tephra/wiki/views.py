@@ -3,9 +3,11 @@ from urllib.parse import urlencode
 
 from django.contrib import messages
 from django.core.cache import cache
+from django.db import transaction
 from django.http import Http404
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views.decorators.http import require_POST
+from django.utils import timezone
 from django.utils.text import slugify
 
 from rules.extensions import is_offered, offer
@@ -119,7 +121,9 @@ def edit(request, slug=None):
         title = request.POST.get("title", "").strip()[:160]
         body = request.POST.get("body", "")
         name = request.POST.get("name", "").strip()[:80]
-        ctx = {"page": p, "title": title, "body": body, "name": name, "updated": _stamp(p), "max_body": MAX_BODY}
+        # The submitted stamp survives validation errors, so a later save still detects a conflict.
+        ctx = {"page": p, "title": title, "body": body, "name": name, "updated": request.POST.get("updated", ""),
+               "max_body": MAX_BODY}
         if request.POST.get("delete") and p and request.user.is_staff:
             p.delete()
             messages.success(request, _("Page deleted."))
@@ -133,22 +137,32 @@ def edit(request, slug=None):
         if not request.user.is_staff and cache.get(_edit_key(request), 0) >= EDIT_LIMIT:
             messages.error(request, _("Too many edits from your connection. Please try again later."))
             return render(request, "wiki/edit.html", ctx, status=429)
-        if p and request.POST.get("updated") != _stamp(p):
-            # Someone saved since this form was opened: show both texts; saving again overwrites.
+
+        def conflict():
+            # Someone saved since this form was opened: show both texts; saving again (new stamp) overwrites.
             msg = _("Someone changed this page while you were editing. Compare both texts, then save again to overwrite.")
             messages.error(request, msg)
-            return render(request, "wiki/edit.html", dict(ctx, conflict=p), status=409)
+            return render(request, "wiki/edit.html", dict(ctx, conflict=p, updated=_stamp(p)), status=409)
+
+        if p and request.POST.get("updated") != _stamp(p):
+            return conflict()
+        language = request.POST.get("language", "") if request.POST.get("language", "") in ("", get_language()) else ""
         if p is None:
             base = slugify(title)[:100] or "page"
             new_slug, n = base, 2
             while WikiPage.objects.filter(slug=new_slug).exists():
                 new_slug, n = f"{base}-{n}", n + 1
-            p = WikiPage(slug=new_slug)
+            p = WikiPage.objects.create(slug=new_slug, title=title, body=body, updated_by=name, language=language)
         else:
-            _keep_revision(p)
-        p.title, p.body, p.updated_by = title, body, name
-        p.language = request.POST.get("language", "") if request.POST.get("language", "") in ("", get_language()) else ""
-        p.save()
+            with transaction.atomic():
+                # Conditional update: a save that slipped in after the check above makes this match nothing.
+                saved = WikiPage.objects.filter(pk=p.pk, updated=p.updated).update(
+                    title=title, body=body, updated_by=name, language=language, updated=timezone.now())
+                if saved:
+                    _keep_revision(p)  # p still holds the replaced version
+            if not saved:
+                p.refresh_from_db()
+                return conflict()
         if not request.user.is_staff:  # set, not incr: the file cache's incr drops the timeout
             cache.set(_edit_key(request), cache.get(_edit_key(request), 0) + 1, EDIT_WINDOW)
         messages.success(request, _("Page saved."))

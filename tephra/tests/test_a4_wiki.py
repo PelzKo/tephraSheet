@@ -103,3 +103,37 @@ def test_german_translations_complete():
         call_command("i18n_check", lang="de")
     except SystemExit as e:
         pytest.fail(f"i18n_check --lang de reported gaps (exit {e.code})")
+
+
+def test_render_backslash_image_is_link():
+    for src in ("/\\evil.example/x", "/&#92;evil.example/x", "/%5Cok.png"):
+        html = render(f"![x]({src})")
+        assert ("<img" in html) == (src == "/%5Cok.png"), (src, html)
+
+
+@pytest.mark.django_db
+def test_validation_error_keeps_submitted_stamp(client):
+    p = _page(body="base")
+    stale = p.updated.isoformat()
+    _edit(client, p, "other user")
+    p.refresh_from_db()
+    resp = _edit(client, p, "mine", title="", updated=stale)
+    assert resp.status_code == 200 and f'value="{stale}"'.encode() in resp.content
+    assert _edit(client, p, "mine", updated=stale).status_code == 409
+
+
+@pytest.mark.django_db
+def test_concurrent_save_after_check_conflicts(client, monkeypatch):
+    p = _page(body="base")
+    real = views._stamp
+
+    def racing_stamp(page):  # another save lands right after this request passed the stamp check
+        stamp = real(page)
+        WikiPage.objects.filter(pk=page.pk).update(body="their save", updated=page.updated.replace(year=2099))
+        monkeypatch.setattr(views, "_stamp", real)
+        return stamp
+
+    monkeypatch.setattr(views, "_stamp", racing_stamp)
+    assert _edit(client, p, "my save").status_code == 409
+    p.refresh_from_db()
+    assert p.body == "their save" and not p.revisions.exists()
