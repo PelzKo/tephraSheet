@@ -29,7 +29,7 @@
         <button class="btn small" name="sign" value="-1" title="{% t "Repair: wounds first, then HP" %}">{% t "Repair" %}</button></form>
     </div>
   {% endif %}
-  <details class="small"><summary>{% t "Core and limbs" %}</summary>
+  <details class="small" data-keep="auto-{{ a.pk }}"><summary>{% t "Core and limbs" %}</summary>
     <div><b>{{ s.type.core_label|t }}</b>: {% for x in a.core_augments %}{% with aug=x.0|augment %}{{ aug.name }} mQ {{ x.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% empty %}–{% endfor %}</div>
     {% for l in a.limbs %}<div><b>{{ l.name }}</b> ({{ l.material|t }}{% if l.beta %}, beta{% endif %}): {% for x in l.augments %}{% with aug=x.0|augment %}{{ aug.name }} mQ {{ x.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% empty %}–{% endfor %}</div>{% endfor %}
     {% if a.equipment %}<div>{{ a.equipment }}</div>{% endif %}{% if a.notes %}<p>{{ a.notes|linebreaksbr }}</p>{% endif %}

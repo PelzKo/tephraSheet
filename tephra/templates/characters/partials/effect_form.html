@@ -1,5 +1,5 @@
 <form class="stack effect-form" hx-post="{% url 'play' character.pk 'effect-add' %}" hx-target="#sheet-body" hx-swap="outerHTML"
-      x-data="effectForm()" x-on:submit="if (!ready()) $event.preventDefault()">
+      x-data="effectForm()" x-on:submit="if (!ready()) $event.preventDefault()" x-on:preset-called.window="preset($event.detail)">
   <div class="row">
     <select name="kind" x-model="kind" aria-label="{% t "Effect type" %}">
       <option value="status">{% t "Status effect" %}</option>
@@ -24,7 +24,7 @@
     </template>
     <template x-if="kind === 'called'">
       <div class="row grow">
-        <select name="location" x-model="location" aria-label="{% t "Location" %}">
+        <select name="location" x-model="location" x-on:change="located()" aria-label="{% t "Location" %}">
           <option value="">{% t "Location…" %}</option>
           <template x-for="l in opts.locations" :key="l.n"><option :value="l.n" x-text="l.label"></option></template>
         </select>

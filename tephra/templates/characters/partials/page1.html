@@ -140,11 +140,11 @@
 
   <!-- health -->
   <div class="gear big play-btn" style="--cx:618;--cy:592;--r:56" x-on:click="openPanel('health')">
-    <div class="face"><span class="val">{{ hp }}</span><span class="lbl">{% t "Hit Points" %}</span></div></div>
+    <div class="face"><span class="val track">{{ hp }}</span><span class="lbl">{% t "Hit Points" %}</span></div></div>
   <div class="gear" style="--cx:712;--cy:556;--r:31"><div class="face"><span class="val">{% stat sheet.stats.hp "Max HP"|t %}</span><span class="lbl">{% t "Max HP" %}</span></div></div>
   <div class="gear max-wounds" style="--cx:765;--cy:606;--r:40"><div class="face"><span class="val">{% stat sheet.stats.wnd "Max wounds"|t %}</span><span class="lbl">{% t "Max Wounds" %}</span></div></div>
   <div class="gear big play-btn" style="--cx:868;--cy:592;--r:56" x-on:click="openPanel('health')">
-    <div class="face"><span class="val" title="{% t "Wounds taken (0 = unhurt). At {max} every hit is a fatal effect." max=sheet.max_wounds %}">{{ wounds }}</span><span class="lbl">{% t "Wounds" %}</span></div></div>
+    <div class="face"><span class="val track" title="{% t "Wounds taken (0 = unhurt). At {max} every hit is a fatal effect." max=sheet.max_wounds %}">{{ wounds }}</span><span class="lbl">{% t "Wounds" %}</span></div></div>
   <div class="frame box effects" style="--x:540;--y:648;--w:386;--h:215">
     {% for title, list in effect_boxes %}
     <section><h4>{{ title|t }}:</h4>
@@ -199,7 +199,7 @@
   <!-- experience clock -->
   <svg class="deco xp-arc" viewBox="0 0 952 1232" style="pointer-events:none">
     {% xp_pos xp_hand 88 1178 as h %}
-    <line x1="475" y1="1178" x2="{{ h.x }}" y2="{{ h.y }}" stroke="#141210" stroke-width="6" stroke-linecap="round"/>
+    <line class="track" x1="475" y1="1178" x2="{{ h.x }}" y2="{{ h.y }}" stroke="#141210" stroke-width="6" stroke-linecap="round"/>
     <path d="M{{ h.x }},{{ h.y }} l0,0" stroke="#141210" stroke-width="14" stroke-linecap="round"/>
     <circle cx="475" cy="1178" r="9" fill="#141210"/>
     {% for i in xp_range %}{% xp_pos i 140 1178 as p %}

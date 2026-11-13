@@ -1,0 +1,7 @@
+{# Edit-conflict guard: the hash of the text this editor started from; on conflict, the other saved version. #}
+<input type="hidden" name="base" value="{{ base }}" data-draft-base>
+{% if conflict.field == field %}
+  <div class="warn-banner" role="alert" data-conflict><b>{% t "Changed elsewhere in the meantime." %}</b>
+    {% t "Your text is in the editor below; this is the version saved meanwhile. Merge what you need and save again." %}
+    <pre class="conflict-text">{{ conflict.theirs }}</pre></div>
+{% endif %}

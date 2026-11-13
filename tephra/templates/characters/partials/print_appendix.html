@@ -1,0 +1,27 @@
+{% load sheet_tags %}{# Print only: everything the two sheet pages cut off or the tabs hide (sheet.css @media print). #}
+<section class="print-appendix">
+  <h1>{{ character.name }} – {% t "Appendix" %}</h1>
+  <h2>{% t "Inventory" %}</h2>
+  <table class="print-list">
+    {% for i in items %}<tr><td>{% if i.quantity > 1 %}{{ i.quantity }}× {% endif %}<b>{{ i.name|item_name }}</b></td><td>{{ i.get_slot_display|t }}</td>
+      <td>{% for a in i.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %} · {% endfor %}{{ i|item_desc }}{% if i.notes %} · {{ i.notes }}{% endif %}</td></tr>
+    {% empty %}<tr><td>{% t "Nothing carried yet." %}</td></tr>{% endfor %}
+  </table>
+  <h2>{% t "Augments" %}</h2>
+  <ul>{% for a in augments %}<li><b>{{ a.name }}</b> ({{ a.lists|join:"/" }}): {{ a.text|default:a.notes }}</li>{% endfor %}
+    {% for a in granted_augments %}<li><b>{{ a.name }}</b> ({{ a.granted_by }}): {{ a.text|default:a.notes }}</li>{% endfor %}
+    {% for a in character.body_augments %}{% with aug=a.0|augment %}<li><b>{{ aug.name }} mQ {{ a.1|roman }}</b> ({% t "installed" %})</li>{% endwith %}{% endfor %}</ul>
+  <h2>{% t "Notes" %}</h2>
+  {% if character.personality %}<p><b>{% t "Personality:" %}</b> {{ character.personality }}</p>{% endif %}
+  <ul>{% for label, text in sheet.notes %}<li>{{ label|cut:"Specialty: " }}: {{ text }}</li>{% endfor %}</ul>
+  {% if character.notes %}<p>{{ character.notes|linebreaksbr }}</p>{% endif %}
+  {% if effects %}<h2>{% t "Effects" %}</h2>
+    <ul>{% for e in effects %}<li><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text }}{% if e.rule_text %} – {{ e.rule_text }}{% endif %}</li>{% endfor %}</ul>{% endif %}
+  <h2>{% t "Specialties" %}</h2>
+  {% for sp in spec_data.values %}<div class="print-spec"><h3>{{ sp.name }} <small>{{ sp.skill|t }} · {{ sp.cost }}</small></h3>{{ sp.effect|effect_html }}</div>{% endfor %}
+  {% if pets or automatons %}<h2>{% t "Companions" %}</h2>
+    {% for c in pets %}{% include "characters/partials/pet_card.html" with p=c.p s=c.s hp_left=c.hp_left editor=True %}{% endfor %}
+    {% for c in automatons %}{% include "characters/partials/automaton_card.html" with a=c.a s=c.s hp_left=c.hp_left wounds_left=c.wounds_left editor=True %}{% endfor %}{% endif %}
+  {% if journal %}<h2>{% t "Story journal" %}</h2>
+    {% for s in journal %}{% if s.title %}<h3>{{ s.title }}</h3>{% endif %}{{ s.html|safe }}{% endfor %}{% endif %}
+</section>

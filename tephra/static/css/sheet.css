@@ -299,3 +299,29 @@ button.val { cursor: help; }
 :lang(de) .spec-title { font-size: calc(24 * var(--u)); }
 :lang(de) .spec-table th.col span { font-size: calc(11 * var(--u)); }
 :lang(de) .frame h3, :lang(de) .barrel h3 { font-size: calc(16 * var(--u)); }
+
+/* ---------- a5: play-bar details, error bar, popovers, print appendix, pencil print ---------- */
+.info-tip { cursor: pointer; font-size: 15px; padding: 2px 4px; margin-left: -3px; color: var(--ink-soft); }
+.active-details { max-width: 1400px; margin: -6px auto 12px; padding: 6px 12px; background: rgba(246, 241, 230, .96); border-radius: 10px; font-size: 14px; }
+.active-details:not(:has(div)) { display: none; }
+.sheet-shell:has(.htmx-request) :is(.play-bar button, .chip, .btn) { opacity: .6; pointer-events: none; }
+.net-error, .net-offline { position: fixed; left: 50%; transform: translateX(-50%); bottom: 16px; z-index: 80; border: 0; border-radius: 10px;
+  padding: 10px 18px; font-weight: 700; box-shadow: 0 6px 20px rgba(0, 0, 0, .35); }
+.net-error { background: var(--bad); color: #fff; cursor: pointer; }
+.net-offline { background: var(--ink); color: var(--paper); bottom: 64px; }
+.qty-pop { position: fixed; min-width: 0; }
+.qty-line { cursor: pointer; }
+.conflict-text { white-space: pre-wrap; max-height: 200px; overflow: auto; background: #fffdf7; color: var(--ink); padding: 6px; font-size: 13px; text-align: left; }
+.print-appendix { display: none; }
+@media print {
+  .net-error, .net-offline, .active-details, .qty-pop { display: none !important; }
+  .print-appendix { display: block; break-before: page; font-size: 11pt; color: #000; }
+  .print-appendix h1 { font-size: 16pt; margin: 0 0 6pt; }
+  .print-appendix h2 { font-size: 13pt; margin: 10pt 0 4pt; border-bottom: 1px solid #000; }
+  .print-appendix h3 { font-size: 11pt; margin: 6pt 0 2pt; }
+  .print-appendix .print-list { width: 100%; border-collapse: collapse; }
+  .print-appendix .print-list td { border-bottom: 1px solid #999; padding: 2pt 4pt; vertical-align: top; }
+  .print-appendix .print-spec, .print-appendix .pet-card { break-inside: avoid; }
+  .pencil .track { visibility: hidden; }
+  .pencil .xp-dot.on circle { fill: #fff; }
+}

@@ -37,7 +37,7 @@
         <button class="btn small" hx-post="{% url 'play' character.pk 'pet-venom' %}" hx-vals='{"id": "{{ p.pk }}", "delta": "-99", "tab": "pets"}' hx-target="#sheet-body" hx-swap="outerHTML" title="{% t "Doses refill after a breather" %}">{% t "Refill" %}</button>{% endif %}
     </div>
   {% endif %}
-  <details class="small"><summary>{% t "Traits, movement and stories" %}</summary>
+  <details class="small" data-keep="pet-{{ p.pk }}"><summary>{% t "Traits, movement and stories" %}</summary>
     <ul>{% for m in s.movement %}<li><b>{{ m.name }}</b>: {{ m.text }}</li>{% endfor %}
       {% for t in s.traits %}<li><b>{{ t.name }}</b>{% if t.choice %} ({{ t.choice }}){% endif %}: {{ t.text }}</li>{% endfor %}
       {% for st in s.stories %}<li><b>{{ st.name }}</b>: {{ st.text }}</li>{% endfor %}</ul>

@@ -1,0 +1,12 @@
+{# Full text of the active stance and toggles, readable on tablets (chips only show it on hover). #}
+<div class="active-details">
+  {% for s in sheet.stances %}{% if s.active %}
+    <div><b>{{ s.label|t }}</b>{% if s.detail %}: {{ s.detail|t }}{% endif %}{% if s.slug in spec_data %} <button type="button" class="linkish" x-on:click="showSpec('{{ s.slug }}')">{% t "Rules text" %}</button>{% endif %}</div>
+  {% endif %}{% endfor %}
+  {% for t in sheet.ongoing %}{% if t.active %}{% with slug=t.key|slice:"5:" %}
+    <div><b>{{ t.label }}</b>: {{ t.cost }}{% if t.detail %} – {{ t.detail }}{% endif %}{% if slug in spec_data %} <button type="button" class="linkish" x-on:click="showSpec('{{ slug }}')">{% t "Rules text" %}</button>{% endif %}</div>
+  {% endwith %}{% endif %}{% endfor %}
+  {% for t in sheet.toggles %}{% if t.active %}{% with slug=t.key|slice:"5:" %}
+    <div><b>{{ t.label|cut:"Specialty: "|cut:"Racial trait: "|cut:"Story: " }}</b>{% if t.detail %}: {{ t.detail|t }}{% endif %}{% if slug in spec_data %} <button type="button" class="linkish" x-on:click="showSpec('{{ slug }}')">{% t "Rules text" %}</button>{% endif %}</div>
+  {% endwith %}{% endif %}{% endfor %}
+</div>
