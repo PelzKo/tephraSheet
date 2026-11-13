@@ -1,6 +1,7 @@
 from django.contrib import admin
 
-from .models import Character, CustomModifier, EffectEntry, Feedback, InventoryItem, LevelLog, NarratorSettings
+from .models import (Character, CustomModifier, EffectEntry, Feedback, InventoryItem, JournalRevision, LevelLog,
+                     NarratorSettings)
 
 
 class InventoryInline(admin.TabularInline):
@@ -26,6 +27,29 @@ class CharacterAdmin(admin.ModelAdmin):
     search_fields = ["name", "player_name"]
     exclude = ["password"]
     inlines = [InventoryInline, EffectInline, ModifierInline]
+
+
+@admin.register(JournalRevision)
+class JournalRevisionAdmin(admin.ModelAdmin):
+    """Earlier journal texts; "Restore" puts the chosen text back (the current text becomes a revision)."""
+
+    list_display = ["character", "created", "preview"]
+    list_filter = ["character"]
+    readonly_fields = ["character", "text", "created"]
+    actions = ["restore"]
+
+    @admin.display(description="Text")
+    def preview(self, obj):
+        return obj.text[:80]
+
+    @admin.action(description="Restore this journal text")
+    def restore(self, request, queryset):
+        for rev in queryset.order_by("character", "-created").distinct():
+            character = rev.character
+            JournalRevision.record(character, character.story_notes)
+            character.story_notes = rev.text
+            character.save(update_fields=["story_notes", "updated"])
+        self.message_user(request, f"Restored {queryset.count()} journal text(s).")
 
 
 admin.site.register(NarratorSettings)
