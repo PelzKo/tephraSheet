@@ -37,6 +37,7 @@ urlpatterns = [
     path("catalog/new/",catalog_views.item_create, name="item_create"),
     path("catalog/<int:pk>/edit/", catalog_views.item_edit, name="item_edit"),
     path("catalog/<int:pk>/add/", catalog_views.add_to_inventory, name="add_to_inventory"),
+    path("catalog/export.csv", catalog_views.catalog_export, name="catalog_export"),
     path("catalog/import/", catalog_views.import_view, name="catalog_import"),
     path("catalog/import/template.csv", catalog_views.import_template, name="catalog_import_template"),
     path("gm/login/", general.GMLoginView.as_view(), name="gm_login"),

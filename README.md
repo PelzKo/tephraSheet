@@ -34,7 +34,7 @@ The rule data (`tephra/rules/data/*.json`) is generated from `tephra/rules/data/
 
 ## Deployment
 
-Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, a database backup (`bin/backup.sh`), `migrate`, `seed_catalog` and `check --deploy`, then `exec`s gunicorn (3 workers, access log on stdout) on `0.0.0.0:8000`. If `collectstatic`, `migrate` or `seed_catalog` fails, the app does not boot (supervisor reports FATAL); a failed backup or deploy check is only logged.
+Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, a database backup (`bin/backup.sh`), `migrate`, `seed_catalog` (creates missing book items only; narrator edits stay) and `check --deploy`, then `exec`s gunicorn (3 workers, access log on stdout) on `0.0.0.0:8000`. If `collectstatic`, `migrate` or `seed_catalog` fails, the app does not boot (supervisor reports FATAL); a failed backup or deploy check is only logged.
 
 Security notes:
 - **Group passphrase:** set it on `/gm/` (Narrator settings). Every browser must enter it once (remembered for a year); the narrator never needs it. Without a passphrase the site is open to anyone who finds it. A new passphrase makes everyone enter it again.

@@ -10,10 +10,12 @@
       {% if character %}<a class="btn" href="{{ character.get_absolute_url }}?tab=inventory">{% t "Back to sheet" %}</a>{% endif %}
     </div>
   </div>
-  <form class="row" hx-get="{% url 'catalog' %}" hx-target="#results" hx-trigger="input changed delay:250ms from:#q, change from:#kind" hx-push-url="true">
+  <form class="row" hx-get="{% url 'catalog' %}" hx-target="#results" hx-trigger="input changed delay:250ms from:#q, change from:#kind, change from:#source, change from:#ext" hx-push-url="true">
     {% if character %}<input type="hidden" name="for" value="{{ character.pk }}">{% endif %}
     <input id="q" type="search" name="q" value="{{ q }}" placeholder="{% t "Search items…" %}" class="grow">
     <select id="kind" name="kind"><option value="">{% t "All kinds" %}</option>{% for v, l in kinds %}<option value="{{ v }}" {% if v == kind %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select>
+    <select id="source" name="source" aria-label="{% t "Source" %}"><option value="">{% t "All sources" %}</option>{% for v, l in sources %}<option value="{{ v }}" {% if v == source %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select>
+    {% if extensions %}<select id="ext" name="ext" aria-label="{% t "Extension" %}"><option value="">{% t "All extensions" %}</option><option value="core" {% if ext == "core" %}selected{% endif %}>{% t "Core rules" %}</option>{% for v, l in extensions %}<option value="{{ v }}" {% if v == ext %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select>{% endif %}
   </form>
   <div id="results">{% include "catalog/partials/results.html" %}</div>
 </div>

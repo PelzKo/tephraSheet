@@ -14,11 +14,13 @@
 {% if rows is not None %}
 <div class="paper">
   <h2>{% t "Preview – {ok} of {n} rows OK" ok=ok_count n=rows|length %}</h2>
+  <p class="small muted">{% t "Into the shared catalog:" %} {{ summary }}</p>
   <div class="table-scroll"><table class="data">
-    <tr><th>{% t "Line" %}</th><th>{% t "Name" %}</th><th>{% t "Kind" %}</th><th>{% t "Size" %}</th><th data-nosort>{% t "Details" %}</th><th>{% t "Problems" %}</th></tr>
+    <tr><th>{% t "Line" %}</th><th>{% t "Name" %}</th><th>{% t "Kind" %}</th><th>{% t "Size" %}</th><th data-nosort>{% t "Details" %}</th><th>{% t "Problems" %}</th><th>{% t "Catalog" %}</th></tr>
     {% for r in rows %}<tr class="{% if r.errors %}err{% endif %}"><td>{{ r.line }}</td><td>{{ r.values.name }}</td><td>{{ r.values.kind }}</td><td data-sort="{{ r.values.size|lower|size_rank }}">{{ r.values.size }}</td>
       <td class="small">{% for k, v in r.values.items %}{% if k != "name" and k != "kind" and k != "size" and v %}{{ k }}={{ v }} {% endif %}{% endfor %}</td>
-      <td class="small">{{ r.errors|join:"; " }}</td></tr>{% endfor %}
+      <td class="small">{{ r.errors|join:"; " }}</td>
+      <td class="small">{% if r.status == "new" %}{% t "new" %}{% elif r.status == "update" %}{% t "updates existing" %}{% elif r.status == "unchanged" %}{% t "unchanged" %}{% elif r.status == "skipped" %}{% t "skipped (Playing Guide item)" %}{% else %}{% t "error" %}{% endif %}</td></tr>{% endfor %}
   </table></div>
   {% if ok_count %}
   <form method="post" class="row" style="margin-top:10px">{% csrf_token %}
