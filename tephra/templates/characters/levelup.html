@@ -8,7 +8,7 @@
     <h1>{% t "{name}: level {old} → {new}" name=character.name old=character.level new=new_level %}</h1>
     <button class="btn dice" name="action" value="random" formnovalidate> {% t "Random level-up" %}</button>
   </div>
-  {% if catch_up %}<p class="muted">{% t "Building up to starting level {n}: level up one level at a time." n=character.target_level %}</p>{% endif %}
+  {% if catch_up %}<p class="muted"><b>{% t "Level {level} of {target}" level=new_level target=character.target_level %}</b> · {% t "Building up to starting level {n}: level up one level at a time." n=character.target_level %}</p>{% endif %}
   <ul class="small">
     <li>{% t "+2 points in any one skill, +1 point in two other skills" %}</li>
     <li>{% t "Learn one new specialty (its bonuses are added automatically)" %}</li>
@@ -30,11 +30,14 @@
   {% if retrofit %}
     <h2 style="margin-top:14px">{% t "Retrofit (optional)" %}</h2>
     <div class="form-grid"><div class="field"><label>{% t "Replace specialty" %}</label>
-      <select name="retrofit_old" id="retro-old"><option value="">{% t "– keep all –" %}</option>{% for s in owned %}<option value="{{ s.slug }}">{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div></div>
+      <select name="retrofit_old" id="retro-old"><option value="">{% t "– keep all –" %}</option>{% for s in owned %}<option value="{{ s.slug }}" {% if s.slug == plan.retrofit.0 %}selected{% endif %}>{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div></div>
   {% endif %}
   <div id="lvl-options" hx-post="{% url 'levelup_options' character.pk %}" hx-include="#lvlform"
        hx-trigger="load, change[target.matches('.lvl-skill, #retro-old')] from:#lvlform" hx-swap="innerHTML">
     <p class="muted">{% t "Choose your skill points to see the specialties you can learn." %}</p></div>
+  <h2 style="margin-top:14px">{% t "Before / after" %}</h2>
+  <div id="lvl-preview" hx-post="{% url 'levelup_preview' character.pk %}" hx-include="#lvlform"
+       hx-trigger="load, change from:#lvlform" hx-swap="innerHTML"></div>
   <div class="wizard-actions"><a class="btn" href="{% url 'sheet' character.pk %}">{% t "Cancel" %}</a>
     <button class="btn primary" type="submit" name="action" value="apply" :disabled="dup">{% t "Level up ✓" %}</button></div>
 </form>

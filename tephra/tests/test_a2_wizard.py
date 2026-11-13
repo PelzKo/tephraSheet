@@ -159,3 +159,138 @@ def test_admin_grants_are_marked_and_kept(client_char):
     client.post(reverse("augments", args=[c.pk]), {"action": "remove", "slug": aug["slug"]})
     c.refresh_from_db()
     assert f"aug:{aug['slug']}" not in c.narrator_granted
+
+
+# --------------------------------------------------------------------------- level-up: B10, B12, XP, retrofit, C5–C8
+def levelup_post(client, c, **extra):
+    data = {"action": "apply", "skill_two": "Brawl", "skill_one_a": "Luck", "skill_one_b": "Faith", **extra}
+    return client.post(reverse("levelup", args=[c.pk]), data, follow=True)
+
+
+def free_spec(c, **want):
+    reg = get_registry()
+    owned = {s for s, _ in c.specialties}
+    return next(s for s in reg.specialties.values() if s["slug"] not in owned and not s["requires"]
+                and s["skill"] in ("Brawl", "Luck", "Faith") and not s.get("options")
+                and all(s.get(k) == v for k, v in want.items()))
+
+
+def test_levelup_keeps_damage_and_xp_rules(client_char):
+    client, c = client_char
+    finished(client, c)
+    c.xp, c.wounds_taken = 14, 2
+    c.current_hp = c.compute().max_hp - 5
+    c.save()
+    max_before = c.compute().max_hp
+    levelup_post(client, c, specialty=free_spec(c)["slug"])
+    c.refresh_from_db()
+    assert c.level == 2 and c.xp == 2 and c.wounds_taken == 2
+    assert c.current_hp == c.compute().max_hp - 5 and c.compute().max_hp >= max_before
+    # Admin mode below 10 XP: the XP stay.
+    c.xp = 4
+    c.save()
+    levelup_post(client, c, specialty=free_spec(c)["slug"])
+    c.refresh_from_db()
+    assert c.level == 3 and c.xp == 4
+
+
+def test_catch_up_money_once_and_progress(client_char):
+    client, c = client_char
+    services.random_all(c, random.Random(5))
+    c.set_password("pw")
+    c.target_level = 2
+    services.finish_creation(c)
+    assert c.money_on_hand == services.starting_money(2)
+    client.post(reverse("unlock", args=[c.pk]), {"password": "pw"})
+    c.money_on_hand = 3  # spent in play
+    c.target_level = 3  # the narrator raises the target later
+    c.save()
+    page = client.get(reverse("levelup", args=[c.pk])).content.decode()
+    assert "Level 2 of 3" in page
+    levelup_post(client, c, specialty=free_spec(c)["slug"])
+    c.refresh_from_db()
+    assert c.level == 2 and c.money_on_hand == 3
+    resp = client.get(reverse("augments", args=[c.pk])).content.decode()
+    assert "Continue levelling" in resp
+
+
+def test_levelup_preview_table(client_char):
+    client, c = client_char
+    finished(client, c)
+    spec = free_spec(c)
+    resp = client.post(reverse("levelup_preview", args=[c.pk]), {"skill_two": "Brawl", "specialty": spec["slug"]})
+    assert resp.status_code == 200 and b"Brawl" in resp.content and b'class="changed"' in resp.content
+
+
+def test_plan_tidy_and_differs_note_and_planned_augment(client_char):
+    client, c = client_char
+    finished(client, c)
+    from characters.views.wizard import augment_options
+    spec = free_spec(c)
+    listed = [o["aug"]["slug"] for _g, items in augment_options(c)[1] for o in items if not o["known"]]
+    aug = listed[0]
+    c.plan = [{"level": 2, "skills": {}, "specialty": spec["slug"], "augments": [aug], "note": ""},
+              {"level": 3, "skills": {}, "specialty": "", "augments": [], "note": "later"}]
+    c.xp = 20
+    c.save()
+    other = next(
+        s for s in get_registry().specialties.values() if s["slug"] != spec["slug"] and not s["requires"]
+        and s["skill"] == "Brawl" and s["slug"] not in {x for x, _ in c.specialties} and not s.get("options"))
+    resp = levelup_post(client, c, specialty=other["slug"])
+    assert "Level 2 differs from your plan." in resp.content.decode()
+    c.refresh_from_db()
+    assert [e["level"] for e in c.plan] == [2, 3]
+    page = client.get(reverse("augments", args=[c.pk])).content.decode()
+    assert "planned for this level" in page
+    levelup_post(client, c, specialty=free_spec(c)["slug"])
+    c.refresh_from_db()
+    assert [e["level"] for e in c.plan] == [3]
+
+
+def test_retrofit_refuses_breaking_dependents_and_logs(db):
+    reg = get_registry()
+    dep = next(s for s in reg.specialties.values()
+               if any(cl["type"] == "specialty" and not cl.get("soft") for cl in s["requires"])
+               and len(next(cl for cl in s["requires"] if cl["type"] == "specialty")["any"]) == 1)
+    need_name = next(cl for cl in dep["requires"] if cl["type"] == "specialty")["any"][0]
+    need = reg.specialties_by_name[need_name]
+    c = Character.objects.create(race="human", status="active", level=3, skills={s: 10 for s in
+                                 [need["skill"], dep["skill"]] if s})
+    c.specialties = [[need["slug"], 1], [dep["slug"], 2]]
+    c.save()
+    assert dep["slug"] in services.legal_specialties(c)
+    target = next(s for s in reg.specialties.values() if s["attribute"] == need["attribute"]
+                  and not s["requires"] and s["slug"] != need["slug"] and s["skill"] == need["skill"])
+    fresh = next(s for s in reg.specialties.values() if not s["requires"] and s["skill"] == need["skill"]
+                 and s["slug"] not in (need["slug"], target["slug"], dep["slug"]) and not s.get("options"))
+    skills = {need["skill"]: 2, "Luck": 1, "Faith": 1} if need["skill"] not in ("Luck", "Faith") else None
+    errors = services.apply_levelup(c, skills, fresh["slug"], retrofit=(need["slug"], target["slug"]), from_xp=False)
+    assert errors and "would lose a prerequisite" in errors[0]
+    c.refresh_from_db()
+    c.specialties = [[need["slug"], 1]]
+    c.save()
+    assert not services.apply_levelup(c, skills, fresh["slug"], retrofit=(need["slug"], target["slug"]),
+                                      from_xp=False)
+    log = LevelLog.objects.get(character=c, level=4)
+    assert log.data["retrofit_level"] == 1
+
+
+def test_planner_checks_augments_capacity_and_retrofit(client_char):
+    client, c = client_char
+    finished(client, c)
+    reg = get_registry()
+    url = reverse("planner", args=[c.pk])
+    many = [a for a in reg.augments if a not in c.augments][:30]
+    client.post(url, {"action": "save", "level": "2", "augments": many})
+    page = client.get(url).content.decode()
+    assert "augments can be learned" in page or "needs" in page
+    old = c.specialties[0][0]
+    new = next(s["slug"] for s in reg.specialties.values() if s["attribute"] == reg.specialties[old]["attribute"]
+               and s["slug"] != old and not s["requires"])
+    client.post(url, {"action": "save", "level": "4", "retrofit_old": old, "retrofit_new": new})
+    client.post(url, {"action": "save", "level": "5", "retrofit_old": old, "retrofit_new": new})
+    c.refresh_from_db()
+    plans = {e["level"]: e for e in c.plan}
+    assert plans[4]["retrofit"] == [old, new] and 5 not in plans
+    state, checks = __import__("characters.views.planner", fromlist=["x"]).planned_state(c)
+    assert new in {s for s, _ in state.specialties} and old not in {s for s, _ in state.specialties}

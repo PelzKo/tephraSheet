@@ -483,9 +483,20 @@ def finish_creation(character):
     character.status = "active"
     character.wizard_step = 10
     reset_health(character)
+    if character.level < character.target_level:  # higher starting level: its starting money, granted once
+        character.money_on_hand = starting_money(character.target_level)
     character.save()
     LevelLog.objects.create(character=character, level=1, data={
         "skills": character.skills, "specialties": character.specialties, "augments": character.augments})
+
+
+def legal_specialties(character):
+    """Slugs of learned specialties whose prerequisites are met."""
+    reg = get_registry()
+    state = character.to_state()
+    sheet = compute(state)
+    return {s for s, _l in character.specialties
+            if s in reg.specialties and check_specialty(reg.specialties[s], state, sheet, ignore_owned=True)[0]}
 
 
 @transaction.atomic
@@ -494,6 +505,7 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
     errors = leveling.validate_levelup_skills(skill_delta)
     if errors:
         return errors
+    old_max_hp = character.compute().max_hp
     new_level = character.level + 1
     skills = dict(character.skills)
     for s, p in skill_delta.items():
@@ -506,6 +518,7 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
         errs = leveling.validate_retrofit(*retrofit)
         if errs:
             return errs
+        legal_before = legal_specialties(character)
         old = [list(s) for s in character.specialties]
         idx = next((i for i, (s, _) in enumerate(old) if s == retrofit[0]), None)
         if idx is None:
@@ -516,6 +529,12 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
         errs = add_specialties_sequentially(character, [retrofit[1]], level=replaced_level, options=options)
         if errs:
             return errs
+        reg = get_registry()
+        broken = [reg.specialties[s]["name"] for s in legal_before - legal_specialties(character)
+                  if s != retrofit[0]]
+        if broken:
+            return [_("Can't replace {name}: {names} would lose a prerequisite.",
+                      name=reg.specialties[retrofit[0]]["name"], names=", ".join(broken))]
     errs = add_specialties_sequentially(character, [specialty], level=new_level, options=options)
     if errs:
         return errs
@@ -525,10 +544,19 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
             return errs
     if from_xp:
         character.xp = max(0, character.xp - tables.XP_PER_LEVEL)
-    reset_health(character)
+    # More max HP raise current HP by the same amount; wounds stay.
+    new_max_hp = character.compute().max_hp
+    if character.current_hp is not None:
+        character.current_hp = max(0, min(new_max_hp, character.current_hp + new_max_hp - old_max_hp))
+    # Plan entries of earlier levels are done (the one of this level stays for the augments page).
+    character.plan = [e for e in character.plan if e.get("level", 0) >= new_level]
     character.save()
-    LevelLog.objects.create(character=character, level=new_level, data={
-        "skills": skill_delta, "specialty": specialty, "retrofit": list(retrofit or []), "augments": list(augments)})
+    data = {"skills": skill_delta, "specialty": specialty, "retrofit": list(retrofit or []), "augments": list(augments)}
+    if retrofit and retrofit[0] and retrofit[1]:
+        data["retrofit_level"] = replaced_level
+    if options:
+        data["options"] = {k: v for k, v in options.items() if v}
+    LevelLog.objects.create(character=character, level=new_level, data=data)
     return []
 
 
