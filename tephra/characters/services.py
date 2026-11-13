@@ -105,28 +105,38 @@ def random_step1(character, rng):
 
 # --------------------------------------------------------------------------- revalidation
 def revalidate(character):
-    """Drop specialties/augments that are no longer legal after earlier choices changed."""
+    """Drop specialties/augments of a draft that are no longer legal after earlier choices changed.
+    Finished characters (edited in admin mode) and narrator-granted entries are never touched.
+    Returns the names of what was removed."""
+    if character.status != "draft":
+        return []
+    reg = get_registry()
+    granted = set(character.narrator_granted)
     state = character.to_state()
-    kept = []
+    kept, removed = [], []
     for slug, level in character.specialties:
-        spec = get_registry().specialties.get(slug)
+        spec = reg.specialties.get(slug)
         if not spec:
             continue
         state.specialties = [(s, l) for s, l in kept]
-        ok, _reasons = check_specialty(spec, state, compute(state))
-        if ok:
+        if f"spec:{slug}" in granted or check_specialty(spec, state, compute(state))[0]:
             kept.append((slug, level))
+        else:
+            removed.append(spec["name"])
     character.specialties = [list(k) for k in kept]
     state.specialties = kept
     sheet = compute(state)
     capacity = sheet.stats["aug"].total
     augs = []
     for slug in character.augments:
-        aug = get_registry().augments.get(slug)
+        aug = reg.augments.get(slug)
         state.augments = augs
-        if aug and check_augment(aug, state, sheet)[0] and len(augs) < capacity:
+        if f"aug:{slug}" in granted or aug and check_augment(aug, state, sheet)[0] and len(augs) < capacity:
             augs.append(slug)
+        elif aug:
+            removed.append(aug["name"])
     character.augments = augs
+    return removed
 
 
 # --------------------------------------------------------------------------- steps 4/5
@@ -204,6 +214,9 @@ def set_augments(character, slugs):
     for slug in slugs:
         aug = reg.augments.get(slug)
         if not aug:
+            continue
+        if f"aug:{slug}" in character.narrator_granted and slug in owned:
+            kept.append(slug)  # narrator-granted: no checks
             continue
         if slug not in owned and not is_offered(aug):
             errors.append(_("{name}: not offered by the narrator.", name=aug["name"]))

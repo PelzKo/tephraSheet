@@ -3,8 +3,9 @@
 <form method="post" class="paper">{% csrf_token %}
   <div class="row spread"><h1>{% t "Augments – {name}" name=character.name %}</h1>
     <div class="row"><button class="btn dice" name="action" value="random"> {% t "Random" %}</button><a class="btn" href="{% url 'augment_reference' %}">{% t "Augment reference" %}</a><a class="btn" href="{% url 'sheet' character.pk %}">{% t "Back to sheet" %}</a></div></div>
+  {% if catch_up %}<p class="row"><b>{% t "Level {level} of {target}" level=character.level target=character.target_level %}</b> <a class="btn primary" href="{% url 'levelup' character.pk %}">{% t "Continue levelling" %}</a></p>{% endif %}
   <p><b>{% t "Known {n} / {max}" n=known|length max=capacity %}</b> {% t "(from the Aug bonuses of your specialties). Whenever you learn a new augment, you may swap one known augment from the same skill." %}</p>
-  <div class="row">{% for a in known %}<span class="chip on">{{ a.name }}{% if admin_mode %} <button class="val" name="action" value="remove" onclick="this.form.slug.value='{{ a.slug }}'" style="color:inherit;cursor:pointer">✕</button>{% endif %}</span>{% endfor %}{% for a in granted %}<span class="chip on" title="{% t "Granted by {source}" source=a.granted_by %}">{{ a.name }} <span class="muted small">({{ a.granted_by }})</span></span>{% endfor %}</div>
+  <div class="row">{% for a in known %}<span class="chip on">{{ a.name }}{% if "aug:"|add:a.slug in character.narrator_granted %} <span class="tag" title="{% t "Granted by the narrator" %}">{% t "GM" %}</span>{% endif %}{% if admin_mode %} <button class="val" name="action" value="remove" onclick="this.form.slug.value='{{ a.slug }}'" style="color:inherit;cursor:pointer">✕</button>{% endif %}</span>{% endfor %}{% for a in granted %}<span class="chip on" title="{% t "Granted by {source}" source=a.granted_by %}">{{ a.name }} <span class="muted small">({{ a.granted_by }})</span></span>{% endfor %}</div>
   <input type="hidden" name="slug" value="">
   {% if known and known|length >= capacity %}
     <details style="margin-top:10px"><summary>{% t "Swap an augment (retrofit)" %}</summary>
@@ -24,7 +25,8 @@
               {% elif o.ok %}
                 {% if known|length < capacity %}<button class="btn small primary" name="action" value="add" onclick="this.form.slug.value='{{ o.aug.slug }}'">{% t "Learn" %}</button>
                 {% else %}<button class="btn small" name="action" value="swap" onclick="this.form.slug.value='{{ o.aug.slug }}'">{% t "Swap in" %}</button>{% endif %}
-              {% endif %}
+              {% elif admin_mode %}<button class="btn small" name="action" value="grant" onclick="this.form.slug.value='{{ o.aug.slug }}'" title="{% t "Admin mode: add without rule checks" %}">{% t "Grant" %}</button>
+              {% endif %}{% if o.aug.slug in planned and not o.known %}<span class="tag ok">{% t "planned for this level" %}</span>{% endif %}
               <b>{{ o.aug.name }}</b> {% ext_badge o.aug %}{% if o.aug.two_marque %} <span class="tag" title="{% t "This augment only has mQ I and mQ III." %}">{% t "mQ I/III" %}</span>{% endif %} <span class="tag">{% if o.aug.slots == 1 %}{% t "1 slot" %}{% else %}{% t "{n} slots" n=o.aug.slots|default_if_none:"?" %}{% endif %}</span>
               {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
               <span class="cost">{% t "your marque: {n}" n=o.marque|roman %}</span>

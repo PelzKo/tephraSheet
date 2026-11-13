@@ -1,0 +1,15 @@
+{
+ "Admin mode: add without rule checks": "Admin-Modus: ohne Regelprüfung hinzufügen",
+ "Continue levelling": "Weiter aufsteigen",
+ "Fill this step randomly? This replaces what you entered here.": "Diesen Schritt zufällig füllen? Das ersetzt deine Eingaben hier.",
+ "GM": "Erz.",
+ "Grant": "Gewähren",
+ "Granted by the narrator": "Vom Erzähler gewährt",
+ "Level {level} of {target}": "Stufe {level} von {target}",
+ "Removed because prerequisites are no longer met: {names}": "Entfernt, weil die Voraussetzungen nicht mehr erfüllt sind: {names}",
+ "This character is finished: only saving is possible here.": "Dieser Charakter ist fertig: Hier kann nur gespeichert werden.",
+ "Your body is your armor.": "Dein Körper ist deine Rüstung.",
+ "planned for this level": "für diese Stufe geplant",
+ "{item} needs a free hand: put away {names}.": "{item} braucht eine freie Hand: {names} weggesteckt.",
+ "{item} needs both hands, so the right hand stays empty.": "{item} braucht beide Hände, die rechte Hand bleibt also leer."
+}

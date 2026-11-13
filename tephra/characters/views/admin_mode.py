@@ -9,7 +9,7 @@ from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .. import access
+from .. import access, services
 from ..models import Character, CustomModifier
 from .sheet import _respond
 
@@ -93,6 +93,8 @@ def edit_choices(request, character):
                     pass
                 specs.append([slug, level])
             character.specialties = specs
+            have = {f"spec:{s}" for s, _l in specs} | {f"aug:{a}" for a in character.augments}
+            character.narrator_granted = [k for k in character.narrator_granted if k in have]
             messages.success(request, _("Saved (no rule validation in admin mode)."))
         elif action == "add_specialty":
             slug = p.get("slug")
@@ -102,10 +104,12 @@ def edit_choices(request, character):
                 except ValueError:
                     level = character.level
                 character.specialties = list(character.specialties) + [[slug, level]]
+                character.narrator_granted = list(character.narrator_granted) + [f"spec:{slug}"]
         elif action == "add_body_augment":
             slug = p.get("slug")
-            if slug in reg.augments:
-                character.body_augments = list(character.body_augments) + [[slug, int(p.get("marque", 1))]]
+            marque = p.get("marque", "1")
+            if slug in reg.augments and marque.isdecimal():
+                character.body_augments = list(character.body_augments) + [[slug, int(marque)]]
         elif action == "remove_body_augment":
             character.body_augments = [a for a in character.body_augments if a[0] != p.get("slug")]
         elif action == "add_modifier":
@@ -120,6 +124,7 @@ def edit_choices(request, character):
         elif action == "reset_misc":
             character.misc = {}
         character.save()
+        services.grant_race_items(character)  # body items of a changed race/traits
         return redirect("edit_choices", pk=character.pk)
     race = reg.races.get(character.race)
     all_traits = [t for t in reg.traits.values()]

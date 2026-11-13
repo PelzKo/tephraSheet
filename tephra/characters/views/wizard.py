@@ -24,6 +24,13 @@ def _redirect(character, step):
     return redirect("wizard_step", pk=character.pk, step=step)
 
 
+def _revalidate(request, character):
+    removed = services.revalidate(character)
+    if removed:
+        messages.warning(request, _("Removed because prerequisites are no longer met: {names}",
+                                    names=", ".join(removed)))
+
+
 def step_done(character, step):
     """Whether a step has the data it needs (for the progress bar)."""
     if step == 1:
@@ -35,6 +42,20 @@ def step_done(character, step):
     if step == 10:
         return bool(character.name and character.password)
     return step < character.wizard_step
+
+
+def step_has_data(character, step):
+    """Whether "Random" on this step would replace something the player entered (confirmation dialog)."""
+    if step == 1:
+        return bool(character.random_traits or character.nationality)
+    if step == 6:
+        return character.items.filter(slot__in=["weapon1", "weapon2", "armor", "deflection"]).exists()
+    if step == 7:
+        return character.items.filter(slot="carried", template__is_starting_gear=True).exists()
+    if step == 9:
+        return any(get_registry().stories.get(s, {}).get("type") not in services.NATIONALITY_TYPES
+                   for s in character.stories)
+    return bool({2: character.skills, 4: character.specialties, 5: character.augments}.get(step))
 
 
 @access.character_view
@@ -50,7 +71,8 @@ def wizard(request, character, step=None):
     if step > character.wizard_step:
         character.wizard_step = step
         character.save(update_fields=["wizard_step"])
-    ctx = {"character": character, "step": step, "steps": [
+    ctx = {"character": character, "step": step, "draft": character.status == "draft",
+           "has_data": step_has_data(character, step), "steps": [
         {"n": n, "label": _(label), "done": step_done(character, n), "current": n == step}
         for n, label in creation.STEPS]}
     ctx.update(STEP_CONTEXT[step](request, character))
@@ -66,6 +88,10 @@ def handle_post(request, character, step):
         post["slug"] = arg
         request.POST = post
     rng = random.Random()
+    if character.status != "draft" and action in ("random_all", "random", "finish"):
+        # A finished character reopened in admin mode: only saving is allowed (no rerolls, no second finish).
+        messages.error(request, _("This character is finished: only saving is possible here."))
+        return _redirect(character, step)
     if action == "random_all":
         services.random_all(character, rng)
         messages.success(request, _("Random character rolled. Check each step, then set a name and password."))
@@ -134,7 +160,9 @@ def save_step1(request, character, action):
     if race in {r["slug"] for r in offer_races(reg.races.values(), keep={character.race})}:
         services.set_race(character, race)
     if action == "race":
+        _revalidate(request, character)
         character.save()
+        services.grant_race_items(character)
         return []
     settings = NarratorSettings.get()
     slots = creation.trait_slots(character.race) if character.race else {}
@@ -219,7 +247,7 @@ def save_step1(request, character, action):
             t = reg.traits.get(key)
             if t and t.get("choice") and not character.trait_choices.get(key):
                 errors.append(_("Make the choice for {trait}.", trait=t["name"]))
-    services.revalidate(character)
+    _revalidate(request, character)
     character.save()
     services.grant_race_items(character)
     return errors
@@ -244,8 +272,9 @@ def save_step2(request, character, action):
         if v:
             alloc[s] = v
     character.skills = alloc
-    errors = creation.validate_creation_skills(alloc) if action in ("next", "finish") else []
-    services.revalidate(character)
+    draft = character.status == "draft"  # leveled characters have more than the creation points
+    errors = creation.validate_creation_skills(alloc) if draft and action in ("next", "finish") else []
+    _revalidate(request, character)
     character.save()
     return errors
 
@@ -303,8 +332,9 @@ def save_step4(request, character, action):
     elif action == "remove":
         slug = request.POST.get("slug")
         character.specialties = [s for s in character.specialties if s[0] != slug]
-        services.revalidate(character)
-    elif action in ("next", "finish") and len(character.specialties) != tables.CREATION_SPECIALTIES:
+        _revalidate(request, character)
+    elif action in ("next", "finish") and character.status == "draft" and \
+            len(character.specialties) != tables.CREATION_SPECIALTIES:
         errors.append(_("Choose exactly {count} specialties.", count=tables.CREATION_SPECIALTIES))
     character.save()
     return errors
@@ -349,17 +379,22 @@ def save_step5(request, character, action):
 
 # --------------------------------------------------------------------------- step 6
 def ctx_step6(request, character):
-    templates = ItemTemplate.offered()
+    templates = ItemTemplate.offered().exclude(name__in=services.race_item_names())  # body items come with a race
     equipped = {i.slot: i for i in character.items.filter(slot__in=["weapon1", "weapon2", "armor", "deflection"])}
-    return {"weapons": templates.filter(kind__in=["melee", "firearm", "bow", "crossbow"]),
-            "armors": templates.filter(kind="armor"), "deflections": templates.filter(kind="deflection"),
-            "equipped": equipped, "sheet": character.compute()}
+    lists = {"weapons": templates.filter(kind__in=["melee", "firearm", "bow", "crossbow"]),
+             "armors": templates.filter(kind="armor"), "deflections": templates.filter(kind="deflection")}
+    offered = {t.pk for qs in lists.values() for t in qs}
+    # Items not in the lists (custom, disabled extension) get a "keep" option so saving doesn't drop them.
+    keep = {slot: i for slot, i in equipped.items() if i.template_id not in offered}
+    return {**lists, "equipped": equipped, "keep": keep, "sheet": character.compute(),
+            "body_armor": get_registry().races.get(character.race, {}).get("armor_item")}
 
 
 def save_step6(request, character, action):
+    body_armor = get_registry().races.get(character.race, {}).get("armor_item")
     for slot in ("weapon1", "weapon2", "armor", "deflection"):
         value = request.POST.get(slot)
-        if value is None:
+        if value is None or slot == "armor" and body_armor:  # the body is the armor (abyssal suit)
             continue
         current = character.items.filter(slot=slot).first()
         if value == "":
@@ -367,19 +402,23 @@ def save_step6(request, character, action):
                 current.delete()
             continue
         # "custom" (or any non-pk) = keep the custom item already in this slot
-        if not value.isdigit() or current and current.template_id and str(current.template_id) == value:
+        if not value.isdecimal() or current and current.template_id and str(current.template_id) == value:
             continue
         tpl = ItemTemplate.objects.filter(pk=value).first()
         if not tpl:
             continue
         left = character.items.filter(slot="weapon1").first()
         if slot == "weapon2" and left and services.item_hands(character, left) == 2:
-            return [f"{left.name} needs both hands, so the right hand stays empty."]
-        if current:
+            return [_("{item} needs both hands, so the right hand stays empty.", item=left.name)]
+        try:
+            result = services.equip(character, InventoryItem.from_template(character, tpl), slot)
+        except services.EquipError as e:
+            return [str(e)]
+        if current:  # replaced only once the new item is in place
             current.delete()
-        result = services.equip(character, InventoryItem.from_template(character, tpl), slot)
-        if result["moved"]:
-            return [f"{tpl.name} needs a free hand: put away {', '.join(result['moved'])}."]
+        moved = [n for n in result["moved"] if not current or n != current.name]
+        if moved:
+            return [_("{item} needs a free hand: put away {names}.", item=tpl.name, names=", ".join(moved))]
     return []
 
 
@@ -399,15 +438,15 @@ def save_step7(request, character, action):
             item.delete()
         else:
             q = request.POST.get(f"qty:{tid}")
-            if q and q.isdigit() and int(q) != item.quantity:
+            if q and q.isdecimal() and int(q) != item.quantity:
                 item.quantity = max(1, int(q))
                 item.save(update_fields=["quantity"])
     for tid in selected - set(existing):
         tpl = ItemTemplate.objects.filter(pk=tid, is_starting_gear=True).first()
         if tpl:
             q = request.POST.get(f"qty:{tid}", "1")
-            InventoryItem.from_template(character, tpl, quantity=max(1, int(q) if q.isdigit() else 1)).save()
-    if not character.money_on_hand:
+            InventoryItem.from_template(character, tpl, quantity=max(1, int(q) if q.isdecimal() else 1)).save()
+    if not character.money_on_hand and character.status == "draft":
         character.money_on_hand = services.starting_money(1)
         character.save(update_fields=["money_on_hand"])
     return []
@@ -462,11 +501,12 @@ def save_step10(request, character, action):
     if "notes" in p:
         character.notes = p.get("notes", "")
     errors = []
-    try:
-        level = int(p.get("target_level", character.target_level or 1))
-    except ValueError:
-        level = 1
-    character.target_level = max(1, min(level, NarratorSettings.get().max_starting_level))
+    if character.status == "draft":  # finished characters keep their target level
+        try:
+            level = int(p.get("target_level", character.target_level or 1))
+        except ValueError:
+            level = 1
+        character.target_level = max(1, min(level, NarratorSettings.get().max_starting_level))
     pw, pw2 = p.get("password", ""), p.get("password2", "")
     if pw or pw2:
         if pw != pw2:

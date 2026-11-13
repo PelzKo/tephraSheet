@@ -145,6 +145,12 @@ def augments_view(request, character):
                 messages.error(request, _("Augments can only be swapped for one of the same skill."))
         elif action == "remove" and access.in_admin_mode(request, character):
             character.augments = [a for a in character.augments if a != slug]
+            character.narrator_granted = [k for k in character.narrator_granted if k != f"aug:{slug}"]
+        elif action == "grant" and access.in_admin_mode(request, character) and slug in get_registry().augments \
+                and slug not in character.augments:
+            # Admin mode: no rule checks; marked so later checks never drop it.
+            character.augments = list(character.augments) + [slug]
+            character.narrator_granted = list(character.narrator_granted) + [f"aug:{slug}"]
         elif action == "random":
             services.random_augments(character, random.Random())
         character.save()
@@ -156,4 +162,6 @@ def augments_view(request, character):
         "capacity": sheet.stats["aug"].total,
         "known": known, "granted": granted,
         "admin_mode": access.in_admin_mode(request, character),
+        "planned": set((planned_for(character, character.level) or {}).get("augments", [])),
+        "catch_up": services.needs_catch_up(character),
     })
