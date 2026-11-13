@@ -1,7 +1,7 @@
 # Getting started
 
 1. On **Characters**, click *New character*. The wizard walks you through race, skills, specialties, stories, gear and details. Every step has a **Random** button if you want to be surprised.
-2. At the end you set a **password**. Characters are unlocked per browser session with that password; the narrator can open every character.
+2. At the end you set a **password**. It needs at least 8 characters. Characters are unlocked per browser session with that password; the narrator can open every character. On a shared tablet, **🔒 Lock all** in the header locks every character unlocked on that device again. If the narrator has set a group passphrase, each browser asks for it once before anything else.
 3. The finished character opens on its **sheet**. It looks like the paper sheet: hover or tap any number to see where it comes from.
 
 ## Racial traits

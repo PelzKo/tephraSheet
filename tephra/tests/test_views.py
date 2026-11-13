@@ -66,7 +66,7 @@ def test_manual_wizard_flow(client_char):
     backpack = ItemTemplate.objects.get(name="Backpack")
     client.post(url(7), {"action": "next", "gear": [backpack.pk], f"qty:{backpack.pk}": 1})
     client.post(url(9), {"action": "next", "stories": ["bartender"]})
-    resp = client.post(url(10), {"action": "finish", "name": "Ada Cogsley", "password": "brass", "password2": "brass"})
+    resp = client.post(url(10), {"action": "finish", "name": "Ada Cogsley", "password": "brass-gear", "password2": "brass-gear"})
     c.refresh_from_db()
     assert c.status == "active", resp
     assert c.money_on_hand == 100
@@ -84,7 +84,7 @@ def test_random_all_and_play(client_char):
     c.refresh_from_db()
     assert c.race and len(c.specialties) == 3 and c.name
     resp = client.post(reverse("wizard_step", args=[c.pk, 10]),
-                       {"action": "finish", "name": c.name, "password": "abc", "password2": "abc"})
+                       {"action": "finish", "name": c.name, "password": "abcdefgh", "password2": "abcdefgh"})
     c.refresh_from_db()
     assert c.status == "active"
     sheet_url = reverse("sheet", args=[c.pk])
@@ -309,7 +309,7 @@ def test_catalog_sort_keys_and_inventory_toolbar(client_char):
     client.post(reverse("wizard_step", args=[c.pk, 1]), {"action": "random_all"})
     c.refresh_from_db()
     client.post(reverse("wizard_step", args=[c.pk, 10]),
-                {"action": "finish", "name": c.name, "password": "abc", "password2": "abc"})
+                {"action": "finish", "name": c.name, "password": "abcdefgh", "password2": "abcdefgh"})
     InventoryItem.from_template(c, sabre).save()
     html = client.get(reverse("sheet", args=[c.pk]) + "?tab=inventory").content.decode()
     assert "data-inv-toolbar" in html and f'data-price="{sabre.price_dukes}"' in html
@@ -490,7 +490,7 @@ def test_password_change_revokes_other_sessions(client, db):
     other.post(reverse("unlock", args=[c.pk]), {"password": "old"})
     assert other.get(reverse("sheet", args=[c.pk])).status_code == 200
     client.post(reverse("unlock", args=[c.pk]), {"password": "old"})
-    client.post(reverse("password", args=[c.pk]), {"password": "newpw", "confirm": "newpw"})
+    client.post(reverse("password", args=[c.pk]), {"password": "newpw-long", "confirm": "newpw-long"})
     assert client.get(reverse("sheet", args=[c.pk])).status_code == 200
     assert other.get(reverse("sheet", args=[c.pk])).status_code == 302
 

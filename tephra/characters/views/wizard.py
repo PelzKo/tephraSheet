@@ -471,8 +471,8 @@ def save_step10(request, character, action):
     if pw or pw2:
         if pw != pw2:
             errors.append(_("Passwords don't match."))
-        elif len(pw) < 3:
-            errors.append(_("Password needs at least 3 characters."))
+        elif len(pw) < access.MIN_PASSWORD:
+            errors.append(_("Password must have at least {n} characters.", n=access.MIN_PASSWORD))
         else:
             character.set_password(pw)
             access.unlock(request, character)

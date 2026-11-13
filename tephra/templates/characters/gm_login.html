@@ -3,6 +3,7 @@
 <div class="paper" style="max-width:420px;margin:40px auto">
   <h1>{% t "Narrator login" %}</h1>
   <p class="muted small">{% t "Narrator accounts are Django staff users" %} (<code>python manage.py createsuperuser</code>).</p>
+  {% if error %}<ul class="messages"><li class="error">{{ error }}</li></ul>{% endif %}
   <form method="post" class="stack">{% csrf_token %}{{ form.as_div }}
     <input type="hidden" name="next" value="{{ next|default:'/gm/' }}">
     <button class="btn primary">{% t "Log in" %}</button>

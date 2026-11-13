@@ -1,3 +1,4 @@
+from django.conf import settings
 from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.urls import path
@@ -12,6 +13,8 @@ urlpatterns = [
     path("c/<int:pk>/", sheet.sheet_view, name="sheet"),
     path("c/<int:pk>/unlock/", general.unlock_view, name="unlock"),
     path("c/<int:pk>/lock/", general.lock_view, name="lock"),
+    path("lock-all/", general.lock_all, name="lock_all"),
+    path("pass/", general.passphrase_view, name="passphrase"),
     path("c/<int:pk>/password/", general.password_view, name="password"),
     path("c/<int:pk>/delete/", general.delete_view, name="delete_character"),
     path("c/<int:pk>/wizard/", wizard.wizard, name="wizard"),
@@ -52,5 +55,6 @@ urlpatterns = [
     path("wiki/race/<slug:slug>/", wiki_views.race, name="wiki_race"),
     path("wiki/p/<slug:slug>/", wiki_views.page, name="wiki_page"),
     path("wiki/p/<slug:slug>/edit/", wiki_views.edit, name="wiki_edit"),
-    path("admin/", admin.site.urls),
+    path(settings.ADMIN_URL + "login/", general.GMLoginView.as_view()),  # throttled, unlike admin's own
+    path(settings.ADMIN_URL, admin.site.urls),
 ]

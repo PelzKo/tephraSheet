@@ -27,6 +27,14 @@
   </table></div>
   <p class="small muted">{% t "Raw data:" %} <a href="{% url 'admin:index' %}">{% t "Django admin" %}</a> · <a href="{% url 'catalog' %}">{% t "Catalog" %}</a> · <a href="{% url 'catalog_import' %}">{% t "Bulk import" %}</a></p>
 </div>
+<div class="paper">
+  <h2>{% t "Server" %}</h2>
+  <dl class="fb-meta">
+    <dt>{% t "Version" %}</dt><dd>{{ server.version }}</dd>
+    <dt>{% t "Database" %}</dt><dd>{{ server.database }}</dd>
+    <dt>{% t "Last backup" %}</dt><dd>{% if server.last_backup %}{{ server.last_backup|date:"Y-m-d H:i" }} ({% t "{age} ago" age=server.last_backup|timesince %}){% else %}<b>{% t "No backup found" %}</b>{% endif %} <span class="muted small">{{ server.backup_dir }}</span></dd>
+  </dl>
+</div>
 <div class="paper" id="feedback">
   <h2>{% t "Feedback" %}{% if feedback_open %} <span class="tag">{% t "{n} open" n=feedback_open %}</span>{% endif %}</h2>
   {% if feedback %}
@@ -43,7 +51,7 @@
         <td class="small" data-sort="{{ f.character_name }} {{ f.page_title }}">
           {% if f.character %}<a href="{{ f.character.get_absolute_url }}">{{ f.character_name }}</a>{% elif f.character_name %}{{ f.character_name }} <span class="muted">{% t "(deleted)" %}</span>{% endif %}
           {% if f.meta.tab %}<div class="muted">{% t "tab: {name}" name=f.meta.tab %}</div>{% endif %}
-          {% if f.page_url %}<div><a href="{{ f.page_url }}" title="{{ f.page_url }}">{{ f.page_title|default:f.page_url|truncatechars:40 }}</a></div>{% endif %}</td>
+          {% if f.safe_page_url %}<div><a href="{{ f.safe_page_url }}" title="{{ f.safe_page_url }}">{{ f.page_title|default:f.safe_page_url|truncatechars:40 }}</a></div>{% elif f.page_url %}<div title="{{ f.page_url }}">{{ f.page_title|default:f.page_url|truncatechars:40 }}</div>{% endif %}</td>
         <td><div class="fb-message">{{ f.message }}</div>
           <details class="small muted"><summary>{% t "Details" %}</summary><dl class="fb-meta">{% for k, v in f.meta.items %}<dt>{{ k }}</dt><dd>{{ v }}</dd>{% endfor %}</dl></details></td>
         <td><form method="post" action="{% url 'gm_feedback_delete' f.pk %}" onsubmit="return confirm('{% t "Delete this feedback?" %}')">{% csrf_token %}<button class="btn small danger">Delete</button></form></td>
