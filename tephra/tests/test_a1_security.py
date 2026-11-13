@@ -217,3 +217,22 @@ def test_lock_all(client, db):
     assert b"Lock all" in client.get("/").content
     client.post(reverse("lock_all"))
     assert client.get(reverse("sheet", args=[c.pk])).url == reverse("unlock", args=[c.pk])
+
+
+def test_throttle_counter_lives_in_db_not_cache(db):
+    """Codex: FileBasedCache add/incr is not atomic across gunicorn workers; counters are DB rows."""
+    from datetime import timedelta
+
+    from django.utils import timezone
+
+    from characters import access
+    from characters.models import Throttle
+
+    assert [access.hit("k", 60) for _ in range(3)] == [1, 2, 3]
+    cache.clear()  # a cache wipe must not reset the count
+    assert access.is_limited("k", 3) and not access.is_limited("k", 4)
+    Throttle.objects.filter(key="k").update(expires=timezone.now() - timedelta(seconds=1))
+    assert not access.is_limited("k", 1)
+    assert access.hit("k", 60) == 1  # expired window starts over
+    access.clear("k")
+    assert not Throttle.objects.exists()

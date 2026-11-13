@@ -412,3 +412,11 @@ def drop_card_cache(sender, instance, **kwargs):
     pk = instance.pk if isinstance(instance, Character) else getattr(instance, "character_id", None)
     if pk:
         cache.delete_many([card_cache_key(pk, code) for code in languages()])
+
+
+class Throttle(models.Model):
+    """Failed-attempt counter per key (``access.hit``); in the DB so all gunicorn workers share it atomically."""
+
+    key = models.CharField(max_length=255, unique=True)
+    count = models.PositiveIntegerField(default=0)
+    expires = models.DateTimeField(db_index=True)

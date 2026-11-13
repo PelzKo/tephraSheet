@@ -1,15 +1,17 @@
 """Per-character password unlocking and admin-mode helpers."""
 
 import logging
+from datetime import timedelta
 from functools import wraps
 
 from django.conf import settings
-from django.core.cache import cache
+from django.db import transaction
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.urls import reverse
+from django.utils import timezone
 
-from .models import Character, NarratorSettings
+from .models import Character, NarratorSettings, Throttle
 
 SESSION_KEY = "unlocked_characters"
 STAMP_KEY = "unlocked_stamps"
@@ -75,18 +77,25 @@ def client_ip(request):
 
 
 def is_limited(key, limit):
-    return cache.get(key, 0) >= limit
+    return Throttle.objects.filter(key=key, expires__gt=timezone.now(), count__gte=limit).exists()
 
 
 def hit(key, timeout=None):
-    """Count one attempt under ``key``; ``add`` + ``incr`` so parallel requests don't lose counts."""
-    timeout = timeout or settings.UNLOCK_LOCKOUT_SECONDS
-    cache.add(key, 0, timeout)
-    try:
-        return cache.incr(key)
-    except ValueError:  # expired between add and incr
-        cache.set(key, 1, timeout)
-        return 1
+    """Count one attempt under ``key``; a locked DB row so parallel workers don't lose counts."""
+    now = timezone.now()
+    expires = now + timedelta(seconds=timeout or settings.UNLOCK_LOCKOUT_SECONDS)
+    with transaction.atomic():
+        Throttle.objects.filter(expires__lte=now).exclude(key=key).delete()
+        row, created = Throttle.objects.select_for_update().get_or_create(
+            key=key, defaults={"count": 1, "expires": expires})
+        if not created:
+            row.count, row.expires = (row.count + 1, row.expires) if row.expires > now else (1, expires)
+            row.save(update_fields=["count", "expires"])
+    return row.count
+
+
+def clear(key):
+    Throttle.objects.filter(key=key).delete()
 
 
 def _unlock_keys(request, character):
@@ -106,7 +115,7 @@ def register_failure(request, character):
 
 
 def clear_failures(request, character):
-    cache.delete(_unlock_keys(request, character)[0])
+    clear(_unlock_keys(request, character)[0])
 
 
 def lock_all(request):
