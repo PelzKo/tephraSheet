@@ -1,10 +1,18 @@
+from urllib.parse import urlencode
+
+from django.conf import settings as django_settings
+from django.urls import reverse
 from django.utils import translation
+from django.utils.crypto import salted_hmac
 
 from rules import extensions, lang
 
+from . import access
 from .models import NarratorSettings
 
 COOKIE = "tephra_lang"
+PASS_COOKIE = "tephra_pass"
+PASS_MAX_AGE = 365 * 24 * 3600
 
 
 def pick_language(request):
@@ -32,7 +40,7 @@ class LanguageMiddleware:
         lang.set_language(code)
         translation.activate(code)
         request.LANGUAGE_CODE = code
-        settings = NarratorSettings.get()
+        settings = request.narrator_settings = NarratorSettings.get()
         extensions.set_offer(settings.enabled_extensions, settings.disabled_races)
         try:
             response = self.get_response(request)
@@ -41,6 +49,42 @@ class LanguageMiddleware:
             extensions.set_offer()
         response.headers.setdefault("Content-Language", code)
         return response
+
+
+def _pass_stamp(narrator_settings):
+    # derived from the hash, so a new passphrase invalidates every remembered pass
+    return salted_hmac(PASS_COOKIE, narrator_settings.passphrase).hexdigest()[:24]
+
+
+def remember_pass(response, narrator_settings):
+    response.set_signed_cookie(PASS_COOKIE, _pass_stamp(narrator_settings), salt=PASS_COOKIE, max_age=PASS_MAX_AGE,
+                               secure=django_settings.SESSION_COOKIE_SECURE, httponly=True, samesite="Lax")
+
+
+def has_pass(request, narrator_settings):
+    stamp = request.get_signed_cookie(PASS_COOKIE, default=None, salt=PASS_COOKIE, max_age=PASS_MAX_AGE)
+    return stamp == _pass_stamp(narrator_settings)
+
+
+class PassphraseMiddleware:
+    """Group passphrase gate (set on /gm/): without it remembered in this browser only the gate itself,
+    static files, the language switch and the narrator logins are reachable. No passphrase = no gate."""
+
+    def __init__(self, get_response):
+        self.get_response = get_response
+
+    def __call__(self, request):
+        narrator_settings = request.narrator_settings
+        if (not narrator_settings.passphrase or access.is_gm(request)
+                or request.path.startswith("/" + django_settings.STATIC_URL.lstrip("/"))
+                or request.path in {reverse(name) for name in ("passphrase", "set_language", "gm_login", "admin:login")}
+                or has_pass(request, narrator_settings)):
+            return self.get_response(request)
+        if request.headers.get("HX-Request"):
+            target = request.headers.get("HX-Current-URL", "/")
+        else:
+            target = request.get_full_path() if request.method == "GET" else "/"
+        return access.redirect_to(request, reverse("passphrase") + "?" + urlencode({"next": target}))
 
 
 # Strings static/js/app.js shows to the user (it looks them up with t(); keep in sync).

@@ -21,6 +21,9 @@
       <a href="{% url 'character_list' %}">{% t "Characters" %}</a>
       <a href="{% url 'catalog' %}">{% t "Catalog" %}</a>
       <a href="{% url 'wiki' %}">{% t "Wiki" %}</a>
+      {% if request.session.unlocked_characters or request.session.admin_mode_characters %}
+        <form class="inline" method="post" action="{% url 'lock_all' %}">{% csrf_token %}<button type="submit" title="{% t "Lock every character unlocked on this device and leave admin mode" %}">🔒 {% t "Lock all" %}</button></form>
+      {% endif %}
       {% if request.user.is_staff %}
         <a href="{% url 'gm_settings' %}">{% t "Narrator" %}</a>
         <form class="inline" method="post" action="{% url 'gm_logout' %}">{% csrf_token %}<button type="submit">{% t "Log out" %}</button></form>

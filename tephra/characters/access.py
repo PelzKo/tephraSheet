@@ -1,16 +1,22 @@
 """Per-character password unlocking and admin-mode helpers."""
 
+import logging
 from functools import wraps
 
 from django.conf import settings
 from django.core.cache import cache
+from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.urls import reverse
 
 from .models import Character, NarratorSettings
 
 SESSION_KEY = "unlocked_characters"
 STAMP_KEY = "unlocked_stamps"
 ADMIN_KEY = "admin_mode_characters"
+MIN_PASSWORD = 8  # new character passwords; older shorter ones keep working
+
+security_log = logging.getLogger("tephra.security")
 
 
 def _stamp(character):
@@ -62,22 +68,61 @@ def set_admin_mode(request, character, on):
     request.session[ADMIN_KEY] = sorted(ids)
 
 
-def throttle_key(request, character):
-    ip = request.META.get("HTTP_X_FORWARDED_FOR", request.META.get("REMOTE_ADDR", "")).split(",")[0].strip()
-    return f"unlock-fail:{character.pk}:{ip}"
+def client_ip(request):
+    """The last X-Forwarded-For hop is the one our reverse proxy added (earlier ones are client-controlled)."""
+    forwarded = request.META.get("HTTP_X_FORWARDED_FOR", "").split(",")[-1].strip()
+    return forwarded or request.META.get("REMOTE_ADDR", "")
+
+
+def is_limited(key, limit):
+    return cache.get(key, 0) >= limit
+
+
+def hit(key, timeout=None):
+    """Count one attempt under ``key``; ``add`` + ``incr`` so parallel requests don't lose counts."""
+    timeout = timeout or settings.UNLOCK_LOCKOUT_SECONDS
+    cache.add(key, 0, timeout)
+    try:
+        return cache.incr(key)
+    except ValueError:  # expired between add and incr
+        cache.set(key, 1, timeout)
+        return 1
+
+
+def _unlock_keys(request, character):
+    return f"unlock-fail:{character.pk}:{client_ip(request)}", f"unlock-fail:{character.pk}"
 
 
 def is_throttled(request, character):
-    return cache.get(throttle_key(request, character), 0) >= settings.UNLOCK_MAX_ATTEMPTS
+    ip_key, char_key = _unlock_keys(request, character)
+    return (is_limited(ip_key, settings.UNLOCK_MAX_ATTEMPTS)
+            or is_limited(char_key, settings.UNLOCK_MAX_ATTEMPTS_PER_CHARACTER))
 
 
 def register_failure(request, character):
-    key = throttle_key(request, character)
-    cache.set(key, cache.get(key, 0) + 1, settings.UNLOCK_LOCKOUT_SECONDS)
+    for key in _unlock_keys(request, character):
+        hit(key)
+    security_log.warning("failed unlock of character %s from %s", character.pk, client_ip(request))
 
 
 def clear_failures(request, character):
-    cache.delete(throttle_key(request, character))
+    cache.delete(_unlock_keys(request, character)[0])
+
+
+def lock_all(request):
+    for key in (SESSION_KEY, STAMP_KEY, ADMIN_KEY):
+        request.session.pop(key, None)
+
+
+def redirect_to(request, url):
+    """htmx swaps a plain redirect's target into the page; ask it to navigate instead."""
+    if request.headers.get("HX-Request"):
+        return HttpResponse(headers={"HX-Redirect": url})
+    return redirect(url)
+
+
+def to_unlock(request, character):
+    return redirect_to(request, reverse("unlock", args=[character.pk]))
 
 
 def character_view(view):
@@ -87,7 +132,7 @@ def character_view(view):
     def wrapper(request, pk, *args, **kwargs):
         character = get_object_or_404(Character, pk=pk)
         if not can_access(request, character):
-            return redirect("unlock", pk=character.pk)
+            return to_unlock(request, character)
         return view(request, character, *args, **kwargs)
 
     return wrapper
@@ -98,7 +143,7 @@ def admin_view(view):
     def wrapper(request, pk, *args, **kwargs):
         character = get_object_or_404(Character, pk=pk)
         if not can_access(request, character):
-            return redirect("unlock", pk=character.pk)
+            return to_unlock(request, character)
         if not in_admin_mode(request, character):
             return redirect("sheet", pk=character.pk)
         return view(request, character, *args, **kwargs)

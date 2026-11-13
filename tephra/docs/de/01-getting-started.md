@@ -1,7 +1,7 @@
 # Erste Schritte
 
 1. Klicke unter **Charaktere** auf *Neuer Charakter*. Der Assistent führt dich durch Volk, Fertigkeiten, Spezialisierungen, Geschichten, Ausrüstung und Details. Jeder Schritt hat einen **Zufall**-Knopf, falls du dich überraschen lassen willst.
-2. Am Ende vergibst du ein **Passwort**. Charaktere werden pro Browser-Sitzung mit diesem Passwort entsperrt; der Erzähler kann jeden Charakter öffnen.
+2. Am Ende vergibst du ein **Passwort**. Es braucht mindestens 8 Zeichen. Charaktere werden pro Browser-Sitzung mit diesem Passwort entsperrt; der Erzähler kann jeden Charakter öffnen. Auf einem geteilten Tablet sperrt **🔒 Alle sperren** in der Kopfzeile alle auf dem Gerät entsperrten Charaktere wieder. Hat der Erzähler eine Gruppen-Passphrase gesetzt, fragt jeder Browser einmal danach, bevor irgendetwas anderes erscheint.
 3. Der fertige Charakter öffnet sich auf seinem **Bogen**. Er sieht aus wie der Papierbogen: fahre über eine Zahl oder tippe sie an, um zu sehen, woher sie kommt.
 
 ## Volksmerkmale

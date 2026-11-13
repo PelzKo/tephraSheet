@@ -1,7 +1,7 @@
 """Feedback bubble: anyone can send a message; the narrator reviews it on the GM page."""
 
 import json
-import time
+from urllib.parse import urlsplit, urlunsplit
 
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
@@ -15,8 +15,7 @@ from ..models import Character, Feedback
 
 MAX_MESSAGE = 5000
 RATE_WINDOW = 600  # seconds
-RATE_LIMIT = 10  # messages per window and session
-SESSION_KEY = "feedback_sent"
+RATE_LIMIT = 10  # messages per window and address (in the cache, so a new cookie doesn't reset it)
 
 
 def _client_meta(raw):
@@ -36,11 +35,18 @@ def _client_meta(raw):
     return clean
 
 
+def _page_path(request, raw):
+    """The page URL as a same-site path; JS sends location.href, so drop our own scheme and host."""
+    parts = urlsplit(raw)
+    if parts.scheme in ("http", "https") and parts.netloc == request.get_host():
+        return urlunsplit(("", "", parts.path, parts.query, parts.fragment))
+    return raw  # stored as given, shown as plain text (Feedback.safe_page_url)
+
+
 @require_POST
 def feedback_submit(request):
-    now = time.time()
-    sent = [t for t in request.session.get(SESSION_KEY, []) if now - t < RATE_WINDOW]
-    if len(sent) >= RATE_LIMIT:
+    rate_key = f"feedback:{access.client_ip(request)}"
+    if access.is_limited(rate_key, RATE_LIMIT):
         return JsonResponse({"error": _("Too many messages – please wait a few minutes.")}, status=429)
 
     text = request.POST.get("message", "").strip()
@@ -54,7 +60,7 @@ def feedback_submit(request):
 
     character = None
     pk = request.POST.get("character", "")
-    if pk.isdigit():
+    if pk.isascii() and pk.isdigit():
         character = Character.objects.filter(pk=pk).first()
 
     meta = _client_meta(request.POST.get("meta"))
@@ -70,10 +76,9 @@ def feedback_submit(request):
 
     Feedback.objects.create(
         category=category, name=request.POST.get("name", "").strip()[:80], message=text,
-        page_url=request.POST.get("page_url", "")[:500], page_title=request.POST.get("page_title", "")[:200],
+        page_url=_page_path(request, request.POST.get("page_url", ""))[:500], page_title=request.POST.get("page_title", "")[:200],
         character=character, character_name=str(character)[:120] if character else "", meta=meta)
-    sent.append(now)
-    request.session[SESSION_KEY] = sent
+    access.hit(rate_key, RATE_WINDOW)
     return JsonResponse({"ok": True})
 
 

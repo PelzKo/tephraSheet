@@ -1,0 +1,21 @@
+{
+ "A passphrase is set. A new one makes every browser enter it again.": "Eine Passphrase ist gesetzt. Eine neue muss in jedem Browser erneut eingegeben werden.",
+ "All characters on this device are locked again.": "Alle Charaktere auf diesem Gerät sind wieder gesperrt.",
+ "Database": "Datenbank",
+ "Enter": "Eintreten",
+ "Last backup": "Letzte Sicherung",
+ "Lock all": "Alle sperren",
+ "Lock every character unlocked on this device and leave admin mode": "Alle auf diesem Gerät entsperrten Charaktere sperren und den Admin-Modus verlassen",
+ "Narrators never need it.": "Erzähler brauchen sie nie.",
+ "New group passphrase": "Neue Gruppen-Passphrase",
+ "No backup found": "Keine Sicherung gefunden",
+ "No passphrase set: anyone who finds the site can open it.": "Keine Passphrase gesetzt: Jeder, der die Seite findet, kann sie öffnen.",
+ "Passphrase": "Passphrase",
+ "Password must have at least {n} characters.": "Das Passwort muss mindestens {n} Zeichen haben.",
+ "Remove the group passphrase": "Gruppen-Passphrase entfernen",
+ "Server": "Server",
+ "This site is for our group. Enter the group passphrase; this browser remembers it.": "Diese Seite ist für unsere Gruppe. Gib die Gruppen-Passphrase ein; dieser Browser merkt sie sich.",
+ "Version": "Version",
+ "Wrong passphrase.": "Falsche Passphrase.",
+ "{age} ago": "vor {age}"
+}

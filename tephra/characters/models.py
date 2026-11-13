@@ -1,10 +1,14 @@
 from django.contrib.auth.hashers import check_password, make_password
+from django.core.cache import cache
 from django.db import models
+from django.db.models.signals import post_delete, post_save
+from django.dispatch import receiver
 from django.urls import reverse
 
 from catalog.models import ItemFields, ItemTemplate
 from rules.engine import effects, tables
 from rules.engine.state import CharacterState
+from rules.lang import languages
 from rules.registry import get_registry
 
 SLOT_CHOICES = [
@@ -33,6 +37,8 @@ class NarratorSettings(models.Model):
     # Both only gate new choices (wizard, pickers, random generators); existing characters keep their content.
     enabled_extensions = models.JSONField(default=list, blank=True)
     disabled_races = models.JSONField(default=list, blank=True)
+    # Hash of the group passphrase every visitor must enter once per browser; empty = no gate.
+    passphrase = models.CharField(max_length=128, blank=True)
 
     class Meta:
         verbose_name_plural = "narrator settings"
@@ -388,3 +394,21 @@ class Feedback(models.Model):
     @property
     def is_open(self):
         return self.status in self.OPEN_STATUSES
+
+    @property
+    def safe_page_url(self):
+        """Only same-site paths become links; anything else (javascript:, //host) is shown as text."""
+        url = self.page_url
+        return url if url.startswith("/") and not url.startswith("//") and "\\" not in url else ""
+
+
+def card_cache_key(pk, code):
+    return f"card:{pk}:{code}"
+
+
+@receiver([post_save, post_delete])
+def drop_card_cache(sender, instance, **kwargs):
+    """The front page caches each character's card values; any change to it or its rows drops them."""
+    pk = instance.pk if isinstance(instance, Character) else getattr(instance, "character_id", None)
+    if pk:
+        cache.delete_many([card_cache_key(pk, code) for code in languages()])

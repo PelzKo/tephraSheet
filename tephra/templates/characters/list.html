@@ -14,19 +14,19 @@
         {{ c.race_data.name|default:"" }}{% if c.nationality_name %} · {{ c.nationality_name }}{% endif %}
         {% if c.player_name %}<br>{% t "played by {name}" name=c.player_name %}{% endif %}
       </div>
-      {% if card.sheet %}
+      {% if card.stats %}
         <div class="stats">
           <div><b>{{ c.level }}</b><span>{% t "Level" %}</span></div>
-          <div><b>{{ card.hp }}/{{ card.sheet.max_hp }}</b><span>{% t "HP" %}</span></div>
-          <div><b>{{ card.wounds }}/{{ card.sheet.max_wounds }}</b><span>{% t "Wounds" %}</span></div>
-          <div><b>{{ card.sheet.stats.ap.total }}</b><span>{% t "AP" %}</span></div>
-          <div><b>{{ card.sheet.stats.eva.total|signed }}</b><span>{% t "Evade" %}</span></div>
-          <div><b>{{ card.sheet.stats.def.total|signed }}</b><span>{% t "Defense" %}</span></div>
-          <div><b>{{ card.sheet.stats.pri.total|signed }}</b><span>{% t "Priority" %}</span></div>
-          <div><b>{{ card.sheet.stats.spd.total }}</b><span>{% t "Speed" %}</span></div>
+          <div><b>{{ card.hp }}/{{ card.max_hp }}</b><span>{% t "HP" %}</span></div>
+          <div><b>{{ card.wounds }}/{{ card.max_wounds }}</b><span>{% t "Wounds" %}</span></div>
+          <div><b>{{ card.stats.ap }}</b><span>{% t "AP" %}</span></div>
+          <div><b>{{ card.stats.eva|signed }}</b><span>{% t "Evade" %}</span></div>
+          <div><b>{{ card.stats.def|signed }}</b><span>{% t "Defense" %}</span></div>
+          <div><b>{{ card.stats.pri|signed }}</b><span>{% t "Priority" %}</span></div>
+          <div><b>{{ card.stats.spd }}</b><span>{% t "Speed" %}</span></div>
         </div>
-        <div class="hpbar" title="{% t "Hit points" %}"><i style="width:{% if card.sheet.max_hp %}{% widthratio card.hp card.sheet.max_hp 100 %}{% else %}0{% endif %}%"></i></div>
-        <div class="weapon">⚔ <b>{{ card.weapon.name|item_name }}</b> · {% t "Acc" %} {{ card.weapon.acc.total|signed }}{% if card.weapon.stk %} · {% t "Stk" %} {{ card.weapon.stk.total|signed }}{% endif %} · {% t "DC" %} {{ card.weapon.dc.total }}</div>
+        <div class="hpbar" title="{% t "Hit points" %}"><i style="width:{% if card.max_hp %}{% widthratio card.hp card.max_hp 100 %}{% else %}0{% endif %}%"></i></div>
+        <div class="weapon">⚔ <b>{{ card.weapon.name|item_name }}</b> · {% t "Acc" %} {{ card.weapon.acc|signed }}{% if card.weapon.stk is not None %} · {% t "Stk" %} {{ card.weapon.stk|signed }}{% endif %} · {% t "DC" %} {{ card.weapon.dc }}</div>
       {% endif %}
     </a>
   {% endwith %}{% empty %}

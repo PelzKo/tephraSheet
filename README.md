@@ -20,7 +20,7 @@ cd tephra
 cp .env.sample .env              # set LOCAL=True, DEBUG=True for development
 ../.venv/bin/python manage.py migrate
 ../.venv/bin/python manage.py seed_catalog
-../.venv/bin/python manage.py create_random_character --if-empty   # demo sheet, password "demo"
+../.venv/bin/python manage.py create_random_character --if-empty   # optional demo sheet, password "demo"
 ../.venv/bin/python manage.py createsuperuser   # narrator account
 ../.venv/bin/python manage.py runserver
 ../.venv/bin/pytest                             # tests
@@ -34,7 +34,13 @@ The rule data (`tephra/rules/data/*.json`) is generated from `tephra/rules/data/
 
 ## Deployment
 
-Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, `migrate`, `seed_catalog` and `create_random_character --if-empty` (a demo character with password `demo` on a fresh database), then `exec`s gunicorn on `0.0.0.0:8000`. If any step fails, the app does not boot (supervisor reports FATAL).
+Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, a database backup (`bin/backup.sh`), `migrate`, `seed_catalog` and `check --deploy`, then `exec`s gunicorn (3 workers, access log on stdout) on `0.0.0.0:8000`. If `collectstatic`, `migrate` or `seed_catalog` fails, the app does not boot (supervisor reports FATAL); a failed backup or deploy check is only logged.
+
+Security notes:
+- **Group passphrase:** set it on `/gm/` (Narrator settings). Every browser must enter it once (remembered for a year); the narrator never needs it. Without a passphrase the site is open to anyone who finds it. A new passphrase makes everyone enter it again.
+- The Django admin lives at `/narrator-admin/` (change with `ADMIN_URL`). Narrator logins, character unlocks and the passphrase are throttled per client address. The address is the **last** `X-Forwarded-For` value (the one the reverse proxy adds), else `REMOTE_ADDR`.
+- Failed unlocks, wrong passphrases, failed narrator logins, CSRF failures and bad `Host` headers are logged to stderr (`tephra.security`, `django.security`), i.e. `~/logs/tephra.err.log`.
+- Character passwords need at least 8 characters (older shorter ones keep working).
 
 Environment variables go in `tephra/.env` (see `.env.sample`):
 
@@ -45,6 +51,9 @@ Environment variables go in `tephra/.env` (see `.env.sample`):
 | `LOCAL` | `True` skips SSL hardening and forces SQLite |
 | `EXTERNAL_HOSTNAME` | needed when `LOCAL=False`; added to `ALLOWED_HOSTS` and `CSRF_TRUSTED_ORIGINS` |
 | `DB_*` | MySQL/MariaDB, used only when `DB_ENGINE`, `DB_NAME` and `DB_USERNAME` are all set and `LOCAL=False`; otherwise SQLite |
+| `ADMIN_URL` | path of the Django admin, default `narrator-admin/` |
+| `SECURE_HSTS_SECONDS` | HSTS max-age when `LOCAL=False`, default one year; `0` switches it off |
+| `BACKUP_DIR` | where `bin/backup.sh` writes dumps, default `~/backups/tephra` |
 | `SENTRY_DSN`, `EMAIL_*` | optional |
 
 ### Initial server setup (Uberspace)
@@ -87,6 +96,22 @@ The app is served on its own subdomain (e.g. `tephra.<domain>`), not a subpath o
    supervisorctl update
    supervisorctl status tephra
    ```
+
+7. Nightly backups: `crontab -e` and add
+   ```
+   30 3 * * * bash /home/<user>/tephraSheet/bin/backup.sh >> /home/<user>/logs/tephra-backup.log 2>&1
+   ```
+   `bin/backup.sh` dumps the database configured in `tephra/.env` (`mysqldump`, or a copy of the SQLite file when `LOCAL=True`) to `BACKUP_DIR/tephra-<date>.sql.gz` and deletes dumps older than 14 days. `start.sh` also makes one before every `migrate`. `/gm/` shows the time of the newest backup.
+8. Optional demo character (password `demo`): `.venv/bin/python tephra/manage.py create_random_character --if-empty`.
+
+### Restoring a backup
+
+```bash
+supervisorctl stop tephra
+gunzip -c ~/backups/tephra/tephra-<date>.sql.gz | mysql <db name>     # MariaDB (credentials from ~/.my.cnf)
+# SQLite: gunzip -c ~/backups/tephra/tephra-<date>.sqlite3.gz > tephra/db.sqlite3
+supervisorctl start tephra
+```
 
 ### Each release
 

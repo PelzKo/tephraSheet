@@ -61,6 +61,7 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "characters.middleware.LanguageMiddleware",
+    "characters.middleware.PassphraseMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
@@ -113,6 +114,7 @@ else:
 
 AUTH_PASSWORD_VALIDATORS = [
     {"NAME": "django.contrib.auth.password_validation.MinimumLengthValidator"},
+    {"NAME": "django.contrib.auth.password_validation.CommonPasswordValidator"},
 ]
 
 LANGUAGE_CODE = "en-us"
@@ -152,13 +154,24 @@ CACHES = {
 
 # Failed character-password attempts before a temporary lockout.
 UNLOCK_MAX_ATTEMPTS = 8
+UNLOCK_MAX_ATTEMPTS_PER_CHARACTER = 30  # from all addresses together
 UNLOCK_LOCKOUT_SECONDS = 300
+# Wrong group passphrases / narrator logins per address before the same lockout.
+LOGIN_MAX_ATTEMPTS = 8
+
+# Django admin lives here instead of the well-known /admin/.
+ADMIN_URL = (os.environ.get("ADMIN_URL", "").strip("/") or "narrator-admin") + "/"
+# bin/backup.sh writes here; /gm/ shows the newest file's time.
+BACKUP_DIR = Path(os.environ.get("BACKUP_DIR") or "~/backups/tephra").expanduser()
 
 if not LOCAL:
     SECURE_SSL_REDIRECT = True
     SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
+    SECURE_HSTS_SECONDS = int(os.environ.get("SECURE_HSTS_SECONDS") or 31536000)
+    # HSTS covers only this (sub)domain: the parent domain and its other subdomains are not ours to pin.
+    SILENCED_SYSTEM_CHECKS = ["security.W005", "security.W021"]
 
 if not DEBUG:
     EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -169,13 +182,18 @@ if not DEBUG:
     EMAIL_USE_TLS = env_bool("EMAIL_USE_TLS", True)
     DEFAULT_FROM_EMAIL = os.environ.get("DEFAULT_FROM_EMAIL", EMAIL_HOST_USER)
 
-# Unhandled 500s go to stderr regardless of DEBUG (supervisor captures it).
+# Unhandled 500s go to stderr regardless of DEBUG (supervisor captures it), and so do
+# security events: failed unlocks/passphrases/logins (tephra.security), CSRF failures and
+# DisallowedHost (django.security.*).
 LOGGING = {
     "version": 1,
     "disable_existing_loggers": False,
-    "handlers": {"stderr": {"class": "logging.StreamHandler"}},
+    "formatters": {"stamped": {"format": "{asctime} {levelname} {name}: {message}", "style": "{"}},
+    "handlers": {"stderr": {"class": "logging.StreamHandler", "formatter": "stamped"}},
     "loggers": {
         "django.request": {"handlers": ["stderr"], "level": "ERROR", "propagate": False},
+        "django.security": {"handlers": ["stderr"], "level": "WARNING", "propagate": False},
+        "tephra.security": {"handlers": ["stderr"], "level": "WARNING", "propagate": False},
     },
 }
 
