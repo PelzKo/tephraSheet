@@ -492,10 +492,14 @@ def finish_creation(character):
 
 def legal_specialties(character):
     """Slugs of learned specialties whose prerequisites are met."""
+    return legal_in_state(character.to_state())
+
+
+def legal_in_state(state):
+    """Slugs of the state's specialties whose prerequisites are met."""
     reg = get_registry()
-    state = character.to_state()
     sheet = compute(state)
-    return {s for s, _l in character.specialties
+    return {s for s, _l in state.specialties
             if s in reg.specialties and check_specialty(reg.specialties[s], state, sheet, ignore_owned=True)[0]}
 
 

@@ -11,6 +11,7 @@ from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from .. import access
+from ..services import legal_in_state
 
 PREVIEW_STATS = ["ap", "acc", "eva", "stk", "def", "pri", "spd", "hp", "wnd", "aug", "diy", "soak"]
 
@@ -40,9 +41,14 @@ def planned_state(character, upto=None):
             elif old not in owned:
                 problems.append(_("The specialty to replace is not learned."))
             elif new in reg.specialties:
+                legal_before = legal_in_state(state)
                 state.specialties = [(s, l) for s, l in state.specialties if s != old]
                 problems += _spec_problems(reg.specialties[new], state)
                 state.specialties.append((new, dict(character.specialties).get(old, entry["level"])))
+                broken = [reg.specialties[s]["name"] for s in legal_before - legal_in_state(state) if s != old]
+                if broken:
+                    problems.append(_("Can't replace {name}: {names} would lose a prerequisite.",
+                                      name=reg.specialties[old]["name"], names=", ".join(broken)))
         spec = reg.specialties.get(entry.get("specialty", ""))
         if spec:
             problems += _spec_problems(spec, state)

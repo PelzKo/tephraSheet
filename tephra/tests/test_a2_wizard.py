@@ -327,3 +327,28 @@ def test_random_character_command_race_and_seed(db, capsys):
     assert c.race == "elf" and "seed 7" in out and c.status == "active"
     call_command("create_random_character")
     assert "seed " in capsys.readouterr().out
+
+
+def test_planner_retrofit_reports_broken_dependents(db):
+    from characters.views.planner import planned_state
+    reg = get_registry()
+    dep = next(s for s in reg.specialties.values()
+               if any(cl["type"] == "specialty" and not cl.get("soft") for cl in s["requires"])
+               and len(next(cl for cl in s["requires"] if cl["type"] == "specialty")["any"]) == 1)
+    need = reg.specialties_by_name[next(cl for cl in dep["requires"] if cl["type"] == "specialty")["any"][0]]
+    target = next(s for s in reg.specialties.values() if s["attribute"] == need["attribute"]
+                  and not s["requires"] and s["slug"] != need["slug"] and s["skill"] == need["skill"])
+    c = Character.objects.create(race="human", status="active", level=3,
+                                 skills={s: 10 for s in [need["skill"], dep["skill"]] if s},
+                                 specialties=[[need["slug"], 1], [dep["slug"], 2]],
+                                 plan=[{"level": 4, "retrofit": [need["slug"], target["slug"]]}])
+    _state, checks = planned_state(c)
+    assert any("would lose a prerequisite" in p and dep["name"] in p for p in checks[0][1])
+
+
+def test_admin_grant_offered_for_eligible_augment(client_char):
+    client, c = client_char
+    finished(client, c)
+    client.post(reverse("toggle_admin", args=[c.pk]), {"on": "1"})
+    page = client.get(reverse("augments", args=[c.pk])).content.decode()
+    assert page.count('value="grant"') >= page.count('value="add"') + page.count('value="swap"') > 0
