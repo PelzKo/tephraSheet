@@ -158,3 +158,31 @@ def test_add_to_inventory_checks(client, char):
     if ext:  # extension switched off -> not offered
         assert client.post(url(ext), {"for": char.pk}).status_code == 404
     assert InventoryItem.objects.filter(character=char).count() == 1
+
+
+def test_copy_keeps_modifiers(client, catalog):
+    item = ItemTemplate.objects.get(name="Grapple Gun")
+    form = client.get(reverse("item_create") + f"?copy={item.pk}").context["form"]
+    data = {k: v for k, v in form.initial.items() if v is not None and not isinstance(v, list)}
+    data.update(name="Grapple Gun Mk2", copy=item.pk)
+    client.post(reverse("item_create"), data)
+    assert ItemTemplate.objects.get(name="Grapple Gun Mk2").modifiers == item.modifiers
+
+
+def test_export_import_keeps_modifiers(gm):
+    items = list(ItemTemplate.objects.exclude(modifiers=[]))
+    assert {i.name for i in items} >= {"Grapple Gun", "The Fashionable Arrival (flight pack)"}
+    text = export_csv(items)
+    ItemTemplate.objects.filter(pk__in=[i.pk for i in items]).delete()
+    gm.post(reverse("catalog_import"), {"action": "preview", "text": text})
+    gm.post(reverse("catalog_import"), {"action": "commit", "target": "catalog"})
+    for i in items:
+        assert ItemTemplate.objects.get(name=i.name, kind=i.kind).modifiers == i.modifiers
+
+
+def test_import_rejects_bad_modifiers_and_players_cannot_set_them(client, catalog):
+    for bad in ['not json', '{"stat": "x"}', '[{"value": 2}]', '[{"stat": "x", "op": "eval"}]', '[{"stat": "x", "value": "2"}]']:
+        assert parse_rows(f"name\tmodifiers\nX\t{bad}\n")[0]["errors"], bad
+    client.post(reverse("catalog_import"), {"action": "preview", "text": 'name\tmodifiers\nCheat\t[{"stat": "eva", "value": 99}]\n'})
+    client.post(reverse("catalog_import"), {"action": "commit", "target": "catalog"})
+    assert ItemTemplate.objects.get(name="Cheat").modifiers == []

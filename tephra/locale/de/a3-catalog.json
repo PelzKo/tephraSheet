@@ -40,5 +40,6 @@
  "error": "Fehler",
  "name is longer than {max} characters": "Name ist länger als {max} Zeichen",
  "too many rows ({n}); at most {max} per import": "zu viele Zeilen ({n}); höchstens {max} pro Import",
- "unknown extension '{value}'": "unbekannte Erweiterung '{value}'"
+ "unknown extension '{value}'": "unbekannte Erweiterung '{value}'",
+ "modifiers must be a JSON list like {example}": "Modifikatoren müssen eine JSON-Liste sein, z. B. {example}"
 }

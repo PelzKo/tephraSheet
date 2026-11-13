@@ -2,6 +2,7 @@
 
 import csv
 import io
+import json
 import re
 
 from rules.engine.tables import VARIANTS
@@ -39,7 +40,7 @@ ALIASES = {
 }
 # Export = import format; price as exact dukes, plus the columns the creator knows beyond the template.
 EXPORT_HEADER = [h for h in TEMPLATE_HEADER if h not in ("price", "quantity")] + [
-    "price_dukes", "acc_bonus", "stk_bonus", "memento", "binding", "extension"]
+    "price_dukes", "acc_bonus", "stk_bonus", "memento", "binding", "extension", "modifiers"]
 MAX_ROWS = 2000
 NAME_MAX = 120
 KIND_ALIASES = {"weapon": "melee", "melee weapon": "melee", "gun": "firearm", "pistol": "firearm", "rifle": "firearm",
@@ -77,6 +78,8 @@ def export_csv(items):
         v = getattr(item, f)
         if f == "variants":
             return "/".join(v or [])
+        if f == "modifiers":
+            return json.dumps(v) if v else ""
         if f == "augments":
             text = "; ".join(f"{reg.augments[s]['name_en'] if s in reg.augments else s} {roman.get(m, m)}"
                              for s, m in v or [])
@@ -161,6 +164,31 @@ def parse_augments(text, kind, errors, memento=False):
     return out
 
 
+MOD_CHOICES = {"op": ("add", {"add", "base", "transfer", "set"}),  # key: (default, allowed), see curated.mod
+               "when": ("always", {"always", "stance", "toggle", "note"}),
+               "scope": ("character", {"character", "weapon", "melee", "unarmed", "ranged"})}
+
+
+def _valid_modifier(m):
+    return (isinstance(m, dict) and isinstance(m.get("stat"), str)
+            and all(m.get(k, default) in allowed for k, (default, allowed) in MOD_CHOICES.items())
+            and isinstance(m.get("value", 0), int) and isinstance(m.get("formula", ""), str)
+            and isinstance(m.get("by_marque", []), list) and all(isinstance(x, int) for x in m.get("by_marque", [])))
+
+
+def parse_modifiers(text):
+    """Modifiers cell (JSON list in the curated.mod schema) -> list; raises ValueError if malformed."""
+    if not text:
+        return []
+    try:
+        mods = json.loads(text)
+    except ValueError:
+        mods = None
+    if not (isinstance(mods, list) and all(_valid_modifier(m) for m in mods)):
+        raise ValueError(_("modifiers must be a JSON list like {example}", example='[{"stat": "climb", "value": 2}]'))
+    return mods
+
+
 def parse_rows(text):
     header, rows = read_table(text)
     fields = [normalize_header(h) for h in header]
@@ -233,6 +261,11 @@ def parse_rows(text):
                 errors.append(_("hands must be 0, 1 or 2, not '{value}'", value=hands))
         elif "hands" in raw:
             values["hands"] = None
+        if "modifiers" in raw:
+            try:
+                values["modifiers"] = parse_modifiers(raw["modifiers"])
+            except ValueError as exc:
+                errors.append(str(exc))
         if "augments" in raw:
             values["augments"] = parse_augments(raw["augments"], kind, errors, memento=values.get("memento", False))
         result.append({"line": n, "values": values, "errors": errors})

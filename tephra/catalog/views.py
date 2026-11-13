@@ -143,7 +143,7 @@ def item_create(request):
     if request.method == "POST" and form.is_valid():
         obj = form.save(commit=False)
         if copy_of:
-            obj.extension = copy_of.extension  # not a form field
+            obj.extension, obj.modifiers = copy_of.extension, list(copy_of.modifiers or [])  # not form fields
         # Every created item is shared in the catalog. A name+kind that already exists stays
         # inventory-only for a character (the catalog keeps the original).
         if ItemTemplate.objects.filter(name=obj.name, kind=obj.kind).exists():
@@ -265,8 +265,9 @@ CATALOG_FIELDS = {*ItemTemplate.ITEM_FIELDS, "is_starting_gear"}
 
 
 def _catalog_values(row, gm):
-    """Model values of an import row for the shared catalog (starting gear only from the narrator)."""
-    return {k: v for k, v in row["values"].items() if k in CATALOG_FIELDS and (gm or k != "is_starting_gear")}
+    """Model values of an import row for the shared catalog (starting gear and modifiers only from the narrator)."""
+    return {k: v for k, v in row["values"].items()
+            if k in CATALOG_FIELDS and (gm or k not in ("is_starting_gear", "modifiers"))}
 
 
 def _import_status(values, gm):
