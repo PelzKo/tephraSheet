@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% block title %}{% t "History" %}: {{ page.title }} – {% t "Wiki" %}{% endblock %}
+{% block content %}
+<article class="paper wiki-page">
+  <div class="row spread"><a href="{{ page.get_absolute_url }}">← {{ page.title }}</a></div>
+  <h1>{% t "History" %}: {{ page.title }}</h1>
+  <p class="muted small">{% t "Every save keeps the previous version. Pick one to compare it with the current text." %}</p>
+  <table class="data">
+    <thead><tr><th>{% t "Replaced on" %}</th><th>{% t "Written by" %}</th><th>{% t "Title" %}</th><th data-nosort></th></tr></thead>
+    <tbody>{% for r in revisions %}
+      <tr{% if r == rev %} class="selected"{% endif %}><td data-sort="{{ r.created|date:'c' }}">{{ r.created|date:"d.m.Y H:i" }}</td><td>{{ r.edited_by|default:"–" }}</td><td>{{ r.title }}</td>
+        <td><a class="btn small" href="?rev={{ r.pk }}">{% t "Compare" %}</a>
+          {% if request.user.is_staff %}<form class="inline" method="post" action="{% url 'wiki_restore' page.slug r.pk %}">{% csrf_token %}
+            <button class="btn small" onclick="return confirm('{% t "Restore this version?" %}')">{% t "Restore" %}</button></form>{% endif %}</td></tr>
+    {% empty %}<tr><td colspan="4" class="muted">{% t "No earlier versions." %}</td></tr>{% endfor %}</tbody>
+  </table>
+  {% if rev %}
+    <h2>{% t "Changes from {when} to now" when=rev.created|date:"d.m.Y H:i" %}</h2>
+    <pre class="wiki-diff">{% for cls, line in diff %}<span class="{{ cls }}">{{ line }}</span>
+{% empty %}{% t "No differences." %}{% endfor %}</pre>
+  {% endif %}
+</article>
+{% endblock %}

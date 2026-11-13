@@ -4,7 +4,8 @@
 <article class="paper wiki-page">
   <div class="row spread">
     <a href="{% url 'wiki' %}">← {% t "Wiki" %}</a>
-    {% if page %}<a class="btn small" href="{% url 'wiki_edit' page.slug %}">{% t "Edit" %}</a>{% endif %}
+    {% if page %}<span class="row"><a class="btn small" href="{% url 'wiki_history' page.slug %}">{% t "History" %}</a>
+      <a class="btn small" href="{% url 'wiki_edit' page.slug %}">{% t "Edit" %}</a></span>{% endif %}
   </div>
   <h1>{{ title }}</h1>
   {% if page %}<p class="muted small">{% t "Last change: {when}" when=page.updated|date:"d.m.Y H:i" %}{% if page.updated_by %} · {{ page.updated_by }}{% endif %}</p>{% endif %}

@@ -23,7 +23,7 @@ class WikiPage(models.Model):
 
 
 class WikiRevision(models.Model):
-    """The previous version of a page, saved on every edit (restore in the Django admin)."""
+    """The previous version of a page, saved on every edit (History page; the narrator restores it)."""
 
     page = models.ForeignKey(WikiPage, on_delete=models.CASCADE, related_name="revisions")
     title = models.CharField(max_length=160)
