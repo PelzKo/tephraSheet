@@ -2,6 +2,8 @@
 {% block step_title %}{% t "Finishings" %}{% endblock %}
 {% block intro %}<p class="muted">{% t "Choose a name, add some flavor, give your character a personality – and set the password that protects this sheet." %}</p>{% endblock %}
 {% block step %}
+{% if checklist %}<div class="usage-note" style="margin-bottom:10px"><b>{% t "Still open" %}</b>
+  <ul class="small">{% for text, n in checklist %}<li><a href="{% url 'wizard_step' character.pk n %}">{{ text }}</a></li>{% endfor %}</ul></div>{% endif %}
 <div class="form-grid">
   <div class="field"><label for="f-name">{% t "Character name" %}</label><input id="f-name" type="text" name="name" value="{{ character.name }}" required></div>
   <div class="field"><label for="f-player">{% t "Player name" %}</label><input id="f-player" type="text" name="player_name" value="{{ character.player_name }}"></div>

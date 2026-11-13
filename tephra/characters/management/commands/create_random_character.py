@@ -3,12 +3,13 @@
 import random
 
 from django.core.management import call_command
-from django.core.management.base import BaseCommand
+from django.core.management.base import BaseCommand, CommandError
 
 from catalog.models import ItemTemplate
 from characters import services
 from characters.models import Character, NarratorSettings
 from rules import extensions
+from rules.registry import get_registry
 
 
 class Command(BaseCommand):
@@ -20,6 +21,7 @@ class Command(BaseCommand):
         parser.add_argument("--name", default="", help="character name (default: random)")
         parser.add_argument("--player", default="Demo", help="player name")
         parser.add_argument("--seed", type=int, default=None, help="random seed for a reproducible character")
+        parser.add_argument("--race", default="", help="race slug (default: random)")
         parser.add_argument("--if-empty", action="store_true", help="do nothing if any character exists")
 
     def handle(self, *args, **opts):
@@ -30,10 +32,13 @@ class Command(BaseCommand):
             call_command("seed_catalog", verbosity=0)
         settings = NarratorSettings.get()
         extensions.set_offer(settings.enabled_extensions, settings.disabled_races)
-        rng = random.Random(opts["seed"])
+        if opts["race"] and opts["race"] not in get_registry().races:
+            raise CommandError(f"Unknown race {opts['race']!r}.")
+        seed = opts["seed"] if opts["seed"] is not None else random.randrange(2 ** 32)
+        rng = random.Random(seed)
         level = max(1, min(12, opts["level"]))
         character = Character.objects.create(name=opts["name"], player_name=opts["player"])
-        services.random_all(character, rng)
+        services.random_all(character, rng, race=opts["race"] or None)
         character.set_password(opts["password"])
         services.finish_creation(character)
         for _ in range(level - 1):
@@ -46,4 +51,4 @@ class Command(BaseCommand):
         character.save()
         self.stdout.write(self.style.SUCCESS(
             f"Created {character.name} (level {character.level} {character.race_data['name']}), "
-            f"password \"{opts['password']}\"."))
+            f"password \"{opts['password']}\", seed {seed}."))

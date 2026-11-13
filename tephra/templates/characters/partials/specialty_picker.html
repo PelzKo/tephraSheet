@@ -1,11 +1,12 @@
 {% load sheet_tags %}
-<div x-data="{q: ''}">
+<div x-data="{q: '', all: false}">
   <input type="search" x-model="q" placeholder="{% t "Filter specialties…" %}" style="width:100%;margin-top:10px" aria-label="{% t "Filter specialties" %}">
+  <label class="small"><input type="checkbox" x-model="all"> {% t "Show all (also those you can't learn now)" %}</label>
   {% for skill, items in groups %}
-    <details class="spec-group" open>
+    <details class="spec-group" open{% if items.0.hidden %} x-show="all" style="display:none"{% endif %}>
       <summary>{{ skill|t }} <span class="muted small">{{ sheet.skills|get:skill|total|default_if_none:"" }}{% if sheet.skills|get:skill %} {% t "points" %}{% endif %}</span></summary>
       {% for o in items %}
-        <div class="spec{% if not o.ok %} off{% endif %}{% if o.owned %} owned{% endif %}" x-show="!q || $el.dataset.name.includes(q.toLowerCase())" data-name="{{ o.spec.name|lower }}">
+        <div class="spec{% if not o.ok %} off{% endif %}{% if o.owned %} owned{% endif %}" x-show="{% if o.hidden %}all && {% endif %}(!q || $el.dataset.name.includes(q.toLowerCase()))"{% if o.hidden %} style="display:none"{% endif %} data-name="{{ o.spec.name|lower }}">
           <header>
             {% if mode == "wizard" %}
               {% if o.owned %}<span class="tag ok">{% t "chosen" %}</span>

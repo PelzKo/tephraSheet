@@ -294,3 +294,36 @@ def test_planner_checks_augments_capacity_and_retrofit(client_char):
     assert plans[4]["retrofit"] == [old, new] and 5 not in plans
     state, checks = __import__("characters.views.planner", fromlist=["x"]).planned_state(c)
     assert new in {s for s, _ in state.specialties} and old not in {s for s, _ in state.specialties}
+
+
+# --------------------------------------------------------------------------- C4, C11, C16
+def test_finish_checklist_lists_open_points(client_char):
+    client, c = client_char
+    client.post(step_url(c, 1), {"action": "race", "race": "human"})
+    page = client.get(step_url(c, 10)).content.decode()
+    assert "Still open" in page and "Empty hands: 2" in page
+    assert f'href="{step_url(c, 2)}"' in page and f'href="{step_url(c, 6)}"' in page
+
+
+def test_specialty_picker_show_all_lists_hidden_with_reason(client_char):
+    client, c = client_char
+    client.post(step_url(c, 1), {"action": "race", "race": "human"})
+    from characters.views.wizard import specialty_options
+    c.refresh_from_db()
+    extensions.set_offer(["races-of-tephra"])
+    _sheet, groups = specialty_options(c)
+    entries = [o for _k, items in groups for o in items]
+    hidden = [o for o in entries if o["hidden"]]
+    assert hidden and all(not o["ok"] and o["reasons"] for o in hidden)
+    assert any(o["spec"].get("racial") and "another race" in "; ".join(o["reasons"]) for o in hidden)
+    page = client.get(step_url(c, 4)).content.decode()
+    assert "Show all" in page and 'x-show="all &&' in page
+
+
+def test_random_character_command_race_and_seed(db, capsys):
+    call_command("create_random_character", "--race", "elf", "--seed", "7")
+    out = capsys.readouterr().out
+    c = Character.objects.get()
+    assert c.race == "elf" and "seed 7" in out and c.status == "active"
+    call_command("create_random_character")
+    assert "seed " in capsys.readouterr().out

@@ -297,20 +297,24 @@ def specialty_options(character, level=None, extra_state=None):
     owned = {s for s, _ in state.specialties}
     groups = {}
     for spec in offer(reg.specialties.values(), keep=owned):
-        if spec.get("racial") and spec["racial"] not in race_family(state.race) and spec["slug"] not in owned:
-            continue  # other races' racial specialties
         skill = spec["skill"] or ("General (Sciences)" if spec["general"] else spec.get("group") or "Racial")
-        if spec["skill"] and max(sheet.skills[s].total for s in spec.get("skill_any") or [spec["skill"]]) < 1 \
-                and spec["slug"] not in owned:
-            continue
-        if spec["general"] and not any(sheet.skills[s].total for s in tables.SCIENCE_SKILLS):
-            continue
         ok, reasons = check_specialty(spec, state, sheet)
-        groups.setdefault(skill, []).append({"spec": spec, "ok": ok, "reasons": reasons,
+        # Hidden unless "show all" (C11): other races' racial specialties, skills without points, general
+        # specialties without a Science skill. Their reasons say why.
+        other_race = spec.get("racial") and spec["racial"] not in race_family(state.race)
+        hidden = spec["slug"] not in owned and bool(
+            other_race
+            or spec["skill"] and max(sheet.skills[s].total for s in spec.get("skill_any") or [spec["skill"]]) < 1
+            or spec["general"] and not any(sheet.skills[s].total for s in tables.SCIENCE_SKILLS))
+        if other_race and hidden:
+            ok, reasons = False, reasons + [_("racial specialty of another race")]
+        groups.setdefault(skill, []).append({"spec": spec, "ok": ok, "reasons": reasons, "hidden": hidden,
                                              "warnings": specialty_warnings(spec, state),
                                              "owned": spec["slug"] in owned})
     order = {s: i for i, s in enumerate(tables.ALL_SKILLS)}
-    return sheet, sorted(groups.items(), key=lambda kv: order.get(kv[0], 99))
+    # Visible entries first, so a group whose first entry is hidden is hidden as a whole.
+    return sheet, sorted(((k, sorted(v, key=lambda o: o["hidden"])) for k, v in groups.items()),
+                         key=lambda kv: order.get(kv[0], 99))
 
 
 def ctx_step4(request, character):
@@ -487,8 +491,28 @@ def save_step9(request, character, action):
 
 
 # --------------------------------------------------------------------------- step 10
+def finish_checklist(character):
+    """What is still open, as plain facts with the step to fix it (never a suggestion): [(text, step)]."""
+    reg = get_registry()
+    items = [(_("Step {n} is incomplete: {label}", n=n, label=_(label)), n)
+             for n, label in creation.STEPS if n in (1, 2, 4) and not step_done(character, n)]
+    for key in active_trait_keys(character.to_state(include_items=False))[0]:
+        trait = reg.traits.get(key)
+        if trait and trait.get("choice") and not character.trait_choices.get(key):
+            items.append((_("Make the choice for {trait}.", trait=trait["name"]), 1))
+    items += [(f"{spec['name']}: {spec['options']['label']}", 4) for spec in services.missing_options(character)]
+    sheet = character.compute()
+    free = sheet.stats["aug"].total - len(services.known_augment_entries(character)[0])
+    if free > 0:
+        items.append((_("Free augment slots: {n}", n=free), 5))
+    if sheet.hands["free"]:
+        items.append((_("Empty hands: {n}", n=sheet.hands["free"]), 6))
+    return items
+
+
 def ctx_step10(request, character):
-    return {"settings": NarratorSettings.get(), "levels": range(1, NarratorSettings.get().max_starting_level + 1)}
+    return {"settings": NarratorSettings.get(), "levels": range(1, NarratorSettings.get().max_starting_level + 1),
+            "checklist": finish_checklist(character)}
 
 
 def save_step10(request, character, action):

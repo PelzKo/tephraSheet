@@ -91,8 +91,8 @@ def set_nationality_story(character, slug):
     character.stories = stories
 
 
-def random_step1(character, rng):
-    r = creation.random_race_and_nationality(rng)
+def random_step1(character, rng, race=None):
+    r = creation.random_race_and_nationality(rng, race=race)
     set_race(character, r["race"])
     character.nationality = r["nationality"]
     character.fixed_traits = r["fixed_traits"] or character.fixed_traits
@@ -428,10 +428,10 @@ def random_finishings(character, rng):
 
 
 # --------------------------------------------------------------------------- random per step / all
-def random_step(character, step, rng=None):
+def random_step(character, step, rng=None, race=None):
     rng = rng or random.Random()
     if step == 1:
-        random_step1(character, rng)
+        random_step1(character, rng, race)
         character.save()
         grant_race_items(character)
     elif step == 2:
@@ -463,10 +463,10 @@ def random_step(character, step, rng=None):
 
 
 @transaction.atomic
-def random_all(character, rng=None):
+def random_all(character, rng=None, race=None):
     rng = rng or random.Random()
     for step in (1, 2, 4, 5, 6, 7, 9, 10):
-        random_step(character, step, rng)
+        random_step(character, step, rng, race)
     character.wizard_step = 10
     character.save()
 
