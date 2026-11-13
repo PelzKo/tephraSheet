@@ -1,3 +1,5 @@
+import json
+
 from django.db import models
 
 from rules.engine.state import ItemState
@@ -114,6 +116,9 @@ class ItemTemplate(ItemFields):
     is_starting_gear = models.BooleanField(default=False)
     source = models.CharField(max_length=10, choices=SOURCE_CHOICES, default="custom")
     created = models.DateTimeField(auto_now_add=True)
+    modified = models.BooleanField(default=False, help_text="book item changed by the narrator")
+    # hidden (book items deleted by the narrator, so seed_catalog does not bring them back); reusable for a trash
+    deleted_at = models.DateTimeField(null=True, blank=True)
 
     class Meta:
         ordering = ["kind", "name"]
@@ -127,4 +132,24 @@ class ItemTemplate(ItemFields):
         """Templates new choices may use: core plus switched-on extensions (rules.extensions)."""
         from rules.extensions import enabled
 
-        return cls.objects.filter(extension__in=["", *enabled()])
+        return cls.objects.filter(extension__in=["", *enabled()], deleted_at__isnull=True)
+
+    def reset_to_book(self):
+        """Restore the Playing Guide values (unsaved). False if the book has no such item."""
+        entry = book_entries().get((self.name, self.kind))
+        if entry is None:
+            return False
+        for f in [*self.ITEM_FIELDS, "is_starting_gear"]:
+            setattr(self, f, entry.get(f, self._meta.get_field(f).get_default()))
+        self.modified = False
+        self.deleted_at = None
+        return True
+
+
+def book_entries():
+    """Playing Guide items from rules/data/catalog.json: {(name, kind): field values}."""
+    from rules.registry import DATA_DIR
+
+    fields = {*ItemTemplate.ITEM_FIELDS, "is_starting_gear"}
+    items = json.loads((DATA_DIR / "catalog.json").read_text(encoding="utf8"))
+    return {(i["name"], i["kind"]): {k: v for k, v in i.items() if k in fields} for i in items}

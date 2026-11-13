@@ -34,7 +34,7 @@ The rule data (`tephra/rules/data/*.json`) is generated from `tephra/rules/data/
 
 ## Deployment
 
-Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, `migrate`, `seed_catalog` and `create_random_character --if-empty` (a demo character with password `demo` on a fresh database), then `exec`s gunicorn on `0.0.0.0:8000`. If any step fails, the app does not boot (supervisor reports FATAL).
+Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, `migrate`, `seed_catalog` (creates missing book items only; narrator edits stay) and `create_random_character --if-empty` (a demo character with password `demo` on a fresh database), then `exec`s gunicorn on `0.0.0.0:8000`. If any step fails, the app does not boot (supervisor reports FATAL).
 
 Environment variables go in `tephra/.env` (see `.env.sample`):
 

@@ -6,11 +6,13 @@
     <h1>{% if inventory_item %}{% t "Edit {name}" name=inventory_item.name %}{% elif item %}{% t "Edit catalog item" %}{% else %}{% t "Object creator" %}{% endif %}</h1>
     {% if character %}<a class="btn" href="{{ character.get_absolute_url }}?tab=inventory">{% t "Back to {name}" name=character %}</a>{% else %}<a class="btn" href="{% url 'catalog' %}">{% t "Back to catalog" %}</a>{% endif %}
   </div>
+  {% if item.source == "book" %}<p class="small">{% if item.deleted_at %}<span class="tag">{% t "hidden" %}</span> {% endif %}{% if item.modified %}<span class="tag">{% t "modified" %}</span> {% endif %}{% t "Playing Guide item: name and kind stay fixed; use “Copy” in the catalog for a variant." %}</p>{% endif %}
+  {% if copy_of %}<input type="hidden" name="copy" value="{{ copy_of.pk }}">{% endif %}
   <p class="muted small">{% t "Pick kind and size – the rules' values are filled in automatically (shown as “auto”). Only fill a number to override it." %}</p>
   {{ form.non_field_errors }}
   <div class="form-grid">
     <div class="field"><label for="{{ form.name.id_for_label }}">{% t "Name" %}</label>{{ form.name }}{{ form.name.errors }}</div>
-    <div class="field"><label for="id_kind">{% t "Kind" %}</label><select name="kind" x-model="kind">{% for v, l in form.fields.kind.choices %}<option value="{{ v }}" {% if form.kind.value == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select></div>
+    <div class="field"><label for="id_kind">{% t "Kind" %}</label><select name="kind" x-model="kind" {% if form.fields.kind.disabled %}disabled{% endif %}>{% for v, l in form.fields.kind.choices %}<option value="{{ v }}" {% if form.kind.value == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select></div>
     <div class="field"><label for="id_size">{% t "Size" %}</label><select name="size" x-model="size">{% for v, l in form.fields.size.choices %}<option value="{{ v }}" {% if form.size.value == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select></div>
     <div class="field"><label for="id_material">{% t "Material" %}</label><select name="material" x-model="material">{% for v, l in form.fields.material.choices %}<option value="{{ v }}" {% if form.material.value == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select></div>
     <div class="field"><label for="{{ form.price_princes.id_for_label }}">{% t "Price (princes)" %}</label>{{ form.price_princes }}</div>
@@ -100,7 +102,11 @@
     </div>
   {% endif %}
   <div class="wizard-actions">
-    {% if item and request.user.is_staff %}<button class="btn danger" name="delete" value="1" onclick="return confirm('{% t "Delete this catalog item?" %}')">{% t "Delete" %}</button>{% else %}<span></span>{% endif %}
+    {% if item and request.user.is_staff %}<span class="row">
+      {% if item.deleted_at %}<button class="btn" name="restore" value="1" formnovalidate>{% t "Restore" %}</button>
+      {% else %}<button class="btn danger" name="delete" value="1" formnovalidate onclick="return confirm('{% if item.source == "book" %}{% t "Hide this Playing Guide item from the catalog?" %}{% else %}{% t "Delete this catalog item?" %}{% endif %}')">{% if item.source == "book" %}{% t "Hide" %}{% else %}{% t "Delete" %}{% endif %}</button>{% endif %}
+      {% if item.source == "book" %}<button class="btn" name="reset" value="1" formnovalidate onclick="return confirm('{% t "Reset this item to the Playing Guide values?" %}')">{% t "Reset to book" %}</button>{% endif %}
+    </span>{% else %}<span></span>{% endif %}
     <button class="btn primary" type="submit">{% if inventory_item or item %}{% t "Save" %}{% elif character %}{% t "Add to inventory" %}{% else %}{% t "Add to catalog" %}{% endif %}</button>
   </div>
 </form>

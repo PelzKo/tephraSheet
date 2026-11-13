@@ -1,7 +1,10 @@
 # Inventory and items
 
 - **Found something?** Type a name (blanket, bottle, shark tooth …), a quantity and notes in the inventory tab: it is added as a *general item*.
-- **Add from catalog** shows every item; *pay* takes the price from your money on hand.
+- **Add from catalog** shows every item; *pay* takes the price from your money on hand (only if you have enough). Filter by source (*book*, *modified* book items, *custom*) and extension; long lists have pages.
+- **Copy** opens the object creator with a copy of any catalog item, saved as your own custom item.
+- **Export CSV** downloads the (filtered) catalog in the import format: edit it in a spreadsheet and bring it back with **Bulk import**. The import preview shows per row whether it is new, updates an existing item, is unchanged or is skipped (Playing Guide items can only be changed by the narrator).
+- Playing Guide items can only be changed by the narrator. Changed ones are marked *modified* and have **Reset to book**; deleting one hides it (filter *Hidden* to restore). Restarting the server never overwrites these changes.
 - **Create item** opens the object creator: choose kind and size and the rules fill in damage class, AP, range and armor values ("auto"). Weapons can get an **Accuracy bonus** and melee weapons and bows a **Strike bonus**. Armor penalties are entered as numbers and subtracted.
 - Every item you create is also **saved to the shared catalog**, so everyone can use it.
 - Choose where an item is (left/right hand, armor, deflection, worn, carried, stored). Only worn and held items apply their modifiers. A two-handed item goes into the left hand and blocks the right one.

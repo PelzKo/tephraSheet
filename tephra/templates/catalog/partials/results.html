@@ -1,8 +1,12 @@
 {% load sheet_tags %}
+<div class="row spread small muted" style="margin:6px 0">
+  <span>{% t "{n} items" n=page.paginator.count %}</span>
+  <a class="btn small" href="{% url 'catalog_export' %}{% querystring page=None for=None %}">{% t "Export CSV" %}</a>
+</div>
 <div class="table-scroll"><table class="data">
   <tr><th>{% t "Item" %}</th><th>{% t "Kind" %}</th><th>{% t "Size" %}</th><th>{% t "Price" %}</th><th data-nosort></th></tr>
   {% for i in items %}
-    <tr><td data-sort="{{ i.name }}"><b>{{ i.name|item_name }}</b>{% if i.is_starting_gear %} <span class="tag">{% t "starting gear" %}</span>{% endif %}{% if i.source == "custom" %} <span class="tag">{% t "custom" %}</span>{% endif %}
+    <tr><td data-sort="{{ i.name }}"><b>{{ i.name|item_name }}</b>{% if i.is_starting_gear %} <span class="tag">{% t "starting gear" %}</span>{% endif %}{% if i.source == "custom" %} <span class="tag">{% t "custom" %}</span>{% elif i.modified %} <span class="tag">{% t "modified" %}</span>{% else %} <span class="tag">{% t "book" %}</span>{% endif %}{% if i.deleted_at %} <span class="tag">{% t "hidden" %}</span>{% endif %}{% if i.extension %} <span class="tag">{{ extension_names|get:i.extension|default:i.extension|t }}</span>{% endif %}
         {% if i.variants %}<span class="small muted"> {% for v in i.variants %}{{ v|t }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>{% endif %}
         {% if i.augments %}<div class="small">{% for a in i.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}</div>{% endif %}
         {% if i.description %}<div class="small muted">{{ i|item_desc|truncatechars:160 }}</div>{% endif %}</td>
@@ -17,6 +21,14 @@
             <button class="btn small primary">{% t "Add" %}</button></form>
         {% endif %}
         {% if is_gm or i.source == "custom" %}<a class="btn small" href="{% url 'item_edit' i.pk %}">{% t "Edit" %}</a>{% endif %}
+        <a class="btn small" href="{% url 'item_create' %}?copy={{ i.pk }}{% if character %}&amp;for={{ character.pk }}{% endif %}" title="{% t "Open the object creator with a copy of this item" %}">{% t "Copy" %}</a>
       </td></tr>
   {% empty %}<tr data-nosort><td colspan="5" class="muted">{% t "No items found." %}</td></tr>{% endfor %}
 </table></div>
+{% if page.has_other_pages %}
+<div class="row" style="margin-top:8px">
+  {% if page.has_previous %}<a class="btn small" href="{% querystring page=page.previous_page_number %}" hx-get="{% url 'catalog' %}{% querystring page=page.previous_page_number %}" hx-target="#results" hx-push-url="true">{% t "Previous" %}</a>{% endif %}
+  <span class="small muted">{% t "Page {n} of {total}" n=page.number total=page.paginator.num_pages %}</span>
+  {% if page.has_next %}<a class="btn small" href="{% querystring page=page.next_page_number %}" hx-get="{% url 'catalog' %}{% querystring page=page.next_page_number %}" hx-target="#results" hx-push-url="true">{% t "Next" %}</a>{% endif %}
+</div>
+{% endif %}
