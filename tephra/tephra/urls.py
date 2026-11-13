@@ -55,6 +55,8 @@ urlpatterns = [
     path("wiki/race/<slug:slug>/", wiki_views.race, name="wiki_race"),
     path("wiki/p/<slug:slug>/", wiki_views.page, name="wiki_page"),
     path("wiki/p/<slug:slug>/edit/", wiki_views.edit, name="wiki_edit"),
+    path("wiki/p/<slug:slug>/history/", wiki_views.history, name="wiki_history"),
+    path("wiki/p/<slug:slug>/restore/<int:rev>/", wiki_views.restore, name="wiki_restore"),
     path(settings.ADMIN_URL + "login/", general.GMLoginView.as_view()),  # throttled, unlike admin's own
     path(settings.ADMIN_URL, admin.site.urls),
 ]

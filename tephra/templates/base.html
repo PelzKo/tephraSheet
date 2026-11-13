@@ -18,6 +18,7 @@
     <a class="brand" href="{% url 'character_list' %}">Tephra<small>{% t "character sheets" %}</small></a>
     {% block topbar %}{% endblock %}
     <nav>
+      <form class="inline header-search" method="get" action="{% url 'wiki' %}" role="search"><input type="search" name="q" placeholder="{% t "Search" %}…" aria-label="{% t "Search" %}" minlength="2"></form>
       <a href="{% url 'character_list' %}">{% t "Characters" %}</a>
       <a href="{% url 'catalog' %}">{% t "Catalog" %}</a>
       <a href="{% url 'wiki' %}">{% t "Wiki" %}</a>

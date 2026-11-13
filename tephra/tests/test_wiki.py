@@ -16,7 +16,8 @@ def test_wiki_pages_search_and_language(client):
     client.post(reverse("wiki_new"), {"title": "House rules", "body": "Crits on **12**.", "name": "Ana"})
     page = WikiPage.objects.get()
     assert page.slug == "house-rules"
-    client.post(reverse("wiki_edit", args=[page.slug]), {"title": "House rules", "body": "Crits on 11.", "name": "Bo"})
+    client.post(reverse("wiki_edit", args=[page.slug]), {"title": "House rules", "body": "Crits on 11.", "name": "Bo",
+                                                           "updated": page.updated.isoformat()})
     page.refresh_from_db()
     assert page.body == "Crits on 11." and page.revisions.get().body == "Crits on **12**."
     resp = client.get(reverse("wiki"), {"q": "battle theme"})

@@ -269,6 +269,18 @@ tr.fb-closed td { opacity: .55; }
 .wiki-body table { border-collapse: collapse; margin: 8px 0; font-size: 14px; display: block; overflow-x: auto; }
 .wiki-body th, .wiki-body td { border: 1px solid #c9bfa8; padding: 3px 6px; vertical-align: top; }
 .wiki-page .toc { columns: 2 220px; }
+.wiki-diff { white-space: pre-wrap; font-size: 13px; background: var(--paper-2); padding: 8px; }
+.wiki-diff .add { background: #d7f0d0; } .wiki-diff .del { background: #f6d5d0; } .wiki-diff .hunk { color: #777; }
+.wiki-conflict pre { white-space: pre-wrap; max-height: 40vh; overflow: auto; background: var(--paper-2); padding: 8px; }
+.wiki-page tr.selected td { background: var(--paper-2); }
+.header-search input { width: 9em; padding: 3px 6px; font: inherit; font-size: 14px; }
+@page { size: A4 portrait; margin: 15mm; }
+@media print {
+  .topbar, .messages, .wiki-page > a:first-child, .wiki-page > .row.spread .btn { display: none !important; }
+  body:has(.wiki-page), .wiki-page { background: #fff !important; box-shadow: none; border: 0; padding: 0; max-width: none; }
+  .wiki-page a { color: inherit; text-decoration: none; }
+  .wiki-page h2, .wiki-page h3 { break-after: avoid; }
+}
 /* Character tiles: long (German) stat labels wrap inside their box instead of overflowing. */
 .card .stats div { min-width: 0; }
 .card .stats span { display: block; font-size: 10px; letter-spacing: 0; line-height: 1.15; hyphens: auto; overflow-wrap: anywhere; }

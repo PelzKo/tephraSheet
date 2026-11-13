@@ -2,10 +2,13 @@
 {% block title %}{% t "Edit page" %} – {% t "Wiki" %}{% endblock %}
 {% block content %}
 <form method="post" class="paper stack">{% csrf_token %}
+  <input type="hidden" name="updated" value="{{ updated }}">
   <h1>{% if page %}{% t "Edit page" %}{% else %}{% t "New page" %}{% endif %}</h1>
   <label>{% t "Title" %} <input type="text" name="title" value="{{ title }}" maxlength="160" required></label>
   <label>{% t "Text" %} <span class="muted small">{% t "Markdown: # heading, **bold**, *italic*, - list, [link](https://…), tables with |" %}</span>
-    <textarea name="body" rows="20">{{ body }}</textarea></label>
+    <textarea name="body" rows="20" maxlength="{{ max_body }}">{{ body }}</textarea></label>
+  {% if conflict %}<details class="wiki-conflict" open><summary>{% t "The current text, saved {when}" when=conflict.updated|date:"d.m.Y H:i" %}{% if conflict.updated_by %} · {{ conflict.updated_by }}{% endif %}</summary>
+    <p><b>{{ conflict.title }}</b></p><pre>{{ conflict.body }}</pre></details>{% endif %}
   <div class="row">
     <label>{% t "Your name" %} <input type="text" name="name" value="{{ name }}" maxlength="80"></label>
     <label>{% t "Show in" %} <select name="language"><option value="">{% t "all languages" %}</option>

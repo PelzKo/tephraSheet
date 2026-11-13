@@ -1,0 +1,17 @@
+{
+ "Changes from {when} to now": "Änderungen von {when} bis jetzt",
+ "Compare": "Vergleichen",
+ "Every save keeps the previous version. Pick one to compare it with the current text.": "Jedes Speichern behält die vorige Fassung. Wähle eine, um sie mit dem aktuellen Text zu vergleichen.",
+ "History": "Verlauf",
+ "No differences.": "Keine Unterschiede.",
+ "No earlier versions.": "Keine früheren Fassungen.",
+ "Replaced on": "Ersetzt am",
+ "Restore": "Wiederherstellen",
+ "Restore this version?": "Diese Fassung wiederherstellen?",
+ "Someone changed this page while you were editing. Compare both texts, then save again to overwrite.": "Jemand hat diese Seite geändert, während du sie bearbeitet hast. Vergleiche beide Texte und speichere dann erneut, um zu überschreiben.",
+ "The current text, saved {when}": "Der aktuelle Text, gespeichert {when}",
+ "The text is too long (at most {n} characters).": "Der Text ist zu lang (höchstens {n} Zeichen).",
+ "Too many edits from your connection. Please try again later.": "Zu viele Änderungen von deiner Verbindung. Bitte versuche es später noch einmal.",
+ "Version restored. The replaced text is kept in the history.": "Fassung wiederhergestellt. Der ersetzte Text bleibt im Verlauf.",
+ "Written by": "Geschrieben von"
+}
