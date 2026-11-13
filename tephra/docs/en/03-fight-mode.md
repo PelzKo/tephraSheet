@@ -7,3 +7,4 @@ Click **Start fight** in the bar above the sheet. The counter shows how many **a
 - Click **My turn** when your turn begins. Maintained effects take their **upkeep** (1 AP each, Concentrated Stream too). If you don't have the AP for all of them, a window lets you tick which ones to keep – the ticked costs can't add up to more than your AP. Everything else ends. With only one effect and no AP, it simply ends.
 - Click **End my turn** when you are done: your AP refresh to the full amount and the next round starts.
 - **End fight** switches the counter off. Outside fight mode, switching shows the costs in an info bar but subtracts nothing.
+- In a specialty's details, **Spend n AP** takes the AP cost written there from this round.
