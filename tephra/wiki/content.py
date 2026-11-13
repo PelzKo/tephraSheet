@@ -5,8 +5,12 @@ import re
 from functools import cache
 from pathlib import Path
 
+import xml.etree.ElementTree as etree
+from urllib.parse import urlencode
+
 import markdown
 from django.utils.text import slugify
+from markdown.inlinepatterns import InlineProcessor
 
 from rules.lang import DEFAULT
 
@@ -15,13 +19,61 @@ DOCS_DIR = BASE / "docs"
 SOURCE_DIR = BASE / "rules" / "data" / "source"
 EXT_DIR = BASE / "rules" / "data" / "ext"  # <key>/rules.md (+ rules_<lang>.md): extension rules chapters
 SAFE_HREF = re.compile(r'href="(?!https?://|/|#|mailto:)[^"]*"')
+IMG = re.compile(r'<img alt="([^"]*)" src="([^"]*)"[^>]*>')
+CROSS_LINK = r"\[\[([^\]|\n]+)(?:\|([^\]\n]+))?\]\]"
+
+
+def _by_name(entries, name):
+    n = name.strip().lower()
+    return next((e for e in entries if n in (e["name"].lower(), e["name_en"].lower(), e.get("slug", ""))), None)
+
+
+def cross_link(target):
+    """``[[target]]`` → (label, url): ``spec:``/``aug:``/``trait:`` name a rule entry (any language, by name or
+    slug), anything else is a wiki page title (missing pages link to the new-page form)."""
+    from rules.registry import get_registry
+
+    kind, _, name = target.partition(":")
+    reg = get_registry()
+    if name and kind == "spec" and (s := _by_name(reg.specialties.values(), name)):
+        return s["name"], f"/wiki/specialty/{s['slug']}/"
+    if name and kind == "aug" and (a := _by_name(reg.augments.values(), name)):
+        return a["name"], "/catalog/augments/?" + urlencode({"q": a["name"]})
+    if name and kind == "trait" and (t := _by_name(reg.traits.values(), name)):
+        return t["name"], f"/wiki/race/{t['race']}/"
+    from .models import WikiPage
+
+    page = (WikiPage.objects.filter(slug=slugify(target)).first()
+            or WikiPage.objects.filter(title__iexact=target.strip()).first())
+    if page:
+        return page.title, page.get_absolute_url()
+    return target.strip(), "/wiki/new/?" + urlencode({"title": target.strip()})
+
+
+class _CrossLinks(InlineProcessor):
+    def handleMatch(self, m, data):
+        label, url = cross_link(m.group(1))
+        el = etree.Element("a", {"href": url, "class": "xlink"})
+        el.text = (m.group(2) or label).strip()
+        return el, m.start(0), m.end(0)
+
+
+def _image(m):
+    """Only same-origin images load; external ones become links so readers' IPs don't leak."""
+    alt, src = m.groups()
+    if src.startswith("/") and not src.startswith("//"):
+        return m.group(0)
+    return f'<a href="{src}">{alt or src}</a>'
 
 
 def render(text):
     """Markdown → HTML for text anyone may write: raw HTML is escaped, links only to http(s),
-    site paths, anchors and mailto."""
-    html = markdown.markdown((text or "").replace("<", "&lt;"), extensions=["tables", "sane_lists"])
-    return SAFE_HREF.sub('href="#"', html)
+    site paths, anchors and mailto, images only from this site, ``[[…]]`` cross-links."""
+    md = markdown.Markdown(extensions=["tables", "sane_lists"])
+    md.preprocessors.deregister("html_block")  # raw HTML is shown as text, not passed through
+    md.inlinePatterns.deregister("html")
+    md.inlinePatterns.register(_CrossLinks(CROSS_LINK, md), "cross_link", 175)
+    return SAFE_HREF.sub('href="#"', IMG.sub(_image, md.convert(text or "")))
 
 
 def _split(text, level_re):
