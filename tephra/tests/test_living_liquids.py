@@ -30,7 +30,8 @@ def test_learning(db):
                                      specialties=[["alchemy-liquid-life-giver", 1]]).to_state()
     sheet = compute(state)
     assert check_augment(reg.augments["alchemy-living-liquid-accurate-attacks"], state, sheet)[0]
-    assert not check_augment(reg.augments["alchemy-living-liquid-defensive"], state, sheet)[0]
+    # package F: Interior Platelets must be on the same liquid (checked on the item), not known
+    assert check_augment(reg.augments["alchemy-living-liquid-defensive"], state, sheet)[0]
 
 
 def test_liquid_block():

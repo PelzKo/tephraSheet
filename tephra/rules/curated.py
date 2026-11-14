@@ -360,7 +360,101 @@ AUGMENTS = {
     "automata-prosthetic-leg-propellers": {"modifiers": [mod("swim", by_marque=[10, 15, 20, 25])]},
     "automata-prosthetic-hand-propellers": {"modifiers": [mod("swim", by_marque=[10, 15, 20, 25])]},
     "automata-prosthetic-torso-mass-propulsion": {"modifiers": [mod("spd", by_marque=[5, 10, 15, 20])]},
+    # same wording as the melee/firearm Easily Altered, but the bow table has no qualifier
+    "armsmith-bow-easily-altered": {"qualifiers": ["req. Interchangeable Parts"]},
 }
+
+# Augment conditions on the item it is placed on ("Requires: placed on weapon with Custom"), classified in
+# rules/data/AUDIT_augment_requirements.md. Merged into the augment JSON as "item"; rules.engine.item_requirements
+# checks them. Keys: "needs" = AND of OR-groups of augment slugs on the same item, "needs_waived_by" = variants that
+# lift "needs" (aether-shaped weapons take Signature Weapon without Custom), "sizes"/"materials" = one of,
+# "variants" = one of (Aerodynamic counts as throwing), "max_ready" = base AP to ready (item value or size table),
+# "excludes" = augments it can't share an item with, "from" = the qualifiers this replaces: they are not checked
+# when learning. Lists the app has no item for (prosthetics, automata, vehicles) only use "from".
+AUGMENT_ITEM_RULES = {
+    "armsmith-melee-burn-trail": {"needs": [["armsmith-melee-combustion"]], "from": ["req. Combustion"]},
+    "armsmith-melee-everburning": {"needs": [["armsmith-melee-combustion"]], "from": ["req. Combustion"]},
+    "armsmith-melee-electrical-archs": {"needs": [["armsmith-melee-electrical"]], "from": ["req. Electrical"]},
+    "armsmith-melee-long-archs": {"needs": [["armsmith-melee-electrical-archs"]], "from": ["req. Electrical Archs"]},
+    "armsmith-melee-signature-weapon": {"needs": [["armsmith-melee-custom"]], "needs_waived_by": ["aether"],
+                                        "from": ["req. Custom"]},
+    "armsmith-melee-specialized": {"needs": [["armsmith-melee-custom"]], "from": ["req. Custom"]},
+    "armsmith-melee-gnome-sized": {"sizes": ["light"], "from": ["light"]},
+    "armsmith-melee-streamlined": {"sizes": ["light", "medium"], "from": ["light/medium"]},
+    "armsmith-melee-tangling": {"variants": ["flexible"], "from": ["flexible"]},
+    "armsmith-melee-propelled": {"variants": ["throwing"], "from": ["throwing"]},
+    "armsmith-melee-returning": {"variants": ["throwing"], "from": ["throwing"]},
+    "armsmith-firearm-crank-free": {"needs": [["armsmith-firearm-rotating-barrels"]], "from": ["req. Rotating Barrels"]},
+    "armsmith-firearm-crossbow-signature-weapon": {"needs": [["armsmith-firearm-crossbow-custom"]],
+                                                   "from": ["req. Custom"]},
+    "armsmith-firearm-crossbow-gnome-sized": {"sizes": ["light"], "from": ["light only"]},
+    "armsmith-firearm-rotating-barrels": {"max_ready": 2},
+    "armsmith-bow-burn-trail-everburning": {"needs": [["armsmith-bow-combustion"]]},
+    "armsmith-munition-split-shot": {"excludes": ["armsmith-munition-syringed", "armsmith-munition-inkshot",
+                                                  "armsmith-munition-flash-bangs"]},
+    **{f"armsmith-turret-{s}": {"needs": [["armsmith-turret-automated"]], "from": ["req. Automated"]}
+       for s in ("body-part-seeker", "deadly-accurate", "seek-destroy-system", "spray-shots", "targeting-system")},
+    "armsmith-turret-devastatingly-accurate": {"needs": [["armsmith-turret-automated"],
+                                                         ["armsmith-turret-deadly-accurate"]],
+                                               "from": ["req. Automated", "req. Deadly Accurate"]},
+    "gadgetry-explosive-anti-handling-fuse": {"needs": [["gadgetry-explosive-delay"]], "from": ["req. Delay"]},
+    "gadgetry-explosive-clinging": {"needs": [["gadgetry-explosive-jumping", "gadgetry-explosive-roaming"]],
+                                    "from": ["req. Jumping or Roaming"]},
+    "gadgetry-explosive-high-incendiary": {"needs": [["gadgetry-explosive-incendiary"]], "from": ["req. Incendiary"]},
+    "gadgetry-explosive-lingering-fires": {"needs": [["gadgetry-explosive-incendiary"]], "from": ["req. Incendiary"]},
+    "gadgetry-explosive-miniscule": {"needs": [["gadgetry-explosive-concealable"]], "from": ["req. Concealable"]},
+    "gadgetry-explosive-proximity-leap": {"needs": [["gadgetry-explosive-jumping"], ["gadgetry-explosive-proximity-fuse"]],
+                                          "from": ["req. Jumping", "req. Proximity Fuse"]},
+    # "Knock Back" is the core explosive augment "Knockback" (the squib Knock Back is on another list)
+    "gadgetry-explosive-shockwave": {"needs": [["gadgetry-explosive-knockback"]], "from": ["req. Knock Back"]},
+    "gadgetry-explosive-super-heated-shrapnel": {"needs": [["gadgetry-explosive-shrapnel"]], "from": ["req. Shrapnel"]},
+    "gadgetry-explosive-vast-crater": {"needs": [["gadgetry-explosive-sinking-crater"]], "from": ["req. Sinking Crater"]},
+    "gadgetry-firebomb-battlefield-scorcher": {"needs": [["gadgetry-firebomb-extended-blast"]],
+                                               "from": ["req. Extended Blast"]},
+    "gadgetry-firebomb-magnetic-pulsing": {"needs": [["gadgetry-firebomb-sparks-in-the-air"]],
+                                           "from": ["req. Sparks in the Air"]},
+    "gadgetry-resonator-fast-black-trap": {"needs": [["gadgetry-resonator-black-trap"]], "from": ["req. Black Trap"]},
+    "gadgetry-resonator-focused-black-trap": {"needs": [["gadgetry-resonator-black-trap"]], "from": ["req. Black Trap"]},
+    "gadgetry-resonator-highly-irradiated": {"needs": [["gadgetry-resonator-irradiated"]], "from": ["req. Irradiated"]},
+    "gadgetry-resonator-widespread-darkness": {"needs": [["gadgetry-resonator-light-absorbing"]],
+                                               "from": ["req. Light-Absorbing"]},
+    "alchemy-living-liquid-defensive": {"needs": [["alchemy-living-liquid-interior-platelets"]],
+                                        "from": ["req. Interior Platelets"]},
+    "alchemy-living-liquid-lifting-liquid": {"needs": [["alchemy-living-liquid-lighter-than-air-liquid"]],
+                                             "from": ["req. Lighter-than-Air Liquid"]},
+    "alchemy-medicine-antivenom-plus": {"needs": [["alchemy-medicine-antivenom"]], "from": ["req. Antivenom"]},
+    "luck-memento-master-of-fortune": {"needs": [["luck-memento-moneymaker"]], "from": ["req. Moneymaker"]},
+    "luck-memento-lost-and-stolen": {"needs": [["luck-memento-lost-wallet"]], "from": ["req. Lost Wallet"]},
+    # no item in the app (prosthetics, automata, vehicles): only no longer a learning requirement
+    "automata-fusebox-master-fuse-box": {"from": ["req. Specialist"]},
+    "automata-clockwork-hit-them-subdirective": {"from": ["req. Avenge-Me"]},
+    "automata-clockwork-hurt-them-subdirective": {"from": ["req. Avenge-Me"]},
+    "automata-prosthetic-air-conditioner": {"from": ["req. Air Blaster"]},
+    "automata-prosthetic-air-tunnel": {"from": ["req. Air Blaster"]},
+    "automata-prosthetic-hidden-blade": {"from": ["req. Weapon Mounting"]},
+    "automata-prosthetic-hidden-claymore": {"from": ["req. Hidden Blade"]},
+    "automata-prosthetic-overglow": {"from": ["req. Glowing"]},
+    "automata-prosthetic-hand-retractable": {"from": ["req. Hand-Launcher"]},
+    "automata-prosthetic-torso-poison-gas-receptor": {"from": ["req. Poison Gas Epicenter"]},
+    "automata-prosthetic-cold-iron": {"from": ["req. Freezer"]},
+    "automata-prosthetic-hot-iron": {"from": ["req. Furnace"]},
+    "automata-prosthetic-flame-exhausts": {"from": ["req. Furnace"]},
+    "automata-prosthetic-freeze-exhausts": {"from": ["req. Freezer"]},
+    "automata-prosthetic-smokestack": {"from": ["req. Furnace or Freezer"]},
+    "automata-prosthetic-hand-flame-pores": {"from": ["req. Furnace"]},
+    "automata-prosthetic-hand-freezing-pores": {"from": ["req. Freezer"]},
+    "engineer-auto-blazing-speed": {"from": ["req. Improved Speed"]},
+    "engineer-auto-clanker-extra-passengers": {"from": ["req. Passenger"]},
+    "engineer-vehicle-armor-exceptional-structure": {"from": ["req. Structural Integrity"]},
+}
+# Learning requirements that aren't a specialty or augment name (book: "Requires: Marque II Explosives").
+AUGMENT_LEARN = {
+    "gadgetry-explosive-extended-blast": {"learn": [{"type": "marque", "min": 2}], "learn_from": ["req. mQ II explosives"]},
+}
+for _slug, _rule in AUGMENT_ITEM_RULES.items():
+    AUGMENTS.setdefault(_slug, {})["item"] = _rule
+for _slug, _rule in AUGMENT_LEARN.items():
+    AUGMENTS.setdefault(_slug, {}).update(_rule)
 
 # --------------------------------------------------------------------------- catalog seed
 

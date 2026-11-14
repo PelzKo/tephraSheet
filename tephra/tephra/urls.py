@@ -39,6 +39,7 @@ urlpatterns = [
     path("c/<int:pk>/items/<int:item_id>/", catalog_views.inventory_item_edit, name="inventory_item_edit"),
     path("catalog/", catalog_views.catalog_list, name="catalog"),
     path("catalog/augments/", catalog_views.augment_reference, name="augment_reference"),
+    path("catalog/augment-check/", catalog_views.augment_check, name="augment_check"),
     path("catalog/new/",catalog_views.item_create, name="item_create"),
     path("catalog/<int:pk>/edit/", catalog_views.item_edit, name="item_edit"),
     path("catalog/<int:pk>/add/", catalog_views.add_to_inventory, name="add_to_inventory"),

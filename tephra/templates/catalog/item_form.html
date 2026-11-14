@@ -1,6 +1,6 @@
 {% extends "base.html" %}
 {% block content %}
-<form method="post" class="paper" x-data="itemCreator({{ tables_json }}, {{ augments_json }})" x-init="init()">
+<form method="post" class="paper" x-data="itemCreator({{ tables_json }}, {{ augments_json }})" x-init="init()" x-on:change="recheck()" data-check="{% url 'augment_check' %}">
   {% csrf_token %}
   <div class="row spread">
     <h1>{% if inventory_item %}{% t "Edit {name}" name=inventory_item.name %}{% elif item %}{% t "Edit catalog item" %}{% else %}{% t "Object creator" %}{% endif %}</h1>
@@ -77,13 +77,14 @@
             <b x-text="nameOf(a[0])"></b>
             <select x-model.number="a[1]"><option value="1">mQ I</option><option value="2" :disabled="find(a[0])?.two_marque">mQ II</option><option value="3">mQ III</option><option value="4" :disabled="find(a[0])?.two_marque">mQ IV</option></select>
             <span class="small muted" x-text="effectOf(a[0], a[1])"></span>
+            <span class="tag bad" x-show="blocked.selected[a[0]]" x-text="blocked.selected[a[0]]"></span>
             <button type="button" class="btn small danger" x-on:click="augs.splice(i, 1)">{% t "Remove" %}</button>
           </div>
           <details class="small"><summary>{% t "Info" %}</summary><div x-html="infoOf(a[0])"></div></details>
         </div>
       </template>
       <div class="row"><select x-model="pick"><option value="">{% t "Add augment…" %}</option>
-        <template x-for="o in augOptions" :key="o.slug"><option :value="o.slug" x-text="o.name + ' (' + tt(o.slots === 1 ? '{n} slot' : '{n} slots', {n: o.slots}) + ', ' + o.list + ')'"></option></template></select>
+        <template x-for="o in augOptions" :key="o.slug"><option :value="o.slug" :disabled="!!blocked.options[o.slug]" x-text="o.name + ' (' + tt(o.slots === 1 ? '{n} slot' : '{n} slots', {n: o.slots}) + ', ' + o.list + ')' + (blocked.options[o.slug] ? ' – ' + blocked.options[o.slug] : '')"></option></template></select>
         <button type="button" class="btn small" x-on:click="if (pick) { augs.push([pick, 1]); pick=''; }">{% t "Add" %}</button></div>
       <div class="small" x-show="pick" x-html="infoOf(pick)" style="margin-top:4px"></div>
     </div>
@@ -127,6 +128,7 @@ window.itemCreator = function (tables, augChoices) {
       return out;
     },
     tables, augChoices, kind: "", size: "", material: "metal", beta: false, memento: false, houseRule: false, augs: [], pick: "",
+    blocked: {selected: {}, options: {}},
     init() {
       const f = this.$root;
       this.kind = f.querySelector("[name=kind]").value;
@@ -136,6 +138,18 @@ window.itemCreator = function (tables, augChoices) {
       this.memento = !!f.querySelector("[name=memento]")?.checked;
       this.houseRule = f.querySelector("[name=house_rule]").checked;
       try { this.augs = JSON.parse(f.querySelector("[name=augments_json]").getAttribute("value") || "[]"); } catch (e) { this.augs = []; }
+      this.$watch("augs", () => this.recheck());
+      this.$nextTick(() => this.recheck());
+    },
+    // the server's item check (same as on saving): reasons for chosen augments and for options that don't fit
+    async recheck() {
+      const fd = new FormData(this.$root);
+      fd.set("augments_json", JSON.stringify(this.augs));
+      fd.set("kind", this.kind);  // a disabled select (book items) is not in the form data
+      try {
+        const r = await fetch(this.$root.dataset.check, {method: "POST", body: fd});
+        if (r.ok) this.blocked = await r.json();
+      } catch (e) { /* offline: the save still checks */ }
     },
     get isWeapon() { return ["melee", "firearm", "bow", "crossbow"].includes(this.kind); },
     auto(key) {

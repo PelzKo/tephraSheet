@@ -11,7 +11,7 @@
             {% elif o.ok and known|length < capacity %}<button class="btn small primary" name="action" value="add:{{ o.aug.slug }}" formnovalidate>{% t "Learn" %}</button>{% endif %}
             <b>{{ o.aug.name }}</b> {% ext_badge o.aug %}{% if o.aug.two_marque %} <span class="tag" title="{% t "This augment only has mQ I and mQ III." %}">{% t "mQ I/III" %}</span>{% endif %}
             <span class="tag">{% if o.aug.slots == 1 %}{% t "1 slot" %}{% else %}{% t "{n} slots" n=o.aug.slots|default_if_none:"?" %}{% endif %}</span>
-            {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
+            {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}{% for n in o.aug|install_notes %} <span class="small muted">{{ n }}</span>{% endfor %}
             <span class="cost">{% t "your marque: {m}" m=o.marque|roman %}</span>
           </header>
           <div class="small">{% for m in o.aug.marques %}{% if m %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m|term_tips }}</span>{% endif %}{% endfor %} {{ o.aug.notes|term_tips }}</div>

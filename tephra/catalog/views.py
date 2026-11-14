@@ -4,7 +4,7 @@ from django.contrib import messages
 from django.core.paginator import Paginator
 from django.db import IntegrityError, transaction
 from django.db.models import Q
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -12,7 +12,7 @@ from django.views.decorators.http import require_POST
 
 from characters import access, actionlog, services
 from characters.models import Character, InventoryItem
-from rules.engine import tables
+from rules.engine import item_requirements, tables
 from rules.extensions import EXTENSIONS, enabled, offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
@@ -235,6 +235,34 @@ def inventory_item_edit(request, character, item_id):
         messages.success(request, _("{name} updated.", name=inv.name))
         return redirect(f"{character.get_absolute_url()}?tab=inventory")
     return render(request, "catalog/item_form.html", _creator_context(form, character, inventory_item=inv))
+
+
+@require_POST
+def augment_check(request):
+    """Object creator picker: why augments don't fit the item as filled in so far (the check ItemForm.clean runs).
+    {"selected": {slug: reason}, "options": {slug: reason}} – options are tried as if added."""
+    p = request.POST
+    reg = get_registry()
+    try:
+        augs = json.loads(p.get("augments_json") or "[]")
+    except ValueError:
+        augs = []
+    augs = [a for a in augs if isinstance(a, list) and len(a) == 2 and a[0] in reg.augments] \
+        if isinstance(augs, list) else []
+    item = {"kind": p.get("kind", ""), "size": p.get("size", ""), "material": p.get("material", ""),
+            "variants": p.getlist("variants"), "ap_ready": _int(p.get("ap_ready")), "augments": augs}
+    out = {"selected": {}, "options": {}}
+    if p.get("house_rule"):
+        return JsonResponse(out)
+    on = {a[0] for a in augs}
+    for slug in on:
+        if reasons := item_requirements.augment_reasons(slug, item):
+            out["selected"][slug] = "; ".join(reasons)
+    for slug, aug in reg.augments.items():
+        if aug.get("item") and slug not in on:
+            if reasons := item_requirements.augment_reasons(slug, {**item, "augments": [*augs, [slug, 1]]}):
+                out["options"][slug] = "; ".join(reasons)
+    return JsonResponse(out)
 
 
 @require_POST

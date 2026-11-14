@@ -33,7 +33,8 @@ def test_resonator_augments_need_designer(db):
     assert not check_augment(reg.augments["gadgetry-resonator-burning"], state, compute(state))[0]
     state = designer("gadgetry-resonator-designer").to_state()
     assert check_augment(reg.augments["gadgetry-resonator-burning"], state, compute(state))[0]
-    assert not check_augment(reg.augments["gadgetry-resonator-fast-black-trap"], state, compute(state))[0]
+    # package F: "req. Black Trap" means Black Trap on the same resonator, checked on the item, not when learning
+    assert check_augment(reg.augments["gadgetry-resonator-fast-black-trap"], state, compute(state))[0]
 
 
 def test_resonator_basics_grant_five(db):

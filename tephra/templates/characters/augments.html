@@ -27,7 +27,7 @@
                 {% else %}<button class="btn small" name="action" value="swap" onclick="this.form.slug.value='{{ o.aug.slug }}'">{% t "Swap in" %}</button>{% endif %}
               {% endif %}{% if admin_mode and not o.known %}<button class="btn small" name="action" value="grant" onclick="this.form.slug.value='{{ o.aug.slug }}'" title="{% t "Admin mode: add without rule checks" %}">{% t "Grant" %}</button>{% endif %}{% if o.aug.slug in planned and not o.known %}<span class="tag ok">{% t "planned for this level" %}</span>{% endif %}
               <b>{{ o.aug.name }}</b> {% ext_badge o.aug %}{% if o.aug.two_marque %} <span class="tag" title="{% t "This augment only has mQ I and mQ III." %}">{% t "mQ I/III" %}</span>{% endif %} <span class="tag">{% if o.aug.slots == 1 %}{% t "1 slot" %}{% else %}{% t "{n} slots" n=o.aug.slots|default_if_none:"?" %}{% endif %}</span>
-              {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
+              {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}{% for n in o.aug|install_notes %} <span class="small muted">{{ n }}</span>{% endfor %}
               <span class="cost">{% t "your marque: {n}" n=o.marque|roman %}</span>
             </header>
             <div class="small">{% for m in o.aug.marques %}{% if m %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m|term_tips }}</span>{% endif %}{% endfor %} {{ o.aug.notes|term_tips }}</div>

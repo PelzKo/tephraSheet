@@ -165,8 +165,9 @@ def _unknown_slugs(c, items):
     return out
 
 
-def import_character(data, name, password):
-    """Create a new character from export data. Raises TransferError (nothing saved) on any problem."""
+def import_character(data, name, password, check_items=True):
+    """Create a new character from export data. Raises TransferError (nothing saved) on any problem.
+    ``check_items``: refuse items whose augments don't fit them (off for duplicates: existing items stay as they are)."""
     if not isinstance(data, dict) or data.get("format") != FORMAT:
         raise TransferError([_("This is not a TephraSheet character file.")])
     if data.get("version") != VERSION:
@@ -193,6 +194,9 @@ def import_character(data, name, password):
         errors += [_("Unknown rule entry: {entry}", entry=e) for e in _unknown_slugs(character, items)]
     except (TypeError, ValueError):
         errors.append(_("The rule choices have the wrong format."))
+    if check_items and not errors:
+        for n, item in enumerate(items):
+            errors += [f"items {n + 1}: {p}" for p in item.augment_problems]
     for n, (row, _o) in enumerate(rows["automatons"]):
         for k in ("weapon", "armor"):
             ref = row.get(k)
@@ -245,4 +249,4 @@ def _remap_toggle(key, new_ids):
 
 def duplicate_character(character, name, password):
     """C14: a copy with everything, through the same export → import path."""
-    return import_character(export_character(character), name, password)
+    return import_character(export_character(character), name, password, check_items=False)

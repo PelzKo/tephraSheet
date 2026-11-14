@@ -2,6 +2,7 @@ import json
 
 from django import forms
 
+from rules.engine import item_requirements
 from rules.engine.tables import VARIANTS
 from rules.extensions import enabled, is_offered, offer
 from rules.lang import gettext as _
@@ -14,6 +15,12 @@ FORM_FIELDS = ["name", "kind", "size", "material", "beta", "concealable", "hands
                "range", "increment", "soak", "eva_penalty", "spd_penalty", "climb_swim_penalty", "deflect_bonus",
                "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "price_dukes", "description", "memento",
                "binding", "house_rule"]
+
+
+def _norm(v):
+    if isinstance(v, (list, tuple)):
+        return sorted(tuple(x) if isinstance(x, list) else x for x in v)
+    return v if v not in ("", None) else None
 
 
 class ItemForm(forms.ModelForm):
@@ -65,18 +72,31 @@ class ItemForm(forms.ModelForm):
             raise forms.ValidationError(_("Invalid augment data."))
         reg = get_registry()
         out = []
-        for entry in data:
-            if not isinstance(entry, (list, tuple)) or len(entry) != 2:
-                continue
-            slug, marque = entry
-            if slug in reg.augments:
-                out.append([slug, max(1, min(4, int(marque)))])
+        for entry in data if isinstance(data, list) else [None]:  # also on house-rule items: no unknown data
+            if not (isinstance(entry, list) and len(entry) == 2 and entry[0] in reg.augments
+                    and type(entry[1]) is int and 1 <= entry[1] <= 4):
+                raise forms.ValidationError(_("Invalid augment data."))
+            out.append(entry)
         return out
+
+    # what decides whether the augments fit; an unchanged legacy item can still be saved (it shows a warning)
+    FIT_FIELDS = ("kind", "size", "material", "variants", "augments", "ap_ready", "house_rule", "memento", "beta")
+
+    def _fit_changed(self, data):
+        inst = self.instance
+        new = {**data, "variants": data.get("variants") or [], "augments": data.get("augments_json") or []}
+        return any(_norm(getattr(inst, f, None)) != _norm(new[f]) for f in self.FIT_FIELDS if f in new)
 
     def clean(self):
         data = super().clean()
+        if "augments_json" not in data:  # already refused as invalid
+            return data
         if data.get("house_rule"):  # the group allows any augments on this item (slots and kind unchecked)
             return data
+        if self._fit_changed(data):
+            item = {**data, "variants": data.get("variants") or [], "augments": data["augments_json"]}
+            for problem in item_requirements.problems(item):
+                self.add_error(None, problem)
         augs = data.get("augments_json") or []
         kind = data.get("kind")
         reg = get_registry()

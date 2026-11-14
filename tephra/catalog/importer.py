@@ -5,6 +5,7 @@ import io
 import json
 import re
 
+from rules.engine import item_requirements
 from rules.engine.tables import VARIANTS
 from rules.extensions import EXTENSIONS
 from rules.lang import gettext as _
@@ -269,5 +270,7 @@ def parse_rows(text):
         if "augments" in raw:
             values["augments"] = parse_augments(raw["augments"], kind, errors, memento=values.get("memento", False),
                                                  house_rule=values.get("house_rule", False))
+            # shortcut: an update row is checked with its own columns only, not merged with the existing item
+            errors += item_requirements.problems(values)
         result.append({"line": n, "values": values, "errors": errors})
     return result

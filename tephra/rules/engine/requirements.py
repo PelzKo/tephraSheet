@@ -296,9 +296,16 @@ def check_augment(aug, state, sheet):
         reasons.append(_("needs a crafting specialty for {lists}", lists=" / ".join(_(x) for x in aug["lists"])))
     if augment_points(aug, sheet, lists & set(aug["lists"]) or None) < 1:
         reasons.append(_("needs points in {skill}", skill=_(" or ").join(_(s) for s in sorted(augment_skills(aug)))))
+    for clause in aug.get("learn", []):  # "Requires: Marque II Explosives"
+        if clause["type"] == "marque" and \
+                tables.marque_for_points(augment_points(aug, sheet, lists & set(aug["lists"]) or None)) < clause["min"]:
+            reasons.append(_("needs marque {roman} in {skill}", roman=("I", "II", "III", "IV")[clause["min"] - 1],
+                             skill=_(" or ").join(_(s) for s in sorted(augment_skills(aug)))))
     names = owned_names(state)
+    # conditions on the item (curated.AUGMENT_ITEM_RULES "from") are checked when it is installed, not when learning
+    on_item = {*(aug.get("item") or {}).get("from", []), *aug.get("learn_from", [])}
     for q in aug.get("qualifiers_en", []):
-        if q.startswith("req. "):
+        if q.startswith("req. ") and q not in on_item:
             needed = [n.strip() for n in q[5:].split(" or ")]
             if not any(_req_met(n, aug, known, names) for n in needed):
                 reasons.append(_("needs {names}", names=_(" or ").join(_local(n) for n in needed)))

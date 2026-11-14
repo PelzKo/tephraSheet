@@ -17,7 +17,7 @@
             <b>{{ a.name }}</b> <span class="tag">{% if a.slots == 1 %}{% t "{n} slot" n=1 %}{% else %}{% t "{n} slots" n=a.slots|default_if_none:"?" %}{% endif %}</span>
             <span class="tag">{% for li in a.lists %}{{ li|t }}{% if not forloop.last %}/{% endif %}{% endfor %}</span>
             {% if a.accessory %}<span class="tag">{% t "accessory" %}</span>{% endif %}
-            {% for q in a.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
+            {% for q in a.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}{% for n in a|install_notes %} <span class="small muted">{{ n }}</span>{% endfor %}
             {% if a.subsection %}<span class="cost">{{ a.subsection }}</span>{% endif %}
           </header>
           <div class="small">{% for m in a.marques %}{% if m and m != "–" %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m|term_tips }}</span>{% endif %}{% endfor %} {{ a.notes|term_tips }}{% if a.price %} · {% t "price {p} pr" p=a.price %}{% endif %}</div>

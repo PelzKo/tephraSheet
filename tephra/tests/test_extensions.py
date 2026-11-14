@@ -80,7 +80,7 @@ def test_augment_requirement_checked_in_german(db):
     lang.set_language("de")
     try:
         state = c.to_state()
-        ok, reasons = check_augment(get_registry().augments["automata-prosthetic-air-conditioner"], state, compute(state))
+        ok, reasons = check_augment(get_registry().augments["automata-prosthetic-head-sensory-transmission"], state, compute(state))
     finally:
         lang.set_language(lang.DEFAULT)
     assert not ok and len(reasons) == 1

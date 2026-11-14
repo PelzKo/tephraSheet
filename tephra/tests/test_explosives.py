@@ -43,14 +43,18 @@ def test_anti_handling_needs_delay_and_same_name_augments_stay_apart(db):
     reg = get_registry()
     state = state_of({"Gadgetry": 3}, ["gadgetry-pyrotechnician", "gadgetry-firebomber"])
     sheet = compute(state)
-    assert not check_augment(reg.augments["gadgetry-explosive-anti-handling-fuse"], state, sheet)[0]
+    # package F: these "req." are augments on the same bomb (checked on the item), not learning requirements
+    assert check_augment(reg.augments["gadgetry-explosive-anti-handling-fuse"], state, sheet)[0]
+    from rules.engine.item_requirements import problems
+
+    def bomb(*augs):
+        return problems({"kind": "gear", "augments": [[a, 1] for a in augs]})
+
+    assert bomb("gadgetry-explosive-anti-handling-fuse") and not bomb("gadgetry-explosive-anti-handling-fuse",
+                                                                       "gadgetry-explosive-delay")
     # Battlefield Scorcher needs the firebomb Extended Blast, the explosive one doesn't count
-    state = state_of({"Gadgetry": 3}, ["gadgetry-pyrotechnician", "gadgetry-firebomber"],
-                     ["gadgetry-explosive-extended-blast"])
-    assert not check_augment(reg.augments["gadgetry-firebomb-battlefield-scorcher"], state, compute(state))[0]
-    state = state_of({"Gadgetry": 3}, ["gadgetry-pyrotechnician", "gadgetry-firebomber"],
-                     ["gadgetry-firebomb-extended-blast"])
-    assert check_augment(reg.augments["gadgetry-firebomb-battlefield-scorcher"], state, compute(state))[0]
+    assert bomb("gadgetry-explosive-extended-blast", "gadgetry-firebomb-battlefield-scorcher")
+    assert not bomb("gadgetry-firebomb-extended-blast", "gadgetry-firebomb-battlefield-scorcher")
 
 
 def test_scanning_activator_needs_remote_activation(db):

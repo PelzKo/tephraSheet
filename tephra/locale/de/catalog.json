@@ -248,5 +248,6 @@
  "not bound": "nicht gebunden",
  "{augment} only fits a memento.": "{augment} passt nur auf ein Memento.",
  "Living liquid (vial)": "Lebende Flüssigkeit (Phiole)",
- "Released (living liquid)": "Freigesetzt (lebende Flüssigkeit)"
+ "Released (living liquid)": "Freigesetzt (lebende Flüssigkeit)",
+ "does not meet: {n}": "erfüllt nicht: {n}"
 }

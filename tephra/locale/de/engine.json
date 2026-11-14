@@ -214,5 +214,16 @@
  "Heavy without Footing": "Schwer ohne Festen Stand",
  "Hybrid": "Hybrid",
  "Variant": "Variante",
- "Fluoform": "Fluoform"
+ "Fluoform": "Fluoform",
+ "Only on {sizes} items.": "Nur auf Gegenständen der Größe {sizes}.",
+ "Only on {variants} weapons.": "Nur auf Waffen der Art {variants}.",
+ "Requires {names} on the item when installed.": "Braucht beim Anbringen {names} auf demselben Gegenstand.",
+ "can't be combined with {names}": "nicht kombinierbar mit {names}",
+ "needs a {materials} item": "braucht einen Gegenstand aus {materials}",
+ "needs a {sizes} item": "braucht einen Gegenstand der Größe {sizes}",
+ "needs a {variants} weapon": "braucht eine Waffe der Art {variants}",
+ "needs at most {max} AP to ready (has {have})": "höchstens {max} AP zum Bereitmachen (hat {have})",
+ "needs marque {roman} in {skill}": "braucht Marque {roman} in {skill}",
+ "needs {names} on the same item": "braucht {names} auf demselben Gegenstand",
+ "{augment}: {reason}": "{augment}: {reason}"
 }

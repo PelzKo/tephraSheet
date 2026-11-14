@@ -37,7 +37,9 @@ def test_learning(db):
     sheet = compute(state)
     assert check_augment(reg.augments["luck-memento-keen"], state, sheet)[0]
     assert not check_augment(reg.augments["luck-memento-hand-slip"], state, sheet)[0]  # needs Feeling Lucky
-    assert not check_augment(reg.augments["luck-memento-master-of-fortune"], state, sheet)[0]  # needs Moneymaker
+    # package F: Moneymaker must be on the same memento (checked on the item), not known
+    assert check_augment(reg.augments["luck-memento-master-of-fortune"], state, sheet)[0]
+    assert not check_augment(reg.augments["luck-memento-fumble"], state, sheet)[0]  # Hand Slip stays a learning req.
 
 
 def test_carried_memento_applies_and_stacks_once(db):

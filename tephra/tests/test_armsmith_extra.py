@@ -67,7 +67,7 @@ def test_crafting_basics_grant_and_turret_requirements(db):
     assert not ok and "already known" in reasons
     state = smith("armsmith-gunsmith", "armsmith-turret-builder").to_state()
     ok, reasons = check_augment(reg.augments["armsmith-turret-body-part-seeker"], state, compute(state))
-    assert not ok
+    assert ok  # package F: "req. Automated" = an Automated turret, checked on the item, not when learning
 
 
 def test_turret_specialty_warns_without_turret_builder(db):

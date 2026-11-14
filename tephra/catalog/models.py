@@ -84,6 +84,13 @@ class ItemFields(models.Model):
         return {f: getattr(self, f) for f in self.ITEM_FIELDS}
 
     @property
+    def augment_problems(self):
+        """Augment conditions this item doesn't meet (old items are kept as they are and only show a warning)."""
+        from rules.engine.item_requirements import problems
+
+        return problems(self.item_values()) if self.augments else []
+
+    @property
     def is_weapon(self):
         return self.kind in WEAPON_KINDS
 

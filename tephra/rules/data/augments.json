@@ -1288,7 +1288,17 @@
   "size": "",
   "price": "",
   "text": "Requires: Augmented with Rotating Barrels\nConverting your firearm to be truly automatic, the crank-free firearm no longer increases the need of hands - a one-handed firearm is still one-handed, and a two-handed firearm is still just two-handed.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-firearm-rotating-barrels"
+    ]
+   ],
+   "from": [
+    "req. Rotating Barrels"
+   ]
+  }
  },
  {
   "slug": "armsmith-firearm-crossbow-custom",
@@ -1454,7 +1464,15 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on light weapon\nYou’ve been able to shrink the weapon down so that a gnome will be able to conceal it.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "sizes": [
+    "light"
+   ],
+   "from": [
+    "light only"
+   ]
+  }
  },
  {
   "slug": "armsmith-firearm-crossbow-horrifying",
@@ -1578,7 +1596,10 @@
   "size": "",
   "price": "",
   "text": "Creating what comes close to being a fully automatic weapon, a firearm with multiple rotating barrels uses a crank to fire. Using rotating barrels increases the need of hands - a one-handed firearm now requires two hands, and a two-handed firearm now requires you to be in a “firing position.” A rotating multi-barrel firearm eliminates the reload time of the firearm, but at a price to accuracy.\nThis augment can only be placed on firearms that use ammunition and have a reload time of 2 action points or less.\n-5 accuracy\n-3 accuracy\n-1 accuracy\nNo accuracy penalty",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "max_ready": 2
+  }
  },
  {
   "slug": "armsmith-firearm-crossbow-scope",
@@ -1630,7 +1651,17 @@
   "size": "",
   "price": "",
   "text": "takes up 2 augment slots on a Firearm or Crossbow requires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this weapon was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-firearm-crossbow-custom"
+    ]
+   ],
+   "from": [
+    "req. Custom"
+   ]
+  }
  },
  {
   "slug": "armsmith-firearm-crossbow-silent",
@@ -1962,7 +1993,17 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on weapon with the Combustion augment Any person attempting to physically aid a victim of your combustion must first make a dexterity resist that equals the marque of your Combusion augment or be set on fire themselves.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-melee-combustion"
+    ]
+   ],
+   "from": [
+    "req. Combustion"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-everburning",
@@ -1988,7 +2029,17 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on weapon with the Combustion augment Despite your victim’s best efforts to put themselves out, they seem to continue burning. When catching things on fire through the use of a combustion attack, extra action points are required to put out the fire.\n1 extra AP\n2 extra AP\n3 extra AP\n4 extra AP",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-melee-combustion"
+    ]
+   ],
+   "from": [
+    "req. Combustion"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-damaging",
@@ -2125,7 +2176,17 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on weapon with the Electrical augment The electricity that runs down your blade now jumps about, hitting multiple victims. Once you’ve hit an opponent, the electricity will arch to another opponent within 10 feet. Roll your accuracy versus their evade. If you meet or exceed it, the second opponent will be hit by the arch (dealing the normal damage for your electricity). The electricity will arch a number of times based on the marque of the augment. If, at any point, you miss a target, the electricity will not continue to jump.\nElectricity jumps once\nElectricity jumps twice\nElectricity jumps thrice\nElectricity jumps quatrice",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-melee-electrical"
+    ]
+   ],
+   "from": [
+    "req. Electrical"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-long-archs",
@@ -2151,7 +2212,17 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on a weapon with Electrical Archs augment Generally, electrical archs will jump from one target to another at a very small distance. The electricity will simply fizzle out if it goes too far. But with longer archs, your weapon’s electricity will take great leaps across the battlefield.\nCan arch up to 25 feet\nCan arch up to 50 feet\nCan arch up to 75 feet\nCan arch up to 100 feet",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-melee-electrical-archs"
+    ]
+   ],
+   "from": [
+    "req. Electrical Archs"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-gas-leaks",
@@ -2201,7 +2272,15 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on light weapon\nYou’ve been able to shrink the weapon down so that a gnome will be able to conceal it.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "sizes": [
+    "light"
+   ],
+   "from": [
+    "light"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-horrifying",
@@ -2408,7 +2487,15 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on throwing weapons\nThe weapon sails through the air, being easy to throw and going much further than its mundane counterparts. An easily thrown weapon has a farther range.\n+20 feet\n+30 feet\n+40 feet\n+60 feet",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "variants": [
+    "throwing"
+   ],
+   "from": [
+    "throwing"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-reach",
@@ -2482,7 +2569,15 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on throwing weapon\nYou can throw your weapon, and it will return to you. Due to this, the range you can throw it is decreased, but you will always have the weapon on hand.\n-30 feet\n-20 feet\n-10 feet\nno ranged penalty",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "variants": [
+    "throwing"
+   ],
+   "from": [
+    "throwing"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-signature-weapon",
@@ -2508,7 +2603,20 @@
   "size": "",
   "price": "",
   "text": "takes up 2 augment slots on a weapon\nRequires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this blade was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-melee-custom"
+    ]
+   ],
+   "needs_waived_by": [
+    "aether"
+   ],
+   "from": [
+    "req. Custom"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-skullsmasher",
@@ -2558,7 +2666,17 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on weapon with Custom augment\nBe it from pressurized spikes in its grip or an unearthly balance, when a person attempts to wield the weapon, it causes them harm. The person the weapon was customized for is immune to this effect.\nThe weapon causes its user 2 unsoakable damage with each use\nThe weapon causes its user 4 unsoakable damage with each use\nThe weapon causes its user 6 unsoakable damage with each use\nThe weapon causes its user 8 unsoakable damage with each use",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-melee-custom"
+    ]
+   ],
+   "from": [
+    "req. Custom"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-static",
@@ -2608,7 +2726,16 @@
   "size": "",
   "price": "",
   "text": "takes up 3 augment slots on a weapon\nRequires: placed on light or medium weapon\nMade of only the lightest and highest quality parts, this weapon has feels lighter then air. All attacks made with this weapon cost\n1 action point.\n-3 damage class\n-2 damage class\n-1 damage class\nno damage class penalty",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "sizes": [
+    "light",
+    "medium"
+   ],
+   "from": [
+    "light/medium"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-tangling",
@@ -2634,7 +2761,15 @@
   "size": "",
   "price": "",
   "text": "Requires: placed on flexible weapon\nThe whip is specially designed to make grabs against the opponent. Whenever used, the whip gains a bonus on all rolls to prevent the target from resisting the grab.\n+2\n+4\n+6\n+8\nWeapon Accessories\nYou can learn weapon accessories just like augments. However, weapon accessories do not take up any augment slots and can only be applied to a weapon once. Each weapon accessory has its own cost associated with it.",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "variants": [
+    "flexible"
+   ],
+   "from": [
+    "flexible"
+   ]
+  }
  },
  {
   "slug": "armsmith-melee-alchemic-tube",
@@ -2838,7 +2973,9 @@
   "section": "Bow augments",
   "subsection": "",
   "slots": 1,
-  "qualifiers": [],
+  "qualifiers": [
+   "req. Interchangeable Parts"
+  ],
   "accessory": false,
   "marques": [
    "2 AP",
@@ -3042,7 +3179,14 @@
   "size": "",
   "price": "",
   "text": "",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-bow-combustion"
+    ]
+   ]
+  }
  },
  {
   "slug": "armsmith-armor-airmelting",
@@ -4234,7 +4378,12 @@
   "size": "",
   "price": "",
   "text": "Requires: fusebox augmented with Fuse Box Specialist augment Your fusebox is a master of using their specialties. They have an additional skill bonus for their specialties and for prerequisites on top of their Fusebox Specialist augment\n+1 skill points for specialties\n+3 skill points for specialties\n+5 skill points for specialties\n+7 skill points for specialties",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Specialist"
+   ]
+  }
  },
  {
   "slug": "automata-fusebox-flight",
@@ -4703,7 +4852,12 @@
      12
     ]
    }
-  ]
+  ],
+  "item": {
+   "from": [
+    "req. Avenge-Me"
+   ]
+  }
  },
  {
   "slug": "automata-clockwork-hurt-them-subdirective",
@@ -4743,7 +4897,12 @@
      16
     ]
    }
-  ]
+  ],
+  "item": {
+   "from": [
+    "req. Avenge-Me"
+   ]
+  }
  },
  {
   "slug": "automata-clockwork-defend-your-area-directive",
@@ -5480,7 +5639,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Prosthetic with the Air Blaster augment activation Cost: 1 AP (see below)\nYou are able to superheat or supercool the air from your air blaster, causing it to deal either heat or freezing damage whenever you use it, in addition to its normal effects. For one action point, you can switch your air blaster between heat and freezing damage or turn the effects of this augment on and off. The damage is soakable.\n2 heat or freezing damage\n4 heat or freezing damage\n6 heat or freezing damage\n8 heat or freezing damage",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Air Blaster"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-air-tunnel",
@@ -5506,7 +5670,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Prosthetic with the Air Blaster augment Your air blaster has been overclocked, causing its normal gust of wind to become a miniature tornado erupting from your body part. Whenever you successfully push back your target with your air blaster, they are moved an additional 5 feet backwards. In addition, this augment increases your air blaster’s range.\n5 additional feet of range\n10 additional feet of range\n15 additional feet of range\n20 additional feet of range",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Air Blaster"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-barbed",
@@ -5581,7 +5750,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Body Part must be made of metal & the Freezer Augment somewhere on subject’s body\nThis prosthetic leaks small amounts of liquid nitrogen diverted from your freezer. Whenever someone comes into contact with this body part, whether it be them grabbing you or you punching them, they suffer first degree frostbite. This means they will suffer increased sensitivity to heat and cold lasting until their next breather. This augment deactivates if your freezer is extinguished. This effect will not stack with multiple exposures to a cold iron body part.\nTarget suffers a -3 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -6 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -9 when resisting effects caused by heat, flames, cold, or ice\nTarget suffers a -12 when resisting effects caused by heat, flames, cold, or ice",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Freezer"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-compartment",
@@ -5655,7 +5829,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Furnace Augment somewhere on subject’s body resist: Dexterity (marques down)\nActivation Cost: 3 AP\nExhausts protrude from the prosthetic, flames periodically leaking out of them. For three action points you cause the body part to spray flames onto everyone adjacent to you to set them on fire, although they can still attempt to resist the attack. You cannot activate your flame exhausts if your furnace is extinguished. tier 1 Burning: 2 unsoakable damage per turn, 2 AP to put out the fire\ntier 1 Burning: 2 unsoakable damage per turn, 2 AP to put out the fire\ntier 2 Burning: 4 unsoakable damage per turn, 4 AP to put out the fire, wooden and cloth items destroyed tier 3 Burning: 8 unsoakable damage per turn, 8 AP to put out the fire, wooden and cloth items destroyed",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Furnace"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-freeze-exhausts",
@@ -5681,7 +5860,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Freezer augment somewhere on subject’s body resist: Brute (marques down)\nActivation Cost: 3 ap\nExhausts protrude from the prosthetic, icy mist periodically leaking out of it. For three action points you cause the body part to spray this mist onto everyone adjacent to you, although they can still attempt to resist the attack. This mist causes your target’s body temperature to rapidly drop, making them sluggish until the start of your next turn. You cannot activate your freeze exhausts if your freezer is extinguished.\nTarget suffers a -2 to evade\nTarget suffers a -4 to evade\nTarget suffers a -6 to evade\nTarget suffers a -8 to evade",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Freezer"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-freezer",
@@ -5779,7 +5963,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Prosthetic augmented with Weapon Mounting The prosthetic has a secret weapon hidden inside that can flip out at a moment’s notice. For no action point cost, you can now retract your weapon into your body, as long as the weapon would normally be concealable.\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Weapon Mounting"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-hidden-claymore",
@@ -5805,7 +5994,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Prosthetic augmented with Hidden Blade The prosthetic can fit an enormous weapon inside it by breaking down its key components. For no action point cost you can now retract your weapon into your body, even if the weapon would normally not be concealable.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Hidden Blade"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-hot-iron",
@@ -5832,7 +6026,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Prosthetic must be made of metal & the Furnace augment somewhere on subject’s body\nAs long as fire burns within your body, it constantly heats up this body part, making it burn to the touch. Whenever someone comes into contact with this body part, whether it be them grabbing you or you punching them, they take a small amount of heat damage. This doesn’t apply if your furnace is extinguished.\n2 heat damage\n4 heat damage\n6 heat damage\n8 heat damage",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Furnace"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-overglow",
@@ -5858,7 +6057,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Prosthetic with the Glowing Augment\nResist: Cunning (marques down)\nActivation Cost: 1 ap\nLight erupts from your prosthetic, arcing toward a single target within 25 feet with the potential to blind them (giving them a -4 on accuracy and evade rolls). They can resist with their cunning attribute.\nBlinds for one turn\nBlinds for two turns\nBlinds for three turns\nBlinds for four turns",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Glowing"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-poison-injector",
@@ -5980,7 +6184,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Furnace augment or Freezer augment somewhere on subject’s body\nResist: Cunning (negates)\nActivation Cost: 1 AP (see below)\nA chimney or metal gratings constantly release clouds of smoke or fog from your furnace. This cloud billows out around you, making you and those within a certain range completely blinded. This will instantly end if your furnace or freezer is extinguished. You can spend one action point to start your smokescreen or to adjust the range of the cloud from affecting characters adjacent to you up to its maximum range detailed by the marque of this augment.\nOnly characters adjacent to you are blinded\nAnyone up to 10 feet of you are blinded\nAnyone up to 15 feet of you are blinded\nAnyone up to 20 feet of you are blinded",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Furnace or Freezer"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-weapon-mounting",
@@ -7989,7 +8198,12 @@
   "size": "",
   "price": "",
   "text": "Can only Be applied to autos\nRequires: vehicle to be augmented to have the Improved Speed Your vehicle is stupidly fast. Your speed is improved based on the marque of this augment. (This bonus stacks with that granted by Improved Speed.)\n+50 speed\n+100 speed\n+150 speed\n+200 speed",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Improved Speed"
+   ]
+  }
  },
  {
   "slug": "engineer-auto-blurring-speeds",
@@ -8214,7 +8428,12 @@
   "size": "",
   "price": "",
   "text": "Requires: vehicle to be augmented to have the Passenger augment You’ve outfitted your vehicle with small compartments, uncomfortable back seats, and barrels that hang from the main seat that are all capable of carrying extra passengers. You may add a number of extra passengers (in addition to the passenger allowed from your Passenger augment). This does not make the vehicle much larger, despite logic dictating otherwise (hey, it’s steampunk!).\n+1 passengers (to a total of 1 pilot & 2 passengers)\n+2 passengers (to a total of 1 pilot & 3 passengers)\n+3 passengers (to a total of 1 pilot & 4 passengers)\n+4 passengers (to a total of 1 pilot & 5 passengers)",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Passenger"
+   ]
+  }
  },
  {
   "slug": "engineer-clanker-flying",
@@ -8682,7 +8901,12 @@
   "size": "",
   "price": "",
   "text": "Requires: armoring to be augmented to have the Structural Integrity augment\nYour vehicle’s armoring is exceptional, providing greater support and a thicker buffer between your hard, outer shell and the gooey insides. This grants you additional hit points, which stack with those granted by Structural Integrity.\n+20 hit points\n+40 hit points\n+60 hit points\n+80 hit points",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Structural Integrity"
+   ]
+  }
  },
  {
   "slug": "engineer-vehicle-armor-fireproofing",
@@ -9004,7 +9228,16 @@
   "size": "",
   "price": "",
   "text": "Requires: Marque II Explosives\nThe bomb has a greater radius of effect. The bomb acts normally, but also blasts out beyond its normal range. The bomb does damage of one marque lower than its own marque beyond its normal range.\n5 feet further\n10 feet further\n15 feet further\n20 feet further",
-  "modifiers": []
+  "modifiers": [],
+  "learn": [
+   {
+    "type": "marque",
+    "min": 2
+   }
+  ],
+  "learn_from": [
+   "req. mQ II explosives"
+  ]
  },
  {
   "slug": "gadgetry-explosive-flare",
@@ -10639,7 +10872,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Furnace augment somewhere on subject’s body activation Cost: 1 AP (after a successful unarmed attack) Holes in the limb make it expel flames from your furnace when it is used in an unarmed strike. As long as your furnace isn’t extinguished, you can spend 1 action point after a successful unarmed attack in order to burn your target. Multiple burns caused by your flame pores will not stack the penalties to a single target’s defense. These burns will go away during the foe’s next breather.\nTier 1 Burns (-1 on all defense rolls)\nTier 2 Burns (-3 on all defense rolls)\nTier 3 Burns (-5 on all defense rolls)\nTier 4 Burns (-7 on all defense rolls)",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Furnace"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-hand-freezing-pores",
@@ -10665,7 +10903,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Freezer augment somewhere on subject’s body activation Cost: 1 AP (after a successful unarmed called shot) Holes in the limb make it expel small streams of subzero mist from your freezer which will freeze solid on impact when used in an unarmed attack. As long as your freezer isn’t extinguished, this makes unarmed called shots with this limb ice over the part of your target you hit. This ice will temporarily impede the use of extremities, making called shot effects to extremities (hands, feet, head) last longer.\nEffects of the called shot last an additional turn Effects of the called shot last two additional turns Effects of the called shot last three additional turns Effects of the called shot last four additional turns",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Freezer"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-hand-hand-launcher",
@@ -10776,7 +11019,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Hand-Launcher augment applied to the hand You can have your hand tethered to a rope or chain that automatically returns to you after being fired. Though you do not have to do anything, it does take a little bit of time before the hand returns to you.\nReturns within 3 AP\nReturns within 2 AP\nReturns within 1 AP\nReturns immediately",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Hand-Launcher"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-leg-extreme-speed",
@@ -11023,7 +11271,12 @@
   "size": "",
   "price": "",
   "text": "Requires: Torso with the Poison Gas Epicenter augment You’ve upgraded your gas dispenser to hold extra doses of alchemical gases. You still can only release one gas at a time. Maximum of Two Doses\nMaximum of Three Doses\nMaximum of Four Doses\nMaximum of Six Doses",
-  "modifiers": []
+  "modifiers": [],
+  "item": {
+   "from": [
+    "req. Poison Gas Epicenter"
+   ]
+  }
  },
  {
   "slug": "automata-prosthetic-torso-sensor-array",
@@ -11519,7 +11772,17 @@
   "price": "",
   "modifiers": [],
   "text": "",
-  "extension": "aether"
+  "extension": "aether",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-resonator-black-trap"
+    ]
+   ],
+   "from": [
+    "req. Black Trap"
+   ]
+  }
  },
  {
   "slug": "gadgetry-resonator-focused-black-trap",
@@ -11546,7 +11809,17 @@
   "price": "",
   "modifiers": [],
   "text": "",
-  "extension": "aether"
+  "extension": "aether",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-resonator-black-trap"
+    ]
+   ],
+   "from": [
+    "req. Black Trap"
+   ]
+  }
  },
  {
   "slug": "gadgetry-resonator-irradiated",
@@ -11598,7 +11871,17 @@
   "price": "",
   "modifiers": [],
   "text": "",
-  "extension": "aether"
+  "extension": "aether",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-resonator-irradiated"
+    ]
+   ],
+   "from": [
+    "req. Irradiated"
+   ]
+  }
  },
  {
   "slug": "gadgetry-resonator-light-absorbing",
@@ -11650,7 +11933,17 @@
   "price": "",
   "modifiers": [],
   "text": "",
-  "extension": "aether"
+  "extension": "aether",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-resonator-light-absorbing"
+    ]
+   ],
+   "from": [
+    "req. Light-Absorbing"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -12086,7 +12379,14 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "excludes": [
+    "armsmith-munition-syringed",
+    "armsmith-munition-inkshot",
+    "armsmith-munition-flash-bangs"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -12825,7 +13125,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "needs": [
+    [
+     "armsmith-turret-automated"
+    ]
+   ],
+   "from": [
+    "req. Automated"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -12852,7 +13162,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "needs": [
+    [
+     "armsmith-turret-automated"
+    ]
+   ],
+   "from": [
+    "req. Automated"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -12880,7 +13200,21 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "needs": [
+    [
+     "armsmith-turret-automated"
+    ],
+    [
+     "armsmith-turret-deadly-accurate"
+    ]
+   ],
+   "from": [
+    "req. Automated",
+    "req. Deadly Accurate"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -13032,7 +13366,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "needs": [
+    [
+     "armsmith-turret-automated"
+    ]
+   ],
+   "from": [
+    "req. Automated"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -13059,7 +13403,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "needs": [
+    [
+     "armsmith-turret-automated"
+    ]
+   ],
+   "from": [
+    "req. Automated"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -13086,7 +13440,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "needs": [
+    [
+     "armsmith-turret-automated"
+    ]
+   ],
+   "from": [
+    "req. Automated"
+   ]
+  }
  },
  {
   "skill": "Armsmith",
@@ -13368,7 +13732,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-delay"
+    ]
+   ],
+   "from": [
+    "req. Delay"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -13423,7 +13797,18 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-jumping",
+     "gadgetry-explosive-roaming"
+    ]
+   ],
+   "from": [
+    "req. Jumping or Roaming"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -13744,7 +14129,17 @@
   "notes": "",
   "size": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-incendiary"
+    ]
+   ],
+   "from": [
+    "req. Incendiary"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -13902,7 +14297,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-incendiary"
+    ]
+   ],
+   "from": [
+    "req. Incendiary"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -13958,7 +14363,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-concealable"
+    ]
+   ],
+   "from": [
+    "req. Concealable"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -14013,7 +14428,21 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-jumping"
+    ],
+    [
+     "gadgetry-explosive-proximity-fuse"
+    ]
+   ],
+   "from": [
+    "req. Jumping",
+    "req. Proximity Fuse"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -14121,7 +14550,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-knockback"
+    ]
+   ],
+   "from": [
+    "req. Knock Back"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -14226,7 +14665,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-shrapnel"
+    ]
+   ],
+   "from": [
+    "req. Shrapnel"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -14280,7 +14729,17 @@
   "notes": "",
   "size": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-explosive-sinking-crater"
+    ]
+   ],
+   "from": [
+    "req. Sinking Crater"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -14333,7 +14792,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-firebomb-extended-blast"
+    ]
+   ],
+   "from": [
+    "req. Extended Blast"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -14487,7 +14956,17 @@
   "notes": "",
   "size": "",
   "modifiers": [],
-  "extension": "explosives"
+  "extension": "explosives",
+  "item": {
+   "needs": [
+    [
+     "gadgetry-firebomb-sparks-in-the-air"
+    ]
+   ],
+   "from": [
+    "req. Sparks in the Air"
+   ]
+  }
  },
  {
   "skill": "Gadgetry",
@@ -14806,7 +15285,17 @@
   "slots": 1,
   "accessory": false,
   "size": "",
-  "extension": "living-liquids"
+  "extension": "living-liquids",
+  "item": {
+   "needs": [
+    [
+     "alchemy-living-liquid-interior-platelets"
+    ]
+   ],
+   "from": [
+    "req. Interior Platelets"
+   ]
+  }
  },
  {
   "skill": "Alchemy",
@@ -15174,7 +15663,17 @@
   "slots": 1,
   "accessory": false,
   "size": "",
-  "extension": "living-liquids"
+  "extension": "living-liquids",
+  "item": {
+   "needs": [
+    [
+     "alchemy-living-liquid-lighter-than-air-liquid"
+    ]
+   ],
+   "from": [
+    "req. Lighter-than-Air Liquid"
+   ]
+  }
  },
  {
   "skill": "Alchemy",
@@ -16243,7 +16742,17 @@
   "modifiers": [],
   "accessory": false,
   "size": "",
-  "extension": "mementos"
+  "extension": "mementos",
+  "item": {
+   "needs": [
+    [
+     "luck-memento-moneymaker"
+    ]
+   ],
+   "from": [
+    "req. Moneymaker"
+   ]
+  }
  },
  {
   "skill": "Luck",
@@ -16875,7 +17384,17 @@
   "modifiers": [],
   "accessory": false,
   "size": "",
-  "extension": "mementos"
+  "extension": "mementos",
+  "item": {
+   "needs": [
+    [
+     "luck-memento-lost-wallet"
+    ]
+   ],
+   "from": [
+    "req. Lost Wallet"
+   ]
+  }
  },
  {
   "skill": "Luck",
@@ -17204,7 +17723,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "pets-and-predators"
+  "extension": "pets-and-predators",
+  "item": {
+   "needs": [
+    [
+     "alchemy-medicine-antivenom"
+    ]
+   ],
+   "from": [
+    "req. Antivenom"
+   ]
+  }
  },
  {
   "slug": "alchemy-sedative",

@@ -85,6 +85,14 @@ def nonzero(value):
 
 
 @register.filter
+def install_notes(aug):
+    """Item conditions of an augment for the learning pickers ("Requires Custom on the item when installed.")."""
+    from rules.engine.item_requirements import install_notes as notes
+
+    return notes(aug or {})
+
+
+@register.filter
 def augment(slug):
     from rules.registry import get_registry
 
