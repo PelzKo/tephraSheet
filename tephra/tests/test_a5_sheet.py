@@ -200,3 +200,25 @@ def test_editors_carry_draft_and_base(admin_client, db, field):
     c = make(**{field: "hello"})
     html = admin_client.get(c.get_absolute_url()).content.decode()
     assert f'value="{text_stamp("hello")}" data-draft-base' in html
+
+
+def test_give_locks_both_characters_first(admin_client, db):
+    """A→B and B→A at once must not deadlock: both rows are locked together, in pk order, first."""
+    from django.db import connection
+    from django.test.utils import CaptureQueriesContext
+    a, b = make("Ada"), make("Bob")
+    with CaptureQueriesContext(connection) as ctx:
+        play(admin_client, b, "give-money", {"to": a.pk, "amount": 0})
+    sqls = [q["sql"] for q in ctx.captured_queries]
+    both = next(i for i, q in enumerate(sqls) if 'FROM "characters_character"' in q and " IN (" in q and "ORDER BY" in q)
+    own = max(i for i, q in enumerate(sqls) if q.endswith(f'"characters_character"."id" = {b.pk} LIMIT 21'))
+    assert both < own  # the pair lock comes before the single-row lock in play_action
+
+
+def test_app_js_reads_request_element_from_event_detail():
+    """htmx 2 puts the requesting element in event.detail.elt; requestConfig has no elt."""
+    from pathlib import Path
+    from django.conf import settings
+    js = (Path(settings.BASE_DIR) / "static/js/app.js").read_text(encoding="utf-8")
+    assert "requestConfig.elt" not in js and "cfg.elt" not in js
+    assert "elt: e.detail.elt" in js and "const elt = e.detail.elt" in js

@@ -503,7 +503,7 @@ window.effectForm = function () {
     const f = failed;
     bar.hidden = true;
     failed = null;
-    if (f && f.elt.isConnected) htmx.ajax(f.verb, f.path, { source: f.elt, target: "#sheet-body", swap: "outerHTML", values: f.values });
+    if (f && f.elt && f.elt.isConnected) htmx.ajax(f.verb, f.path, { source: f.elt, target: "#sheet-body", swap: "outerHTML", values: f.values });
   });
   const offline = document.createElement("div");
   offline.className = "net-offline";
@@ -517,7 +517,7 @@ window.effectForm = function () {
     if (!cfg || cfg.verb === "get") return;  // searches/refreshes: nothing was lost
     const values = {};
     if (cfg.formData) for (const [k, v] of cfg.formData.entries()) values[k] = k in values ? [].concat(values[k], v) : v;
-    failed = { verb: cfg.verb, path: cfg.path, elt: cfg.elt, values };
+    failed = { verb: cfg.verb, path: cfg.path, elt: e.detail.elt, values };
     bar.textContent = t("Not saved – tap to retry");
     bar.hidden = false;
   }
@@ -536,7 +536,7 @@ window.effectForm = function () {
   document.addEventListener("htmx:beforeSwap", (e) => {
     const b = body();
     if (!b || e.detail.target !== b || !e.detail.shouldSwap) return;
-    const elt = e.detail.requestConfig && e.detail.requestConfig.elt;
+    const elt = e.detail.elt;  // requestConfig has no elt in htmx 2
     // The server took the save (no conflict box in the answer): forget the drafts of that form.
     if (elt && elt.querySelectorAll && !String(e.detail.serverResponse).includes("data-conflict")) {
       elt.querySelectorAll("[data-draft]").forEach((el) => store(draftKey(el), null));

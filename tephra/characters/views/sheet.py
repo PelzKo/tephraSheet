@@ -219,8 +219,12 @@ def _int(value, default=0):
 def play_action(request, character, action):
     # Row lock: overlapping HTMX actions on one character run one after another instead of
     # overwriting each other's changes (the full save below writes every field).
-    character = Character.objects.select_for_update().get(pk=character.pk)
     action = action.replace("-", "_")  # URL slugs use hyphens (effect-add → effect_add)
+    if action in ("give_item", "give_money"):
+        # Both participants in pk order, so A→B and B→A at once cannot deadlock.
+        list(Character.objects.select_for_update().filter(
+            pk__in=[character.pk, _int(request.POST.get("to"))]).order_by("pk"))
+    character = Character.objects.select_for_update().get(pk=character.pk)
     sheet = character.compute()
     p = request.POST
     hp = character.current_hp if character.current_hp is not None else sheet.max_hp
