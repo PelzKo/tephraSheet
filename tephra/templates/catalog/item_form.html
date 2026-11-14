@@ -146,9 +146,10 @@ window.itemCreator = function (tables, augChoices) {
       const fd = new FormData(this.$root);
       fd.set("augments_json", JSON.stringify(this.augs));
       fd.set("kind", this.kind);  // a disabled select (book items) is not in the form data
+      const seq = this.checkSeq = (this.checkSeq || 0) + 1;  // only the newest answer counts (no stale results)
       try {
         const r = await fetch(this.$root.dataset.check, {method: "POST", body: fd});
-        if (r.ok) this.blocked = await r.json();
+        if (r.ok) { const j = await r.json(); if (seq === this.checkSeq) this.blocked = j; }
       } catch (e) { /* offline: the save still checks */ }
     },
     get isWeapon() { return ["melee", "firearm", "bow", "crossbow"].includes(this.kind); },
