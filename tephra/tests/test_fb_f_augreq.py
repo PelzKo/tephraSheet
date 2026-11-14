@@ -155,3 +155,28 @@ def test_warning_badge_and_audit_command(client):
     out = StringIO()
     call_command("audit_item_augments", stdout=out)
     assert "catalog" in out.getvalue() and "Signature Weapon: needs Custom" in out.getvalue()
+
+
+def _import(client, text):
+    rows = client.post(reverse("catalog_import"), {"action": "preview", "text": text}).context["rows"]
+    client.post(reverse("catalog_import"), {"action": "commit", "target": "catalog"})
+    return rows
+
+
+@pytest.mark.django_db
+def test_csv_update_rows_are_checked_merged_with_the_existing_item(client):
+    tiny = ItemTemplate.objects.create(name="Tiny", kind="melee", size="light", source="custom")
+    rows = _import(client, "name,kind,augments\nTiny,melee,Gnome-Sized\n")  # size only on the saved item
+    assert rows[0]["status"] == "update", rows[0]["errors"]
+    tiny.refresh_from_db()
+    assert tiny.augments == [["armsmith-melee-gnome-sized", 1]]
+    rows = _import(client, "name,kind,size\nTiny,melee,heavy\n")  # leaves Gnome-Sized on a heavy item
+    assert rows[0]["status"] == "error" and any("Gnome-Sized" in e for e in rows[0]["errors"])
+    assert ItemTemplate.objects.get(pk=tiny.pk).size == "light"
+    legacy = ItemTemplate.objects.create(name="Old", kind="melee", size="medium", augments=[[SIG, 1]], source="custom")
+    assert _import(client, "name,kind,description\nOld,melee,still mine\n")[0]["status"] == "update"
+    assert ItemTemplate.objects.get(pk=legacy.pk).description == "still mine"
+    house = ItemTemplate.objects.create(name="House", kind="melee", size="light", house_rule=True, source="custom",
+                                        augments=[["armsmith-melee-gnome-sized", 1]])
+    assert _import(client, "name,kind,size\nHouse,melee,heavy\n")[0]["status"] == "update"
+    assert ItemTemplate.objects.get(pk=house.pk).size == "heavy"

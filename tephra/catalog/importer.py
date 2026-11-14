@@ -270,7 +270,7 @@ def parse_rows(text):
         if "augments" in raw:
             values["augments"] = parse_augments(raw["augments"], kind, errors, memento=values.get("memento", False),
                                                  house_rule=values.get("house_rule", False))
-            # shortcut: an update row is checked with its own columns only, not merged with the existing item
-            errors += item_requirements.problems(values)
-        result.append({"line": n, "values": values, "errors": errors})
+        # item conditions of the row as a new item; an update of a catalog item is rechecked merged (catalog.views)
+        fit = item_requirements.problems(values)
+        result.append({"line": n, "values": values, "errors": errors + fit, "fit": fit})
     return result

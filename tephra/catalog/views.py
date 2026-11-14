@@ -17,7 +17,7 @@ from rules.extensions import EXTENSIONS, enabled, offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .forms import ItemForm, augment_choices_json
+from .forms import ItemForm, _norm, augment_choices_json
 from .importer import export_csv, parse_rows, template_csv
 from .models import KIND_CHOICES, ItemTemplate
 
@@ -321,6 +321,19 @@ def _import_status(values, gm):
     return "unchanged", existing
 
 
+def _catalog_row(row, gm):
+    """(errors, status, existing) of an import row into the catalog. An update is checked as the merged item, and only
+    when the row changes what decides the fit (as ItemForm), so legacy items still take unrelated updates."""
+    values = _catalog_values(row, gm)
+    status, existing = _import_status(values, gm)
+    errors = row["errors"]
+    if existing is not None:
+        errors = [e for e in errors if e not in row.get("fit", [])]
+        if any(_norm(getattr(existing, f)) != _norm(values[f]) for f in ItemForm.FIT_FIELDS if f in values):
+            errors += item_requirements.problems({**existing.item_values(), **values})
+    return errors, ("error" if errors else status), existing
+
+
 def _import_summary(counts):
     return _("{new} new, {update} updated, {unchanged} unchanged, {skipped} skipped (Playing Guide items), {error} with errors",  # noqa: E501
              **counts)
@@ -342,8 +355,8 @@ def import_view(request):
             request.session[IMPORT_SESSION_KEY] = rows
     elif request.method == "POST" and request.POST.get("action") == "commit":
         rows = request.session.pop(IMPORT_SESSION_KEY, [])
-        good = [r for r in rows if not r["errors"]]
         if character and request.POST.get("target", "catalog") != "catalog":
+            good = [r for r in rows if not r["errors"]]  # always new inventory items: the row's own check
             for r in good:
                 values = {k: v for k, v in r["values"].items() if k in ItemTemplate.ITEM_FIELDS}
                 InventoryItem.objects.create(character=character, quantity=max(1, r["values"].get("quantity", 1)),
@@ -352,10 +365,10 @@ def import_view(request):
             messages.success(request, _("Imported {created} new item(s), skipped {skipped} with errors.",
                                         created=len(good), skipped=len(rows) - len(good)))
             return redirect(f"{character.get_absolute_url()}?tab=inventory")
-        counts = {"new": 0, "update": 0, "unchanged": 0, "skipped": 0, "error": len(rows) - len(good)}
-        for r in good:
+        counts = {"new": 0, "update": 0, "unchanged": 0, "skipped": 0, "error": 0}
+        for r in rows:
             values = _catalog_values(r, gm)
-            status, existing = _import_status(values, gm)
+            _errors, status, existing = _catalog_row(r, gm)
             counts[status] += 1
             if status == "new":
                 ItemTemplate.objects.create(**values, source="custom")
@@ -371,9 +384,16 @@ def import_view(request):
     counts = None
     if rows is not None:
         counts = {"new": 0, "update": 0, "unchanged": 0, "skipped": 0, "error": 0}
+        shown = []  # display copies: the session keeps the rows as parsed, commit rechecks for its target
         for r in rows:
-            r["status"] = "error" if r["errors"] else _import_status(_catalog_values(r, gm), gm)[0]
-            counts[r["status"]] += 1
+            if character:  # the inventory target (default) takes every row as a new item
+                errors = r["errors"]
+                status = "error" if errors else _import_status(_catalog_values(r, gm), gm)[0]
+            else:
+                errors, status, _existing = _catalog_row(r, gm)
+            shown.append({**r, "errors": errors, "status": status})
+            counts[status] += 1
+        rows = shown
     return render(request, "catalog/import.html", {
         "rows": rows, "character": character, "ok_count": sum(1 for r in rows or [] if not r["errors"]),
         "summary": _import_summary(counts) if counts else ""})
