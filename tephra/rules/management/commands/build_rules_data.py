@@ -385,7 +385,7 @@ class Command(BaseCommand):
         out = []
         texts = {}
         for bt in doc.book_texts:
-            texts.setdefault(bt.name.lower(), []).append(bt)
+            texts.setdefault(bt.name.lower().replace("-", " "), []).append(bt)  # "Chained-Grip" = "Chained Grip"
         for table in doc.tables:
             first = table.header[0]
             if first not in ("Augment", "Explosive augment", "Eyewear augment", "Trinket"):
@@ -416,8 +416,9 @@ class Command(BaseCommand):
                 slug = slugify(f"{skill}-{'-'.join(entry_lists)}-{name}")
                 if any(a["slug"] == slug for a in out):
                     slug += "-2"
-                book = texts.get(name.lower(), [])
-                text = book[0].text if book else ""
+                book = texts.get(name.lower().replace("-", " "), [])
+                book = [b for b in book if section in b.headings] or book  # same-name augments: this list's text
+                text = re.sub(r" Weapon$", "", book[0].text) if book else ""  # page header glued to Chained-Grip
                 notes = strip_md(r.get("Notes") or r.get("Tool tags") or r.get("Use") or r.get("Cost note") or "")
                 if first == "Augment" and r.get("Effect"):
                     marques = [strip_md(r["Effect"]), "", "", ""]

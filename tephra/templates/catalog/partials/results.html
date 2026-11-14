@@ -9,7 +9,7 @@
     <tr><td data-sort="{{ i.name }}"><b>{{ i.name|item_name }}</b>{% if i.is_starting_gear %} <span class="tag">{% t "starting gear" %}</span>{% endif %}{% if i.source == "custom" %} <span class="tag">{% t "custom" %}</span>{% elif i.modified %} <span class="tag">{% t "modified" %}</span>{% else %} <span class="tag">{% t "book" %}</span>{% endif %}{% if i.deleted_at %} <span class="tag">{% t "hidden" %}</span>{% endif %}{% if i.extension %} <span class="tag">{{ extension_names|get:i.extension|default:i.extension|t }}</span>{% endif %}
         {% if i.variants %}<span class="small muted"> {% for v in i.variants %}{{ v|t }}{% if not forloop.last %}, {% endif %}{% endfor %}</span>{% endif %}
         {% if i.augments %}<div class="small">{% for a in i.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}</div>{% endif %}
-        {% if i.description %}<div class="small muted">{{ i|item_desc|truncatechars:160 }}</div>{% endif %}</td>
+        {% if i.description %}<div class="small muted">{{ i|item_desc|truncatechars:160|term_tips }}</div>{% endif %}</td>
       <td>{{ i.get_kind_display|t }}</td><td data-sort="{{ i.size|size_rank }}">{{ i.get_size_display|t }}</td><td data-sort="{{ i.price_dukes }}">{{ i.price_dukes|money }}</td>
       <td style="white-space:nowrap">
         {% if character %}

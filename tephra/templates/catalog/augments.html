@@ -20,8 +20,8 @@
             {% for q in a.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
             {% if a.subsection %}<span class="cost">{{ a.subsection }}</span>{% endif %}
           </header>
-          <div class="small">{% for m in a.marques %}{% if m and m != "–" %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m }}</span>{% endif %}{% endfor %} {{ a.notes }}{% if a.price %} · {% t "price {p} pr" p=a.price %}{% endif %}</div>
-          {% if a.text %}<details><summary>{% t "Book text" %}</summary><p class="effect">{{ a.text|linebreaksbr }}</p></details>{% endif %}
+          <div class="small">{% for m in a.marques %}{% if m and m != "–" %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m|term_tips }}</span>{% endif %}{% endfor %} {{ a.notes|term_tips }}{% if a.price %} · {% t "price {p} pr" p=a.price %}{% endif %}</div>
+          {% if a.text %}<details><summary>{% t "Book text" %}</summary><p class="effect">{{ a.text|term_tips|linebreaksbr }}</p></details>{% endif %}
         </div>
       {% endfor %}
     </details>

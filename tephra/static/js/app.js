@@ -41,7 +41,7 @@ const t = (function () {
   }
 
   // Elements whose hover title can also be opened by click (not buttons/links that do something else).
-  const TIP_SELECTOR = ".sheet-shell [title], .sheet-shell [data-tip]";
+  const TIP_SELECTOR = ".sheet-shell [title], .sheet-shell [data-tip], .term[title]";  // .term: rule-term tips (term_tips filter)
   function tipTarget(target) {
     const el = target.closest(TIP_SELECTOR);
     if (!el || el.closest("a, button, input, select, textarea, label, [hx-post], .play-btn, .modal")) return null;

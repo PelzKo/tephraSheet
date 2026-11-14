@@ -112,18 +112,37 @@ TIER_RANGES = ["1–9", "10–19", "20–29", "30+"]
 
 
 @register.filter
+def term_tips(text):
+    """Plain text as HTML with status effects and rule terms ("Fear T2", "unsoakable", …) wrapped in a tip span.
+    Text that is already HTML is returned unchanged (no double wrapping, attributes are never touched)."""
+    from django.utils.html import escape
+    from django.utils.safestring import SafeData, mark_safe
+
+    from rules.engine.effects import term_matches
+
+    if isinstance(text, SafeData):
+        return text
+    text, out, pos = str(text or ""), [], 0
+    for start, end, tip in term_matches(text):
+        tip = escape(tip).replace("\n", "&#10;")  # survives linebreaksbr
+        out += [escape(text[pos:start]), f'<span class="term" title="{tip}">{escape(text[start:end])}</span>']
+        pos = end
+    out.append(escape(text[pos:]))
+    return mark_safe("".join(out))
+
+
+@register.filter
 def effect_html(text):
     """Specialty effect as HTML: the text, then the four tier results as numbered gears."""
-    from django.utils.html import escape
     from django.utils.safestring import mark_safe
 
     from rules.engine.text import split_tiers
 
     body, tiers = split_tiers(text or "")
-    html = f'<p class="effect">{escape(body)}</p>' if body.strip() else ""
+    html = f'<p class="effect">{term_tips(body)}</p>' if body.strip() else ""
     if tiers:
         rows = "".join(f'<li><span class="tier-gear" title="Tier {n} (roll {TIER_RANGES[n - 1]})">'
-                       f'<span>{n}</span></span><span class="tier-text">{escape(t)}</span></li>'
+                       f'<span>{n}</span></span><span class="tier-text">{term_tips(t)}</span></li>'
                        for n, t in enumerate(tiers, 1))
         html += f'<ol class="tier-results" aria-label="Results by tier">{rows}</ol>'
     return mark_safe(html)

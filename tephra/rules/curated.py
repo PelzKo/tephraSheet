@@ -334,6 +334,8 @@ PROSTHETIC_EXTRA = {
 
 # Augments whose marque values change sheet numbers. scope=weapon applies to the item it is on.
 AUGMENTS = {
+    # the melee table has this requirement in its Notes column, the firearm one as a qualifier
+    "armsmith-melee-easily-altered": {"qualifiers": ["req. Interchangeable Parts"]},
     "armsmith-firearm-crossbow-accurate": {"modifiers": [mod("acc", scope="weapon", by_marque=[1, 2, 3, 4])]},
     "armsmith-firearm-crossbow-damaging": {"modifiers": [mod("dc", scope="weapon", by_marque=[1, 2, 3, 4])]},
     "armsmith-firearm-crossbow-bipod": {"modifiers": [mod("acc", scope="weapon", when="toggle", label="bipod set up",

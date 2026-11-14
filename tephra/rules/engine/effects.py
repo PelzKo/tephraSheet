@@ -6,6 +6,8 @@ Conditional parts ("vs the source", "rolls with that arm") stay in the text only
 ``halve_hp`` halves max HP, ``lost_wounds`` lowers max wounds permanently, ``breather`` means the
 effect ends with a breather, ``drop`` makes the hit hand drop what it holds.
 """
+import re
+from functools import cache
 
 
 def _mods(stats):
@@ -139,6 +141,69 @@ CALLED_SHOTS = {
 
 CALLED_KINDS = ("normal", "wound", "fatal")  # display order: Normal, Wounded, Fatal
 CALLED_LABELS = {"normal": "Normal", "wound": "Wounded", "fatal": "Fatal"}
+
+
+def _tiers(slug):
+    return [f"{slug}-{t}" for t in (1, 2, 3, 4)]
+
+
+# Words in rule texts that get an explainer tip (``term_matches``, template filter ``term_tips``). ``status``: the
+# status effects it explains (a tier in the match picks one: "Fear T2"); otherwise ``name``/``text`` explain a general
+# rule (reference 1.2/1.3/1.6). Patterns are case-insensitive, whole words; other languages replace pattern/name/text
+# in rules/data/i18n/<lang>/effects.json "TERMS".
+TERMS = {
+    "bleeding": {"pattern": r"bleed(?:ing|s)?", "status": ["bleeding"]},
+    "blinded": {"pattern": r"blind(?:ed|ness)?", "status": ["blinded"]},
+    "burning": {"pattern": r"burning(?: T[1-4])?", "status": _tiers("burning")},
+    "burnt": {"pattern": r"burnt(?: T[1-4])?", "status": _tiers("burnt")},
+    "deafened": {"pattern": r"deaf(?:ened)?", "status": ["deafened"]},
+    "disoriented": {"pattern": r"disorient(?:ed)?", "status": ["disoriented"]},
+    "drowning": {"pattern": r"drown(?:ing|s)?", "status": ["drowning"]},
+    "enraged": {"pattern": r"enraged", "status": ["enraged"]},
+    "fatigued": {"pattern": r"fatigued?", "status": ["fatigued"]},
+    "fear": {"pattern": r"fear(?: T[1-4])?", "status": _tiers("fear")},
+    "nausea": {"pattern": r"nause(?:a|ated|ous)", "status": ["nausea"]},
+    "paralyzed": {"pattern": r"paraly(?:zed|sed|sis)", "status": ["paralyzed"]},
+    "prone": {"pattern": r"prone", "status": ["prone"]},
+    "stunned": {"pattern": r"stun(?:ned|s)?", "status": ["stunned"]},
+    "wet": {"pattern": r"wet", "status": ["wet"]},
+    "tier": {"pattern": r"T[1-4]|tier [1-4]", "name": "Tier",
+             "text": "Roll result 1–9 = T1, 10–19 = T2, 20–29 = T3, 30+ = T4. "
+                     "Damage = Damage Class × tier, soak = Soak Class × Defense tier."},
+    "unsoakable": {"pattern": r"unsoakable", "name": "Unsoakable",
+                   "text": "The damage ignores soak: no Defense roll reduces it."},
+    "resist": {"pattern": r"resist(?:s|ed|ing|ance)?", "name": "Resist",
+               "text": "A roll of the named attribute. Each tier above T1 lowers the incoming effect by 1 tier "
+                       "(T2 −1, T3 −2, T4 −3)."},
+}
+
+
+@cache
+def _term_regex(lang):
+    tr = _translations().get("TERMS", {})
+    alts = "|".join(f"(?P<{key}>{tr.get(key, {}).get('pattern', t['pattern'])})" for key, t in TERMS.items())
+    return re.compile(rf"\b(?:{alts})\b", re.I)
+
+
+def term_tip(key, matched):
+    """Tip text for a matched term: the status effect(s) or the general rule, in the current language."""
+    term = TERMS[key]
+    if "status" in term:
+        slugs = term["status"]
+        tier = re.search(r"[1-4]", matched)
+        if tier and len(slugs) == 4:
+            slugs = [slugs[int(tier.group()) - 1]]
+        return "\n".join(f"{e['name']}: {e['text']}" for e in (get(f"status:{s}") for s in slugs))
+    tr = _translations().get("TERMS", {}).get(key, {})
+    return f"{tr.get('name', term['name'])}: {tr.get('text', term['text'])}"
+
+
+def term_matches(text):
+    """(start, end, tip) for every explained term in plain ``text``."""
+    from rules.lang import get_language
+
+    for m in _term_regex(get_language()).finditer(text):
+        yield m.start(), m.end(), term_tip(m.lastgroup, m.group())
 
 
 def _build_index():

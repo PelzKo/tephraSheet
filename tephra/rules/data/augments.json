@@ -846,7 +846,7 @@
   "notes": "−4 Acc/Eva",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment slots on the gas\nA blinding chemical burns the eyes of everyone within the area of the gas, to the point where opening their eyes is painful. Those within the blinding area suffer a -4 on accuracy and evade rolls. People may leave the area of the gas, but they remain blinded for a number of turns afterwards based on the marque of this gas (though this is resistable).\n1 turn\n2 turns\n3 turns\n4 turns",
+  "text": "takes up 2 augment slots on the poison\nThis poison blinds the person, causing them to temporarily lose their eyesight. Being blind causes the target to take a -4 on accuracy and evade rolls. It lasts for an amount of time based on the marque.\n2 turns\n4 turns\n6 turns\n8 turns",
   "modifiers": []
  },
  {
@@ -1086,7 +1086,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Your targets are stunned when they get hit by this gas. They are stunned for the specified action points (though this is resistable). stunned for 1 action point\nstunned for 1 action point\nstunned for 2 action points\nstunned for 2 action points",
+  "text": "The poison stuns the opponent, causing the opponent to respond slowly and lose action points. The target is stunned for the specified amount of action points.\n1 action point stunned\n2 action points stunned\n3 action points stunned\n4 action points stunned",
   "modifiers": []
  },
  {
@@ -1704,7 +1704,7 @@
   "notes": "own price table",
   "size": "",
   "price": "",
-  "text": "",
+  "text": "The user keeps a chain attached to both their wrist and the weapon, making it difficult - if not impossible - to be disarmed. Whenever the target of a disarm (called shot to the hand), the user gains a bonus to the resist roll.\n+2 to resist being disarmed\n+4 to resist being disarmed\n+6 to resist being disarmed\n+8 to resist being disarmed\nMarque I II III IV\nmarket price 10 princes 50 princes 250 princes 1,250 princes",
   "modifiers": []
  },
  {
@@ -2011,7 +2011,7 @@
   "notes": "[STAT]",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment slots on a Firearm or Crossbow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
+  "text": "takes up 2 augment slots on a weapon\nYour weapon is larger but lighter, dealing extra damage with each blow.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
   "modifiers": [
    {
     "stat": "dc",
@@ -2048,7 +2048,7 @@
   "notes": "always mQ I (note: II for firearms)",
   "size": "",
   "price": "",
-  "text": "You can use this weapon like a shield, allowing you to deflect incoming attacks (gaining a +4 to evade in exchange for 1 reflexive action point).\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
+  "text": "You may use this weapon like a shield, allowing you to deflect incoming attacks (gaining a +4 to evade in exchange for 1 reflexive action point).\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
   "modifiers": []
  },
  {
@@ -2061,7 +2061,9 @@
   "section": "Melee & throwing weapon augments",
   "subsection": "",
   "slots": 1,
-  "qualifiers": [],
+  "qualifiers": [
+   "req. Interchangeable Parts"
+  ],
   "accessory": false,
   "marques": [
    "swap 2 AP",
@@ -2072,7 +2074,7 @@
   "notes": "req. Interchangeable Parts",
   "size": "",
   "price": "",
-  "text": "Requires: Weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
+  "text": "Requires: weapon to be made with Interchangeable Parts The weapon is easily altered, allowing its interchangeable parts to be used and switched around much more quickly than normal. The easily altered augment is a permanent affixture of the weapon, however, and cannot be activated or deactivated with interchangeable parts.\n2 AP to interchange parts\n2 AP to interchange parts\n1 AP to interchange parts\n1 AP to interchange parts",
   "modifiers": []
  },
  {
@@ -2222,7 +2224,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment slots on a Firearm or Crossbow The weapon is so twisted and wicked looking that it could strike fear into the heart of even the bravest of warriors. When first seeing the weapon, all enemies must make a spirit resist or suffer from tier 1 fear. At any time a character can spend an action point to attempt another resist roll. A single person can only evoke the effect of one horrifying weapon per combat.\nTier 2 spirit result to resist\nTier 3 spirit result to resist\nTier 4 spirit result to resist\nIrresistable (unless they can get a Tier 5 spirit resist)",
+  "text": "takes up 2 augment slots on a weapon\nThe weapon is so twisted and wicked looking that it could strike fear into the heart of even the bravest of warriors. When first seeing the weapon, all enemies must make a spirit resist or suffer from tier 1 fear. At anytime, a character may spend an action point to attempt another resist roll. A single person can only evoke the effect of one horrifying weapon per combat.\nTier 2 spirit result to resist\nTier 3 spirit result to resist\nTier 4 spirit result to resist\nIrresistable (unless they can get a Tier 5 spirit resist)",
   "modifiers": []
  },
  {
@@ -2318,7 +2320,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "When crafting this weapon designate a called shot. The weapon seems to guide itself toward that specific called on your victim’s body with the greatest of ease. Called shots to the designated location do not require an additional action point when made with this weapon. However, attacking any other called shot location with this weapon can be problematic, as it was built with one cause in mind. (This penalty does not apply to normal, unspecified attacks.)\n-8 on accuracy rolls when attacking a different called shot location\n-6 on accuracy rolls when attacking a different called shot location\n-4 on accuracy rolls when attacking a different called shot location\n-2 on accuracy rolls when attacking a different called shot location\nNote: When crafting the augment, the word “location” should be replaced with the specified called shot, such as “eye seeking” or “torso seeking.”",
+  "text": "When crafting this weapon designate a called shot. The weapon seems to guide itself toward that specific called shot on your victim’s body with the greatest of ease. Called shots to the designated location do not require an additional action point when made with this weapon. However, attacking any other called shot location with this weapon can be problematic, as it was built with one cause in mind. (This penalty does not apply to normal, unspecified attacks.)\n-8 on accuracy rolls when attacking a different called shot location\n-6 on accuracy rolls when attacking a different called shot location\n-4 on accuracy rolls when attacking a different called shot location\n-2 on accuracy rolls when attacking a different called shot location\nNote: When crafting the augment, the word “location” should be replaced with the specified called shot, such as “eye seeking” or “torso seeking.”",
   "modifiers": []
  },
  {
@@ -2342,7 +2344,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Your weapon glows. Perhaps you strung lights along its barrel, gave it a glow-in-the-dark coating, or made your weapon transparent with a light set inside. The light extends outwards from your weapon a number of feet determined by the marque of this augment. For 1 action point, you may turn it on, off, or dim it.\n25 feet\n50 feet\n100 feet\n200 feet",
+  "text": "Your weapon glows. Perhaps you strung lights along its blade, gave it a glow-in-the-dark coating, or made your weapon transparent with a light set inside. The light extends outwards from your weapon a number of feet determined by the marque of this augment. For 1 action point, you may turn it on, off, or dim it.\n25 feet\n50 feet\n100 feet\n200 feet",
   "modifiers": []
  },
  {
@@ -2453,7 +2455,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "You build your weapon solidly, giving it little room to break on the battlefield. When somebody attempts to sunder the reinforced weapon, it acts as if it is several size categories larger than it is. Once these “reinforced” size categories are gone, then its actual damage begins to decrease.\nThis augment can be applied multiple times, its effect stacking.\n1 reinforced size category\n2 reinforced size categories\n3 reinforced size categories\n4 reinforced size categories",
+  "text": "You build your weapon solidly, giving it little room to break on the battlefield. When somebody attempts to sunder the reinforced weapon, it acts as if it is several size categories larger than it is. Once these “reinforced” size categories are gone, then its actual damage begins to decrease.\n1 reinforced size category\n2 reinforced size categories\n3 reinforced size categories\n4 reinforced size categories",
   "modifiers": []
  },
  {
@@ -2505,7 +2507,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment slots on a Firearm or Crossbow requires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this weapon was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
+  "text": "takes up 2 augment slots on a weapon\nRequires: placed on weapon with Custom augment\nBe it a family heirloom or just your perfectly customized weapon, the very sight of it invigorate you. As long as your weapon is in hand there is still hope. You recover a small amount of hit points when your action points refresh. This augment only affects the person this blade was customized for.\nrecover 1 hit point\nrecover 2 hit points\nrecover 3 hit points\nrecover 4 hit points",
   "modifiers": []
  },
  {
@@ -2679,7 +2681,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "",
+  "text": "The user keeps a chain attached to both their wrist and the weapon, making it difficult - if not impossible - to be disarmed. Whenever the target of a disarm (called shot to the hand), the user gains a bonus to the resist roll.\n+2 to resist being disarmed\n+4 to resist being disarmed\n+6 to resist being disarmed\n+8 to resist being disarmed\nMarque I II III IV\nmarket price 10 princes 50 princes 250 princes 1,250 princes",
   "modifiers": []
  },
  {
@@ -2703,7 +2705,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Fine attention has been placed on the quality of your weapon. The user gains a bonus to accuracy with the weapon.\n+1\n+2\n+3\n+4",
+  "text": "Fine attention has been placed on the quality of your bow. The user gains a bonus to accuracy with the bow.\n+1\n+2\n+3\n+4",
   "modifiers": []
  },
  {
@@ -2727,7 +2729,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Sometimes discretion is the better part of not having your weaponry confiscated, so you create a clever collapsing mechanism for your weapons which makes them easier to conceal. Any weapon this is applied to can be broken down for 3 acion points and re-assembled for 3 action points. It is treated, for purposes of concealment, as being smaller than it is, but only when broken down.\n1 category smaller\n2 categories smaller\n3 categories smaller\n4 categories smaller",
+  "text": "Sometimes discretion is the better part of not having your weaponry confiscated, so you create a clever collapsing mechanism for your bows which makes them easier to conceal. Any bow this is applied to can be broken down for 3 acion points and re-assembled for 3 action points. It is treated, for purposes of concealment, as being smaller than it is, but only when broken down.\n1 category smaller\n2 categories smaller\n3 categories smaller\n4 categories smaller",
   "modifiers": []
  },
  {
@@ -2751,7 +2753,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "This weapon was designed to be used by one person and one person only. That person must be designated at the time of the weapon’s crafting. If anybody else attempts to use the custom weapon, they suffer a penalty on all accuracy and strike rolls with it.\n-3\n-6\n-9\n-12",
+  "text": "This bow was designed to be used by one person and one person only. That person must be designated at the time of the bow’s crafting. If anybody else attempts to use the custom bow, they suffer a penalty on all accuracy and strike rolls with it.\n-3\n-6\n-9\n-12",
   "modifiers": []
  },
  {
@@ -2775,7 +2777,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment slots on a Firearm or Crossbow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
+  "text": "takes up 2 augment slots on a Bow\nYour bow is larger but lighter, dealing extra damage with each blow.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
   "modifiers": []
  },
  {
@@ -2823,7 +2825,7 @@
   "notes": "always mQ I",
   "size": "",
   "price": "",
-  "text": "You can use this weapon like a shield, allowing you to deflect incoming attacks (gaining a +4 to evade in exchange for 1 reflexive action point).\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
+  "text": "You can use this bow like a shield, allowing you to deflect incoming attacks (gaining a +4 to evade in exchange for 1 reflexive action point).\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
   "modifiers": []
  },
  {
@@ -2871,7 +2873,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Your weapon is stronger than others, be it due to a sharper blade, large striking side, or a heftier head. Regardless, it gives the user a bonus on their strike rolls.\n+2 on strike\n+4 on strike\n+6 on strike\n+8 on strike",
+  "text": "Your weapon has a greater pull than others, giving the user a bonus on their strike rolls.\n+2 on strike\n+4 on strike\n+6 on strike\n+8 on strike",
   "modifiers": []
  },
  {
@@ -2919,7 +2921,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "You build your weapon solidly, giving it little room to break on the battlefield. When somebody attempts to sunder the reinforced weapon, it acts as if it is several size categories larger than it is. Once these “reinforced” size categories are gone, then its actual damage begins to decrease.\nThis augment can be applied multiple times, its effect stacking.\n1 reinforced size category\n2 reinforced size categories\n3 reinforced size categories\n4 reinforced size categories",
+  "text": "You build your bow solidly, giving it little room to break on the battlefield. Whenever somebody attempts to sunder the reinforced bow, it acts as if it is several size categories larger than it is. Once these “reinforced” size categories are gone, then its actual damage begins to decrease.\n1 reinforced size category\n2 reinforced size categories\n3 reinforced size categories\n4 reinforced size categories",
   "modifiers": []
  },
  {
@@ -2943,7 +2945,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "The range on your firearm increases greatly. This augment can be applied multiple times, with its increases stacking.\n+50 feet\n+100 feet\n+200 feet\n+300 feet",
+  "text": "The range on your bow increases greatly, improving the range that the bow can accurate hit a target within.\n+50 feet\n+100 feet\n+200 feet\n+300 feet",
   "modifiers": []
  },
  {
@@ -2967,7 +2969,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "This weapon is whispering death. It makes almost no sound when shot or reloaded, making it almost impossible for people to figure out where it is by sound alone. Any time anybody is attempting to figure out where the weapon was shot from based on sound must make a tier result with their cunning.\nTier 2\nTier 3\nTier 4\nImpossible (or Tier 5)",
+  "text": "This bow is whispering death. It makes almost no sound when an arrow is notched or fired from it, making it almost impossible for people to figure out where it is by sound alone. Any time anybody is attempting to figure out where the bow was shot from based on sound must make a tier result with their cunning.\nTier 2\nTier 3\nTier 4\nImpossible (or Tier 5)",
   "modifiers": []
  },
  {
@@ -3015,7 +3017,7 @@
   "notes": "attack +1 AP; Dex resist",
   "size": "",
   "price": "",
-  "text": "takes up 3 augment slots on a weapon\nResist: Dexterity (marques down)\nCost to activate: 1 AP reflexively during an attack Fire lashes out around your weapon, catching those struck with it on fire. When you hit an opponent, you can spend 1 action point in order to attempt to catch them on fire. The target may resist with their dexterity (lowering the marques of the combustion).\nThe victim catches on Tier 1 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 3 fire",
+  "text": "takes up 3 augment slots on a Bow\nResist: Dexterity (marques down)\nCost to activate: Attack +1 AP\nFire lashes out from your bow, allowing you to set your arrows on fire. You can use this to attempt to set your enemy aflame. The target may resist with their dexterity (lowering the marques of the combustion).\nThe victim catches on Tier 1 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 2 fire\nThe victim catches on Tier 3 fire",
   "modifiers": []
  },
  {
@@ -4255,7 +4257,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Takes up 2 Augment Slots on a Boiler\nThe automaton has been outfitted with a graviton sphere, allowing it to float and move. It can now fly, with its speed depending on the marque. Any speed penalties you take from armor will penalize this speed.\n5 feet of fly speed per action point\n10 feet of fly speed per action point\n15 feet of fly speed per action point\n25 feet of fly speed per action point",
+  "text": "Takes up 2 augment slots on the Brainworks\nThe automaton has been outfitted with a graviton sphere, allowing it to float and move. It can now fly, with its speed depending on the marque. Any speed penalties you take from armor will penalize this speed.\n5 feet of flight speed per action point\n10 feet of flight speed per action point\n15 feet of flight speed per action point\n20 feet of flight speed per action point",
   "modifiers": [
    {
     "stat": "fly",
@@ -4414,7 +4416,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Your automaton has a hollow compartment inside, allowing people to ride inside and see out through eye holes or monitors of your design. While inside an automaton, a character cannot be directly targeted but they in turn cannot interact with anything outside of the automaton, although the automaton can still hear all voice commands. Any remote controls for the automaton can still control it from its passenger compartment. The number of people the automaton can hold is equal to the number of spaces it takes up. The amount of action points required by passengers to get into and out of the automaton is based on the marque of this augment.\n4 AP to enter or exit the automaton (can take multiple turns)\n3 AP to enter or exit the automaton\n2 AP to enter or exit the automaton\n1 AP to enter or exit the automaton",
+  "text": "Your automaton has a hollow compartment inside, allowing people to ride inside and see out through eye holes or monitors of your design. While inside an automaton, a character cannot be directly targeted but they in turn cannot interact with anything outside of the automaton, although the automaton can still hear all voice commands. The number of people the automaton can hold is equal to the number of spaces it takes up. The amount of action points required by passengers to get into and out of the automaton is based on the marque of this augment.\n4 AP to enter or exit the automaton (can take multiple turns)\n3 AP to enter or exit the automaton\n2 AP to enter or exit the automaton\n1 AP to enter or exit the automaton",
   "modifiers": []
  },
  {
@@ -5294,7 +5296,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Takes up 2 Augment Slots on a Boiler\nThe automaton has been outfitted with a graviton sphere, allowing it to float and move. It can now fly, with its speed depending on the marque. Any speed penalties you take from armor will penalize this speed.\n5 feet of fly speed per action point\n10 feet of fly speed per action point\n15 feet of fly speed per action point\n25 feet of fly speed per action point",
+  "text": "Takes up 2 augment slots on the Brainworks\nThe automaton has been outfitted with a graviton sphere, allowing it to float and move. It can now fly, with its speed depending on the marque. Any speed penalties you take from armor will penalize this speed.\n5 feet of flight speed per action point\n10 feet of flight speed per action point\n15 feet of flight speed per action point\n20 feet of flight speed per action point",
   "modifiers": [
    {
     "stat": "fly",
@@ -5355,7 +5357,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Your automaton has a hollow compartment inside, allowing people to ride inside and see out through eye holes or monitors of your design. While inside an automaton, a character cannot be directly targeted but they in turn cannot interact with anything outside of the automaton, although the automaton can still hear all voice commands. Any remote controls for the automaton can still control it from its passenger compartment. The number of people the automaton can hold is equal to the number of spaces it takes up. The amount of action points required by passengers to get into and out of the automaton is based on the marque of this augment.\n4 AP to enter or exit the automaton (can take multiple turns)\n3 AP to enter or exit the automaton\n2 AP to enter or exit the automaton\n1 AP to enter or exit the automaton",
+  "text": "Your automaton has a hollow compartment inside, allowing people to ride inside and see out through eye holes or monitors of your design. While inside an automaton, a character cannot be directly targeted but they in turn cannot interact with anything outside of the automaton, although the automaton can still hear all voice commands. The number of people the automaton can hold is equal to the number of spaces it takes up. The amount of action points required by passengers to get into and out of the automaton is based on the marque of this augment.\n4 AP to enter or exit the automaton (can take multiple turns)\n3 AP to enter or exit the automaton\n2 AP to enter or exit the automaton\n1 AP to enter or exit the automaton",
   "modifiers": []
  },
  {
@@ -5379,7 +5381,7 @@
   "notes": "wounds after rebuild",
   "size": "",
   "price": "",
-  "text": "If your automaton is defeated in battle, its insides are heavily safeguarded to allow for easy repair during your next breather. An automaton with a protected core can be entirely rebuilt in a matter of minutes. The automaton can be repaired up to a certain amount of maximum wounds, based on the marque. It cannot be repaired past its normal maximum number of wounds\n10 wounds after repairs\n20 wounds after repairs\n30 wounds after repairs\n40 wounds after repairs",
+  "text": "If your automaton is defeated in battle, its insides are heavily safeguarded to allow for easy repair during your next breather. An automaton with a protected core can be entirely rebuilt in a matter of minutes. The automaton can be repaired up to a certain amount of maximum wounds, based on the marque. It cannot be repaired past its normal maximum number of wounds.\n10 wounds after repairs\n20 wounds after repairs\n30 wounds after repairs\n40 wounds after repairs",
   "modifiers": []
  },
  {
@@ -5927,7 +5929,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "You build your weapon solidly, giving it little room to break on the battlefield. When somebody attempts to sunder the reinforced weapon, it acts as if it is several size categories larger than it is. Once these “reinforced” size categories are gone, then its actual damage begins to decrease.\nThis augment can be applied multiple times, its effect stacking.\n1 reinforced size category\n2 reinforced size categories\n3 reinforced size categories\n4 reinforced size categories",
+  "text": "The prosthetic is strengthened with internal plating, granting it a resist against called shots.\n+4 to resist when struck\n+8 to resist when struck\n+12 to resist when struck\n+16 to resist when struck",
   "modifiers": []
  },
  {
@@ -6315,7 +6317,7 @@
   "notes": "[COND]",
   "size": "",
   "price": "",
-  "text": "The armor generally cannot be caught on fire, depending on how intense the fire is.\nCannot be caught on tier 1 fire\nCannot be caught on tier 2 fire\nCannot be caught on tier 3 fire\nCannot be caught on tier 4 fire",
+  "text": "Your skin becomes a darkened charcoal color that is less likely to ignite or burn. You are never denied your defense roll when on fire. You also gain extra soak against damage from being on fire and any other damage from fire.\nYou gain a +2 soak against fire\nYou gain a +3 soak against fire\nYou gain a +4 soak against fire\nYou gain a +5 soak against fire",
   "modifiers": []
  },
  {
@@ -6997,7 +6999,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Fine attention has been placed on the quality of your weapon. The user gains a bonus to accuracy with the weapon.\n+1\n+2\n+3\n+4",
+  "text": "Fine attention has been placed on the quality of your bio-zapper. You gain a bonus to accuracy with the bio-zapper.\n+1\n+2\n+3\n+4",
   "modifiers": []
  },
  {
@@ -7093,7 +7095,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "Sometimes discretion is the better part of not having your weaponry confiscated, so you create a clever collapsing mechanism for your weapons which makes them easier to conceal. Any weapon this is applied to can be broken down for 3 acion points and re-assembled for 3 action points. It is treated, for purposes of concealment, as being smaller than it is, but only when broken down.\n1 category smaller\n2 categories smaller\n3 categories smaller\n4 categories smaller",
+  "text": "Sometimes discretion is the better part of not having your biozapper confiscated, so you create a clever collapsing mechanism for your bio-zapper which makes it easier to conceal. Any biozapper this is applied to can be broken down for 3 acion points and re-assembled for 3 action points. It is treated, for purposes of concealment, as being smaller than it is, but only when broken down.\n1 category smaller\n2 categories smaller\n3 categories smaller\n4 categories smaller",
   "modifiers": []
  },
  {
@@ -7141,7 +7143,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "This weapon was designed to be used by one person and one person only. That person must be designated at the time of the weapon’s crafting. If anybody else attempts to use the custom weapon, they suffer a penalty on all accuracy and strike rolls with it.\n-3\n-6\n-9\n-12",
+  "text": "This bio-zapper was designed to be used by one person and one person only. That person must be designated at the time of the bio-zapper’s crafting. If anybody else attempts to use the custom bio-zapper, they suffer a penalty on all accuracy rolls with it.\n-3\n-6\n-9\n-12",
   "modifiers": []
  },
  {
@@ -7165,7 +7167,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "You can use this weapon like a shield, allowing you to deflect incoming attacks (gaining a +4 to evade in exchange for 1 reflexive action point).\nNote: This augment always acts as marque II for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
+  "text": "You may use this bio-zapper like a shield, allowing you to deflect incoming attacks (gaining a +4 to evade in exchange for 1 reflexive action point).\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in bio-flux.",
   "modifiers": []
  },
  {
@@ -7333,7 +7335,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "",
+  "text": "Resist: Brute (negates, see below)\nVictims unlucky enough to be in the path of a blinding ray find their eye lids fused together, making it impossible for them the see anything without drastic actions. For a single action point they can deal a point of wounds damage to themselves to rip their eyes open. They don’t take a wounds effect for doing so. tier 2 brute resist to negate\ntier 3 brute resist to negate\ntier 3 brute resist to negate\ntier 4 brute resist to negate",
   "modifiers": []
  },
  {
@@ -7669,7 +7671,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "You build your weapon solidly, giving it little room to break on the battlefield. When somebody attempts to sunder the reinforced weapon, it acts as if it is several size categories larger than it is. Once these “reinforced” size categories are gone, then its actual damage begins to decrease.\nThis augment can be applied multiple times, its effect stacking.\n1 reinforced size category\n2 reinforced size categories\n3 reinforced size categories\n4 reinforced size categories",
+  "text": "You build your bio-zapper solidly, giving it little room to break on the battlefield. Whenever somebody attempts to sunder the reinforced bio-zapper, it acts as if it is several size categories larger than it is. Once these “reinforced” size categories are gone, then it will actually break.\n1 reinforced size category\n2 reinforced size categories\n3 reinforced size categories\n4 reinforced size categories",
   "modifiers": []
  },
  {
@@ -7765,7 +7767,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "This weapon is whispering death. It makes almost no sound when shot or reloaded, making it almost impossible for people to figure out where it is by sound alone. Any time anybody is attempting to figure out where the weapon was shot from based on sound must make a tier result with their cunning.\nTier 2\nTier 3\nTier 4\nImpossible (or Tier 5)",
+  "text": "This bio-zapper is whispering death. It makes almost no sound when fired, making it almost impossible for people to figure out where it is by sound alone. Any time anybody is attempting to figure out where the bio-zapper was shot from based on sound they must make a tier result with their cunning. tier 2 cunning to hear\ntier 3 cunning to hear\ntier 4 cunning to hear\nimpossible (unless they can get a tier 5 cunning)",
   "modifiers": []
  },
  {
@@ -7935,7 +7937,7 @@
   "notes": "always mQ I",
   "size": "",
   "price": "",
-  "text": "",
+  "text": "Your vehicle is adept at moving through terrain (either by having rotating machetes on the front or by having a vehicle that’s just great at sliding in-between brush). Your vehicle cannot be slowed by rough terrain.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in engineer.",
   "modifiers": []
  },
  {
@@ -8358,7 +8360,7 @@
   "notes": "always mQ I",
   "size": "",
   "price": "",
-  "text": "Your automaton has a hollow compartment inside, allowing people to ride inside and see out through eye holes or monitors of your design. While inside an automaton, a character cannot be directly targeted but they in turn cannot interact with anything outside of the automaton, although the automaton can still hear all voice commands. Any remote controls for the automaton can still control it from its passenger compartment. The number of people the automaton can hold is equal to the number of spaces it takes up. The amount of action points required by passengers to get into and out of the automaton is based on the marque of this augment.\n4 AP to enter or exit the automaton (can take multiple turns)\n3 AP to enter or exit the automaton\n2 AP to enter or exit the automaton\n1 AP to enter or exit the automaton",
+  "text": "You’ve installed a second seat in your vehicle - good job, now your friend can come with you! You may carry a single passenger in your vehicle. (This does not increase the size of your vehicle.) Note: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in engineer.",
   "modifiers": []
  },
  {
@@ -8629,7 +8631,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "The armor re-routes electricity through it and into specially created devices that absorb the shock. Anything that deals electricity damage is not entirely soakable, and attacks that deal electricity damage (even if they are only partially electrical, such as attacks with a pulsing weapon) increase the soak class of the armor.\n+2 soak class against electrical attacks\n+4 soak class against electrical attacks\n+6 soak class against electrical attacks\n+8 soak class against electrical attacks",
+  "text": "The armoring re-routes electricity through it and into specially created devices that absorb the shock. Anything that deals electricity damage is now entirely soakable, and attacks that deal electricity damage (even if they are only partially electrical, such as attacks with a pulsing weapon) increase the soak class of the armor.\n+2 soak class against electrical attacks\n+4 soak class against electrical attacks\n+6 soak class against electrical attacks\n+8 soak class against electrical attacks",
   "modifiers": []
  },
  {
@@ -8703,7 +8705,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "While wearing armor that has fireproofing, all fire attacks are soakable. Furthermore, the soak class for the armor is improved against fire. (If the wearer would take burns or be set on fire from a fire attack that is entirely soaked, the extra effects are negated.)\n+1 soak class against fire\n+2 soak class against fire\n+3 soak class against fire\n+4 soak class against fire",
+  "text": "While coated in armoring that has fireproofing, all fire attacks are soakable. Furthermore, the soak class for the armoring is improved against fire.\n+1 soak class against fire\n+2 soak class against fire\n+3 soak class against fire\n+4 soak class against fire",
   "modifiers": []
  },
  {
@@ -8727,7 +8729,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "The armor generally cannot be caught on fire, depending on how intense the fire is.\nCannot be caught on tier 1 fire\nCannot be caught on tier 2 fire\nCannot be caught on tier 3 fire\nCannot be caught on tier 4 fire",
+  "text": "The armoring generally cannot be caught on fire, depending on how intense the fire is.\nCannot be caught on tier 1 fire\nCannot be caught on tier 2 fire\nCannot be caught on tier 3 fire\nCannot be caught on tier 4 fire",
   "modifiers": []
  },
  {
@@ -8949,7 +8951,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "takes up 2 augment slots on a Firearm or Crossbow Your weapon is larger but lighter, dealing extra damage with each shot.\n+1 damage class\n+2 damage class\n+3 damage class\n+4 damage class",
+  "text": "The blast is souped-up to be more powerful, dealing greater amounts of total damage to those caught within its range.\n11 damage per the Explosive’s Marque\n12 damage per the Explosive’s Marque\n13 damage per the Explosive’s Marque\n14 damage per the Explosive’s Marque",
   "modifiers": []
  },
  {
@@ -9407,7 +9409,7 @@
   "notes": "",
   "size": "",
   "price": "",
-  "text": "While wearing this armor, you are very difficult to grab on to. Any time you are attempting to evade a grab or resist a grab, you gain a bonus on your roll.\n+2\n+4\n+6\n+8",
+  "text": "When your explosive is thrown, it begins to secrete a slimy liquid, making it difficult to pick up. It costs 2 action points to attempt to pick your explosive up, and the person attempting to do so must roll their Dexterity.\nTier 2 Dexterity to pick it up\nTier 3 Dexterity to pick it up\nTier 4 Dexterity to pick it up\nImpossible (Unless you can somehow attain a Tier 5 Dexterity result)",
   "modifiers": []
  },
  {
@@ -9456,7 +9458,7 @@
   "notes": "[STAT:Eva]",
   "size": "",
   "price": "",
-  "text": "The automaton is always alert (unless when out of power or turned off), and will raise an alarm if its sensors pick up anything.\nNote: This augment always acts as marque I for the purposes of determining cost, though you can learn this augment despite your skill in automata.",
+  "text": "takes up 3 augment slots on eyewear\nAlert goggles have small sirens built into them which go off whenever they sense something headed in your direction. Small lights in the lenses point you in the direction of the objects in question.\n+1 on evade rolls\n+2 on evade rolls\n+3 on evade rolls\n+4 on evade rolls",
   "modifiers": []
  },
  {
@@ -10560,7 +10562,7 @@
   "notes": "2 AP per vial",
   "size": "L",
   "price": "3/15/75/375 (DIY-made never breaks)",
-  "text": "",
+  "text": "Size: Light\nCost: 2 AP per vial\nIdeal for travelers entering less-hospitable areas of the world (or afraid of poisons), this bottle cap fits onto most vials of liquid. Its perforated top can be used to pour out any unwanted particles and chemicals, leaving you with a vial of pure water. This filter will break with repeated uses.\n3 uses before breaking\n15 uses before breaking\n75 uses before breaking\n500 uses before breaking\nNote: A water filter made with your DIY will never break unless it leaves your care.\nMarque I II III IV\nmarket price 3 princes 15 princes 75 princes 375 princes",
   "modifiers": []
  },
  {

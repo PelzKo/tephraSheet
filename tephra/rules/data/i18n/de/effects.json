@@ -1,5 +1,5 @@
 {
-"_structure": "STATUS: {status slug: {name, text}}. CALLED_SHOTS: {location slug: {name, resist, normal|wound|fatal: {name, text}}} (resist = Attributname). LOCATION_LABELS: {silhouette number as string: label}. CALLED_LABELS: {kind: label}. Same keys as rules/engine/effects.py.",
+"_structure": "STATUS: {status slug: {name, text}}. CALLED_SHOTS: {location slug: {name, resist, normal|wound|fatal: {name, text}}} (resist = Attributname). LOCATION_LABELS: {silhouette number as string: label}. CALLED_LABELS: {kind: label}. Same keys as rules/engine/effects.py. TERMS: {term key (rules/engine/effects.py TERMS): {pattern (regex, whole words), name, text}}.",
 "STATUS": {
  "bleeding": {"name": "Blutung", "text": "TP-Schaden (danach Wunden) bei jeder AP-Erneuerung, nicht absorbierbar, kumulativ; jeder ausgegebene 1 AP (Opfer/Angrenzender) hebt 5 auf."},
  "blinded": {"name": "Geblendet", "text": "−4 Genauigkeit und Ausweichen (schlechte Sicht, Nebel, wenig Licht: −2)."},
@@ -72,5 +72,24 @@
   "normal": {"name": "Verlangsamt oder gestolpert", "text": "Wahl des Angreifers: verlangsamt (+1 AP zum Bewegen) oder gestolpert (liegend)."},
   "wound": {"name": "Verstauchtes Bein", "text": "−10 Tempo (mindestens 5), liegend; bis zur Verschnaufpause."},
   "fatal": {"name": "Abgetrenntes Bein", "text": "−20 Tempo (mindestens 5), Aufgaben mit zwei Beinen −6, −1 maximale Wunden; Tod in 3 Zügen, außer mit 3 AP Verbinden."}}
-}
+},
+"TERMS": {
+  "bleeding": {"pattern": "Blutung(?:en|s|sschaden|sschadens)?|blutet|bluten"},
+  "blinded": {"pattern": "geblendet(?:e|en|er)?|Blindheit"},
+  "burning": {"pattern": "brennend(?:e|en|er)?(?: S[1-4])?"},
+  "burnt": {"pattern": "verbrannt(?:e|en|er)?(?: S[1-4])?"},
+  "deafened": {"pattern": "taub(?:e|en|er|heit)?"},
+  "disoriented": {"pattern": "desorientiert(?:e|en|er)?"},
+  "drowning": {"pattern": "ertrinken|ertrinkt"},
+  "enraged": {"pattern": "wütend(?:e|en|er)?"},
+  "fatigued": {"pattern": "erschöpft(?:e|en|er)?|Erschöpfung"},
+  "fear": {"pattern": "Furcht(?:effekte?)?(?: S[1-4])?"},
+  "nausea": {"pattern": "Übelkeit"},
+  "paralyzed": {"pattern": "gelähmt(?:e|en|er)?|Lähmung"},
+  "prone": {"pattern": "liegend(?:e|en|er)?"},
+  "stunned": {"pattern": "betäubt(?:e|en|er)?|Betäubung"},
+  "wet": {"pattern": "nass(?:e|en|er)?"},
+  "tier": {"pattern": "S[1-4]|Stufe [1-4]", "name": "Stufe", "text": "Wurfergebnis 1–9 = S1, 10–19 = S2, 20–29 = S3, 30+ = S4. Schaden = Schadensklasse × Stufe, Schutz = Schutzklasse × Verteidigungsstufe."},
+  "unsoakable": {"pattern": "nicht absorbierbar(?:e|en|er|es)?", "name": "Nicht absorbierbar", "text": "Der Schaden ignoriert den Schutz: Kein Verteidigungswurf verringert ihn."},
+  "resist": {"pattern": "Widerst(?:and|ands|ände|änden|ehen|eht|ehst|anden|andswurf|andswürfe|andswürfen)", "name": "Widerstand", "text": "Ein Wurf auf das genannte Attribut. Jede Stufe über S1 senkt den eintreffenden Effekt um 1 Stufe (S2 −1, S3 −2, S4 −3)."}}
 }

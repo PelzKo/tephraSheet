@@ -30,9 +30,9 @@
               {% for q in o.aug.qualifiers %}<span class="tag">{{ q }}</span>{% endfor %}
               <span class="cost">{% t "your marque: {n}" n=o.marque|roman %}</span>
             </header>
-            <div class="small">{% for m in o.aug.marques %}{% if m %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m }}</span>{% endif %}{% endfor %} {{ o.aug.notes }}</div>
+            <div class="small">{% for m in o.aug.marques %}{% if m %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m|term_tips }}</span>{% endif %}{% endfor %} {{ o.aug.notes|term_tips }}</div>
             {% if o.reasons and not o.known %}<div class="why">✗ {{ o.reasons|join:"; " }}</div>{% endif %}
-            {% if o.aug.text %}<details><summary>{% t "Book text" %}</summary><p class="effect">{{ o.aug.text }}</p></details>{% endif %}
+            {% if o.aug.text %}<details><summary>{% t "Book text" %}</summary><p class="effect">{{ o.aug.text|term_tips }}</p></details>{% endif %}
           </div>
         {% endfor %}
       </details>

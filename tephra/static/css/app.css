@@ -230,6 +230,7 @@ tr.fb-closed td { opacity: .55; }
 .bd-pop.pinned { pointer-events: auto; }
 .bd-pop .tip { white-space: pre-line; }
 .sheet-shell [title]:not(button):not(a), .sheet-shell [data-tip] { cursor: help; }
+.term { text-decoration: underline dotted; text-underline-offset: 2px; cursor: help; }
 .bd-pop h4 { margin: 0 0 5px; font-family: var(--font-head); font-weight: 400; font-size: 15px; color: var(--brass-2); }
 .bd-pop table { width: 100%; border-collapse: collapse; }
 .bd-pop td { padding: 1px 0; vertical-align: top; }
