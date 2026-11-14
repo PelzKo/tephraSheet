@@ -136,6 +136,10 @@ def planner(request, character):
     state, checks = planned_state(character)
     rows, skill_rows = preview_rows(current, compute(state))
     entry = planned_for(character, edit) or {}
+    retrofit = entry.get("retrofit") or ["", ""]
+    owned = {s for s, _l in planned_state(character, upto=edit - 1)[0].specialties}  # learned or planned before this level
+    specialties = sorted(offer(reg.specialties.values(), keep={entry.get("specialty"), *retrofit, *owned}),
+                         key=lambda s: (s["skill"] or "~", s["name"]))
     entry_skills = sorted((entry.get("skills") or {}).items(), key=lambda kv: -kv[1])
     twos = [s for s, v in entry_skills if v == 2]
     ones = [s for s, v in entry_skills if v == 1]
@@ -151,9 +155,10 @@ def planner(request, character):
         "rows": rows, "skill_rows": skill_rows, "plan_level": state.level,
         "skills_by_attr": tables.SKILLS,
         "retrofit_level": leveling.retrofit_allowed(edit),
-        "retrofit": entry.get("retrofit") or ["", ""],
-        "specialties": sorted(offer(reg.specialties.values(), keep={entry.get("specialty"), *(entry.get("retrofit") or [])}),
-                             key=lambda s: (s["skill"] or "~", s["name"])),
+        "retrofit": retrofit,
+        "specialties": [s for s in specialties if s["slug"] not in owned or s.get("repeatable")
+                        or s["slug"] in {entry.get("specialty"), retrofit[1]}],
+        "owned_specialties": [s for s in specialties if s["slug"] in owned],
         "augments": sorted(offer(reg.augments.values(), keep=entry.get("augments", [])),
                           key=lambda a: (a["skill"], a["name"])),
     })

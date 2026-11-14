@@ -97,7 +97,7 @@
       <label>{% t "Put it:" %} <select name="slot">
         <option value="carried">{% t "Carried" %}</option><option value="weapon1">{% t "Left hand" %}</option><option value="weapon2">{% t "Right hand" %}</option>
         <option value="armor">{% t "Armor (worn)" %}</option><option value="deflection">{% t "Deflection item" %}</option><option value="worn">{% t "Worn / active" %}</option><option value="stored">{% t "Stored" %}</option></select></label>
-      <span class="muted small">{% t "New items are also shared in the catalog for everyone." %}</span>
+      <label><input type="checkbox" name="add_to_catalog" value="1" {% if request.POST.add_to_catalog %}checked{% endif %}> {% t "Also add to the catalog" %}</label>
       <input type="hidden" name="for" value="{{ character.pk }}">
     </div>
   {% endif %}
