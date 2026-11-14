@@ -8,12 +8,14 @@ effect ends with a breather, ``drop`` makes the hit hand drop what it holds.
 
 Amounts (``EffectEntry.amount``) and AP payments, all rule numbers live here:
 ``ask`` = the add form asks a number (label); ``add`` = what adding the same effect again does ("stack": +amount,
-"renew": higher of both; otherwise a second entry); ``tick`` = damage in fight mode at ``at`` ("end_turn" = AP
-refresh, "turn" = start of my turn): ``damage`` (fixed; default the amount) to ``to`` ("hp_wounds", "hp" or
+"replace": the new amount; otherwise a second entry); ``tick`` = damage in fight mode at ``at`` ("end_turn" = AP
+refresh, "turn" = start of my turn): ``damage`` (fixed; default the current amount) to ``to`` ("hp_wounds", "hp" or
 "wounds"), ``decay`` lowers the amount each tick (removed at 0); ``per_ap`` = each AP paid lowers the amount by
 that much (removed at 0); ``cost`` = AP that end it (a number, or "amount" = the asked number); ``bandage`` = AP
-that stop the death timer (the effect stays); ``stun`` = the asked number of AP is lost from the round's pool;
-``refresh_ends`` = removed at the next AP refresh; ``start`` = the amount of an effect that asks nothing; ``max`` caps the asked number.
+that stop the death timer (the effect stays); ``stun`` = the asked number of AP is lost from the round's pool
+(fight mode only); ``refresh_ends`` = removed at the next AP refresh; ``start`` = the amount of an effect that asks
+nothing; ``max`` caps the asked number. AP payments (``per_ap``/``cost``/``bandage``) only apply in fight mode;
+outside it the pay button just says so.
 """
 import re
 from functools import cache
@@ -28,9 +30,8 @@ def _all_rolls(n):
 
 
 def _burning(n):
-    # The AP to extinguish may be spent over several turns (T3/T4 need more than one turn's pool): the amount is
-    # the AP still needed.
-    return {"tick": {"at": "end_turn", "damage": n, "to": "hp_wounds"}, "start": n, "per_ap": 1}
+    # The amount is both the damage per turn and the AP still needed: each AP spent lowers it by 1 (over several turns).
+    return {"tick": {"at": "end_turn", "to": "hp_wounds"}, "start": n, "per_ap": 1}
 
 
 STATUS = [
@@ -88,8 +89,8 @@ STATUS = [
        "cost": "amount", "modifiers": _all_rolls(-(t + 2))}
       for t in (1, 2, 3, 4)],
     {"slug": "radiation-burns", "name": "Radiation Burns", "extension": "aether",
-     "text": "Unsoakable HP damage at the start of the next turn, 1 less each turn after; renewed by a new hit.", "ask": "Damage", "add": "renew",
-     "tick": {"at": "turn", "to": "hp", "decay": 1}},
+     "text": "Unsoakable HP damage each AP refresh, 1 less each turn after; a new hit replaces it.", "ask": "Damage", "add": "replace",
+     "tick": {"at": "end_turn", "to": "hp", "decay": 1}},
     {"slug": "static-shock", "name": "Static Shock", "extension": "aether",
      "text": "−2/−4/−6/−8 (by marque) on the next Evade roll within the next turn."},
 ]
