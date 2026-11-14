@@ -179,13 +179,13 @@ def item_edit(request, pk):
         form.fields["name"].disabled = form.fields["kind"].disabled = True
     if request.method == "POST":
         if request.POST.get("delete") and gm:
-            if item.source == "book":  # hidden, so seed_catalog does not bring it back
-                item.deleted_at = timezone.now()
-                item.save(update_fields=["deleted_at"])
+            # Book items stay hidden (so seed_catalog does not bring them back); custom items go to the trash.
+            item.deleted_at = timezone.now()
+            item.save(update_fields=["deleted_at"])
+            if item.source == "book":
                 messages.success(request, _("Playing Guide item hidden from the catalog."))
             else:
-                item.delete()
-                messages.success(request, _("Item deleted from the catalog."))
+                messages.success(request, _("Item moved to the trash. The narrator can restore it on the narrator page."))
             return redirect("catalog")
         if request.POST.get("restore") and gm and item.deleted_at:
             item.deleted_at = None

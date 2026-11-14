@@ -7,3 +7,4 @@ Der Reiter **Geschichte** ist dein Kampagnentagebuch: was passiert ist, warum du
 - Blöcke lassen sich einklappen, und das Suchfeld filtert sie.
 - Das einzeilige Feld oben hängt eine Zeile ans Ende des Tagebuchs, ohne den Editor zu öffnen.
 - Jede Änderung hebt den vorherigen Text auf; der Erzähler kann ihn wiederherstellen (Django-Admin → Journal revisions).
+- **Stufenverlauf** unter dem Tagebuch listet pro Stufe die gewählten Fertigkeitspunkte, Spezialisierungen (und Umschulungen) und Augmente mit Datum auf (nur lesen).

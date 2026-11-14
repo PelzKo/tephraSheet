@@ -325,3 +325,12 @@ button.val { cursor: help; }
   .pencil .track { visibility: hidden; }
   .pencil .xp-dot.on circle { fill: #fff; }
 }
+
+/* ---------- b2: level history (Story tab, optional print page) ---------- */
+.level-history-box { margin-top: 14px; }
+.level-history-box summary { cursor: pointer; }
+@media print {
+  body:not(.print-history-on) .print-history { display: none; }
+  .print-appendix .level-history { width: 100%; border-collapse: collapse; }
+  .print-appendix .level-history :is(td, th) { border-bottom: 1px solid #999; padding: 2pt 4pt; text-align: left; vertical-align: top; }
+}

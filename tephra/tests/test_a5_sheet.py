@@ -211,7 +211,7 @@ def test_give_locks_both_characters_first(admin_client, db):
         play(admin_client, b, "give-money", {"to": a.pk, "amount": 0})
     sqls = [q["sql"] for q in ctx.captured_queries]
     both = next(i for i, q in enumerate(sqls) if 'FROM "characters_character"' in q and " IN (" in q and "ORDER BY" in q)
-    own = max(i for i, q in enumerate(sqls) if q.endswith(f'"characters_character"."id" = {b.pk} LIMIT 21'))
+    own = max(i for i, q in enumerate(sqls) if f'"characters_character"."id" = {b.pk}' in q and q.endswith("LIMIT 21"))
     assert both < own  # the pair lock comes before the single-row lock in play_action
 
 

@@ -155,6 +155,7 @@ def sheet_context(request, character, pencil=False):
         "money_on_hand": tables.format_money(character.money_on_hand),
         "money_in_bank": tables.format_money(character.money_in_bank),
         "journal": journal.sections(character.story_notes),
+        "level_history": journal.level_history(character),
         "story_base": text_stamp(character.story_notes), "notes_base": text_stamp(character.notes),
         "stamp": sheet_stamp(character), "pencil": pencil, "give_targets": give_targets(request, character),
         "money": {"hand": character.money_on_hand, "bank": character.money_in_bank},

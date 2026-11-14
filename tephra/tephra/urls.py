@@ -6,6 +6,7 @@ from django.urls import path
 from catalog import views as catalog_views
 from wiki import views as wiki_views
 from characters.views import admin_mode, automatons, feedback, general, levelup, pets, planner, sheet, wizard
+from characters.views import trash
 
 urlpatterns = [
     path("", general.character_list, name="character_list"),
@@ -47,6 +48,12 @@ urlpatterns = [
     path("gm/logout/", auth_views.LogoutView.as_view(next_page="character_list"), name="gm_logout"),
     path("gm/", general.gm_settings, name="gm_settings"),
     path("gm/password/<int:pk>/", general.gm_reset_password, name="gm_reset_password"),
+    path("c/<int:pk>/export/", trash.export_view, name="export_character"),
+    path("gm/import/", trash.import_view, name="gm_import"),
+    path("gm/duplicate/<int:pk>/", trash.duplicate_view, name="gm_duplicate"),
+    path("gm/snapshot/<int:pk>/", trash.snapshot_download, name="gm_snapshot"),
+    path("gm/drafts-to-trash/", trash.drafts_to_trash, name="gm_drafts_to_trash"),
+    path("gm/trash/<slug:kind>/<int:pk>/", trash.trash_action, name="gm_trash"),
     path("feedback/", feedback.feedback_submit, name="feedback"),
     path("language/", general.set_language, name="set_language"),
     path("gm/feedback/<int:pk>/status/", feedback.feedback_status, name="gm_feedback_status"),

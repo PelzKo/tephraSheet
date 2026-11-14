@@ -52,6 +52,13 @@ class NarratorSettings(models.Model):
         return obj
 
 
+class LiveManager(models.Manager):
+    """Hides rows in the trash (``deleted_at`` set); ``all_objects`` sees them (trash page, purge, restore)."""
+
+    def get_queryset(self):
+        return super().get_queryset().filter(deleted_at__isnull=True)
+
+
 class Character(models.Model):
     STATUS_CHOICES = [("draft", "In creation"), ("active", "Active")]
 
@@ -106,6 +113,10 @@ class Character(models.Model):
 
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True, help_text="in the trash since (purged after 30 days)")
+
+    objects = LiveManager()
+    all_objects = models.Manager()
 
     class Meta:
         ordering = ["-updated"]
@@ -390,6 +401,26 @@ class LevelLog(models.Model):
 
     class Meta:
         ordering = ["level"]
+
+
+class CharacterSnapshot(models.Model):
+    """Export JSON (``transfer.export_character``) taken automatically before each level-up."""
+
+    KEEP = 10  # snapshots kept per character
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="snapshots")
+    level = models.PositiveSmallIntegerField()
+    data = models.JSONField()
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created", "-pk"]
+
+    @classmethod
+    def record(cls, character, data):
+        cls.objects.create(character=character, level=data["character"]["level"], data=data)
+        stale = cls.objects.filter(character=character).values_list("pk", flat=True)[cls.KEEP:]
+        cls.objects.filter(pk__in=list(stale)).delete()
 
 
 class Feedback(models.Model):

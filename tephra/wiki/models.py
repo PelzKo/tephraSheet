@@ -1,6 +1,8 @@
 from django.db import models
 from django.urls import reverse
 
+from characters.models import LiveManager
+
 
 class WikiPage(models.Model):
     """A page anyone can write (house rules, lore, tips). ``language`` empty = shown in every language."""
@@ -11,6 +13,10 @@ class WikiPage(models.Model):
     language = models.CharField(max_length=10, blank=True)
     updated_by = models.CharField(max_length=80, blank=True)
     updated = models.DateTimeField(auto_now=True)
+    deleted_at = models.DateTimeField(null=True, blank=True, help_text="in the trash since (purged after 30 days)")
+
+    objects = LiveManager()
+    all_objects = models.Manager()
 
     class Meta:
         ordering = ["title"]

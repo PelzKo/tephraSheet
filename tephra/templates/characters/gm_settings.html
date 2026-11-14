@@ -22,11 +22,12 @@
       <tr><td><a href="{{ c.get_absolute_url }}">{{ c }}</a></td><td>{{ c.player_name }}</td><td>{{ c.level }}</td><td>{{ c.get_status_display|t }}</td>
         <td><form class="row" method="post" action="{% url 'gm_reset_password' c.pk %}">{% csrf_token %}
           <input type="text" name="password" placeholder="{% t "new password" %}" required><button class="btn small">{% t "Set" %}</button></form></td>
-        <td><form method="post" action="{% url 'delete_character' c.pk %}" onsubmit="return confirm('{% t "Delete {name} permanently?" name=c|escapejs %}')">{% csrf_token %}<button class="btn small danger">{% t "Delete" %}</button></form></td></tr>
+        <td><form method="post" action="{% url 'delete_character' c.pk %}" onsubmit="return confirm('{% t "Move {name} to the trash?" name=c|escapejs %}')">{% csrf_token %}<button class="btn small danger">{% t "Delete" %}</button></form></td></tr>
     {% endfor %}
   </table></div>
   <p class="small muted">{% t "Raw data:" %} <a href="{% url 'admin:index' %}">{% t "Django admin" %}</a> · <a href="{% url 'catalog' %}">{% t "Catalog" %}</a> · <a href="{% url 'catalog_import' %}">{% t "Bulk import" %}</a></p>
 </div>
+{% include "characters/gm/_b2_trash.html" %}
 <div class="paper">
   <h2>{% t "Server" %}</h2>
   <dl class="fb-meta">

@@ -1,0 +1,10 @@
+{# C3: what was chosen at each level (LevelLog), read-only. Used in the Story tab and the print page. #}
+<table class="data level-history">
+  <tr><th>{% t "Level" %}</th><th>{% t "Date" %}</th><th>{% t "Skills" %}</th><th>{% t "Specialties" %}</th><th>{% t "Augments" %}</th></tr>
+  {% for r in level_history %}
+    <tr><td>{{ r.level }}</td><td data-sort="{{ r.created|date:'c' }}">{{ r.created|date:"Y-m-d" }}</td>
+      <td>{% for s, p in r.skills %}{{ s|t }} +{{ p }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
+      <td>{{ r.specialties|join:", " }}{% if r.retrofit %}<div class="small">{% t "Retrofit: {old} → {new}" old=r.retrofit.0 new=r.retrofit.1 %}</div>{% endif %}</td>
+      <td>{{ r.augments|join:", " }}</td></tr>
+  {% endfor %}
+</table>
