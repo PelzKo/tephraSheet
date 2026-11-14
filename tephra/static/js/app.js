@@ -181,6 +181,12 @@ window.effectForm = function () {
       this.open = false;
     },
     called() { return this.opts.called[this.location] || []; },
+    // Label of the number the picked effect asks for (Bleeding damage, AP lost…), "" if none.
+    ask() {
+      const o = this.kind === "status" ? this.opts.status.find((s) => s.key === this.key)
+        : this.called().find((x) => x.kind === this.which);
+      return (o && o.ask) || "";
+    },
     ready() {
       return this.kind === "status" ? !!(this.key || this.q.trim()) : !!(this.location && this.which);
     },

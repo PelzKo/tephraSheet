@@ -16,7 +16,7 @@
   <ul>{% for label, text in sheet.notes %}<li>{{ label|cut:"Specialty: " }}: {{ text }}</li>{% endfor %}</ul>
   {% if character.notes %}<p>{{ character.notes|linebreaksbr }}</p>{% endif %}
   {% if effects %}<h2>{% t "Effects" %}</h2>
-    <ul>{% for e in effects %}<li><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text }}{% if e.rule_text %} – {{ e.rule_text }}{% endif %}</li>{% endfor %}</ul>{% endif %}
+    <ul>{% for e in effects %}<li><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text }} {{ e.amount_text }}{% if e.rule_text %} – {{ e.rule_text }}{% endif %}</li>{% endfor %}</ul>{% endif %}
   <h2>{% t "Specialties" %}</h2>
   {% for sp in spec_data.values %}<div class="print-spec"><h3>{{ sp.name }} <small>{{ sp.skill|t }} · {{ sp.cost }}</small></h3>{{ sp.effect|effect_html }}</div>{% endfor %}
   {% if pets or automatons %}<h2>{% t "Companions" %}</h2>

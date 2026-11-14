@@ -8,7 +8,7 @@ from django.urls import reverse
 from catalog.models import ItemFields, ItemTemplate
 from rules.engine import effects, tables
 from rules.engine.state import CharacterState
-from rules.lang import languages
+from rules.lang import gettext as _, languages
 from rules.registry import get_registry
 
 SLOT_CHOICES = [
@@ -340,6 +340,7 @@ class EffectEntry(models.Model):
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
     fight_round = models.PositiveSmallIntegerField(null=True, blank=True, help_text="fight round when it was added")
+    amount = models.PositiveSmallIntegerField(default=0, help_text="bleeding damage, turns, AP… (see rules/engine/effects.py)")
 
     class Meta:
         ordering = ["kind", "created"]
@@ -360,6 +361,34 @@ class EffectEntry(models.Model):
     def ends_with_breather(self):
         data = effects.get(self.key)
         return bool(data and data.get("breather"))
+
+    @property
+    def rules(self):
+        return effects.EFFECTS.get(self.key, {})
+
+    @property
+    def amount_now(self):
+        """The amount; an active row saved before amounts existed (0) falls back to the rule's ``start`` (Burning)
+        or 1 for asked AP costs (Irradiated). Bandage 0 = bandaged and Bleeding 0 = unknown stay 0."""
+        r = self.rules
+        if self.amount or not self.active:
+            return self.amount
+        return r.get("start") or (1 if r.get("cost") == "amount" else 0)
+
+    @property
+    def amount_text(self):
+        """Shown after the effect name: "(7)", or "(not bandaged)" while a severed limb's death timer runs."""
+        if not self.amount_now:
+            return ""
+        return "({})".format(_("not bandaged") if self.rules.get("bandage") else self.amount_now)
+
+    @property
+    def pay_cost(self):
+        """AP that end this effect (or stop its death timer); 0 = nothing to pay (``per_ap`` effects take any AP)."""
+        r = self.rules
+        if r.get("bandage"):
+            return r["bandage"] if self.amount else 0
+        return self.amount_now if r.get("cost") == "amount" else r.get("cost", 0)
 
 
 class JournalRevision(models.Model):

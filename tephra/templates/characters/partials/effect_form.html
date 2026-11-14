@@ -34,6 +34,7 @@
         </select>
       </div>
     </template>
+    <template x-if="ask()"><label><span x-text="ask()"></span> <input type="number" inputmode="numeric" name="amount" min="1" value="1" required style="width:5em"></label></template>
     <button class="btn small primary" type="submit" :disabled="!ready()">{% t "Add" %}</button>
   </div>
   <p class="muted small" x-text="hint()"></p>

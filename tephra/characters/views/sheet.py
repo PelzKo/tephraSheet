@@ -35,10 +35,12 @@ def effect_options():
     called = {}
     labels = fx.location_labels()
     for n in labels:
-        called[n] = [{"kind": k, "label": "{}: {}".format(fx.called_label(k), e['name']), "text": e["text"]}
+        called[n] = [{"kind": k, "label": "{}: {}".format(fx.called_label(k), e['name']), "text": e["text"],
+                      "ask": _(e["ask"]) if e.get("ask") else ""}
                      for k in fx.CALLED_KINDS for e in [fx.get(fx.called_key(n, k))]]
     return {
-        "status": [{"key": f"status:{e['slug']}", "name": e["name"], "text": e["text"]} for e in fx.status_list()],
+        "status": [{"key": f"status:{e['slug']}", "name": e["name"], "text": e["text"],
+                    "ask": _(e["ask"]) if e.get("ask") else ""} for e in fx.status_list()],
         "locations": [{"n": n, "label": f"{n} – {label}"} for n, label in labels.items()],
         "called": called,
     }
@@ -242,27 +244,7 @@ def play(request, pk, action, p):
     extra = {}
 
     if action == "damage":
-        # Damage reduces HP first; the rest goes to wounds (p.10). "direct" skips HP.
-        amount = max(0, _int(p.get("amount")))
-        if p.get("direct"):
-            wounds += amount
-        else:
-            to_hp = min(hp, amount)
-            hp -= to_hp
-            wounds += amount - to_hp
-        took_wounds = wounds > character.wounds_taken
-        was_full = character.wounds_taken >= sheet.max_wounds
-        character.current_hp, character.wounds_taken = hp, min(sheet.max_wounds, wounds)
-        # "called-…" tags add a button that opens the effect form preset (sheet_body.html).
-        if took_wounds and was_full:
-            messages.warning(request, _("All wounds taken: this hit causes a fatal effect (roll a location)."),
-                             extra_tags="popup called-fatal")
-        elif wounds >= sheet.max_wounds:
-            messages.warning(request, _("All wounds taken: every further hit causes a fatal effect (roll a location)."),
-                             extra_tags="called-wound" if took_wounds else "")
-        elif took_wounds:
-            messages.warning(request, _("Wounds damage: roll a called-shot location for the wounded effect."),
-                             extra_tags="called-wound")
+        take_damage(request, character, sheet, max(0, _int(p.get("amount"))), "wounds" if p.get("direct") else "hp_wounds")
     elif action == "heal":
         amount = max(0, _int(p.get("amount")))
         character.current_hp = min(sheet.max_hp, hp + amount)
@@ -333,6 +315,10 @@ def play(request, pk, action, p):
         services.set_specialty_option(character, p.get("slug", ""), p.get("value", ""))
     elif action == "effect_remove":
         character.effects.filter(pk=_int(p.get("id"))).update(active=False)
+    elif action == "effect_pay":
+        effect = character.effects.filter(pk=_int(p.get("id")), active=True).first()
+        if effect:
+            pay_effect(request, character, effect, _int(p.get("ap"), 1))
     elif action == "equip":
         item = InventoryItem.objects.filter(character=character, pk=_int(p.get("id"))).first()
         slot = p.get("slot", "carried")
@@ -448,6 +434,75 @@ def play(request, pk, action, p):
         target.refresh_from_db()
         actionlog.log(request, f"play:{action}", target, target_before, actionlog.snapshot(target))
     return character, extra
+
+
+def take_damage(request, character, sheet, amount, to="hp_wounds"):
+    """Damage reduces HP first; the rest goes to wounds (p.10). ``to``: "wounds" skips HP, "hp" never reaches wounds."""
+    hp = character.current_hp if character.current_hp is not None else sheet.max_hp
+    wounds = character.wounds_taken
+    if to == "wounds":
+        wounds += amount
+    else:
+        to_hp = min(hp, amount)
+        hp -= to_hp
+        if to == "hp_wounds":
+            wounds += amount - to_hp
+    took_wounds = wounds > character.wounds_taken
+    was_full = character.wounds_taken >= sheet.max_wounds
+    character.current_hp, character.wounds_taken = hp, min(sheet.max_wounds, wounds)
+    # "called-…" tags add a button that opens the effect form preset (sheet_body.html).
+    if took_wounds and was_full:
+        messages.warning(request, _("All wounds taken: this hit causes a fatal effect (roll a location)."),
+                         extra_tags="popup called-fatal")
+    elif wounds >= sheet.max_wounds:
+        messages.warning(request, _("All wounds taken: every further hit causes a fatal effect (roll a location)."),
+                         extra_tags="called-wound" if took_wounds else "")
+    elif took_wounds:
+        messages.warning(request, _("Wounds damage: roll a called-shot location for the wounded effect."),
+                         extra_tags="called-wound")
+
+
+def effect_ticks(request, character, sheet, at):
+    """Fight mode: damage of Bleeding, Burning, Radiation Burns… at the AP refresh ("end_turn") or the start of
+    my turn ("turn"); decaying amounts drop by 1 and end at 0; ``refresh_ends`` effects (Stunned) end at refresh."""
+    for e in character.effects.filter(active=True).exclude(key=""):
+        r = e.rules
+        if at == "end_turn" and r.get("refresh_ends"):
+            e.active = False
+            e.save(update_fields=["active"])
+            continue
+        tick = r.get("tick")
+        if not tick or tick["at"] != at:
+            continue
+        damage = tick.get("damage", e.amount)
+        if damage:
+            messages.warning(request, _("{name}: {n} damage.", name=e.text, n=damage))
+            take_damage(request, character, sheet, damage, tick["to"])
+        if tick.get("decay"):
+            e.amount = max(0, e.amount - tick["decay"])
+            e.active = e.amount > 0
+            e.save(update_fields=["amount", "active"])
+            if not e.active:
+                messages.info(request, _("{name} has ended.", name=e.text))
+
+
+def pay_effect(request, character, effect, ap):
+    """Spend AP on an effect: ``per_ap`` lowers the amount (Bleeding: 5 per AP), a fixed ``cost`` ends it,
+    ``bandage`` stops the death timer. Paid like stances (pay_ap: from the round's AP in fight mode)."""
+    r = effect.rules
+    if r.get("per_ap"):
+        ap = max(1, min(ap, -(-effect.amount_now // r["per_ap"])))  # never more AP than it takes to stop it
+        if pay_ap(request, character, ap, effect.text, stop=True):
+            effect.amount = max(0, effect.amount_now - ap * r["per_ap"])
+            effect.active = effect.amount > 0
+            effect.save(update_fields=["amount", "active"])
+    elif effect.pay_cost and pay_ap(request, character, effect.pay_cost, effect.text, stop=True):
+        if r.get("bandage"):
+            effect.amount = 0
+            effect.save(update_fields=["amount"])
+        else:
+            effect.active = False
+            effect.save(update_fields=["active"])
 
 
 def _money(p):
@@ -634,6 +689,7 @@ def fight_action(request, character, sheet, what, p):
     elif what == "turn":
         f["my_turn"] = True
         character.fight = f
+        effect_ticks(request, character, sheet, "turn")
         items = [o for o in sheet.ongoing if o["active"] and o["upkeep"]]
         ap = f.get("ap", 0)
         if sum(o["upkeep"] for o in items) <= ap:
@@ -654,6 +710,9 @@ def fight_action(request, character, sheet, what, p):
         return
     elif what == "end_turn":
         f.update(ap=max_ap, my_turn=False, round=f.get("round", 1) + 1)
+        character.fight = f
+        effect_ticks(request, character, sheet, "end_turn")
+        return
     character.fight = f
 
 
@@ -672,8 +731,9 @@ def add_effect(character, p):
         key = fx.called_key(loc, p.get("which"))
         data = fx.get(key)
         if data:
+            amount = 1 if data.get("bandage") else _amount(data, p)  # bandage: 1 = death timer running
             EffectEntry.objects.create(character=character, kind=data["kind"], key=key, location=loc, fight_round=rnd,
-                                       text=data["name"], lost_wounds=data.get("lost_wounds", 0))
+                                       text=data["name"], lost_wounds=data.get("lost_wounds", 0), amount=amount)
             if data.get("drop"):
                 dropped = drop_from_hand(character, loc)
                 if dropped:
@@ -682,10 +742,26 @@ def add_effect(character, p):
         return [t for t in popups if t]
     data = fx.get(p.get("key"))
     if data and data["kind"] == "status":
-        EffectEntry.objects.create(character=character, kind="status", key=p["key"], text=data["name"], fight_round=rnd)
+        amount = _amount(data, p)
+        same = character.effects.filter(active=True, key=p["key"]).first() if data.get("add") else None
+        if same:  # Bleeding stacks, Radiation Burns are renewed
+            same.amount = min(32767, same.amount + amount) if data["add"] == "stack" else max(same.amount, amount)
+            same.save(update_fields=["amount"])
+        else:
+            EffectEntry.objects.create(character=character, kind="status", key=p["key"], text=data["name"],
+                                       fight_round=rnd, amount=amount)
+        if data.get("stun") and character.fight.get("active"):
+            character.fight = dict(character.fight, ap=max(0, character.fight.get("ap", 0) - amount))
+            popups.append(_("Stunned: {n} AP lost from this round.", n=amount))
+        return popups
     elif p.get("text", "").strip():
         EffectEntry.objects.create(character=character, kind="status", text=p["text"].strip()[:255], fight_round=rnd)
     return []
+
+
+def _amount(data, p):
+    """The number asked in the add form (only for effects with ``ask``, at least 1), else the effect's ``start``."""
+    return max(1, min(data.get("max", 32767), _int(p.get("amount"), 1))) if data.get("ask") else data.get("start", 0)
 
 
 def cancel_battle_theme(character, location):
