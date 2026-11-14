@@ -42,7 +42,7 @@
   </header>
   <main class="{% block mainclass %}wrap{% endblock %}">
     {% block messages %}{% if messages %}
-      <ul class="messages">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>
+      <ul class="messages" id="messages" role="alert">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>
     {% endif %}{% endblock %}
     {% block content %}{% endblock %}
   </main>

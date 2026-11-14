@@ -2,6 +2,7 @@ import json
 
 from django.contrib import messages
 from django.core.paginator import Paginator
+from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import HttpResponse
 from django.shortcuts import get_object_or_404, redirect, render
@@ -139,23 +140,26 @@ def item_create(request):
     if copy_of and request.method != "POST":  # "Copy as new item": prefilled, saved as a custom item
         proxy = ItemTemplate(**copy_of.item_values())
         proxy.name = _("{name} (copy)", name=copy_of.name)[:120]
-    form = ItemForm(request.POST or None, gm=gm, initial=initial, instance=proxy)
+    form = ItemForm(request.POST or None, gm=gm, initial=initial, instance=proxy, catalog=not character)
     if request.method == "POST" and form.is_valid():
         obj = form.save(commit=False)
         if copy_of:
             obj.extension, obj.modifiers = copy_of.extension, list(copy_of.modifiers or [])  # not form fields
-        # Every created item is shared in the catalog. A name+kind that already exists stays
-        # inventory-only for a character (the catalog keeps the original).
-        if ItemTemplate.objects.filter(name=obj.name, kind=obj.kind).exists():
-            if not character:
-                form.add_error("name", _("An item with this name and kind already exists in the catalog."))
-                return render(request, "catalog/item_form.html", _creator_context(form, character, copy_of=copy_of))
-            messages.info(request, _("The catalog already has a {kind} called {name}; your version was only added to the inventory.",
-                                   kind=obj.get_kind_display().lower(), name=obj.name))
-        else:
+        # Without a character the item goes into the catalog (the form refuses a taken name+kind).
+        # For a character it is inventory-only unless "Also add to the catalog" is ticked and name+kind is free.
+        if not character or request.POST.get("add_to_catalog"):
             obj.source = "custom"
-            obj.save()
-            actionlog.log(request, "catalog:create", obj)
+            try:
+                with transaction.atomic():
+                    obj.save()
+            except IntegrityError:  # name+kind exists (or was just created): the catalog keeps the original
+                if not character:
+                    raise
+                obj.pk = None
+                messages.info(request, _("The catalog already has a {kind} called {name}; your version was only added to the inventory.",
+                                       kind=obj.get_kind_display().lower(), name=obj.name))
+            else:
+                actionlog.log(request, "catalog:create", obj)
         if character:
             slot = request.POST.get("slot", "carried")
             inv = InventoryItem(character=character, template=obj if obj.pk else None, slot="carried",
@@ -219,7 +223,7 @@ def item_edit(request, pk):
 def inventory_item_edit(request, character, item_id):
     inv = get_object_or_404(InventoryItem, pk=item_id, character=character)
     proxy = ItemTemplate(**{f: getattr(inv, f) for f in ItemTemplate.ITEM_FIELDS})
-    form = ItemForm(request.POST or None, instance=proxy, gm=False)
+    form = ItemForm(request.POST or None, instance=proxy, gm=False, catalog=False)
     if request.method == "POST" and form.is_valid():
         obj = form.save(commit=False)
         for f in ItemTemplate.ITEM_FIELDS:

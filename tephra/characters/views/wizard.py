@@ -4,6 +4,7 @@ import random
 
 from django.contrib import messages
 from django.shortcuts import redirect, render
+from django.urls import reverse
 
 from catalog.models import ItemTemplate
 from rules.engine import creation, tables
@@ -20,8 +21,8 @@ from ..models import InventoryItem, NarratorSettings
 STEP_TEMPLATES = {n: f"characters/wizard/step{n}.html" for n, _ in creation.STEPS}
 
 
-def _redirect(character, step):
-    return redirect("wizard_step", pk=character.pk, step=step)
+def _redirect(character, step, anchor=""):
+    return redirect(reverse("wizard_step", args=[character.pk, step]) + anchor)
 
 
 def _revalidate(request, character):
@@ -103,6 +104,8 @@ def handle_post(request, character, step):
     errors = STEP_SAVE[step](request, character, action) or []
     for e in errors:
         messages.error(request, e)
+    if errors and action == "finish":  # scroll to the errors (a phone shows the bottom of the form)
+        return _redirect(character, step, "#messages")
     if errors or action in ("save", "roll", "reroll", "race", "add", "remove", "equip"):
         return _redirect(character, step)
     if action == "back":
@@ -553,7 +556,7 @@ def finish(request, character):
     missing = [_(label) for n, label in creation.STEPS if n in (1, 2, 4) and not step_done(character, n)]
     if missing:
         messages.error(request, _("Incomplete: {steps}", steps=", ".join(missing)))
-        return _redirect(character, 10)
+        return _redirect(character, 10, "#messages")
     services.finish_creation(character)
     actionlog.log(request, "finish", character, after={"level": character.level, "race": character.race})
     access.unlock(request, character)
