@@ -1,0 +1,14 @@
+<div class="table-scroll"><table class="data">
+  <tr><th>{% t "Name" %}</th><th>{% t "Player" %}</th><th>{% t "Level" %}</th><th>{% t "HP" %}</th><th>{% t "Wounds" %}</th><th>{% t "AP left" %}</th><th>{% t "Stance" %}</th><th>{% t "Effects" %}</th><th>{% t "Last change" %}</th><th>{% t "Password" %}</th><th>{% t "Failed unlocks" %}</th></tr>
+  {% for r in rows %}
+    <tr><td><a href="{{ r.c.get_absolute_url }}">{{ r.c }}</a></td><td>{{ r.c.player_name }}</td><td>{{ r.c.level }}</td>
+      <td data-sort="{{ r.hp }}">{{ r.hp }} / {{ r.max_hp }}</td>
+      <td data-sort="{{ r.c.wounds_taken }}">{{ r.c.wounds_taken }} / {{ r.max_wounds }}</td>
+      <td>{% if r.ap is not None %}{{ r.ap }}{% else %}–{% endif %}</td>
+      <td>{{ r.stance|default:"–" }}</td>
+      <td class="small">{{ r.effects|join:", "|default:"–" }}</td>
+      <td data-sort="{{ r.c.updated|date:'c' }}">{% t "{age} ago" age=r.c.updated|timesince %}</td>
+      <td>{% if r.c.password %}{% t "yes" %}{% else %}<b>{% t "no" %}</b>{% endif %}</td>
+      <td>{% if r.fails %}<b>{{ r.fails }}</b>{% else %}0{% endif %}</td></tr>
+  {% empty %}<tr data-nosort><td colspan="11" class="muted">{% t "No active characters." %}</td></tr>{% endfor %}
+</table></div>

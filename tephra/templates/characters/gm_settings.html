@@ -28,6 +28,7 @@
   <p class="small muted">{% t "Raw data:" %} <a href="{% url 'admin:index' %}">{% t "Django admin" %}</a> · <a href="{% url 'catalog' %}">{% t "Catalog" %}</a> · <a href="{% url 'catalog_import' %}">{% t "Bulk import" %}</a></p>
 </div>
 {% include "characters/gm/_b2_trash.html" %}
+{% include "characters/gm/_b1_narrator.html" %}
 <div class="paper">
   <h2>{% t "Server" %}</h2>
   <dl class="fb-meta">
@@ -54,6 +55,8 @@
           {% if f.meta.tab %}<div class="muted">{% t "tab: {name}" name=f.meta.tab %}</div>{% endif %}
           {% if f.safe_page_url %}<div><a href="{{ f.safe_page_url }}" title="{{ f.safe_page_url }}">{{ f.page_title|default:f.safe_page_url|truncatechars:40 }}</a></div>{% elif f.page_url %}<div title="{{ f.page_url }}">{{ f.page_title|default:f.page_url|truncatechars:40 }}</div>{% endif %}</td>
         <td><div class="fb-message">{{ f.message }}</div>
+          <details class="small" {% if f.note %}open{% endif %}><summary>{% t "Narrator note" %}</summary><form method="post" action="{% url 'gm_feedback_note' f.pk %}">{% csrf_token %}
+            <textarea name="note" rows="2" aria-label="{% t "Narrator note" %}">{{ f.note }}</textarea><button class="btn small">{% t "Save note" %}</button></form></details>
           <details class="small muted"><summary>{% t "Details" %}</summary><dl class="fb-meta">{% for k, v in f.meta.items %}<dt>{{ k }}</dt><dd>{{ v }}</dd>{% endfor %}</dl></details></td>
         <td><form method="post" action="{% url 'gm_feedback_delete' f.pk %}" onsubmit="return confirm('{% t "Delete this feedback?" %}')">{% csrf_token %}<button class="btn small danger">Delete</button></form></td>
       </tr>

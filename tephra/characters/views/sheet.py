@@ -20,7 +20,7 @@ from rules.registry import get_registry
 
 from ..templatetags.sheet_tags import effect_html
 
-from .. import access, journal, services
+from .. import access, actionlog, journal, services
 from ..models import Automaton, Character, EffectEntry, InventoryItem, JournalRevision
 
 TAB_NAMES = ("page1", "page2", "inventory", "story", "pets")
@@ -156,6 +156,7 @@ def sheet_context(request, character, pencil=False):
         "money_in_bank": tables.format_money(character.money_in_bank),
         "journal": journal.sections(character.story_notes),
         "level_history": journal.level_history(character),
+        "history": [(e, actionlog.changes(e)) for e in character.actions.all()[:30]],
         "story_base": text_stamp(character.story_notes), "notes_base": text_stamp(character.notes),
         "stamp": sheet_stamp(character), "pencil": pencil, "give_targets": give_targets(request, character),
         "money": {"hand": character.money_on_hand, "bank": character.money_in_bank},
@@ -216,18 +217,26 @@ def _int(value, default=0):
 
 @require_POST
 @access.character_view
-@transaction.atomic
 def play_action(request, character, action):
+    character, extra = play(request, character.pk, action.replace("-", "_"), request.POST)  # effect-add → effect_add
+    return _respond(request, character, extra)
+
+
+@transaction.atomic
+def play(request, pk, action, p):
+    """One play change of character ``pk`` (also the narrator's group actions); logged with its diff.
+    Returns the saved character and extra template context."""
     # Row lock: overlapping HTMX actions on one character run one after another instead of
     # overwriting each other's changes (the full save below writes every field).
-    action = action.replace("-", "_")  # URL slugs use hyphens (effect-add → effect_add)
+    target = None
     if action in ("give_item", "give_money"):
         # Both participants in pk order, so A→B and B→A at once cannot deadlock.
-        list(Character.objects.select_for_update().filter(
-            pk__in=[character.pk, _int(request.POST.get("to"))]).order_by("pk"))
-    character = Character.objects.select_for_update().get(pk=character.pk)
+        locked = list(Character.objects.select_for_update().filter(pk__in=[pk, _int(p.get("to"))]).order_by("pk"))
+        target = next((c for c in locked if c.pk != pk), None)
+    target_before = actionlog.snapshot(target) if target else None
+    character = Character.objects.select_for_update().get(pk=pk)
+    before = actionlog.snapshot(character)
     sheet = character.compute()
-    p = request.POST
     hp = character.current_hp if character.current_hp is not None else sheet.max_hp
     wounds = character.wounds_taken  # counts up from 0 (unhurt) to max wounds
     extra = {}
@@ -433,16 +442,12 @@ def play_action(request, character, action):
     if action in ("stance", "toggle", "effect_add"):
         end_unavailable(request, character)
     character.save()
-    # Clamp current values if max values changed (e.g. armor, fatigue).
-    new = character.compute()
-    changed = False
-    if character.current_hp is not None and character.current_hp > new.max_hp:
-        character.current_hp, changed = new.max_hp, True
-    if character.wounds_taken > new.max_wounds:
-        character.wounds_taken, changed = new.max_wounds, True
-    if changed:
-        character.save(update_fields=["current_hp", "wounds_taken"])
-    return _respond(request, character, extra)
+    character.clamp_trackers()
+    actionlog.log(request, f"play:{action}", character, before, actionlog.snapshot(character))
+    if target:
+        target.refresh_from_db()
+        actionlog.log(request, f"play:{action}", target, target_before, actionlog.snapshot(target))
+    return character, extra
 
 
 def _money(p):

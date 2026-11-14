@@ -3,15 +3,17 @@
 import json
 from urllib.parse import urlsplit, urlunsplit
 
+from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
+from django.core.mail import send_mail
 from django.http import JsonResponse
 from django.shortcuts import get_object_or_404, redirect
 from django.views.decorators.http import require_POST
 
 from rules.lang import gettext as _
 from .. import access
-from ..models import Character, Feedback
+from ..models import Character, Feedback, NarratorSettings
 
 MAX_MESSAGE = 5000
 RATE_WINDOW = 600  # seconds
@@ -74,12 +76,26 @@ def feedback_submit(request):
         meta["character_level"] = character.level
         meta["character_status"] = character.status
 
-    Feedback.objects.create(
+    entry = Feedback.objects.create(
         category=category, name=request.POST.get("name", "").strip()[:80], message=text,
         page_url=_page_path(request, request.POST.get("page_url", ""))[:500], page_title=request.POST.get("page_title", "")[:200],
         character=character, character_name=str(character)[:120] if character else "", meta=meta)
     access.hit(rate_key, RATE_WINDOW)
+    notify(request, entry)
     return JsonResponse({"ok": True})
+
+
+def mail_configured():
+    # settings.py sets the SMTP values only outside DEBUG (Django's own default host is "localhost").
+    return not settings.DEBUG and bool(settings.EMAIL_HOST)
+
+
+def notify(request, entry):
+    """Mail new feedback to the narrator's address (/gm/), only when the server has mail settings."""
+    to = NarratorSettings.get().feedback_email
+    if to and mail_configured():
+        send_mail(f"[Tephra] {entry}"[:120], f"{entry.message}\n\n{request.build_absolute_uri('/gm/#feedback')}",
+                  None, [to], fail_silently=True)
 
 
 @staff_member_required(login_url="gm_login")
@@ -90,6 +106,15 @@ def feedback_status(request, pk):
     if status in dict(Feedback.STATUS_CHOICES):
         entry.status = status
         entry.save(update_fields=["status"])
+    return redirect("gm_settings")
+
+
+@staff_member_required(login_url="gm_login")
+@require_POST
+def feedback_note(request, pk):
+    entry = get_object_or_404(Feedback, pk=pk)
+    entry.note = request.POST.get("note", "")[:MAX_MESSAGE]
+    entry.save(update_fields=["note"])
     return redirect("gm_settings")
 
 

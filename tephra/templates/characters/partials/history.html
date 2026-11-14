@@ -1,0 +1,19 @@
+<details class="paper" data-keep="history">
+  <summary><h2 style="display:inline">{% t "History" %}</h2> <span class="small muted">{% t "last {n} changes" n=history|length %}</span></summary>
+  {% if is_gm %}<div class="row" style="margin:6px 0">
+    <form method="post" action="{% url 'gm_undo' character.pk %}" onsubmit="return confirm('{% t "Undo the last play action?" %}')">{% csrf_token %}
+      <button class="btn small">{% t "Undo last action" %}</button></form>
+    <form method="post" action="{% url 'gm_undo' character.pk %}" onsubmit="return confirm('{% t "Reverse the last level-up?" %}')">{% csrf_token %}
+      <input type="hidden" name="what" value="levelup"><button class="btn small">{% t "Reverse last level-up" %}</button></form>
+    <a class="small" href="{% url 'gm_action_log' %}?character={{ character.pk }}">{% t "Full log" %}</a>
+  </div>{% endif %}
+  <div class="table-scroll"><table class="data">
+    <tr><th>{% t "Date" %}</th><th>{% t "Who" %}</th><th>{% t "Action" %}</th><th data-nosort>{% t "Changes" %}</th></tr>
+    {% for e, changes in history %}
+      <tr><td data-sort="{{ e.created|date:'c' }}" style="white-space:nowrap">{{ e.created|date:"Y-m-d H:i" }}</td>
+        <td>{{ e.get_actor_display|t }}</td>
+        <td>{{ e.action }}{% if e.undone %} <span class="tag">{% t "undone" %}</span>{% endif %}</td>
+        <td class="small">{% for k, old, new in changes %}<div><b>{{ k }}</b>: {{ old }} → {{ new }}</div>{% endfor %}</td></tr>
+    {% empty %}<tr data-nosort><td colspan="4" class="muted">{% t "No entries." %}</td></tr>{% endfor %}
+  </table></div>
+</details>

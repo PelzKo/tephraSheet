@@ -16,6 +16,7 @@ from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from catalog.models import ItemTemplate
+from characters import actionlog
 from characters.templatetags.tr_tags import item_desc, item_name
 
 from . import content
@@ -125,6 +126,7 @@ def edit(request, slug=None):
         ctx = {"page": p, "title": title, "body": body, "name": name, "updated": request.POST.get("updated", ""),
                "max_body": MAX_BODY}
         if request.POST.get("delete") and p and request.user.is_staff:
+            actionlog.log(request, "wiki:delete", p)
             p.deleted_at = timezone.now()
             p.save(update_fields=["deleted_at"])
             messages.success(request, _("Page moved to the trash. The narrator can restore it on the narrator page."))
@@ -154,6 +156,7 @@ def edit(request, slug=None):
             while WikiPage.all_objects.filter(slug=new_slug).exists():  # trashed pages keep their slug
                 new_slug, n = f"{base}-{n}", n + 1
             p = WikiPage.objects.create(slug=new_slug, title=title, body=body, updated_by=name, language=language)
+            actionlog.log(request, "wiki:create", p)
         else:
             with transaction.atomic():
                 # Conditional update: a save that slipped in after the check above makes this match nothing.
@@ -161,6 +164,8 @@ def edit(request, slug=None):
                     title=title, body=body, updated_by=name, language=language, updated=timezone.now())
                 if saved:
                     _keep_revision(p)  # p still holds the replaced version
+                    actionlog.log(request, "wiki:edit", p, actionlog.values(p, exclude={"updated"}),
+                                  actionlog.values(WikiPage.objects.get(pk=p.pk), exclude={"updated"}))
             if not saved:
                 p.refresh_from_db()
                 return conflict()
@@ -195,8 +200,10 @@ def restore(request, slug, rev):
     p = get_object_or_404(WikiPage, slug=slug)
     r = get_object_or_404(WikiRevision, pk=rev, page=p)
     _keep_revision(p)
+    before = actionlog.values(p, exclude={"updated"})
     p.title, p.body, p.updated_by = r.title, r.body, r.edited_by
     p.save()
+    actionlog.log(request, "wiki:restore", p, before, actionlog.values(p, exclude={"updated"}))
     messages.success(request, _("Version restored. The replaced text is kept in the history."))
     return redirect(p)
 

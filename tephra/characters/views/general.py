@@ -18,9 +18,10 @@ from django.views.decorators.http import require_POST
 from rules.extensions import EXTENSIONS
 from rules.lang import get_language, gettext as _
 from rules.registry import get_registry
-from .. import access
+from .. import access, actionlog
 from ..middleware import remember_pass
 from . import trash as trash_views
+from .feedback import mail_configured
 from ..models import Character, Feedback, NarratorSettings, card_cache_key
 
 CARD_TTL = 600  # rows changed with queryset.update() skip the save signal; this bounds the staleness
@@ -105,9 +106,11 @@ def unlock_view(request, pk):
         elif character.check_password(request.POST.get("password", "")):
             access.clear_failures(request, character)
             access.unlock(request, character)
+            actionlog.log(request, "unlock", character)
             return redirect(character.get_absolute_url())
         else:
             access.register_failure(request, character)
+            actionlog.log(request, "unlock:failed", character)
             error = _("Wrong password.")
     return render(request, "characters/unlock.html", {"character": character, "error": error})
 
@@ -142,6 +145,7 @@ def password_view(request, character):
         character.set_password(form.cleaned_data["password"])
         character.save(update_fields=["password"])
         access.unlock(request, character)  # keep this session, revoke all others
+        actionlog.log(request, "password", character)
         messages.success(request, _("Password changed."))
         return redirect("sheet", pk=character.pk)
     return render(request, "characters/password.html", {"character": character, "form": form})
@@ -153,6 +157,7 @@ def delete_view(request, character):
     if not access.is_gm(request) and character.status != "draft":
         messages.error(request, _("Only the narrator can delete finished characters."))
         return redirect("sheet", pk=character.pk)
+    actionlog.log(request, "delete", character)
     character.deleted_at = dj_timezone.now()
     character.save(update_fields=["deleted_at"])
     messages.success(request, _("Character moved to the trash. The narrator can restore it on the narrator page."))
@@ -190,7 +195,8 @@ class SettingsForm(forms.ModelForm):
     class Meta:
         model = NarratorSettings
         fields = ["allow_choose_random_trait", "allow_reroll_random_trait", "background_story_count",
-                  "max_starting_level", "allow_player_admin_mode", "enabled_extensions", "disabled_races"]
+                  "max_starting_level", "allow_player_admin_mode", "enabled_extensions", "disabled_races",
+                  "feedback_email"]
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -206,6 +212,10 @@ class SettingsForm(forms.ModelForm):
                          if self.instance.passphrase else
                          _("No passphrase set: anyone who finds the site can open it."))
         new.help_text += " " + _("Narrators never need it.")
+        mail = self.fields["feedback_email"]
+        mail.label = _("Email for new feedback")
+        mail.help_text = (_("Each new feedback message is sent to this address.") if mail_configured()
+                          else _("The server has no mail settings (EMAIL_HOST), so no mail is sent."))
 
     def save(self, commit=True):
         obj = super().save(commit=False)
@@ -243,9 +253,14 @@ def server_info():
 @staff_member_required(login_url="gm_login")
 def gm_settings(request):
     obj = NarratorSettings.get()
+    before = actionlog.values(obj)  # before the form: is_valid() already writes into obj
     form = SettingsForm(request.POST or None, instance=obj)
     if request.method == "POST" and form.is_valid():
         form.save()
+        after = actionlog.values(obj)
+        if before["passphrase"] != after["passphrase"]:  # never the hash itself
+            before["passphrase"], after["passphrase"] = bool(before["passphrase"]), "changed" if after["passphrase"] else False
+        actionlog.log(request, "settings", obj, before, after)
         messages.success(request, _("Narrator settings saved."))
         return redirect("gm_settings")
     feedback = list(Feedback.objects.select_related("character"))
@@ -265,6 +280,7 @@ def gm_reset_password(request, pk):
     else:
         character.set_password(raw)
         character.save(update_fields=["password"])
+        actionlog.log(request, "password", character)
         messages.success(request, _("Password of {character} reset.", character=character))
     return redirect("gm_settings")
 

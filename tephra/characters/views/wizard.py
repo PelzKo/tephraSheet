@@ -14,7 +14,7 @@ from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .. import access, services
+from .. import access, actionlog, services
 from ..models import InventoryItem, NarratorSettings
 
 STEP_TEMPLATES = {n: f"characters/wizard/step{n}.html" for n, _ in creation.STEPS}
@@ -555,6 +555,7 @@ def finish(request, character):
         messages.error(request, _("Incomplete: {steps}", steps=", ".join(missing)))
         return _redirect(character, 10)
     services.finish_creation(character)
+    actionlog.log(request, "finish", character, after={"level": character.level, "race": character.race})
     access.unlock(request, character)
     if services.needs_catch_up(character):
         messages.info(request, _("Now level up to level {level}.", level=character.target_level))

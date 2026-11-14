@@ -9,7 +9,7 @@ from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
 
-from characters import access, services
+from characters import access, actionlog, services
 from characters.models import Character, InventoryItem
 from rules.engine import tables
 from rules.extensions import EXTENSIONS, enabled, offer
@@ -155,6 +155,7 @@ def item_create(request):
         else:
             obj.source = "custom"
             obj.save()
+            actionlog.log(request, "catalog:create", obj)
         if character:
             slot = request.POST.get("slot", "carried")
             inv = InventoryItem(character=character, template=obj if obj.pk else None, slot="carried",
@@ -179,6 +180,7 @@ def item_edit(request, pk):
         form.fields["name"].disabled = form.fields["kind"].disabled = True
     if request.method == "POST":
         if request.POST.get("delete") and gm:
+            actionlog.log(request, "catalog:delete", item)
             # Book items stay hidden (so seed_catalog does not bring them back); custom items go to the trash.
             item.deleted_at = timezone.now()
             item.save(update_fields=["deleted_at"])
@@ -190,12 +192,14 @@ def item_edit(request, pk):
         if request.POST.get("restore") and gm and item.deleted_at:
             item.deleted_at = None
             item.save(update_fields=["deleted_at"])
+            actionlog.log(request, "catalog:restore", item)
             messages.success(request, _("{name} is back in the catalog.", name=item.name))
             return redirect("item_edit", pk=item.pk)
         if request.POST.get("reset") and gm and item.source == "book":
             item.refresh_from_db()
             if item.reset_to_book():
                 item.save()
+                actionlog.log(request, "catalog:reset", item, before, item.item_values())
                 messages.success(request, _("{name} reset to the Playing Guide values.", name=item.name))
             else:
                 messages.error(request, _("The Playing Guide has no item called {name}.", name=item.name))
@@ -205,6 +209,7 @@ def item_edit(request, pk):
             if obj.source == "book" and obj.item_values() != before:
                 obj.modified = True
             obj.save()
+            actionlog.log(request, "catalog:edit", obj, before, obj.item_values())
             messages.success(request, _("Catalog item saved."))
             return redirect("catalog")
     return render(request, "catalog/item_form.html", _creator_context(form, None, item=item))
@@ -219,8 +224,10 @@ def inventory_item_edit(request, character, item_id):
         obj = form.save(commit=False)
         for f in ItemTemplate.ITEM_FIELDS:
             setattr(inv, f, getattr(obj, f))
+        before = actionlog.values(InventoryItem.objects.get(pk=inv.pk))
         inv.notes = request.POST.get("notes", inv.notes)[:255]
         inv.save()
+        actionlog.log(request, "inventory:edit", inv, before, actionlog.values(inv))
         messages.success(request, _("{name} updated.", name=inv.name))
         return redirect(f"{character.get_absolute_url()}?tab=inventory")
     return render(request, "catalog/item_form.html", _creator_context(form, character, inventory_item=inv))
@@ -309,6 +316,7 @@ def import_view(request):
                 values = {k: v for k, v in r["values"].items() if k in ItemTemplate.ITEM_FIELDS}
                 InventoryItem.objects.create(character=character, quantity=max(1, r["values"].get("quantity", 1)),
                                              slot="carried", **values)
+            actionlog.log(request, "inventory:import", character, label=f"{character}: {len(good)}")
             messages.success(request, _("Imported {created} new item(s), skipped {skipped} with errors.",
                                         created=len(good), skipped=len(rows) - len(good)))
             return redirect(f"{character.get_absolute_url()}?tab=inventory")
@@ -325,6 +333,7 @@ def import_view(request):
                 existing.deleted_at = None
                 existing.modified = existing.source == "book"
                 existing.save()
+        actionlog.log(request, "catalog:import", label=_import_summary(counts))
         messages.success(request, _("Import into the catalog: {summary}.", summary=_import_summary(counts)))
         return redirect("catalog")
     counts = None

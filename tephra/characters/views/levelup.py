@@ -12,7 +12,7 @@ from rules.extensions import offer
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .. import access, services
+from .. import access, actionlog, services
 from .planner import planned_for, preview_rows
 from .wizard import augment_options, specialty_options
 
@@ -53,6 +53,7 @@ def levelup(request, character):
     from_xp = not catch_up and character.xp >= tables.XP_PER_LEVEL
     if request.method == "POST":
         plan = planned_for(character, new_level) or {}
+        before = actionlog.snapshot(character)
         if request.POST.get("action") == "random":
             errors = services.random_levelup(character, random.Random(), from_xp=from_xp)
         else:
@@ -69,6 +70,7 @@ def levelup(request, character):
             for e in errors:
                 messages.error(request, e)
             return redirect("levelup", pk=character.pk)
+        actionlog.log(request, "levelup", character, before, actionlog.snapshot(character))
         messages.success(request, _("{name} reached level {level}!", name=character.name, level=character.level))
         log = character.level_logs.order_by("-pk").first()
         if plan and log and (plan.get("specialty") and plan["specialty"] != log.data.get("specialty")
@@ -144,6 +146,7 @@ def levelup_preview(request, character):
 @access.character_view
 def augments_view(request, character):
     if request.method == "POST":
+        snap = actionlog.snapshot(character)
         action = request.POST.get("action")
         slug = request.POST.get("slug", "")
         if action == "add":
@@ -175,6 +178,7 @@ def augments_view(request, character):
         elif action == "random":
             services.random_augments(character, random.Random())
         character.save()
+        actionlog.log(request, "augments", character, snap, actionlog.snapshot(character))
         return redirect("augments", pk=character.pk)
     sheet, groups, lists = augment_options(character)
     known, granted = services.known_augment_entries(character)
