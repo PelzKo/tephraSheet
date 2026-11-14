@@ -112,8 +112,9 @@ TIER_RANGES = ["1–9", "10–19", "20–29", "30+"]
 
 
 @register.filter
-def effect_html(text):
-    """Specialty effect as HTML: the text, then the four tier results as numbered gears."""
+def effect_html(text, marques=False):
+    """Specialty effect as HTML: the text, then the four tier results as numbered gears.
+    With an argument (augment book text) the four lines are the results per marque, mQ I–IV."""
     from django.utils.html import escape
     from django.utils.safestring import mark_safe
 
@@ -122,8 +123,24 @@ def effect_html(text):
     body, tiers = split_tiers(text or "")
     html = f'<p class="effect">{escape(body)}</p>' if body.strip() else ""
     if tiers:
-        rows = "".join(f'<li><span class="tier-gear" title="Tier {n} (roll {TIER_RANGES[n - 1]})">'
-                       f'<span>{n}</span></span><span class="tier-text">{escape(t)}</span></li>'
+        def gear(n):
+            if marques:
+                return f'<span class="tier-gear" title="mQ {roman(n)}"><span>{roman(n)}</span></span>'
+            return f'<span class="tier-gear" title="Tier {n} (roll {TIER_RANGES[n - 1]})"><span>{n}</span></span>'
+
+        rows = "".join(f'<li>{gear(n)}<span class="tier-text">{escape(t)}</span></li>'
                        for n, t in enumerate(tiers, 1))
         html += f'<ol class="tier-results" aria-label="Results by tier">{rows}</ol>'
     return mark_safe(html)
+
+
+@register.filter
+def aug_tip(slug_marque):
+    """Hover/tap text for an augment on an item: its effect at that marque, then the book text."""
+    slug, m = slug_marque[0], slug_marque[1]
+    a = augment(slug)
+    if not a:
+        return ""
+    value = a["marques"][m - 1] if 0 < m <= len(a["marques"]) else ""
+    head = f"mQ {roman(m)}: {value}" if value and value != "–" else ""
+    return "\n".join(x for x in (head, a.get("text") or a.get("notes") or "") if x)

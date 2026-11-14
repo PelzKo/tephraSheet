@@ -108,11 +108,13 @@ class ItemForm(forms.ModelForm):
 
 def augment_choices_json():
     """Augment options per item kind for the creator's picker."""
+    from characters.templatetags.sheet_tags import effect_html
+
     reg = get_registry()
     out = {}
     for kind, lists in [*AUGMENT_LISTS_BY_KIND.items(), ("memento", {"memento"})]:
         out[kind] = [{"slug": a["slug"], "name": a["name"], "slots": a.get("slots") or 0,
                       "marques": a["marques"], "list": "/".join(a["lists"]), "notes": a["notes"],
-                      "text": a["text"], "two_marque": a.get("two_marque", False)}
+                      "text_html": effect_html(a["text"], "mq"), "two_marque": a.get("two_marque", False)}
                      for a in offer(reg.augments.values()) if lists.intersection(a["lists"])]
     return out

@@ -115,7 +115,7 @@
     <div class="kv" style="justify-content:flex-end">{% t "Climb/Swim Penalty" %} <span class="v">{% if sheet.armor %}{% stat sheet.armor.climb_swim_penalty "Climb/Swim penalty"|t signed=True %}{% else %}0{% endif %}</span></div>
     <div class="notes-area"><b>{% t "Notes/Augments:" %}</b>
       <ul>
-        {% for a in sheet.armor.item.augments %}{% with aug=a.0|augment %}<li>{{ aug.name|default:a.0 }} mQ {{ a.1|roman }}</li>{% endwith %}{% endfor %}
+        {% for a in sheet.armor.item.augments %}{% with aug=a.0|augment %}<li title="{{ a|aug_tip }}">{{ aug.name|default:a.0 }} mQ {{ a.1|roman }}</li>{% endwith %}{% endfor %}
         {% if sheet.armor.degree_reduced %}<li>{% t "Penalties reduced by {n} degree(s)" n=sheet.armor.degree_reduced %}</li>{% endif %}
         {% if sheet.armor.item.notes %}<li>{{ sheet.armor.item.notes }}</li>{% endif %}
       </ul>

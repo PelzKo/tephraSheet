@@ -21,7 +21,7 @@
             {% if a.subsection %}<span class="cost">{{ a.subsection }}</span>{% endif %}
           </header>
           <div class="small">{% for m in a.marques %}{% if m and m != "–" %}<span class="pill-bonus">mQ {{ forloop.counter|roman }}: {{ m }}</span>{% endif %}{% endfor %} {{ a.notes }}{% if a.price %} · {% t "price {p} pr" p=a.price %}{% endif %}</div>
-          {% if a.text %}<details><summary>{% t "Book text" %}</summary><p class="effect">{{ a.text|linebreaksbr }}</p></details>{% endif %}
+          {% if a.text %}<details><summary>{% t "Book text" %}</summary>{{ a.text|effect_html:"mq" }}</details>{% endif %}
         </div>
       {% endfor %}
     </details>
