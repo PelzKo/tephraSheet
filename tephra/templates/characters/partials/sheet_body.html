@@ -210,6 +210,9 @@
           <label>{% t "Direct wound damage" %} <input type="number" inputmode="numeric" name="amount" min="0" required></label>
           <button class="btn small">{% t "Apply" %}</button></form>
       </div>
+      {% for e in effects %}{% if e.rules.per_ap or e.pay_cost %}
+      <div class="row" style="margin-top:8px"><span class="grow">{{ e.text }} {{ e.amount_text }}</span>{% include "characters/partials/effect_pay.html" %}</div>
+      {% endif %}{% endfor %}
       <h3 style="margin-top:14px">{% t "Add effect" %}</h3>
       {% include "characters/partials/effect_form.html" %}
       <div class="row" style="justify-content:flex-end;margin-top:12px"><button class="btn" type="button" x-on:click="close()">{% t "Close" %}</button></div>

@@ -42,7 +42,10 @@ def snapshot(character):
     data = values(character)
     for i in character.items.all():
         data[f"item:{i.pk}"] = f"{i.name} ×{i.quantity} ({i.slot})" + (f" W{i.wounds_taken}" if i.wounds_taken else "")
-    data.update({f"effect:{e.pk}": e.text for e in character.effects.filter(active=True)})
+    for e in character.effects.filter(active=True):
+        data[f"effect:{e.pk}"] = e.text
+        if e.amount:
+            data[f"effect_amount:{e.pk}"] = e.amount
     data.update({f"pet:{p.pk}": f"{p.name}: HP−{p.hp_damage} W{p.wounds_taken} V{p.venom_used}"
                  for p in character.pets.all()})
     data.update({f"automaton:{a.pk}": f"{a.name}: HP−{a.hp_lost} W{a.wounds_taken} {','.join(a.toggles)}"
@@ -138,6 +141,8 @@ def undo(request, entry):
     for k in keys:
         if k.startswith("effect:"):
             EffectEntry.objects.filter(character=character, pk=int(k[7:])).update(active=k in entry.before)
+        elif k.startswith("effect_amount:"):
+            EffectEntry.objects.filter(character=character, pk=int(k[14:])).update(amount=entry.before.get(k, 0))
         else:
             setattr(character, k, entry.before[k])
     if levelup:

@@ -1,0 +1,9 @@
+{# AP payment for one effect e (Bleeding: AP spent, each lowers it by per_ap; fixed cost: ends it; bandage: stops the death timer). #}
+{% if e.rules.per_ap %}
+<form class="row" hx-post="{% url 'play' character.pk 'effect-pay' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+  <input type="hidden" name="id" value="{{ e.pk }}">{% if tab %}<input type="hidden" name="tab" value="{{ tab }}">{% endif %}
+  <input type="number" inputmode="numeric" name="ap" value="1" min="1" style="width:4em" aria-label="{% t "AP spent" %}">
+  <button class="btn small" title="{% t "Each AP spent lowers it by {n}." n=e.rules.per_ap %}">{% t "Spend AP" %}</button></form>
+{% elif e.pay_cost %}
+<button class="btn small" hx-post="{% url 'play' character.pk 'effect-pay' %}" hx-vals='{"id": "{{ e.pk }}"{% if tab %}, "tab": "{{ tab }}"{% endif %}}' hx-target="#sheet-body" hx-swap="outerHTML">{% if e.rules.bandage %}{% t "Bandage ({n} AP)" n=e.pay_cost %}{% else %}{% t "End ({n} AP)" n=e.pay_cost %}{% endif %}</button>
+{% endif %}

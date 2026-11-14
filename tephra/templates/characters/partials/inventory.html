@@ -110,10 +110,10 @@
 <div class="paper">
   <h2>{% t "Effects" %} {% include "partials/help_link.html" with slug="effects" %}</h2>
   {% for e in effects %}
-    <div class="inv-slot"><div><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text|term_tips }}{% if e.lost_wounds %} {% t "(−{n} max wounds)" n=e.lost_wounds %}{% endif %}
+    <div class="inv-slot"><div><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text|term_tips }} {{ e.amount_text }}{% if e.lost_wounds %} {% t "(−{n} max wounds)" n=e.lost_wounds %}{% endif %}
       {% if e.ends_with_breather %}<span class="tag">{% t "ends with breather" %}</span>{% endif %}
       <span class="muted small">{% if e.fight_round %}{% t "added in round {n}" n=e.fight_round %} · {% endif %}{{ e.created|date:"SHORT_DATETIME_FORMAT" }}</span></div>
-      <div class="inv-actions"><button class="btn small" hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML">{% t "Remove" %}</button></div></div>
+      <div class="inv-actions">{% include "characters/partials/effect_pay.html" with tab="inventory" %}<button class="btn small" hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML">{% t "Remove" %}</button></div></div>
   {% empty %}<p class="muted">{% t "No active effects." %}</p>{% endfor %}
   <h3 style="margin-top:12px">{% t "Add effect" %}</h3>
   {% include "characters/partials/effect_form.html" %}

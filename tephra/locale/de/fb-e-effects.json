@@ -1,0 +1,15 @@
+{
+  "AP spent": "Ausgegebene AP",
+  "Bandage ({n} AP)": "Verbinden ({n} AP)",
+  "Each AP spent lowers it by {n}.": "Jeder ausgegebene AP senkt den Wert um {n}.",
+  "End ({n} AP)": "Beenden ({n} AP)",
+  "Spend AP": "AP ausgeben",
+  "Stunned: {n} AP lost from this round.": "Betäubt: {n} AP dieser Runde verloren.",
+  "not bandaged": "nicht verbunden",
+  "{name} has ended.": "{name} ist vorbei.",
+  "{name}: {n} damage.": "{name}: {n} Schaden.",
+  "Bleeding damage": "Blutungsschaden",
+  "AP lost": "Verlorene AP",
+  "AP to settle": "AP zum Abklingen",
+  "Turns (1 per 3 damage)": "Runden (1 je 3 Schaden)"
+}
