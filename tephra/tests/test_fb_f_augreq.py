@@ -70,7 +70,7 @@ def test_predicates():
     turret = "armsmith-turret-"
     assert len(problems(item([turret + "devastatingly-accurate"], kind="firearm"))) == 2
     assert not problems(item([turret + s for s in ("automated", "deadly-accurate", "devastatingly-accurate")],
-                             kind="firearm"))
+                             kind="firearm", ap_ready=0))
     assert problems(item(["gadgetry-explosive-clinging"], kind="gear"))
     assert not problems(item(["gadgetry-explosive-clinging", "gadgetry-explosive-roaming"], kind="gear"))
     # reload: size table (heavy firearm: 1 AP) or the item's own value

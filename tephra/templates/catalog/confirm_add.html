@@ -1,0 +1,14 @@
+{% extends "base.html" %}{% load sheet_tags %}
+{% block content %}
+<div class="paper">
+  <h1>{% t "Do you really want to do that?" %}</h1>
+  <p>{% t "{name} breaks these rules:" name=template.name %}</p>
+  <ul>{% for p in problems %}<li>{{ p }}</li>{% endfor %}</ul>
+  <form method="post" class="row">{% csrf_token %}
+    {% for k, v in fields.items %}<input type="hidden" name="{{ k }}" value="{{ v }}">{% endfor %}
+    <input type="hidden" name="confirm" value="1">
+    <button class="btn primary">{% t "Add to {character} anyway" character=character %}</button>
+    <a class="btn" href="{{ back }}">{% t "Cancel" %}</a>
+  </form>
+</div>
+{% endblock %}

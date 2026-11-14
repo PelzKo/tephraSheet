@@ -2296,7 +2296,8 @@ Base item prices (Weapon Smith list): light melee 1 pr, medium 7, heavy 15, one-
 | Silent | 1 | T2 | T3 | T4 | impossible | |
 | Versatile | 1 | melee attacks vs adjacent for 2 AP at −1 DC | – | – | – | always mQ II |
 | Combustion | 3 | T1 fire | T2 | T2 | T3 | attack +1 AP; Dex resist |
-| Burn Trail / Everburning | 1 | as melee versions | | | | |
+| Burn Trail (req. Combustion) | 1 | helpers must Dex-resist = marque or catch fire | – | – | – | always mQ III |
+| Everburning (req. Combustion) | 1 | +1 AP to extinguish | +2 | +3 | +4 | |
 
 **Book texts:**
 

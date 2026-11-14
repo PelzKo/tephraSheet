@@ -301,6 +301,9 @@ def check_augment(aug, state, sheet):
                 tables.marque_for_points(augment_points(aug, sheet, lists & set(aug["lists"]) or None)) < clause["min"]:
             reasons.append(_("needs marque {roman} in {skill}", roman=("I", "II", "III", "IV")[clause["min"] - 1],
                              skill=_(" or ").join(_(s) for s in sorted(augment_skills(aug)))))
+        elif clause["type"] == "skill" and sheet.skills[clause["skill"]].total < clause["min"]:  # Automated: Automata
+            reasons.append(_("needs {min} points in {skill} (has {have})", min=clause["min"], skill=_(clause["skill"]),
+                             have=sheet.skills[clause["skill"]].total))
     names = owned_names(state)
     # conditions on the item (curated.AUGMENT_ITEM_RULES "from") are checked when it is installed, not when learning
     on_item = {*(aug.get("item") or {}).get("from", []), *aug.get("learn_from", [])}

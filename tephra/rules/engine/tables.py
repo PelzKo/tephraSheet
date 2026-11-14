@@ -170,6 +170,12 @@ VARIANTS = {
                "note": "assemble 3 AP; Footing stance to fire; 15 wounds, soak 1, light cover"},
 }
 TURRET_WOUNDS = 15
+# Augments an aether-shaped weapon can take (Aether: "Augmenting an aether weapon"): at most "max" augments, "max_beta"
+# on a beta item (the crafter can make beta weapons). Aetherform Modules (any weapon augment) can't be known from the
+# item: mark such a weapon as a house rule.
+AETHER_SHAPED = {"max": 3, "max_beta": 5, "augments": [f"armsmith-melee-{s}" for s in (
+    "accurate", "aerodynamic", "bone-shattering", "damaging", "deflecting", "horrifying", "inspiring", "luminous",
+    "powerful", "propelled", "reach", "returning", "signature-weapon", "streamlined", "tangling")]}
 
 
 DIY_LIQUIDS = [2, 3, 3, 3, 4, 4, 4, 5, 5, 5, 6, 6]  # living liquids maintained per DIY 1-12

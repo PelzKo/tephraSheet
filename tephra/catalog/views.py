@@ -6,6 +6,7 @@ from django.db import IntegrityError, transaction
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect, render
+from django.urls import reverse
 from django.utils import timezone
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
@@ -259,7 +260,7 @@ def augment_check(request):
         if reasons := item_requirements.augment_reasons(slug, item):
             out["selected"][slug] = "; ".join(reasons)
     for slug, aug in reg.augments.items():
-        if aug.get("item") and slug not in on:
+        if (aug.get("item") or "aether" in item["variants"]) and slug not in on:
             if reasons := item_requirements.augment_reasons(slug, {**item, "augments": [*augs, [slug, 1]]}):
                 out["options"][slug] = "; ".join(reasons)
     return JsonResponse(out)
@@ -277,6 +278,12 @@ def add_to_inventory(request, pk):
         slot = "carried"
     qty = min(max(1, _int(request.POST.get("quantity"), 1)), 9999)
     fallback = f"{character.get_absolute_url()}?tab=inventory"
+    problems = template.augment_problems  # an old template can break the rules: ask before copying it
+    if problems and request.POST.get("confirm") != "1":
+        fields = {k: v for k, v in request.POST.items() if k not in ("csrfmiddlewaretoken", "confirm")}
+        return render(request, "catalog/confirm_add.html", {
+            "template": template, "character": character, "problems": problems, "fields": fields,
+            "back": _next_url(request, reverse("catalog") + f"?for={character.pk}")})
     if request.POST.get("pay"):
         cost = template.price_dukes * qty
         if cost > character.money_on_hand:

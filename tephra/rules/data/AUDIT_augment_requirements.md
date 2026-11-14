@@ -26,7 +26,10 @@ Where the predicates live: `rules/curated.py` `AUGMENT_ITEM_RULES` (item: `needs
 - **Aerodynamic counts as throwing** for Propelled/Returning ("you may throw it like a weapon designed for throwing";
   `item_requirements.GRANTS_VARIANT`).
 - **Aether-shaped weapons** take Signature Weapon without Custom (Aether p.5: "Signature Weapon (no Custom needed)");
-  aether-synced does not.
+  aether-synced does not. Package H: an aether-shaped weapon only takes the 15 named augments and at most 3 augments,
+  5 on a beta item (the `beta` flag stands for the crafter's Beta Weapons). Aetherform Modules (any weapon augment you
+  know) depends on the crafter and can't be known from the item: such a weapon is marked as a house rule. Data:
+  `rules/engine/tables.AETHER_SHAPED`; checked by `item_requirements` (form, import, picker, inventory copy, admin).
 - **Rotating Barrels**: "firearms that use ammunition and have a reload time of 2 AP or less" → base AP to ready (the
   item's own value, else the size table) ≤ 2. "Use ammunition" is not checked (every firearm in the app does).
 - **Split Shot**: "cannot be applied to rounds containing a substance (Syringed, Inkshot, Flash-Bangs, …)" → excludes
@@ -36,13 +39,18 @@ Where the predicates live: `rules/curated.py` `AUGMENT_ITEM_RULES` (item: `needs
   "Knock Back" is the core explosive augment "Knockback" (`gadgetry-explosive-knockback`); the squib Knock Back is on
   another list.
 - **Resonator "req. X"** = X on the same resonator (Aether notes).
-- **Living liquids** Defensive / Lifting Liquid: "Requires: X augment" read as the same liquid (Lifting Liquid "moves
-  using its lighter-than-air speed").
-- **Mementos**: Master of Fortune / Lost & Stolen say "on the memento" → (b). Fumble says only "Requires: Hand Slip
-  augment" while the same section words others as "on the memento" and "specialty known" → kept as (a) learning.
-- **Turrets** "Automated turret" / "Automated augment" → Automated on the same turret.
-- Ambiguous bare "Requires: X augment" on non-item lists (acid Thick Rust, essence Metal Exoskeleton/Osmote, animal
-  traits) stay (a) learning requirements as before (conservative: no change).
+- **Living liquids** Defensive / Lifting Liquid: "Requires: X augment" = X on the same liquid (Lifting Liquid "moves
+  using its lighter-than-air speed"); confirmed by the user (package H).
+- **Mementos**: Master of Fortune / Lost & Stolen say "on the memento" → (b). Fumble "Requires: Hand Slip augment" →
+  (b) Hand Slip on the same memento (user decision, package H; before: (a) learning).
+- **Turrets** "Automated turret" / "Automated augment" → Automated on the same turret. Automated itself ("1 skill
+  point in Automata & turret has a 0 AP readying cost", package H): the Automata point is a learning requirement
+  (`AUGMENT_LEARN`, the crafter); the readying cost is checked on the item (`max_item_ready: 0`: base AP to ready plus
+  the item's own augments, Belt Fed and Automatic Reload "1/1/2/2 less AP to reload", which got its `ap_ready`
+  modifier). An item without a character can only be checked for the readying part. The wielder's Snap Reload doesn't
+  count.
+- Bare "Requires: X augment" on non-item lists (acid Thick Rust, essence Metal Exoskeleton/Osmote, animal traits)
+  stay (a) learning requirements; confirmed by the user (package H).
 - Specialty conditions worded as the item ("weapon made with Interchangeable Parts", "Brainworks built with
   Personality") stay (a): the crafter needs the specialty. Bow Easily Altered gets the same qualifier as the melee and
   firearm ones (the bow table lacked it).
@@ -55,32 +63,29 @@ Where the predicates live: `rules/curated.py` `AUGMENT_ITEM_RULES` (item: `needs
   Sprint-to-Me, March-/Run-There, Protect-Us/-Yourself, Shield-Yourself subdirectives require their Directive in the
   text but have no qualifier. All are analytics (clockwork) conditions = (b) on a non-item; not checked.
 - `bio-flux-essence-specialized-animal`: "needs a known animal special trait" (the animal's traits, pets validator).
-- `armsmith-turret-automated`: "Requires: 1 skill point in Automata & turret has a 0 AP readying cost" – neither part
-  is checked (the readying cost can depend on other augments such as Automatic Reload).
 - `gadgetry-explosive-target-processing`: "for use with mines" (no mine flag on items).
 - `luck-memento-eau-de-bile`: "can only be placed on an object after a successful called shot to the groin" (event).
-- Aether-shaped weapons allow only 15 named melee augments, max 3 (5 with Beta Weapons), unless Aetherform Modules:
-  depends on the crafter's specialties, not checked.
 - `automata-prosthetic-furnace` "cannot apply to a wooden prosthetic", `automata-prosthetic-arm-grasper` "no two-handed
   items": target restrictions on prosthetics (no item).
 
 ## Inconsistent source entries (reported, not rewritten)
 
-- `armsmith-bow-burn-trail-everburning`: the parser merged the bow Burn Trail and Everburning texts into one entry with
-  no text and no qualifier; the book has two augments, both "placed on bow with the Combustion augment". Classified as
-  needing bow Combustion on the same bow.
+- `armsmith-bow-burn-trail-everburning`: the reference's bow table merged Burn Trail and Everburning into one row
+  ("as melee versions", no text). Package H split the row in the source markdown (marques as the melee rows, the bow
+  book texts exist for both): Burn Trail keeps the old slug (`curated.AUGMENT_SLUGS`, so stored characters/items keep
+  Burn Trail without a data migration), Everburning is `armsmith-bow-everburning`; both need bow Combustion.
 - Living liquid Defensive: book typo "Interior Platements" (data already says Interior Platelets).
 - Shockwave: "Knock Back" vs the augment name "Knockback".
 
 ## Table
 
-Augments audited: 714 (core 427, extensions 287); with a requirement/restriction clause: 90
+Augments audited: 715 (core 428, extensions 287); with a requirement/restriction clause: 92
 
 | Class | Clauses |
 |---|---|
 | (a) character learning prerequisite | 22 |
-| (b) item prerequisite (augment on the same item) | 57 |
-| (c) item restriction | 21 |
+| (b) item prerequisite (augment on the same item) | 59 |
+| (c) item restriction | 22 |
 | (d) prose only / unclear (qualifier clauses; more in the (d) list) | 2 |
 
 | Augment (slug) | Source | Book qualifier | Class | Check |
@@ -106,7 +111,8 @@ Augments audited: 714 (core 427, extensions 287); with a requirement/restriction
 | `armsmith-melee-streamlined` | core | light/medium | c | size one of light, medium |
 | `armsmith-melee-tangling` | core | flexible | c | variant one of flexible |
 | `armsmith-bow-easily-altered` | core | req. Interchangeable Parts | a | learning: specialty/augment known (checked by check_augment) |
-| `armsmith-bow-burn-trail-everburning` | core | (text) | b | same item: armsmith-bow-combustion |
+| `armsmith-bow-burn-trail-everburning` | core | req. Combustion | b | same item: armsmith-bow-combustion (Burn Trail) |
+| `armsmith-bow-everburning` | core | req. Combustion | b | same item: armsmith-bow-combustion |
 | `automata-fusebox-master-fuse-box` | core | req. Specialist | b | same item/body, NOT enforced: the app has no item for list fusebox |
 | `automata-fusebox-spiritual-connection` | core | req. Personality | a | learning: specialty/augment known (checked by check_augment) |
 | `automata-clockwork-hit-them-subdirective` | core | req. Avenge-Me | b | same item/body, NOT enforced: the app has no item for list clockwork |
@@ -152,6 +158,8 @@ Augments audited: 714 (core 427, extensions 287); with a requirement/restriction
 | `gadgetry-resonator-highly-irradiated` | aether | req. Irradiated | b | same item: gadgetry-resonator-irradiated |
 | `gadgetry-resonator-widespread-darkness` | aether | req. Light-Absorbing | b | same item: gadgetry-resonator-light-absorbing |
 | `armsmith-munition-split-shot` | armsmith-extra | (text) | c | not with armsmith-munition-syringed, armsmith-munition-inkshot, armsmith-munition-flash-bangs |
+| `armsmith-turret-automated` | armsmith-extra | (text) | a | learning: 1 point in Automata (check_augment) |
+| `armsmith-turret-automated` | armsmith-extra | (text) | c | AP to ready incl. the item's augments = 0 |
 | `armsmith-turret-body-part-seeker` | armsmith-extra | req. Automated | b | same item: armsmith-turret-automated |
 | `armsmith-turret-deadly-accurate` | armsmith-extra | req. Automated | b | same item: armsmith-turret-automated |
 | `armsmith-turret-devastatingly-accurate` | armsmith-extra | req. Automated / req. Deadly Accurate | b | same item: armsmith-turret-automated |
@@ -175,7 +183,7 @@ Augments audited: 714 (core 427, extensions 287); with a requirement/restriction
 | `alchemy-living-liquid-defensive` | living-liquids | req. Interior Platelets | b | same item: alchemy-living-liquid-interior-platelets |
 | `alchemy-living-liquid-lifting-liquid` | living-liquids | req. Lighter-than-Air Liquid | b | same item: alchemy-living-liquid-lighter-than-air-liquid |
 | `luck-memento-master-of-fortune` | mementos | req. Moneymaker | b | same item: luck-memento-moneymaker |
-| `luck-memento-fumble` | mementos | req. Hand Slip | a | learning: specialty/augment known (checked by check_augment) |
+| `luck-memento-fumble` | mementos | req. Hand Slip | b | same item: luck-memento-hand-slip |
 | `luck-memento-hand-slip` | mementos | req. Feeling Lucky | a | learning: specialty/augment known (checked by check_augment) |
 | `luck-memento-lost-and-stolen` | mementos | req. Lost Wallet | b | same item: luck-memento-lost-wallet |
 | `alchemy-medicine-antivenom-plus` | pets-and-predators | req. Antivenom | b | same item: alchemy-medicine-antivenom |

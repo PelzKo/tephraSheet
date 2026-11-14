@@ -1198,7 +1198,20 @@
   "size": "",
   "price": "",
   "text": "The crossbow or firearm has a fast reloading mechanism, allowing it to be reloaded much more quickly than normal.\n1 less AP to reload\n1 less AP to reload\n2 less AP to reload\n2 less AP to reload",
-  "modifiers": []
+  "modifiers": [
+   {
+    "stat": "ap_ready",
+    "op": "add",
+    "when": "always",
+    "scope": "weapon",
+    "by_marque": [
+     -1,
+     -1,
+     -2,
+     -2
+    ]
+   }
+  ]
  },
  {
   "slug": "armsmith-firearm-crossbow-bipod",
@@ -3159,7 +3172,7 @@
  },
  {
   "slug": "armsmith-bow-burn-trail-everburning",
-  "name": "Burn Trail / Everburning",
+  "name": "Burn Trail",
   "skill": "Armsmith",
   "lists": [
    "bow"
@@ -3167,24 +3180,65 @@
   "section": "Bow augments",
   "subsection": "",
   "slots": 1,
-  "qualifiers": [],
+  "qualifiers": [
+   "req. Combustion"
+  ],
   "accessory": false,
   "marques": [
-   "as melee versions",
-   "",
-   "",
-   ""
+   "helpers must Dex-resist = marque or catch fire",
+   "–",
+   "–",
+   "–"
   ],
-  "notes": "",
+  "notes": "always mQ III",
   "size": "",
   "price": "",
-  "text": "",
+  "text": "Requires: placed on bow with the Combustion augment Any person attempting to physically aid a victim of your combustion must first make a dexterity resist that equals the marque of your Combusion augment or be set on fire themselves.\nNote: This augment always acts as marque III for the purposes of determining cost, though you can learn this augment despite your skill in armsmith.",
   "modifiers": [],
   "item": {
    "needs": [
     [
      "armsmith-bow-combustion"
     ]
+   ],
+   "from": [
+    "req. Combustion"
+   ]
+  }
+ },
+ {
+  "slug": "armsmith-bow-everburning",
+  "name": "Everburning",
+  "skill": "Armsmith",
+  "lists": [
+   "bow"
+  ],
+  "section": "Bow augments",
+  "subsection": "",
+  "slots": 1,
+  "qualifiers": [
+   "req. Combustion"
+  ],
+  "accessory": false,
+  "marques": [
+   "+1 AP to extinguish",
+   "+2 AP to extinguish",
+   "+3 AP to extinguish",
+   "+4 AP to extinguish"
+  ],
+  "notes": "",
+  "size": "",
+  "price": "",
+  "text": "Requires: placed on bow with the Combustion augment Despite your victim’s best efforts to put themselves out, they seem to continue burning. When catching things on fire through the use of a combustion attack, extra action points are required to put out the fire.\n1 extra AP\n2 extra AP\n3 extra AP\n4 extra AP",
+  "modifiers": [],
+  "item": {
+   "needs": [
+    [
+     "armsmith-bow-combustion"
+    ]
+   ],
+   "from": [
+    "req. Combustion"
    ]
   }
  },
@@ -13033,7 +13087,17 @@
   "size": "",
   "price": "",
   "modifiers": [],
-  "extension": "armsmith-extra"
+  "extension": "armsmith-extra",
+  "item": {
+   "max_item_ready": 0
+  },
+  "learn": [
+   {
+    "type": "skill",
+    "skill": "Automata",
+    "min": 1
+   }
+  ]
  },
  {
   "skill": "Armsmith",
@@ -17190,7 +17254,17 @@
   "two_marque": true,
   "accessory": false,
   "size": "",
-  "extension": "mementos"
+  "extension": "mementos",
+  "item": {
+   "needs": [
+    [
+     "luck-memento-hand-slip"
+    ]
+   ],
+   "from": [
+    "req. Hand Slip"
+   ]
+  }
  },
  {
   "skill": "Luck",

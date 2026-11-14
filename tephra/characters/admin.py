@@ -1,13 +1,17 @@
 from django.contrib import admin
 
+from catalog.admin import ConfirmViolationsForm
+
+from . import services
 from .models import (Character, CustomModifier, EffectEntry, Feedback, InventoryItem, JournalRevision, LevelLog,
                      NarratorSettings)
 
 
 class InventoryInline(admin.TabularInline):
     model = InventoryItem
+    form = ConfirmViolationsForm
     extra = 0
-    fields = ["name", "kind", "size", "slot", "quantity"]
+    fields = ["name", "kind", "size", "slot", "quantity", "confirm_violations"]
 
 
 class EffectInline(admin.TabularInline):
@@ -20,8 +24,14 @@ class ModifierInline(admin.TabularInline):
     extra = 0
 
 
+class CharacterForm(ConfirmViolationsForm):
+    def violations(self, obj):
+        return services.rule_violations(obj)
+
+
 @admin.register(Character)
 class CharacterAdmin(admin.ModelAdmin):
+    form = CharacterForm
     list_display = ["name", "player_name", "race", "level", "status", "updated"]
     list_filter = ["status", "race"]
     search_fields = ["name", "player_name"]

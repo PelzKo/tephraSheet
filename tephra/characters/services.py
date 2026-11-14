@@ -140,6 +140,28 @@ def revalidate(character):
     return removed
 
 
+def rule_violations(character):
+    """["<name>: <reasons>", …] for learned specialties/augments whose learning requirements the character doesn't
+    meet (Django admin warning). Narrator-granted and granted augments are skipped."""
+    reg = get_registry()
+    granted = set(character.narrator_granted)
+    state = character.to_state()
+    sheet = compute(state)
+    free = granted_augments(state)
+    out = []
+    for slug, _level in character.specialties:
+        spec = reg.specialties.get(slug)
+        if spec and f"spec:{slug}" not in granted:
+            out += [_("{augment}: {reason}", augment=spec["name"], reason=r)
+                    for r in check_specialty(spec, state, sheet, ignore_owned=True)[1]]
+    for slug in character.augments:
+        aug = reg.augments.get(slug)
+        if aug and f"aug:{slug}" not in granted and slug not in free:
+            state.augments = [a for a in character.augments if a != slug]
+            out += [_("{augment}: {reason}", augment=aug["name"], reason=r) for r in check_augment(aug, state, sheet)[1]]
+    return out
+
+
 # --------------------------------------------------------------------------- steps 4/5
 def set_specialty_option(character, slug, value):
     """Store the choice a specialty needs (e.g. Battle Theme: singing or instrument)."""

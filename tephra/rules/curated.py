@@ -338,6 +338,7 @@ AUGMENTS = {
     "armsmith-melee-easily-altered": {"qualifiers": ["req. Interchangeable Parts"]},
     "armsmith-firearm-crossbow-accurate": {"modifiers": [mod("acc", scope="weapon", by_marque=[1, 2, 3, 4])]},
     "armsmith-firearm-crossbow-damaging": {"modifiers": [mod("dc", scope="weapon", by_marque=[1, 2, 3, 4])]},
+    "armsmith-firearm-crossbow-automatic-reload": {"modifiers": [mod("ap_ready", scope="weapon", by_marque=[-1, -1, -2, -2])]},
     "armsmith-firearm-crossbow-bipod": {"modifiers": [mod("acc", scope="weapon", when="toggle", label="bipod set up",
                                                           by_marque=[1, 2, 3, 4])]},
     "armsmith-melee-accurate": {"modifiers": [mod("acc", scope="weapon", by_marque=[1, 2, 3, 4])]},
@@ -369,6 +370,7 @@ AUGMENTS = {
 # checks them. Keys: "needs" = AND of OR-groups of augment slugs on the same item, "needs_waived_by" = variants that
 # lift "needs" (aether-shaped weapons take Signature Weapon without Custom), "sizes"/"materials" = one of,
 # "variants" = one of (Aerodynamic counts as throwing), "max_ready" = base AP to ready (item value or size table),
+# "max_item_ready" = AP to ready incl. the item's own augments (Belt Fed, Automatic Reload),
 # "excludes" = augments it can't share an item with, "from" = the qualifiers this replaces: they are not checked
 # when learning. Lists the app has no item for (prosthetics, automata, vehicles) only use "from".
 AUGMENT_ITEM_RULES = {
@@ -389,7 +391,11 @@ AUGMENT_ITEM_RULES = {
                                                    "from": ["req. Custom"]},
     "armsmith-firearm-crossbow-gnome-sized": {"sizes": ["light"], "from": ["light only"]},
     "armsmith-firearm-rotating-barrels": {"max_ready": 2},
-    "armsmith-bow-burn-trail-everburning": {"needs": [["armsmith-bow-combustion"]]},
+    # the bow Burn Trail keeps the slug of the former merged "Burn Trail / Everburning" entry (AUGMENT_SLUGS)
+    "armsmith-bow-burn-trail-everburning": {"needs": [["armsmith-bow-combustion"]], "from": ["req. Combustion"]},
+    "armsmith-bow-everburning": {"needs": [["armsmith-bow-combustion"]], "from": ["req. Combustion"]},
+    # "turret has a 0 AP readying cost" (Belt Fed counts); the Automata point is a learning requirement (AUGMENT_LEARN)
+    "armsmith-turret-automated": {"max_item_ready": 0},
     "armsmith-munition-split-shot": {"excludes": ["armsmith-munition-syringed", "armsmith-munition-inkshot",
                                                   "armsmith-munition-flash-bangs"]},
     **{f"armsmith-turret-{s}": {"needs": [["armsmith-turret-automated"]], "from": ["req. Automated"]}
@@ -425,6 +431,7 @@ AUGMENT_ITEM_RULES = {
     "alchemy-medicine-antivenom-plus": {"needs": [["alchemy-medicine-antivenom"]], "from": ["req. Antivenom"]},
     "luck-memento-master-of-fortune": {"needs": [["luck-memento-moneymaker"]], "from": ["req. Moneymaker"]},
     "luck-memento-lost-and-stolen": {"needs": [["luck-memento-lost-wallet"]], "from": ["req. Lost Wallet"]},
+    "luck-memento-fumble": {"needs": [["luck-memento-hand-slip"]], "from": ["req. Hand Slip"]},  # on the same memento
     # no item in the app (prosthetics, automata, vehicles): only no longer a learning requirement
     "automata-fusebox-master-fuse-box": {"from": ["req. Specialist"]},
     "automata-clockwork-hit-them-subdirective": {"from": ["req. Avenge-Me"]},
@@ -450,7 +457,10 @@ AUGMENT_ITEM_RULES = {
 # Learning requirements that aren't a specialty or augment name (book: "Requires: Marque II Explosives").
 AUGMENT_LEARN = {
     "gadgetry-explosive-extended-blast": {"learn": [{"type": "marque", "min": 2}], "learn_from": ["req. mQ II explosives"]},
+    "armsmith-turret-automated": {"learn": [{"type": "skill", "skill": "Automata", "min": 1}]},  # "1 skill point in Automata"
 }
+# Parsed slug -> slug to use (the bow Burn Trail keeps the slug of the former merged "Burn Trail / Everburning" row)
+AUGMENT_SLUGS = {"armsmith-bow-burn-trail": "armsmith-bow-burn-trail-everburning"}
 for _slug, _rule in AUGMENT_ITEM_RULES.items():
     AUGMENTS.setdefault(_slug, {})["item"] = _rule
 for _slug, _rule in AUGMENT_LEARN.items():

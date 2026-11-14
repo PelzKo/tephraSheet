@@ -6,6 +6,7 @@ from rules.lang import gettext as _
 from rules.registry import get_registry
 
 from . import tables
+from .modifiers import mod_amount
 
 # Augments that turn the item into a variant: Aerodynamic lets a melee weapon be thrown "like a weapon designed for
 # throwing", so it satisfies Propelled/Returning ("placed on throwing weapon").
@@ -25,6 +26,18 @@ def base_ready(item):
     return (READY_TABLES.get(item.get("kind")) or {}).get(item.get("size") or "", {}).get("ready", 0)
 
 
+def item_ready(item):
+    """AP to ready the item itself: base value plus its own augments' ap_ready modifiers (Belt Fed, Automatic Reload),
+    at least 0. The wielder's modifiers (Snap Reload) don't change the item."""
+    reg = get_registry()
+    total = base_ready(item)
+    for slug, marque in item.get("augments") or []:
+        for m in (reg.augments.get(slug) or {}).get("modifiers", []):
+            if m["stat"] == "ap_ready" and m.get("scope") == "weapon":
+                total += mod_amount(m, {}, marque)
+    return max(0, total)
+
+
 def augment_reasons(slug, item):
     """Why augment ``slug`` doesn't fit ``item`` (with the item's augments as they are); [] when it fits."""
     reg = get_registry()
@@ -41,6 +54,10 @@ def augment_reasons(slug, item):
             _(tables.VARIANTS[v]["label"]) for v in rule["variants"])))
     if "max_ready" in rule and base_ready(item) > rule["max_ready"]:
         out.append(_("needs at most {max} AP to ready (has {have})", max=rule["max_ready"], have=base_ready(item)))
+    if "max_item_ready" in rule and item_ready(item) > rule["max_item_ready"]:
+        out.append(_("needs at most {max} AP to ready (has {have})", max=rule["max_item_ready"], have=item_ready(item)))
+    if "aether" in variants and slug not in tables.AETHER_SHAPED["augments"]:  # Aetherform Modules: mark as house rule
+        out.append(_("not allowed on an aether-shaped weapon"))
     if not variants & set(rule.get("needs_waived_by", [])):
         for group in rule.get("needs", []):
             if not on & set(group):
@@ -61,6 +78,9 @@ def problems(item):
     for slug in dict.fromkeys(s for s, _m in item.get("augments") or []):
         name = reg.augments[slug]["name"] if slug in reg.augments else slug
         out += [_("{augment}: {reason}", augment=name, reason=r) for r in augment_reasons(slug, item)]
+    limit = tables.AETHER_SHAPED["max_beta" if item.get("beta") else "max"]
+    if "aether" in (item.get("variants") or []) and len(item.get("augments") or []) > limit:
+        out.append(_("An aether-shaped weapon takes at most {max} augments.", max=limit))
     return out
 
 
