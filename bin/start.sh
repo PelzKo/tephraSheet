@@ -11,4 +11,4 @@ bash "$REPO_ROOT/bin/backup.sh" || echo "start.sh: backup before migrate failed,
 "$PYTHON" manage.py seed_catalog
 "$PYTHON" manage.py purge_trash || echo "start.sh: purge_trash failed, continuing" >&2
 "$PYTHON" manage.py check --deploy || echo "start.sh: deploy check reported problems (see above)" >&2
-exec "$PYTHON" -m gunicorn --workers 3 --access-logfile - --error-logfile - --bind 0.0.0.0:8000 tephra.wsgi:application
+exec "$PYTHON" -m gunicorn --workers 3 --access-logfile - --error-logfile - --bind 0.0.0.0:8999 tephra.wsgi:application

@@ -34,7 +34,7 @@ The rule data (`tephra/rules/data/*.json`) is generated from `tephra/rules/data/
 
 ## Deployment
 
-Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, a database backup (`bin/backup.sh`), `migrate`, `seed_catalog` (creates missing book items only; narrator edits stay), `purge_trash` and `check --deploy`, then `exec`s gunicorn (3 workers, access log on stdout) on `0.0.0.0:8000`. If `collectstatic`, `migrate` or `seed_catalog` fails, the app does not boot (supervisor reports FATAL); a failed backup, trash purge or deploy check is only logged.
+Deployment follows the same setup as TheLog: Django served by Gunicorn behind a reverse proxy (Apache), with static files served by Whitenoise. `bin/start.sh` runs `collectstatic`, a database backup (`bin/backup.sh`), `migrate`, `seed_catalog` (creates missing book items only; narrator edits stay), `purge_trash` and `check --deploy`, then `exec`s gunicorn (3 workers, access log on stdout) on `0.0.0.0:8999`. If `collectstatic`, `migrate` or `seed_catalog` fails, the app does not boot (supervisor reports FATAL); a failed backup, trash purge or deploy check is only logged.
 
 Security notes:
 - **Group passphrase:** set it on `/gm/` (Narrator settings). Every browser must enter it once (remembered for a year); the narrator never needs it. Without a passphrase the site is open to anyone who finds it. A new passphrase makes everyone enter it again.
@@ -71,7 +71,7 @@ The app is served on its own subdomain (e.g. `tephra.<domain>`), not a subpath o
 3. Register the subdomain with Uberspace and route it to the app's port:
    ```bash
    uberspace web domain add tephra.<domain>
-   uberspace web backend set tephra.<domain> --http --port 8000
+   uberspace web backend set tephra.<domain> --http --port 8999
    ```
    Uberspace issues the Let's Encrypt certificate automatically the first time it sees an HTTPS request for the domain (typically seconds to a few minutes after DNS has propagated) — nothing to configure manually. TLS terminates at Apache, which must forward `X-Forwarded-Proto` (already the case for Uberspace-managed domains).
 4. Create the MariaDB database via Uberspace's database overview (https://mysql.uberspace.de/phpmyadmin/), then create `tephra/.env` from `.env.sample` and fill in `SECRET_KEY`, `DEBUG=False`, `LOCAL=False`, `EXTERNAL_HOSTNAME=tephra.<domain>`, and the `DB_*` values for that database.
