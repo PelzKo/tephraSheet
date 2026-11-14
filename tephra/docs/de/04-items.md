@@ -11,3 +11,11 @@
 - **Aus dem Katalog:** Durchsuche den Katalog direkt im Inventar-Reiter und füge einen Gegenstand hinzu, ohne den Bogen zu verlassen.
 - **Geben** übergibt einen Gegenstand (oder einen Teil eines Stapels) an einen anderen Charakter, den du entsperrt hast; beide Tagebücher vermerken es.
 - Auf Seite 2 öffnet ein Tippen auf eine Ausrüstungszeile mit Anzahl (Munition, Stapel) − / +.
+
+## Format für den Massenimport
+Der **Massenimport** (Katalog) nimmt eine CSV-Datei oder eine eingefügte Tabelle: aus einer Tabellenkalkulation, CSV mit `,` oder `;` oder eine Markdown-Tabelle. Die erste Zeile benennt die Spalten; nötig ist nur `name`. *CSV-Vorlage herunterladen* liefert eine Beispieldatei.
+
+- Nützliche Spalten: `kind` (melee, firearm, bow, crossbow, armor, deflection, ammo, gear, animal, vehicle …), `size`, `variants` (flexible / polearm / throwing / impromptu / double-barreled), `material`, `price` (`5 pr`, `3 d`), `augments` (`Accurate II; Damaging I`), `description`, `quantity`. Die Spaltennamen und Werte sind englisch; gängige andere Namen werden verstanden (z. B. *type* für kind, *cost* für price, *qty* für quantity).
+- Leere Zahlenspalten (Schadensklasse, AP, Reichweite, Schutz …) nehmen die Größentabellen der Regeln.
+- Die Vorschau zeigt jede Zeile mit ihren Problemen; importiert werden nur Zeilen ohne Probleme. Aus dem Inventar eines Charakters geöffnet, wählst du, ob sie in dieses Inventar oder in den gemeinsamen Katalog kommen.
+- Die Datei von **CSV exportieren** hat dasselbe Format (mit dem genauen Preis in Dukes und ein paar Spalten mehr), du kannst sie also bearbeiten und wieder importieren.
