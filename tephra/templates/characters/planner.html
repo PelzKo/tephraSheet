@@ -57,7 +57,7 @@
     </select></div>
     {% if retrofit_level %}
     <div class="field"><label>{% t "Retrofit: replace specialty" %}</label><select name="retrofit_old"><option value="">{% t "– keep all –" %}</option>
-      {% for s in specialties %}<option value="{{ s.slug }}" {% if s.slug == retrofit.0 %}selected{% endif %}>{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div>
+      {% for s in owned_specialties %}<option value="{{ s.slug }}" {% if s.slug == retrofit.0 %}selected{% endif %}>{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div>
     <div class="field"><label>{% t "…for this specialty (same attribute)" %}</label><select name="retrofit_new"><option value="">–</option>
       {% for s in specialties %}<option value="{{ s.slug }}" {% if s.slug == retrofit.1 %}selected{% endif %}>{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div>
     {% endif %}

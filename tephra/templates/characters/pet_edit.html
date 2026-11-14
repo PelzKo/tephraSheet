@@ -30,8 +30,9 @@
         <b>{{ t.name }}</b><div class="small muted">{% t "HP {hp} · Wounds {wnd}" hp=t.hp wnd=t.wnd %} · {{ t.attack.name }} {% t "DC {n}" n=t.attack.dmg_class %}</div></label>{% endfor %}</div>
 
     <h3>{% t "2. Movement" %}</h3>
+    <p class="small muted">{% t "Choose one movement type. More come from the Mobile special trait." %}</p>
     <div class="choice-grid">{% for m in animals.movement.values %}
-      <label class="choice"><input type="checkbox" name="movement" value="{{ m.slug }}" {% if m.slug in pet.movement %}checked{% endif %}>
+      <label class="choice"><input type="radio" name="movement" value="{{ m.slug }}" {% if m.slug == pet.movement.0 %}checked{% endif %}>
         <b>{{ m.name }}</b><div class="small">{{ m.text }}</div></label>{% endfor %}</div>
 
     <h3>{% t "3. Special traits (1 SP each) and training stories" %}</h3>

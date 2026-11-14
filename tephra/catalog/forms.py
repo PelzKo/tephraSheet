@@ -29,8 +29,9 @@ class ItemForm(forms.ModelForm):
         fields = FORM_FIELDS + ["is_starting_gear"]
         widgets = {"description": forms.Textarea(attrs={"rows": 3})}
 
-    def __init__(self, *args, gm=False, **kwargs):
+    def __init__(self, *args, gm=False, catalog=True, **kwargs):
         super().__init__(*args, **kwargs)
+        self.catalog = catalog
         if not gm:
             self.fields.pop("is_starting_gear")
         self.fields.pop("price_dukes")
@@ -51,6 +52,10 @@ class ItemForm(forms.ModelForm):
         for name in ("ap_use", "ap_ready", "dc", "reach", "range", "increment", "soak", "eva_penalty",
                      "spd_penalty", "climb_swim_penalty", "deflect_bonus"):
             self.fields[name].widget.attrs["placeholder"] = "auto"
+
+    def validate_constraints(self):
+        if self.catalog:  # inventory items are copies: name+kind only has to be unique in the catalog
+            super().validate_constraints()
 
     def clean_augments_json(self):
         raw = self.cleaned_data.get("augments_json") or "[]"
@@ -108,11 +113,13 @@ class ItemForm(forms.ModelForm):
 
 def augment_choices_json():
     """Augment options per item kind for the creator's picker."""
+    from characters.templatetags.sheet_tags import effect_html
+
     reg = get_registry()
     out = {}
     for kind, lists in [*AUGMENT_LISTS_BY_KIND.items(), ("memento", {"memento"})]:
         out[kind] = [{"slug": a["slug"], "name": a["name"], "slots": a.get("slots") or 0,
                       "marques": a["marques"], "list": "/".join(a["lists"]), "notes": a["notes"],
-                      "text": a["text"], "two_marque": a.get("two_marque", False)}
+                      "text_html": effect_html(a["text"], "mq"), "two_marque": a.get("two_marque", False)}
                      for a in offer(reg.augments.values()) if lists.intersection(a["lists"])]
     return out

@@ -32,7 +32,7 @@ def _from_post(pet, post, animals):
     if post.get("template") in animals["templates"]:
         pet.template = post["template"]
     pet.origin = post.get("origin") if post.get("origin") in dict(Pet.ORIGIN_CHOICES) else pet.origin
-    pet.movement = [m for m in post.getlist("movement") if m in animals["movement"]]
+    pet.movement = [m for m in post.getlist("movement") if m in animals["movement"]][:1]  # book step 2: one type
     pet.traits = [[s, post.get(f"choice:{s}", "").strip()[:60] or None] for s in post.getlist("traits")
                   if s in animals["traits"]]
     pet.stories = [s for s in post.getlist("stories") if s in animals["stories"]]

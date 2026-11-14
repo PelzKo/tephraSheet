@@ -54,7 +54,7 @@
         <span class="tag">{{ item.get_kind_display|t }}{% if item.size %} · {{ item.get_size_display|t }}{% endif %}{% if item.hands_label %} · {{ item.hands_label|t }}{% endif %}{% if item.concealable %} · {% t "concealable" %}{% endif %}</span>
         {% if item.slot != "carried" %}<span class="tag ok">{{ item.get_slot_display|t }}</span>{% endif %}
         <div class="meta">
-          {% for a in item.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}
+          {% for a in item.augments %}{% with aug=a.0|augment %}<span title="{{ a|aug_tip }}">{{ aug.name }} mQ {{ a.1|roman }}</span>{% if not forloop.last %}, {% endif %}{% endwith %}{% endfor %}
           {% if item.price_dukes %} · {{ item.price_dukes|money }}{% endif %}
           {% if item.description %} · {{ item|item_desc|truncatechars:140|term_tips }}{% endif %}
           {% if item.notes %} · {{ item.notes }}{% endif %}

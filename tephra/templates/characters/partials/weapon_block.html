@@ -19,7 +19,7 @@
     <div class="notes-area"><b>{% t "Notes/Augments:" %}</b>
       <ul>
         {% if two_handed %}<li>{% t "Held with both hands" %}</li>{% endif %}
-        {% for slug_marque in w_block.item.augments %}{% with aug=slug_marque.0|augment %}<li>{{ aug.name|default:slug_marque.0 }} mQ {{ slug_marque.1|roman }}</li>{% endwith %}{% endfor %}
+        {% for slug_marque in w_block.item.augments %}{% with aug=slug_marque.0|augment %}<li title="{{ slug_marque|aug_tip }}">{{ aug.name|default:slug_marque.0 }} mQ {{ slug_marque.1|roman }}</li>{% endwith %}{% endfor %}
         {% for n in w_block.notes %}<li>{{ n }}</li>{% endfor %}
       </ul>
     </div>
