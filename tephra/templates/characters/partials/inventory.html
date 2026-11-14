@@ -13,11 +13,19 @@
   <form class="row quick-add" hx-post="{% url 'play' character.pk 'add-item' %}" hx-target="#sheet-body" hx-swap="outerHTML">
     <input type="hidden" name="tab" value="inventory">
     <b>{% t "Found something?" %}</b>
-    <input type="text" name="name" placeholder="{% t "e.g. blanket, shark tooth" %}" maxlength="120" required aria-label="{% t "Item name" %}" class="grow">
-    <input type="number" name="quantity" value="1" min="1" aria-label="{% t "Quantity" %}" style="width:5em">
-    <input type="text" name="notes" placeholder="{% t "Notes (optional)" %}" maxlength="255" aria-label="{% t "Notes" %}">
+    <input type="text" name="name" placeholder="{% t "e.g. blanket, shark tooth" %}" maxlength="120" required aria-label="{% t "Item name" %}" class="grow" data-draft="add-name">
+    <input type="number" inputmode="numeric" name="quantity" value="1" min="1" aria-label="{% t "Quantity" %}" style="width:5em" data-draft="add-qty">
+    <input type="text" name="notes" placeholder="{% t "Notes (optional)" %}" maxlength="255" aria-label="{% t "Notes" %}" data-draft="add-notes">
     <button class="btn small primary">{% t "Add" %}</button>
   </form>
+  {# Catalog search without leaving the sheet: the catalog's own result rows and add forms (catalog/partials/results.html). #}
+  <div class="row quick-add">
+    <b>{% t "From the catalog:" %}</b>
+    <input type="search" name="q" class="grow" placeholder="{% t "Search the catalog…" %}" aria-label="{% t "Search the catalog" %}"
+           hx-get="{% url 'catalog' %}" hx-vals='{"for": "{{ character.pk }}"}' hx-trigger="input[target.value.trim().length > 1] changed delay:400ms, search"
+           hx-target="#inv-catalog" hx-swap="innerHTML" hx-sync="this:replace">
+  </div>
+  <div id="inv-catalog"></div>
   {% if items %}
   <div class="inv-toolbar row" data-inv-toolbar data-character="{{ character.pk }}" data-target="#inv-list">
     <input type="search" data-inv-q placeholder="{% t "Search inventory…" %}" class="grow" aria-label="{% t "Search inventory" %}">
@@ -80,6 +88,14 @@
           </form>
         {% endif %}
         <a class="btn small" href="{% url 'inventory_item_edit' character.pk item.pk %}">{% t "Edit" %}</a>
+        {% if give_targets %}
+          <form class="row" style="gap:4px" hx-post="{% url 'play' character.pk 'give-item' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+            <input type="hidden" name="id" value="{{ item.pk }}"><input type="hidden" name="tab" value="inventory">
+            {% if item.quantity > 1 %}<input type="number" inputmode="numeric" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.quantity }}" aria-label="{% t "Quantity" %}" style="width:4.5em">{% endif %}
+            {% include "characters/partials/give_select.html" %}
+            <button class="btn small">{% t "Give" %}</button>
+          </form>
+        {% endif %}
         <button class="btn small danger" hx-post="{% url 'play' character.pk 'drop' %}" hx-vals='{"id": "{{ item.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML" hx-confirm="{% t "Remove {name}?" name=item.name %}">{% t "Drop" %}</button>
       </div>
     </div>
@@ -94,7 +110,9 @@
 <div class="paper">
   <h2>{% t "Effects" %}</h2>
   {% for e in effects %}
-    <div class="inv-slot"><div><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text }}{% if e.lost_wounds %} {% t "(−{n} max wounds)" n=e.lost_wounds %}{% endif %}</div>
+    <div class="inv-slot"><div><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text }}{% if e.lost_wounds %} {% t "(−{n} max wounds)" n=e.lost_wounds %}{% endif %}
+      {% if e.ends_with_breather %}<span class="tag">{% t "ends with breather" %}</span>{% endif %}
+      <span class="muted small">{% if e.fight_round %}{% t "added in round {n}" n=e.fight_round %} · {% endif %}{{ e.created|date:"SHORT_DATETIME_FORMAT" }}</span></div>
       <div class="inv-actions"><button class="btn small" hx-post="{% url 'play' character.pk 'effect-remove' %}" hx-vals='{"id": "{{ e.pk }}", "tab": "inventory"}' hx-target="#sheet-body" hx-swap="outerHTML">{% t "Remove" %}</button></div></div>
   {% empty %}<p class="muted">{% t "No active effects." %}</p>{% endfor %}
   <h3 style="margin-top:12px">{% t "Add effect" %}</h3>
@@ -105,7 +123,8 @@
   <h2>{% t "Notes" %}</h2>
   <form hx-post="{% url 'play' character.pk 'notes' %}" hx-target="#sheet-body" hx-swap="outerHTML">
     <input type="hidden" name="tab" value="inventory">
-    <textarea name="notes" rows="5">{{ character.notes }}</textarea>
+    {% include "characters/partials/text_conflict.html" with field="notes" base=notes_base %}
+    <textarea name="notes" rows="5" data-draft="notes">{% if conflict.field == "notes" %}{{ conflict.mine }}{% else %}{{ character.notes }}{% endif %}</textarea>
     <div class="row" style="margin-top:8px"><button class="btn small primary">{% t "Save notes" %}</button>
       <a class="btn small" href="{% url 'augments' character.pk %}">{% t "Augments ({n}/{max})" n=augments|length max=sheet.stats.aug.total %}</a></div>
   </form>

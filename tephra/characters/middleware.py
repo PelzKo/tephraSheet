@@ -90,6 +90,9 @@ class PassphraseMiddleware:
 # Strings static/js/app.js shows to the user (it looks them up with t(); keep in sync).
 JS_TEXTS = [
     "Total",
+    "Not saved – tap to retry",
+    "Offline – read only",
+    "This makes the balance negative. Continue?",
     "custom effect (no automatic changes)",
     "Pick a status effect from the list, or type your own.",
     "Choose the hit location, then the wounded or fatal effect.",

@@ -1,5 +1,6 @@
 {# Story journal: read view with collapsible blocks + search, and an editor. #}
-<div class="paper journal" x-data="{edit: {{ journal|yesno:'false,true' }}, q: ''}">
+<div class="paper journal" x-data="{edit: {{ journal|yesno:'false,true' }}{% if conflict.field == "story_notes" %} || true{% endif %}, q: ''}"
+     x-init="if ($el.querySelector('[data-draft-restored]')) edit = true">
   <div class="row spread">
     <h2>{% t "Story journal" %}</h2>
     <div class="row">
@@ -7,6 +8,11 @@
       <button type="button" class="btn small" x-on:click="edit = !edit" x-text="edit ? '{% t "Show journal" %}' : '{% t "Edit" %}'"></button>
     </div>
   </div>
+  <form class="row quick-add" hx-post="{% url 'play' character.pk 'story-append' %}" hx-target="#sheet-body" hx-swap="outerHTML">
+    <input type="hidden" name="tab" value="story">
+    <input type="text" name="line" required maxlength="2000" class="grow" data-draft="story-line" placeholder="{% t "Add a line to the journal…" %}" aria-label="{% t "Add a line to the journal" %}">
+    <button class="btn small primary">{% t "Add" %}</button>
+  </form>
   <div x-show="!edit">
     {% for s in journal %}
       <details class="journal-block lvl{{ s.level }}" open data-text="{{ s.text }}" x-show="!q || $el.dataset.text.includes(q.toLowerCase())">
@@ -17,13 +23,14 @@
   </div>
   <form x-show="edit" hx-post="{% url 'play' character.pk 'story' %}" hx-target="#sheet-body" hx-swap="outerHTML" x-ref="form">
     <input type="hidden" name="tab" value="story">
+    {% include "characters/partials/text_conflict.html" with field="story_notes" base=story_base %}
     <div class="row" style="margin-bottom:6px">
       <button type="button" class="btn small" title="{% t "Start a new block (a day, a city …)" %}"
         x-on:click="const t = $refs.form.querySelector('textarea'); t.value += (t.value && !t.value.endsWith('\n') ? '\n' : '') + '\n# ' + new Date().toLocaleDateString() + ' – \n'; t.focus(); t.selectionStart = t.selectionEnd = t.value.length - 1">{% t "+ New block" %}</button>
       <button type="button" class="btn small" x-on:click="const t = $refs.form.querySelector('textarea'); t.value += '\n## '; t.focus()">{% t "+ Sub-heading" %}</button>
       <span class="muted small"><code># {% t "Heading" %}</code> {% t "starts a block" %}, <code>## {% t "Sub-heading" %}</code>, <code>- {% t "item" %}</code>, <code>**{% t "bold" %}**</code>, <code>*{% t "italic" %}*</code></span>
     </div>
-    <textarea name="story_notes" rows="18" placeholder="{% t "# Day 1 – Daion" %}&#10;{% t "Why we are here, who we met, what we plan …" %}">{{ character.story_notes }}</textarea>
+    <textarea name="story_notes" rows="18" data-draft="story" placeholder="{% t "# Day 1 – Daion" %}&#10;{% t "Why we are here, who we met, what we plan …" %}">{% if conflict.field == "story_notes" %}{{ conflict.mine }}{% else %}{{ character.story_notes }}{% endif %}</textarea>
     <div class="row" style="margin-top:8px"><button class="btn small primary">{% t "Save journal" %}</button></div>
   </form>
 </div>

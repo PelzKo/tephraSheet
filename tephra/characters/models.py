@@ -315,6 +315,7 @@ class EffectEntry(models.Model):
     lost_wounds = models.PositiveSmallIntegerField(default=0, help_text="permanent max-wound loss")
     active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
+    fight_round = models.PositiveSmallIntegerField(null=True, blank=True, help_text="fight round when it was added")
 
     class Meta:
         ordering = ["kind", "created"]
@@ -330,6 +331,32 @@ class EffectEntry(models.Model):
     def rule_text(self):
         data = effects.get(self.key)
         return data["text"] if data else ""
+
+    @property
+    def ends_with_breather(self):
+        data = effects.get(self.key)
+        return bool(data and data.get("breather"))
+
+
+class JournalRevision(models.Model):
+    """The previous journal text, saved on every journal change (restore in the Django admin)."""
+
+    KEEP = 50  # revisions kept per character
+
+    character = models.ForeignKey(Character, on_delete=models.CASCADE, related_name="journal_revisions")
+    text = models.TextField(blank=True)
+    created = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        ordering = ["-created", "-pk"]
+
+    @classmethod
+    def record(cls, character, old_text):
+        if not old_text:
+            return
+        cls.objects.create(character=character, text=old_text)
+        stale = cls.objects.filter(character=character).values_list("pk", flat=True)[cls.KEEP:]
+        cls.objects.filter(pk__in=list(stale)).delete()
 
 
 class CustomModifier(models.Model):

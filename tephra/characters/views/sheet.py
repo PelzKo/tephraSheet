@@ -1,8 +1,13 @@
 """The character sheet and in-play actions (HP, wounds, XP, money, stances, toggles, effects)."""
 
+import hashlib
+
+from django.conf import settings
 from django.contrib import messages
 from django.db import transaction
+from django.http import JsonResponse
 from django.shortcuts import redirect, render
+from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from catalog.models import KIND_CHOICES, ItemTemplate
@@ -16,7 +21,7 @@ from rules.registry import get_registry
 from ..templatetags.sheet_tags import effect_html
 
 from .. import access, journal, services
-from ..models import Character, EffectEntry, InventoryItem
+from ..models import Automaton, Character, EffectEntry, InventoryItem, JournalRevision
 
 TAB_NAMES = ("page1", "page2", "inventory", "story", "pets")
 BARREL_LINES = 14
@@ -39,7 +44,31 @@ def effect_options():
     }
 
 
-def sheet_context(request, character):
+def text_stamp(text):
+    """Short hash of a saved text: the editor sends it back so a save can tell whether someone else
+    changed the text in the meantime (journal/notes edit conflicts)."""
+    return hashlib.sha1((text or "").encode()).hexdigest()[:16]
+
+
+def sheet_stamp(character):
+    """Changes whenever the sheet would look different (polled by other devices for live refresh).
+    shortcut: item/effect counts catch adds/drops made outside play_action, not in-place item edits."""
+    return "{}-{}-{}".format(character.updated.timestamp(), character.items.count(),
+                             character.effects.filter(active=True).count())
+
+
+def give_targets(request, character):
+    """Characters this user may hand things to: unlocked in this session (or every one for the narrator)."""
+    qs = Character.objects.filter(status="active").exclude(pk=character.pk).order_by("name")
+    if not access.is_gm(request):
+        qs = qs.filter(pk__in=access.unlocked_ids(request))
+    return [c for c in qs if access.can_access(request, c)]
+
+
+def sheet_context(request, character, pencil=False):
+    if pencil:
+        # Pencil print: stats without stance/toggle modifiers (in memory only, never saved).
+        character.stance, character.toggles = "", []
     sheet = character.compute()
     reg = get_registry()
     hp = character.current_hp if character.current_hp is not None else sheet.max_hp
@@ -126,6 +155,9 @@ def sheet_context(request, character):
         "money_on_hand": tables.format_money(character.money_on_hand),
         "money_in_bank": tables.format_money(character.money_in_bank),
         "journal": journal.sections(character.story_notes),
+        "story_base": text_stamp(character.story_notes), "notes_base": text_stamp(character.notes),
+        "stamp": sheet_stamp(character), "pencil": pencil, "give_targets": give_targets(request, character),
+        "money": {"hand": character.money_on_hand, "bank": character.money_in_bank},
         "xp_range": range(1, 13),
         "xp_hand": max(1, min(12, character.xp)),
         "admin_mode": access.in_admin_mode(request, character),
@@ -147,13 +179,29 @@ def sheet_view(request, character):
     moved = services.normalize_hands(character)
     if moved:
         messages.info(request, _("{items} needs both hands (or the other hand is full) and was put away.", items=", ".join(moved)))
-    return render(request, "characters/sheet.html", sheet_context(request, character))
+    ctx = sheet_context(request, character, pencil=request.GET.get("print") == "pencil")
+    if request.headers.get("HX-Request"):  # live refresh from another device's change
+        return render(request, "characters/partials/sheet_body.html", ctx)
+    return render(request, "characters/sheet.html", ctx)
 
 
-def _respond(request, character):
+def service_worker(request):
+    """Offline read-only shell (templates/characters/sw.js), served from the site root so it may control /c/…"""
+    resp = render(request, "characters/sw.js", {"static_prefix": settings.STATIC_URL}, content_type="text/javascript")
+    resp["Cache-Control"] = "no-cache"
+    return resp
+
+
+@access.character_view
+def sheet_stamp_view(request, character):
+    return JsonResponse({"stamp": sheet_stamp(character)})
+
+
+def _respond(request, character, extra=None):
     if request.headers.get("HX-Request"):
         ctx = sheet_context(request, character)
         ctx["tab"] = request.POST.get("tab") if request.POST.get("tab") in TAB_NAMES else ctx["tab"]
+        ctx.update(extra or {})
         return render(request, "characters/partials/sheet_body.html", ctx)
     return redirect(f"{character.get_absolute_url()}?tab={request.POST.get('tab', 'page1')}")
 
@@ -171,12 +219,17 @@ def _int(value, default=0):
 def play_action(request, character, action):
     # Row lock: overlapping HTMX actions on one character run one after another instead of
     # overwriting each other's changes (the full save below writes every field).
-    character = Character.objects.select_for_update().get(pk=character.pk)
     action = action.replace("-", "_")  # URL slugs use hyphens (effect-add → effect_add)
+    if action in ("give_item", "give_money"):
+        # Both participants in pk order, so A→B and B→A at once cannot deadlock.
+        list(Character.objects.select_for_update().filter(
+            pk__in=[character.pk, _int(request.POST.get("to"))]).order_by("pk"))
+    character = Character.objects.select_for_update().get(pk=character.pk)
     sheet = character.compute()
     p = request.POST
     hp = character.current_hp if character.current_hp is not None else sheet.max_hp
     wounds = character.wounds_taken  # counts up from 0 (unhurt) to max wounds
+    extra = {}
 
     if action == "damage":
         # Damage reduces HP first; the rest goes to wounds (p.10). "direct" skips HP.
@@ -190,13 +243,16 @@ def play_action(request, character, action):
         took_wounds = wounds > character.wounds_taken
         was_full = character.wounds_taken >= sheet.max_wounds
         character.current_hp, character.wounds_taken = hp, min(sheet.max_wounds, wounds)
+        # "called-…" tags add a button that opens the effect form preset (sheet_body.html).
         if took_wounds and was_full:
             messages.warning(request, _("All wounds taken: this hit causes a fatal effect (roll a location)."),
-                             extra_tags="popup")
+                             extra_tags="popup called-fatal")
         elif wounds >= sheet.max_wounds:
-            messages.warning(request, _("All wounds taken: every further hit causes a fatal effect (roll a location)."))
+            messages.warning(request, _("All wounds taken: every further hit causes a fatal effect (roll a location)."),
+                             extra_tags="called-wound" if took_wounds else "")
         elif took_wounds:
-            messages.warning(request, _("Wounds damage: roll a called-shot location for the wounded effect."))
+            messages.warning(request, _("Wounds damage: roll a called-shot location for the wounded effect."),
+                             extra_tags="called-wound")
     elif action == "heal":
         amount = max(0, _int(p.get("amount")))
         character.current_hp = min(sheet.max_hp, hp + amount)
@@ -204,9 +260,7 @@ def play_action(request, character, action):
         amount = max(0, _int(p.get("amount"), 1))
         character.wounds_taken = max(0, wounds - amount)
     elif action == "breather":
-        character.current_hp = sheet.max_hp
-        ended = [k for k, e in fx.EFFECTS.items() if e.get("breather")]
-        character.effects.filter(active=True, key__in=ended).update(active=False)
+        breather(request, character, sheet)
     elif action == "set_hp":
         character.current_hp = max(0, min(sheet.max_hp, _int(p.get("value"), hp)))
     elif action == "set_wounds":
@@ -218,13 +272,17 @@ def play_action(request, character, action):
         if character.xp >= tables.XP_PER_LEVEL and character.level < tables.MAX_LEVEL:
             messages.success(request, _("Enough experience for a new level!"))
     elif action == "money":
+        # gain / spend on hand or in the bank, or move between them (to_bank / to_hand).
+        op = p.get("op", "gain")
+        amount = _money(p)
         field = "money_in_bank" if p.get("where") == "bank" else "money_on_hand"
-        unit = {"k": tables.DUKES_PER_KING, "pr": tables.DUKES_PER_PRINCE, "d": 1}.get(p.get("unit", "pr"), 1)
-        delta = _int(p.get("amount")) * unit * (-1 if p.get("sign") == "-" else 1)
-        setattr(character, field, getattr(character, field) + delta)
-        if p.get("transfer"):
-            other = "money_on_hand" if field == "money_in_bank" else "money_in_bank"
-            setattr(character, other, getattr(character, other) - delta)
+        if op in ("to_bank", "to_hand"):
+            field = "money_in_bank" if op == "to_bank" else "money_on_hand"
+            other = "money_on_hand" if op == "to_bank" else "money_in_bank"
+            setattr(character, other, getattr(character, other) - amount)
+        setattr(character, field, getattr(character, field) + (-amount if op == "spend" else amount))
+    elif action in ("give_item", "give_money"):
+        give(request, character, action, p)
     elif action == "stance":
         slug = p.get("stance", "")
         stances = {s["slug"]: s for s in sheet.stances}
@@ -315,7 +373,8 @@ def play_action(request, character, action):
             auto.save(update_fields=["toggles"])
         elif auto:
             amount = max(0, _int(p.get("amount")))
-            hp_max = auto.compute()["stats"]["hp"].total
+            stats = auto.compute()["stats"]
+            hp_max, wnd_max = stats["hp"].total, stats["wnd"].total
             if p.get("sign") == "-1":  # repair: wounds first, then HP
                 fix = min(amount, auto.wounds_taken)
                 auto.wounds_taken -= fix
@@ -323,17 +382,25 @@ def play_action(request, character, action):
             else:  # damage: HP first, then wounds
                 to_hp = min(amount, max(0, hp_max - auto.hp_lost))
                 auto.hp_lost += to_hp
-                auto.wounds_taken += amount - to_hp
+                auto.wounds_taken = min(wnd_max, auto.wounds_taken + amount - to_hp)
             auto.save(update_fields=["hp_lost", "wounds_taken"])
     elif action in ("pet_hp", "pet_wound", "pet_venom"):
         pet = character.pets.filter(pk=_int(p.get("id"))).first()
         if pet:
+            s = pets.compute_pet(pet.to_state())
+            hp_max, wnd_max = s["stats"]["hp"].total, s["stats"]["wnd"].total
             if action == "pet_hp":
-                pet.hp_damage = max(0, pet.hp_damage + _int(p.get("amount")) * (-1 if p.get("sign") == "-1" else 1))
+                amount = max(0, _int(p.get("amount")))
+                if p.get("sign") == "-1":
+                    pet.hp_damage = max(0, min(hp_max, pet.hp_damage) - amount)
+                else:  # same flow as characters and automatons: HP first, then wounds
+                    to_hp = min(amount, max(0, hp_max - pet.hp_damage))
+                    pet.hp_damage = min(hp_max, pet.hp_damage + to_hp)
+                    pet.wounds_taken = min(wnd_max, pet.wounds_taken + amount - to_hp)
             elif action == "pet_wound":
-                pet.wounds_taken = max(0, pet.wounds_taken + _int(p.get("delta")))
+                pet.wounds_taken = max(0, min(wnd_max, pet.wounds_taken + _int(p.get("delta"))))
             else:
-                pet.venom_used = max(0, pet.venom_used + _int(p.get("delta")))
+                pet.venom_used = max(0, min(s["venom_doses"], pet.venom_used + _int(p.get("delta"))))
             pet.save(update_fields=["hp_damage", "wounds_taken", "venom_used"])
     elif action in ("liquid_damage", "liquid_end_turn"):
         liquid = InventoryItem.objects.filter(character=character, pk=_int(p.get("id")), slot="released").first()
@@ -346,10 +413,22 @@ def play_action(request, character, action):
                 liquid.delete()
             else:
                 liquid.save(update_fields=["wounds_taken"])
-    elif action == "story":
-        character.story_notes = p.get("story_notes", "")
-    elif action == "notes":
-        character.notes = p.get("notes", "")
+    elif action in ("story", "notes"):
+        field = "story_notes" if action == "story" else "notes"
+        text = p.get(field, "")
+        current = getattr(character, field)
+        if p.get("base") is not None and p["base"] != text_stamp(current) and text != current:
+            # Someone saved in the meantime: keep both, the editor shows theirs next to the user's text.
+            messages.error(request, _("Not saved: this text was changed elsewhere in the meantime. Compare both versions and save again."))
+            extra = {"conflict": {"field": field, "mine": text, "theirs": current}}
+        else:
+            if field == "story_notes" and text != current:
+                JournalRevision.record(character, current)
+            setattr(character, field, text)
+    elif action == "story_append":
+        line = p.get("line", "").strip()
+        if line:
+            journal_append(character, line)
     if action in ("stance", "toggle", "effect_add"):
         end_unavailable(request, character)
     character.save()
@@ -362,7 +441,80 @@ def play_action(request, character, action):
         character.wounds_taken, changed = new.max_wounds, True
     if changed:
         character.save(update_fields=["current_hp", "wounds_taken"])
-    return _respond(request, character)
+    return _respond(request, character, extra)
+
+
+def _money(p):
+    unit = {"k": tables.DUKES_PER_KING, "pr": tables.DUKES_PER_PRINCE, "d": 1}.get(p.get("unit", "pr"), 1)
+    return max(0, min(10 ** 9, _int(p.get("amount")))) * unit
+
+
+def journal_append(character, line):
+    """Add a line at the end of the journal (the previous text becomes a revision). Not saved here."""
+    JournalRevision.record(character, character.story_notes)
+    text = character.story_notes.rstrip("\n")
+    character.story_notes = f"{text}\n{line}" if text else line
+
+
+def breather(request, character, sheet):
+    """15–30 min rest: all HP back, breather effects end, fight mode ends, pet venom refills."""
+    character.current_hp = sheet.max_hp
+    ended_keys = [k for k, e in fx.EFFECTS.items() if e.get("breather")]
+    effects = character.effects.filter(active=True, key__in=ended_keys)
+    ended = [e.text for e in effects]
+    effects.update(active=False)
+    if character.fight.get("active"):
+        character.fight = {}
+        ended.append(_("fight mode"))
+    refilled = [pet.name for pet in character.pets.filter(venom_used__gt=0)]
+    character.pets.update(venom_used=0)
+    text = _("Breather: all HP restored.")
+    if ended:
+        text += " " + _("Ended: {items}.", items=", ".join(ended))
+    if refilled:
+        text += " " + _("Venom refilled: {items}.", items=", ".join(refilled))
+    messages.info(request, text)
+
+
+def give(request, character, action, p):
+    """Hand an item (or part of a stack) or money on hand to another character; both journals note it."""
+    target_id = _int(p.get("to"))
+    if target_id not in {c.pk for c in give_targets(request, character)}:
+        messages.error(request, _("Unlock the character you want to give something to first."))
+        return
+    target = Character.objects.select_for_update().get(pk=target_id)
+    if action == "give_money":
+        amount = _money(p)
+        if not amount:
+            return
+        if amount > character.money_on_hand:
+            messages.error(request, _("You only have {money} on hand.", money=tables.format_money(character.money_on_hand)))
+            return
+        character.money_on_hand -= amount
+        target.money_on_hand += amount
+        what = tables.format_money(amount)
+    else:
+        item = character.items.exclude(slot="released").filter(pk=_int(p.get("id"))).first()
+        if not item:
+            return
+        qty = max(1, min(item.quantity, _int(p.get("quantity"), item.quantity)))
+        what = f"{qty}× {item.name}" if qty > 1 else item.name
+        if qty == item.quantity:
+            Automaton.objects.filter(weapon=item).update(weapon=None)
+            Automaton.objects.filter(armor=item).update(armor=None)
+            item.character, item.slot = target, "carried"
+            item.save()
+        else:
+            InventoryItem.objects.create(
+                character=target, template=item.template, slot="carried", quantity=qty, notes=item.notes,
+                wounds_taken=item.wounds_taken, **{f: getattr(item, f) for f in ItemTemplate.ITEM_FIELDS})
+            item.quantity -= qty
+            item.save(update_fields=["quantity"])
+    day = timezone.localdate().isoformat()
+    journal_append(character, "- " + _("{day}: gave {what} to {name}.", day=day, what=what, name=target))
+    journal_append(target, "- " + _("{day}: received {what} from {name}.", day=day, what=what, name=character))
+    target.save()
+    messages.success(request, _("{what} given to {name}.", what=what, name=target))
 
 
 STANCE_AP = 1
@@ -508,12 +660,13 @@ def add_effect(character, p):
     """Status effect (``key`` or custom ``text``) or called-shot effect (``location`` + ``which``).
     Returns pop-up texts for consequences (dropped item, cancelled Battle Theme)."""
     popups = []
+    rnd = character.fight.get("round") if character.fight.get("active") else None
     if p.get("kind") == "called":
         loc = _int(p.get("location"))
         key = fx.called_key(loc, p.get("which"))
         data = fx.get(key)
         if data:
-            EffectEntry.objects.create(character=character, kind=data["kind"], key=key, location=loc,
+            EffectEntry.objects.create(character=character, kind=data["kind"], key=key, location=loc, fight_round=rnd,
                                        text=data["name"], lost_wounds=data.get("lost_wounds", 0))
             if data.get("drop"):
                 dropped = drop_from_hand(character, loc)
@@ -523,9 +676,9 @@ def add_effect(character, p):
         return [t for t in popups if t]
     data = fx.get(p.get("key"))
     if data and data["kind"] == "status":
-        EffectEntry.objects.create(character=character, kind="status", key=p["key"], text=data["name"])
+        EffectEntry.objects.create(character=character, kind="status", key=p["key"], text=data["name"], fight_round=rnd)
     elif p.get("text", "").strip():
-        EffectEntry.objects.create(character=character, kind="status", text=p["text"].strip()[:255])
+        EffectEntry.objects.create(character=character, kind="status", text=p["text"].strip()[:255], fight_round=rnd)
     return []
 
 

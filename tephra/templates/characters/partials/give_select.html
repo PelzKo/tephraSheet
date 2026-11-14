@@ -1,0 +1,1 @@
+<select name="to" required aria-label="{% t "Give to" %}"><option value="">{% t "Give to…" %}</option>{% for c in give_targets %}<option value="{{ c.pk }}">{{ c }}</option>{% endfor %}</select>

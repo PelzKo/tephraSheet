@@ -58,14 +58,14 @@
   </div>
 
   <div class="gear plain money play-btn" style="--cx:95;--cy:700;--r:52" x-on:click="openPanel('money')">
-    <div class="face"><span class="val" style="font-size:calc(19*var(--u))">{{ money_on_hand }}</span><span class="lbl">{% t "Money on hand" %}</span></div></div>
+    <div class="face"><span class="val track" style="font-size:calc(19*var(--u))">{{ money_on_hand }}</span><span class="lbl">{% t "Money on hand" %}</span></div></div>
   <div class="gear plain money play-btn" style="--cx:857;--cy:700;--r:52" x-on:click="openPanel('money')">
-    <div class="face"><span class="val" style="font-size:calc(19*var(--u))">{{ money_in_bank }}</span><span class="lbl">{% t "Money in bank" %}</span></div></div>
+    <div class="face"><span class="val track" style="font-size:calc(19*var(--u))">{{ money_in_bank }}</span><span class="lbl">{% t "Money in bank" %}</span></div></div>
 
   <div class="barrel box" style="--x:40;--y:790;--w:280;--h:400">
     <h3>{% t "Gear" %}</h3>
     <div class="lines">
-      {% for i in items %}{% if i.slot != "stored" %}<div title="{{ i|item_desc }}">{% if i.quantity > 1 %}{{ i.quantity }}× {% endif %}{{ i.name|item_name }}{% if i.slot != "carried" %} <span class="muted">({{ i.get_slot_display|t }})</span>{% endif %}</div>{% endif %}{% endfor %}
+      {% for i in items %}{% if i.slot != "stored" %}<div title="{{ i|item_desc }}"{% if i.quantity > 1 or i.kind == "ammo" %} class="qty-line play-btn" x-on:click="openQty($event, {{ i.pk }}, {{ i.quantity }}, $el.dataset.name, $el.dataset.remove)" data-name="{{ i.name|item_name }}" data-remove="{% t "Remove {name}?" name=i.name %}"{% endif %}>{% if i.quantity > 1 %}{{ i.quantity }}× {% endif %}{{ i.name|item_name }}{% if i.slot != "carried" %} <span class="muted">({{ i.get_slot_display|t }})</span>{% endif %}</div>{% endif %}{% endfor %}
       {% for _ in blank_lines.gear %}<div></div>{% endfor %}
     </div>
   </div>

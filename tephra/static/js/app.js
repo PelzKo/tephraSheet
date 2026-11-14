@@ -114,6 +114,29 @@ window.sheetUI = function (tab) {
     tab: tab || "page1",
     panel: null,
     spec: null,
+    qty: null,
+    init() {
+      // An action from inside a panel keeps it open across the swap (state saved in htmx:beforeSwap).
+      const keep = window.tephraKeep;
+      window.tephraKeep = null;
+      if (!keep) return;
+      if (keep.spec) this.showSpec(keep.spec);
+      else if (keep.panel) this.panel = keep.panel;
+    },
+    // Wound message button: open the Health panel with the called-shot form preset (effectForm.preset).
+    addCalled(which) {
+      this.panel = "health";
+      this.$nextTick(() => window.dispatchEvent(new CustomEvent("preset-called", { detail: which })));
+    },
+    // "2 AP", "1 AP, Stance" → 2 / 1; 0 if the cost states no AP.
+    apCost(spec) {
+      const m = /(\d+)\s*AP/.exec((spec && spec.cost) || "");
+      return m ? +m[1] : 0;
+    },
+    openQty(ev, id, n, name, removeText) {
+      const r = ev.currentTarget.getBoundingClientRect();
+      this.qty = { id, n, name, removeText, x: Math.max(8, Math.min(r.left, window.innerWidth - 260)), y: r.bottom + 4 };
+    },
     setTab(t) {
       this.tab = t;
       try { localStorage.setItem("tephra-tab", t); } catch (e) { /* storage unavailable */ }
@@ -135,7 +158,9 @@ window.effectForm = function () {
   let opts = { status: [], locations: [], called: {} };
   try { opts = JSON.parse(document.getElementById("effect-options").textContent); } catch (e) { /* no data */ }
   return {
-    opts, kind: "status", q: "", key: "", open: false, active: 0, location: "", which: "",
+    opts, kind: "status", q: "", key: "", open: false, active: 0, location: "", which: "", want: "",
+    preset(which) { this.kind = "called"; this.location = ""; this.which = ""; this.want = which; },
+    located() { if (this.want) this.$nextTick(() => { this.which = this.want; }); },
     matches() {
       const q = this.q.trim().toLowerCase();
       const list = this.opts.status.filter((o) => !q || o.name.toLowerCase().includes(q));
@@ -414,4 +439,197 @@ window.effectForm = function () {
       button.disabled = false;
     }
   });
+})();
+
+/* Sheet robustness (all keyed to #sheet-body, which every play action replaces):
+   - drafts: [data-draft] fields are saved to localStorage while typing and put back after a swap or reload;
+     cleared when the server accepted the save. [data-draft-base] carries the edit-conflict stamp along.
+   - failed requests show a "Not saved – tap to retry" bar (hx-sync="this:drop" on #sheet-body stops double taps).
+   - open panel, open companion <details> and the last-used input survive the swap.
+   - live refresh: polls the character's stamp and re-fetches the sheet when another device changed it.
+   - money panel asks before a balance goes negative; offline note; pencil print; service worker. */
+(function () {
+  const body = () => document.getElementById("sheet-body");
+  const draftKey = (el) => { const b = body(); return b ? `tephra-draft-${b.dataset.character}-${el.dataset.draft}` : null; };
+  const load = (k) => { try { return JSON.parse(localStorage.getItem(k)); } catch (e) { return null; } };
+  const store = (k, v) => { try { v ? localStorage.setItem(k, JSON.stringify(v)) : localStorage.removeItem(k); } catch (e) { /* no storage */ } };
+  const baseOf = (el) => el.form && el.form.querySelector("[data-draft-base]");
+
+  function hasDrafts() {
+    const b = body();
+    if (!b) return false;
+    try {
+      const prefix = `tephra-draft-${b.dataset.character}-`;
+      for (let i = 0; i < localStorage.length; i++) if (localStorage.key(i).startsWith(prefix)) return true;
+    } catch (e) { /* no storage */ }
+    return false;
+  }
+
+  document.addEventListener("input", (e) => {
+    const el = e.target.closest && e.target.closest("[data-draft]");
+    const k = el && draftKey(el);
+    if (!k) return;
+    const old = load(k);
+    const base = baseOf(el);
+    store(k, el.value === el.defaultValue ? null : { text: el.value, base: old ? old.base : (base ? base.value : "") });
+  });
+
+  function restore() {
+    document.querySelectorAll("#sheet-body [data-draft]").forEach((el) => {
+      const k = draftKey(el);
+      const d = load(k);
+      const base = baseOf(el);
+      if (el.form && el.form.querySelector("[data-conflict]")) {
+        // Edit conflict: the editor shows the user's text; keep it as a draft against the new stamp.
+        store(k, { text: el.value, base: base ? base.value : "" });
+        return;
+      }
+      if (!d) return;
+      if (d.text === el.defaultValue) { store(k, null); return; }
+      el.value = d.text;
+      el.setAttribute("data-draft-restored", "");
+      if (base && d.base) base.value = d.base;
+      try { const scope = window.Alpine && Alpine.$data(el); if (scope && "edit" in scope) scope.edit = true; } catch (err) { /* not initialised yet: x-init does it */ }
+    });
+  }
+
+  // --- error bar ---------------------------------------------------------------------------------
+  let failed = null;
+  const bar = document.createElement("button");
+  bar.type = "button";
+  bar.className = "net-error";
+  bar.hidden = true;
+  bar.addEventListener("click", () => {
+    const f = failed;
+    bar.hidden = true;
+    failed = null;
+    if (f && f.elt && f.elt.isConnected) htmx.ajax(f.verb, f.path, { source: f.elt, target: "#sheet-body", swap: "outerHTML", values: f.values });
+  });
+  const offline = document.createElement("div");
+  offline.className = "net-offline";
+  offline.hidden = navigator.onLine;
+  const showOffline = () => { offline.hidden = navigator.onLine; };
+  window.addEventListener("online", showOffline);
+  window.addEventListener("offline", showOffline);
+
+  function onFail(e) {
+    const cfg = e.detail.requestConfig;
+    if (!cfg || cfg.verb === "get") return;  // searches/refreshes: nothing was lost
+    const values = {};
+    if (cfg.formData) for (const [k, v] of cfg.formData.entries()) values[k] = k in values ? [].concat(values[k], v) : v;
+    failed = { verb: cfg.verb, path: cfg.path, elt: e.detail.elt, values };
+    bar.textContent = t("Not saved – tap to retry");
+    bar.hidden = false;
+  }
+  document.addEventListener("htmx:responseError", onFail);
+  document.addEventListener("htmx:sendError", onFail);
+  document.addEventListener("htmx:afterRequest", (e) => { if (e.detail.successful && e.detail.requestConfig && e.detail.requestConfig.verb !== "get") bar.hidden = true; });
+
+  // --- state across swaps ---------------------------------------------------------------------------
+  let lastInput = null;
+  document.addEventListener("focusin", (e) => {
+    if (e.target.matches && e.target.matches("#sheet-body input[type=number], #sheet-body input[type=text]")) lastInput = e.target;
+  });
+  let refocus = null;
+  let keptDetails = [];
+
+  document.addEventListener("htmx:beforeSwap", (e) => {
+    const b = body();
+    if (!b || e.detail.target !== b || !e.detail.shouldSwap) return;
+    const elt = e.detail.elt;  // requestConfig has no elt in htmx 2
+    // The server took the save (no conflict box in the answer): forget the drafts of that form.
+    if (elt && elt.querySelectorAll && !String(e.detail.serverResponse).includes("data-conflict")) {
+      elt.querySelectorAll("[data-draft]").forEach((el) => store(draftKey(el), null));
+    }
+    keptDetails = [...b.querySelectorAll("details[data-keep][open]")].map((d) => d.dataset.keep);
+    const keep = {};
+    try {
+      const ui = Alpine.$data(b);
+      keep.panel = ui.panel;
+      keep.spec = ui.panel === "spec" && ui.spec ? ui.spec.slug : null;
+    } catch (err) { /* Alpine not ready */ }
+    window.tephraKeep = keep;
+    refocus = null;
+    if (lastInput && lastInput.isConnected && elt && elt.contains && elt.contains(lastInput) && lastInput.form) {
+      const post = lastInput.form.getAttribute("hx-post");
+      const forms = [...b.querySelectorAll("form")].filter((f) => f.getAttribute("hx-post") === post);
+      refocus = { post, idx: forms.indexOf(lastInput.form), name: lastInput.name };
+    }
+  });
+
+  document.addEventListener("htmx:afterSettle", () => {
+    const b = body();
+    if (!b) return;
+    restore();
+    keptDetails.forEach((k) => { const d = b.querySelector(`details[data-keep="${CSS.escape(k)}"]`); if (d) d.open = true; });
+    keptDetails = [];
+    if (refocus) {
+      const form = [...b.querySelectorAll("form")].filter((f) => f.getAttribute("hx-post") === refocus.post)[refocus.idx];
+      const input = form && form.querySelector(`[name="${CSS.escape(refocus.name)}"]`);
+      if (input && input.offsetParent !== null) input.focus({ preventScroll: true });
+      refocus = null;
+    }
+  });
+
+  // --- live refresh -------------------------------------------------------------------------------
+  function busy(b) {
+    if (b.querySelector(".htmx-request") || b.classList.contains("htmx-request") || b.hasAttribute("data-autoprint")) return true;
+    const a = document.activeElement;
+    if (a && b.contains(a) && a.matches("input, textarea, select")) return true;
+    if (hasDrafts()) return true;
+    try { const ui = Alpine.$data(b); if (ui.panel || ui.qty) return true; } catch (e) { return true; }
+    return [...b.querySelectorAll(".modal-backdrop")].some((m) => getComputedStyle(m).display !== "none");
+  }
+  async function poll() {
+    const b = body();
+    if (!b || document.hidden || !navigator.onLine || busy(b)) return;
+    try {
+      const resp = await fetch(b.dataset.stampUrl, { headers: { Accept: "application/json" }, credentials: "same-origin" });
+      if (!resp.ok || !(resp.headers.get("content-type") || "").includes("json")) return;
+      const data = await resp.json();
+      const now = body();
+      if (now && data.stamp !== now.dataset.stamp && !busy(now)) {
+        let tab = "page1";
+        try { tab = Alpine.$data(now).tab; } catch (e) { /* default */ }
+        htmx.ajax("GET", `${now.dataset.sheetUrl}?tab=${encodeURIComponent(tab)}`, { source: now, target: "#sheet-body", swap: "outerHTML" });
+      }
+    } catch (e) { /* offline: try again later */ }
+  }
+
+  // --- money: ask before a balance goes negative ----------------------------------------------------
+  document.addEventListener("htmx:confirm", (e) => {
+    const f = e.detail.elt;
+    if (!f.matches || !f.matches("form[data-money]")) return;
+    const ev = e.detail.triggeringEvent;
+    const op = ev && ev.submitter ? ev.submitter.value : "gain";
+    const amount = (+f.elements.amount.value || 0) * ({ k: 100, pr: 10, d: 1 }[f.elements.unit.value] || 1);
+    const hand = +f.dataset.hand, bank = +f.dataset.bank, inBank = f.elements.where.value === "bank";
+    const negative = (op === "spend" && (inBank ? bank : hand) - amount < 0) ||
+      (op === "to_bank" && hand - amount < 0) || (op === "to_hand" && bank - amount < 0);
+    if (!negative) return;
+    e.preventDefault();
+    if (window.confirm(t("This makes the balance negative. Continue?"))) e.detail.issueRequest(true);
+  });
+
+  // Info icons next to play-bar chips: keyboard opens them like a tap.
+  document.addEventListener("keydown", (e) => {
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches(".info-tip")) { e.preventDefault(); e.target.click(); }
+  });
+  // Print: companion details open in the appendix.
+  window.addEventListener("beforeprint", () => document.querySelectorAll(".print-appendix details").forEach((d) => { d.open = true; }));
+
+  function start() {
+    document.body.appendChild(bar);
+    offline.textContent = t("Offline – read only");
+    document.body.appendChild(offline);
+    const b = body();
+    if (!b) return;
+    restore();
+    setInterval(poll, 5000);
+    if (b.hasAttribute("data-autoprint")) window.addEventListener("load", () => setTimeout(() => window.print(), 300));
+    if ("serviceWorker" in navigator && b.dataset.sw) navigator.serviceWorker.register(b.dataset.sw).catch(() => { /* optional */ });
+  }
+  // Deferred script: the DOM is parsed and Alpine (loaded after this file) has not started yet, so the
+  // journal's x-init already sees restored drafts.
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", start); else start();
 })();

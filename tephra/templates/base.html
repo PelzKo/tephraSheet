@@ -41,9 +41,9 @@
     </nav>
   </header>
   <main class="{% block mainclass %}wrap{% endblock %}">
-    {% if messages %}
+    {% block messages %}{% if messages %}
       <ul class="messages">{% for m in messages %}<li class="{{ m.tags }}">{{ m }}</li>{% endfor %}</ul>
-    {% endif %}
+    {% endif %}{% endblock %}
     {% block content %}{% endblock %}
   </main>
   <button type="button" class="fb-bubble" data-fb-open aria-label="{% t "Send feedback" %}" title="{% t "Feedback, bug report or feature request" %}">
