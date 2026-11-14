@@ -159,7 +159,7 @@ def test_duplicate_remaps_id_based_toggle_keys(db):
 
 
 @pytest.mark.parametrize("field, value", [
-    ("fight", ["bad"]), ("fight", {"ap": "3"}), ("plan", [{"level": "x"}]), ("plan", ["bad"]),
+    ("fight", ["bad"]), ("fight", {"ap": "3"}), ("plan", [{"level": "x"}]), ("plan", ["bad"]), ("plan", [{"level": 2, "skills": [1]}]),
     ("toggles", {"a": 1}), ("toggles", [1]), ("skills", {"Brute": "2"}), ("misc", []),
     ("specialty_choices", {"x": 1}), ("narrator_granted", "spec:x"), ("trait_rolls", {}),
 ])

@@ -38,7 +38,7 @@ def _strs(v):
 
 
 def _str_map(v, value_types):
-    return all(isinstance(k, str) and isinstance(x, value_types) and not isinstance(x, bool) for k, x in v.items())
+    return isinstance(v, dict) and all(isinstance(k, str) and isinstance(x, value_types) and not isinstance(x, bool) for k, x in v.items())
 
 
 def _plan_entry(e):
