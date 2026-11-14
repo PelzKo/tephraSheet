@@ -86,6 +86,34 @@ def _localize_races(races, lang):
     return races
 
 
+# Renamed augment slugs: old -> new. Lookups by the old slug still work (old exports, snapshots); the data migration
+# characters 0031 rewrites stored slugs and transfer.import_character normalises imports.
+AUGMENT_ALIASES = {"armsmith-bow-burn-trail-everburning": "armsmith-bow-burn-trail"}
+
+
+class _Aliased(dict):
+    """Resolves AUGMENT_ALIASES on [] / get / in; iterating lists every entry once (under its new slug)."""
+
+    def __missing__(self, key):
+        if key in AUGMENT_ALIASES:
+            return self[AUGMENT_ALIASES[key]]
+        raise KeyError(key)
+
+    def get(self, key, default=None):
+        return super().get(AUGMENT_ALIASES.get(key, key), default)
+
+    def __contains__(self, key):
+        return super().__contains__(AUGMENT_ALIASES.get(key, key))
+
+
+def canonical_slugs(data):
+    """``data`` (JSON-like) with renamed augment slugs replaced, also inside "aug:<slug>" keys (new object)."""
+    text = json.dumps(data)
+    for old, new in AUGMENT_ALIASES.items():  # the old slugs are unique strings: a plain replace is safe
+        text = text.replace(old, new)
+    return json.loads(text)
+
+
 class Registry:
     def __init__(self, lang=DEFAULT):
         self.lang = lang
@@ -93,7 +121,7 @@ class Registry:
         self.races = {r["slug"]: r for r in _localize_races(_load("races"), lang)}
         self.stories = {s["slug"]: s for s in _localize(_load("stories"), lang, "stories")}
         self.nationalities = {n["slug"]: n for n in _localize(_load("nationalities"), lang, "nationalities")}
-        self.augments = {a["slug"]: a for a in _localize(_load("augments"), lang, "augments")}
+        self.augments = _Aliased({a["slug"]: a for a in _localize(_load("augments"), lang, "augments")})
         self.traits = {}
         for race in self.races.values():
             for kind in ("fixed", "random"):

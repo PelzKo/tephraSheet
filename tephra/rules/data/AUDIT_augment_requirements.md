@@ -18,7 +18,7 @@ Classes:
 - **(d) prose only / unclear**: not checkable or ambiguous; listed below.
 
 Where the predicates live: `rules/curated.py` `AUGMENT_ITEM_RULES` (item: `needs`, `needs_waived_by`, `sizes`,
-`materials`, `variants`, `max_ready`, `excludes`, `from`) and `AUGMENT_LEARN` (special learning rules). The augment
+`materials`, `variants`, `max_item_ready`, `excludes`, `from`) and `AUGMENT_LEARN` (special learning rules). The augment
 `size` field was NOT read as an installation restriction (trinket sizes describe the constructed object).
 
 ## Decisions
@@ -26,12 +26,12 @@ Where the predicates live: `rules/curated.py` `AUGMENT_ITEM_RULES` (item: `needs
 - **Aerodynamic counts as throwing** for Propelled/Returning ("you may throw it like a weapon designed for throwing";
   `item_requirements.GRANTS_VARIANT`).
 - **Aether-shaped weapons** take Signature Weapon without Custom (Aether p.5: "Signature Weapon (no Custom needed)");
-  aether-synced does not. Package H: an aether-shaped weapon only takes the 15 named augments and at most 3 augments,
-  5 on a beta item (the `beta` flag stands for the crafter's Beta Weapons). Aetherform Modules (any weapon augment you
+  aether-synced does not. Package H: an aether-shaped weapon only takes the 15 named augments and at most 3 augments
+  (package I: also on a beta item; beta no longer raises it). Aetherform Modules (any weapon augment you
   know) depends on the crafter and can't be known from the item: such a weapon is marked as a house rule. Data:
   `rules/engine/tables.AETHER_SHAPED`; checked by `item_requirements` (form, import, picker, inventory copy, admin).
-- **Rotating Barrels**: "firearms that use ammunition and have a reload time of 2 AP or less" → base AP to ready (the
-  item's own value, else the size table) ≤ 2. "Use ammunition" is not checked (every firearm in the app does).
+- **Rotating Barrels**: "firearms that use ammunition and have a reload time of 2 AP or less" → AP to ready of the item
+  incl. its own augments (`max_item_ready: 2`, `item_requirements.item_ready`, as Automated; package I) ≤ 2. "Use ammunition" is not checked (every firearm in the app does).
 - **Split Shot**: "cannot be applied to rounds containing a substance (Syringed, Inkshot, Flash-Bangs, …)" → excludes
   those three (the "…" can't be enumerated).
 - **Extended Blast** "req. mQ II explosives" → learning: marque II in the augment's skill. Before, it could never be met.
@@ -45,9 +45,10 @@ Where the predicates live: `rules/curated.py` `AUGMENT_ITEM_RULES` (item: `needs
   (b) Hand Slip on the same memento (user decision, package H; before: (a) learning).
 - **Turrets** "Automated turret" / "Automated augment" → Automated on the same turret. Automated itself ("1 skill
   point in Automata & turret has a 0 AP readying cost", package H): the Automata point is a learning requirement
-  (`AUGMENT_LEARN`, the crafter); the readying cost is checked on the item (`max_item_ready: 0`: base AP to ready plus
+  (`AUGMENT_LEARN`, the crafter) and, package I, also for the owner of an inventory item (allocated points in
+  `Character.skills`, `item_requirements.problems(item, owner)`, shared `skill_reasons`); the readying cost is checked on the item (`max_item_ready: 0`: base AP to ready plus
   the item's own augments, Belt Fed and Automatic Reload "1/1/2/2 less AP to reload", which got its `ap_ready`
-  modifier). An item without a character can only be checked for the readying part. The wielder's Snap Reload doesn't
+  modifier). A catalog item (no character) is only checked for the readying part. The wielder's Snap Reload doesn't
   count.
 - Bare "Requires: X augment" on non-item lists (acid Thick Rust, essence Metal Exoskeleton/Osmote, animal traits)
   stay (a) learning requirements; confirmed by the user (package H).
@@ -70,10 +71,10 @@ Where the predicates live: `rules/curated.py` `AUGMENT_ITEM_RULES` (item: `needs
 
 ## Inconsistent source entries (reported, not rewritten)
 
-- `armsmith-bow-burn-trail-everburning`: the reference's bow table merged Burn Trail and Everburning into one row
+- `armsmith-bow-burn-trail` (package I; was `armsmith-bow-burn-trail-everburning`): the reference's bow table merged Burn Trail and Everburning into one row
   ("as melee versions", no text). Package H split the row in the source markdown (marques as the melee rows, the bow
-  book texts exist for both): Burn Trail keeps the old slug (`curated.AUGMENT_SLUGS`, so stored characters/items keep
-  Burn Trail without a data migration), Everburning is `armsmith-bow-everburning`; both need bow Combustion.
+  book texts exist for both): Burn Trail got the clean slug in package I (migration `characters 0031` rewrites stored
+  slugs, `registry.AUGMENT_ALIASES` still resolves the old one, imports normalise it), Everburning is `armsmith-bow-everburning`; both need bow Combustion.
 - Living liquid Defensive: book typo "Interior Platements" (data already says Interior Platelets).
 - Shockwave: "Knock Back" vs the augment name "Knockback".
 
@@ -111,7 +112,7 @@ Augments audited: 715 (core 428, extensions 287); with a requirement/restriction
 | `armsmith-melee-streamlined` | core | light/medium | c | size one of light, medium |
 | `armsmith-melee-tangling` | core | flexible | c | variant one of flexible |
 | `armsmith-bow-easily-altered` | core | req. Interchangeable Parts | a | learning: specialty/augment known (checked by check_augment) |
-| `armsmith-bow-burn-trail-everburning` | core | req. Combustion | b | same item: armsmith-bow-combustion (Burn Trail) |
+| `armsmith-bow-burn-trail` | core | req. Combustion | b | same item: armsmith-bow-combustion (Burn Trail) |
 | `armsmith-bow-everburning` | core | req. Combustion | b | same item: armsmith-bow-combustion |
 | `automata-fusebox-master-fuse-box` | core | req. Specialist | b | same item/body, NOT enforced: the app has no item for list fusebox |
 | `automata-fusebox-spiritual-connection` | core | req. Personality | a | learning: specialty/augment known (checked by check_augment) |

@@ -13,7 +13,7 @@ from django.utils import timezone
 
 from rules.engine.pets import compute_pet
 from rules.lang import gettext as _
-from rules.registry import get_registry
+from rules.registry import canonical_slugs, get_registry
 from . import access
 from .journal import level_history
 from .models import Automaton, Character, CustomModifier, EffectEntry, InventoryItem, LevelLog, Pet
@@ -177,6 +177,7 @@ def import_character(data, name, password, check_items=True):
         raise TransferError([_("Unknown keys: {names}.", names=", ".join(sorted(unknown)))])
     if len(password) < access.MIN_PASSWORD:
         raise TransferError([_("Password must have at least {n} characters.", n=access.MIN_PASSWORD)])
+    data = canonical_slugs(data)  # old export files and snapshots may hold renamed augment slugs
     errors = []
     character = _build(Character, data.get("character"), CHARACTER_SKIP, _("Character"), errors)
     rows = {}
@@ -196,7 +197,7 @@ def import_character(data, name, password, check_items=True):
         errors.append(_("The rule choices have the wrong format."))
     if check_items and not errors:
         for n, item in enumerate(items):
-            errors += [f"items {n + 1}: {p}" for p in item.augment_problems]
+            errors += [f"items {n + 1}: {p}" for p in item.augment_problems_for(character.skills)]
     for n, (row, _o) in enumerate(rows["automatons"]):
         for k in ("weapon", "armor"):
             ref = row.get(k)

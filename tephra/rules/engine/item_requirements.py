@@ -52,8 +52,6 @@ def augment_reasons(slug, item):
     if rule.get("variants") and not (variants | {GRANTS_VARIANT[s] for s in on if s in GRANTS_VARIANT}) & set(rule["variants"]):
         out.append(_("needs a {variants} weapon", variants=_(" or ").join(
             _(tables.VARIANTS[v]["label"]) for v in rule["variants"])))
-    if "max_ready" in rule and base_ready(item) > rule["max_ready"]:
-        out.append(_("needs at most {max} AP to ready (has {have})", max=rule["max_ready"], have=base_ready(item)))
     if "max_item_ready" in rule and item_ready(item) > rule["max_item_ready"]:
         out.append(_("needs at most {max} AP to ready (has {have})", max=rule["max_item_ready"], have=item_ready(item)))
     if "aether" in variants and slug not in tables.AETHER_SHAPED["augments"]:  # Aetherform Modules: mark as house rule
@@ -68,22 +66,34 @@ def augment_reasons(slug, item):
     return out
 
 
-def problems(item):
+def skill_reasons(aug, skills):
+    """Unmet "N points in <skill>" learning clauses of ``aug`` (Automated: 1 point in Automata); skills = {name: points}.
+    Shared by learning (requirements.check_augment) and the owner of an inventory item."""
+    return [_("needs {min} points in {skill} (has {have})", min=c["min"], skill=_(c["skill"]), have=skills.get(c["skill"], 0))
+            for c in aug.get("learn", []) if c["type"] == "skill" and skills.get(c["skill"], 0) < c["min"]]
+
+
+def problems(item, owner=None):
     """["<augment>: <reason>", …] for every augment on ``item`` whose item conditions aren't met (order of the
-    augments doesn't matter). House-rule items have none."""
+    augments doesn't matter). ``owner`` = the owning character's skill points ({name: points}) for inventory items:
+    then the augments' skill learning clauses must be met by the owner too (catalog templates: None). House-rule
+    items have none."""
     if item.get("house_rule"):
         return []
     reg = get_registry()
     out = []
     for slug in dict.fromkeys(s for s, _m in item.get("augments") or []):
         name = reg.augments[slug]["name"] if slug in reg.augments else slug
-        out += [_("{augment}: {reason}", augment=name, reason=r) for r in augment_reasons(slug, item)]
+        reasons = augment_reasons(slug, item)
+        if owner is not None and slug in reg.augments:
+            reasons += skill_reasons(reg.augments[slug], owner)
+        out += [_("{augment}: {reason}", augment=name, reason=r) for r in reasons]
     return out + count_problems(item)
 
 
 def count_problems(item):
-    """The aether-shaped weapon's augment count limit (3, or 5 with beta) as a list of messages."""
-    limit = tables.AETHER_SHAPED["max_beta" if item.get("beta") else "max"]
+    """The aether-shaped weapon's augment count limit (3, beta or not) as a list of messages."""
+    limit = tables.AETHER_SHAPED["max"]
     if "aether" in (item.get("variants") or []) and len(item.get("augments") or []) > limit:
         return [_("An aether-shaped weapon takes at most {max} augments.", max=limit)]
     return []

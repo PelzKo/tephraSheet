@@ -86,9 +86,13 @@ class ItemFields(models.Model):
     @property
     def augment_problems(self):
         """Augment conditions this item doesn't meet (old items are kept as they are and only show a warning)."""
+        return self.augment_problems_for(None)
+
+    def augment_problems_for(self, owner):
+        """``augment_problems`` with the owning character's skill points ({name: points}, None = no owner)."""
         from rules.engine.item_requirements import problems
 
-        return problems(self.item_values()) if self.augments else []
+        return problems(self.item_values(), owner) if self.augments else []
 
     @property
     def is_weapon(self):

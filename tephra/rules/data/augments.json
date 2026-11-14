@@ -1611,7 +1611,7 @@
   "text": "Creating what comes close to being a fully automatic weapon, a firearm with multiple rotating barrels uses a crank to fire. Using rotating barrels increases the need of hands - a one-handed firearm now requires two hands, and a two-handed firearm now requires you to be in a “firing position.” A rotating multi-barrel firearm eliminates the reload time of the firearm, but at a price to accuracy.\nThis augment can only be placed on firearms that use ammunition and have a reload time of 2 action points or less.\n-5 accuracy\n-3 accuracy\n-1 accuracy\nNo accuracy penalty",
   "modifiers": [],
   "item": {
-   "max_ready": 2
+   "max_item_ready": 2
   }
  },
  {
@@ -3171,7 +3171,7 @@
   "modifiers": []
  },
  {
-  "slug": "armsmith-bow-burn-trail-everburning",
+  "slug": "armsmith-bow-burn-trail",
   "name": "Burn Trail",
   "skill": "Armsmith",
   "lists": [

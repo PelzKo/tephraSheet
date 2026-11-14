@@ -369,8 +369,8 @@ AUGMENTS = {
 # rules/data/AUDIT_augment_requirements.md. Merged into the augment JSON as "item"; rules.engine.item_requirements
 # checks them. Keys: "needs" = AND of OR-groups of augment slugs on the same item, "needs_waived_by" = variants that
 # lift "needs" (aether-shaped weapons take Signature Weapon without Custom), "sizes"/"materials" = one of,
-# "variants" = one of (Aerodynamic counts as throwing), "max_ready" = base AP to ready (item value or size table),
-# "max_item_ready" = AP to ready incl. the item's own augments (Belt Fed, Automatic Reload),
+# "variants" = one of (Aerodynamic counts as throwing), "max_item_ready" = AP to ready incl. the item's own
+# augments (Belt Fed, Automatic Reload; item_requirements.item_ready),
 # "excludes" = augments it can't share an item with, "from" = the qualifiers this replaces: they are not checked
 # when learning. Lists the app has no item for (prosthetics, automata, vehicles) only use "from".
 AUGMENT_ITEM_RULES = {
@@ -390,9 +390,8 @@ AUGMENT_ITEM_RULES = {
     "armsmith-firearm-crossbow-signature-weapon": {"needs": [["armsmith-firearm-crossbow-custom"]],
                                                    "from": ["req. Custom"]},
     "armsmith-firearm-crossbow-gnome-sized": {"sizes": ["light"], "from": ["light only"]},
-    "armsmith-firearm-rotating-barrels": {"max_ready": 2},
-    # the bow Burn Trail keeps the slug of the former merged "Burn Trail / Everburning" entry (AUGMENT_SLUGS)
-    "armsmith-bow-burn-trail-everburning": {"needs": [["armsmith-bow-combustion"]], "from": ["req. Combustion"]},
+    "armsmith-firearm-rotating-barrels": {"max_item_ready": 2},  # "reload time of 2 AP or less"
+    "armsmith-bow-burn-trail": {"needs": [["armsmith-bow-combustion"]], "from": ["req. Combustion"]},
     "armsmith-bow-everburning": {"needs": [["armsmith-bow-combustion"]], "from": ["req. Combustion"]},
     # "turret has a 0 AP readying cost" (Belt Fed counts); the Automata point is a learning requirement (AUGMENT_LEARN)
     "armsmith-turret-automated": {"max_item_ready": 0},
@@ -459,8 +458,6 @@ AUGMENT_LEARN = {
     "gadgetry-explosive-extended-blast": {"learn": [{"type": "marque", "min": 2}], "learn_from": ["req. mQ II explosives"]},
     "armsmith-turret-automated": {"learn": [{"type": "skill", "skill": "Automata", "min": 1}]},  # "1 skill point in Automata"
 }
-# Parsed slug -> slug to use (the bow Burn Trail keeps the slug of the former merged "Burn Trail / Everburning" row)
-AUGMENT_SLUGS = {"armsmith-bow-burn-trail": "armsmith-bow-burn-trail-everburning"}
 for _slug, _rule in AUGMENT_ITEM_RULES.items():
     AUGMENTS.setdefault(_slug, {})["item"] = _rule
 for _slug, _rule in AUGMENT_LEARN.items():

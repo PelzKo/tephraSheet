@@ -214,6 +214,12 @@ class InventoryItem(ItemFields):
     notes = models.CharField(max_length=255, blank=True)
     wounds_taken = models.PositiveSmallIntegerField(default=0, help_text="turrets: wounds the turret has taken")
 
+    @property
+    def augment_problems(self):  # the owner counts too (Automated: 1 point in Automata)
+        if not self.augments:
+            return []
+        return self.augment_problems_for(self.character.skills if self.character_id else None)
+
     class Meta:
         ordering = ["slot", "name"]
 

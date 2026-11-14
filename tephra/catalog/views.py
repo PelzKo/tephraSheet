@@ -141,7 +141,8 @@ def item_create(request):
     if copy_of and request.method != "POST":  # "Copy as new item": prefilled, saved as a custom item
         proxy = ItemTemplate(**copy_of.item_values())
         proxy.name = _("{name} (copy)", name=copy_of.name)[:120]
-    form = ItemForm(request.POST or None, gm=gm, initial=initial, instance=proxy, catalog=not character)
+    form = ItemForm(request.POST or None, gm=gm, initial=initial, instance=proxy, catalog=not character,
+                    owner=character.skills if character else None)
     if request.method == "POST" and form.is_valid():
         obj = form.save(commit=False)
         if copy_of:
@@ -224,7 +225,7 @@ def item_edit(request, pk):
 def inventory_item_edit(request, character, item_id):
     inv = get_object_or_404(InventoryItem, pk=item_id, character=character)
     proxy = ItemTemplate(**{f: getattr(inv, f) for f in ItemTemplate.ITEM_FIELDS})
-    form = ItemForm(request.POST or None, instance=proxy, gm=False, catalog=False)
+    form = ItemForm(request.POST or None, instance=proxy, gm=False, catalog=False, owner=character.skills)
     if request.method == "POST" and form.is_valid():
         obj = form.save(commit=False)
         for f in ItemTemplate.ITEM_FIELDS:
@@ -251,8 +252,7 @@ def augment_check(request):
     augs = [a for a in augs if isinstance(a, list) and len(a) == 2 and a[0] in reg.augments] \
         if isinstance(augs, list) else []
     item = {"kind": p.get("kind", ""), "size": p.get("size", ""), "material": p.get("material", ""),
-            "variants": p.getlist("variants"), "ap_ready": _int(p.get("ap_ready")), "augments": augs,
-            "beta": bool(p.get("beta"))}
+            "variants": p.getlist("variants"), "ap_ready": _int(p.get("ap_ready")), "augments": augs}
     out = {"selected": {}, "options": {}}
     if p.get("house_rule"):
         return JsonResponse(out)
@@ -280,7 +280,8 @@ def add_to_inventory(request, pk):
         slot = "carried"
     qty = min(max(1, _int(request.POST.get("quantity"), 1)), 9999)
     fallback = f"{character.get_absolute_url()}?tab=inventory"
-    problems = template.augment_problems  # an old template can break the rules: ask before copying it
+    # an old template can break the rules, or the character lacks the skill a turret needs: ask before copying it
+    problems = template.augment_problems_for(character.skills)
     if problems and request.POST.get("confirm") != "1":
         fields = {k: v for k, v in request.POST.items() if k not in ("csrfmiddlewaretoken", "confirm")}
         return render(request, "catalog/confirm_add.html", {

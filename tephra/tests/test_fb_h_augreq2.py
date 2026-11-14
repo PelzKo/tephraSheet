@@ -65,8 +65,8 @@ def test_bare_requirements_without_items_stay_learning_requirements():
 
 def test_bow_burn_trail_and_everburning_are_two_augments():
     reg = get_registry()
-    burn, ever = reg.augments["armsmith-bow-burn-trail-everburning"], reg.augments["armsmith-bow-everburning"]
-    assert burn["name"] == "Burn Trail" and "dexterity resist" in burn["text"]  # keeps the old slug
+    burn, ever = reg.augments["armsmith-bow-burn-trail"], reg.augments["armsmith-bow-everburning"]
+    assert burn["name"] == "Burn Trail" and "dexterity resist" in burn["text"]  # package I: clean slug
     assert ever["name"] == "Everburning" and "extra action points" in ever["text"]
     assert ever["marques"][3].startswith("+4")
     for slug in (burn["slug"], ever["slug"]):
@@ -80,7 +80,7 @@ def test_bow_burn_trail_german():
     set_language("de")
     try:
         reg = get_registry()
-        assert reg.augments["armsmith-bow-burn-trail-everburning"]["name"] == "Brandspur"
+        assert reg.augments["armsmith-bow-burn-trail"]["name"] == "Brandspur"
         assert reg.augments["armsmith-bow-everburning"]["name"] == "Ewiges Feuer"
     finally:
         set_language("en")
@@ -98,7 +98,7 @@ def test_aether_shaped_weapons_take_listed_augments_only():
     assert not problems({**aether(["armsmith-melee-cryothermal"]), "variants": ["synced"]})
     four = ["armsmith-melee-accurate", "armsmith-melee-damaging", "armsmith-melee-powerful", "armsmith-melee-reach"]
     assert problems(aether(four)) == ["An aether-shaped weapon takes at most 3 augments."]
-    assert not problems(aether(four, beta=True))  # Beta Weapons: 5
+    assert problems(aether(four, beta=True))  # package I: 3 with beta too
 
 
 @pytest.mark.django_db
@@ -117,14 +117,14 @@ def test_aether_limit_in_the_form_and_picker(client):
     assert ItemForm({**data, "house_rule": "on"}).is_valid()
     r = client.post(reverse("augment_check"), {**data, "augments_json": "[]"}).json()
     assert "armsmith-melee-cryothermal" in r["options"] and "armsmith-melee-accurate" not in r["options"]
-    # the count limit is in the picker too: 3 augments are full (5 with beta)
+    # the count limit is in the picker too: 3 augments are full (beta or not)
     from rules.engine import tables
     full = [[a, 1] for a in list(tables.AETHER_SHAPED["augments"])[:3]]
     r = client.post(reverse("augment_check"), {**data, "augments_json": json.dumps(full)}).json()
     other = next(a for a in tables.AETHER_SHAPED["augments"] if a not in [f[0] for f in full])
     assert "at most 3" in r["options"].get(other, "")
     r = client.post(reverse("augment_check"), {**data, "beta": "on", "augments_json": json.dumps(full)}).json()
-    assert "at most" not in r["options"].get(other, "")
+    assert "at most 3" in r["options"].get(other, "")
     extensions.set_offer()
 
 

@@ -140,8 +140,8 @@ def test_stunned_takes_ap_and_ends_at_refresh(char):
 def test_stunned_outside_fight_only_informs(char):
     client, c = char
     resp = play(client, c, "effect-add", kind="status", key="status:stunned", amount="2")
-    assert c.fight == {} and b"only costs AP in fight mode" in resp.content
-    assert EffectEntry.objects.get(key="status:stunned").active
+    assert c.fight == {} and b"only has an effect in fight mode" in resp.content
+    assert not EffectEntry.objects.filter(key="status:stunned").exists()  # package I: nothing is added
 
 
 def test_pay_outside_fight_changes_nothing(char):

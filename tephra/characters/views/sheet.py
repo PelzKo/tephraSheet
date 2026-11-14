@@ -304,9 +304,11 @@ def play(request, pk, action, p):
     elif action.startswith("fight_"):
         fight_action(request, character, sheet, action[6:], p)
     elif action == "effect_add":
-        popups = add_effect(character, p)
         if (fx.get(p.get("key")) or {}).get("stun") and not character.fight.get("active"):
-            messages.info(request, _("Stunned only costs AP in fight mode: no AP were taken."))
+            messages.info(request, _("Stunned only has an effect in fight mode: nothing was added."))
+            popups = []
+        else:
+            popups = add_effect(character, p)
         if popups:
             messages.warning(request, " ".join(popups), extra_tags="popup")
     elif action == "theme_sundered":

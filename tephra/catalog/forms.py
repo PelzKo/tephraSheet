@@ -36,9 +36,10 @@ class ItemForm(forms.ModelForm):
         fields = FORM_FIELDS + ["is_starting_gear"]
         widgets = {"description": forms.Textarea(attrs={"rows": 3})}
 
-    def __init__(self, *args, gm=False, catalog=True, **kwargs):
+    def __init__(self, *args, gm=False, catalog=True, owner=None, **kwargs):
         super().__init__(*args, **kwargs)
         self.catalog = catalog
+        self.owner = owner  # the inventory owner's skill points (Automated needs Automata); None for the catalog
         if not gm:
             self.fields.pop("is_starting_gear")
         self.fields.pop("price_dukes")
@@ -95,7 +96,7 @@ class ItemForm(forms.ModelForm):
             return data
         if self._fit_changed(data):
             item = {**data, "variants": data.get("variants") or [], "augments": data["augments_json"]}
-            for problem in item_requirements.problems(item):
+            for problem in item_requirements.problems(item, self.owner):
                 self.add_error(None, problem)
         augs = data.get("augments_json") or []
         kind = data.get("kind")

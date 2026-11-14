@@ -6,7 +6,7 @@ from rules.lang import get_language
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from . import tables
+from . import item_requirements, tables
 from .weapons import hand_layout
 
 
@@ -301,9 +301,7 @@ def check_augment(aug, state, sheet):
                 tables.marque_for_points(augment_points(aug, sheet, lists & set(aug["lists"]) or None)) < clause["min"]:
             reasons.append(_("needs marque {roman} in {skill}", roman=("I", "II", "III", "IV")[clause["min"] - 1],
                              skill=_(" or ").join(_(s) for s in sorted(augment_skills(aug)))))
-        elif clause["type"] == "skill" and sheet.skills[clause["skill"]].total < clause["min"]:  # Automated: Automata
-            reasons.append(_("needs {min} points in {skill} (has {have})", min=clause["min"], skill=_(clause["skill"]),
-                             have=sheet.skills[clause["skill"]].total))
+    reasons += item_requirements.skill_reasons(aug, {s: v.total for s, v in sheet.skills.items()})  # Automated: Automata
     names = owned_names(state)
     # conditions on the item (curated.AUGMENT_ITEM_RULES "from") are checked when it is installed, not when learning
     on_item = {*(aug.get("item") or {}).get("from", []), *aug.get("learn_from", [])}

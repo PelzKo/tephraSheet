@@ -414,7 +414,6 @@ class Command(BaseCommand):
                 marques = [strip_md(r.get(k, "")) for k in ("mQ I", "mQ II", "mQ III", "mQ IV")]
                 slots = r.get("Slots", "")
                 slug = slugify(f"{skill}-{'-'.join(entry_lists)}-{name}")
-                slug = curated.AUGMENT_SLUGS.get(slug, slug)
                 if any(a["slug"] == slug for a in out):
                     slug += "-2"
                 book = texts.get(name.lower().replace("-", " "), [])

@@ -12,6 +12,6 @@
   "AP lost": "Verlorene AP",
   "AP to settle": "AP zum Abklingen",
   "Turns (1 per 3 damage)": "Runden (1 je 3 Schaden)",
-  "Stunned only costs AP in fight mode: no AP were taken.": "Betäubt kostet nur im Kampfmodus AP: es wurden keine AP abgezogen.",
+  "Stunned only has an effect in fight mode: nothing was added.": "Betäubt wirkt nur im Kampfmodus: es wurde nichts hinzugefügt.",
   "{label}: AP payments only apply in fight mode. Nothing changed (use Remove to end it).": "{label}: AP-Zahlungen wirken nur im Kampfmodus. Nichts geändert (mit Entfernen beenden)."
 }
