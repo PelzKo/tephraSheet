@@ -305,6 +305,8 @@ def play(request, pk, action, p):
         fight_action(request, character, sheet, action[6:], p)
     elif action == "effect_add":
         popups = add_effect(character, p)
+        if (fx.get(p.get("key")) or {}).get("stun") and not character.fight.get("active"):
+            messages.info(request, _("Stunned only costs AP in fight mode: no AP were taken."))
         if popups:
             messages.warning(request, " ".join(popups), extra_tags="popup")
     elif action == "theme_sundered":
@@ -474,7 +476,7 @@ def effect_ticks(request, character, sheet, at):
         tick = r.get("tick")
         if not tick or tick["at"] != at:
             continue
-        damage = tick.get("damage", e.amount)
+        damage = tick.get("damage", e.amount_now)
         if damage:
             messages.warning(request, _("{name}: {n} damage.", name=e.text, n=damage))
             take_damage(request, character, sheet, damage, tick["to"])
@@ -488,8 +490,12 @@ def effect_ticks(request, character, sheet, at):
 
 def pay_effect(request, character, effect, ap):
     """Spend AP on an effect: ``per_ap`` lowers the amount (Bleeding: 5 per AP), a fixed ``cost`` ends it,
-    ``bandage`` stops the death timer. Paid like stances (pay_ap: from the round's AP in fight mode)."""
+    ``bandage`` stops the death timer. Paid from the round's AP (pay_ap); outside fight mode nothing changes."""
     r = effect.rules
+    if not character.fight.get("active"):
+        messages.info(request, _("{label}: AP payments only apply in fight mode. Nothing changed (use Remove to end it).",
+                                 label=effect.text))
+        return
     if r.get("per_ap"):
         ap = max(1, min(ap, -(-effect.amount_now // r["per_ap"])))  # never more AP than it takes to stop it
         if pay_ap(request, character, ap, effect.text, stop=True):
@@ -744,8 +750,8 @@ def add_effect(character, p):
     if data and data["kind"] == "status":
         amount = _amount(data, p)
         same = character.effects.filter(active=True, key=p["key"]).first() if data.get("add") else None
-        if same:  # Bleeding stacks, Radiation Burns are renewed
-            same.amount = min(32767, same.amount + amount) if data["add"] == "stack" else max(same.amount, amount)
+        if same:  # Bleeding stacks, Radiation Burns are replaced
+            same.amount = min(32767, same.amount + amount) if data["add"] == "stack" else amount
             same.save(update_fields=["amount"])
         else:
             EffectEntry.objects.create(character=character, kind="status", key=p["key"], text=data["name"],

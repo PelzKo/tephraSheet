@@ -64,13 +64,13 @@ def test_bleeding_refresh_damage_rolls_over_into_wounds(char):
 def test_bleeding_removal_by_ap(char):
     client, c = char
     e = add(client, c, "bleeding", 12)
-    play(client, c, "effect-pay", id=e.pk, ap="1")  # outside fight: informational only
+    resp = play(client, c, "effect-pay", id=e.pk, ap="1")  # outside fight: only the info bar, nothing changes
     e.refresh_from_db()
-    assert e.amount == 7 and e.active and c.fight == {}
+    assert e.amount == 12 and e.active and c.fight == {} and b"only apply in fight mode" in resp.content
     max_ap = fight(client, c)
-    play(client, c, "effect-pay", id=e.pk, ap="9")  # capped at 2 AP (exact)
+    play(client, c, "effect-pay", id=e.pk, ap="9")  # capped at 3 AP (exact)
     e.refresh_from_db()
-    assert not e.active and e.amount == 0 and c.fight["ap"] == max_ap - 2
+    assert not e.active and e.amount == 0 and c.fight["ap"] == max_ap - 3
 
 
 def test_bleeding_too_few_ap_in_fight(char):
@@ -83,41 +83,48 @@ def test_bleeding_too_few_ap_in_fight(char):
     assert e.amount == 50 and b"Not enough AP" in resp.content
 
 
-def test_burning_damage_and_extinguish(char):
+def test_burning_paid_down_by_one_per_ap_over_turns(char):
     client, c = char
     max_hp = c.compute().max_hp
     max_ap = fight(client, c)
     e = add(client, c, "burning-2")
+    assert e.amount == 4 and b"Burning T2 (4)" in client.get(reverse("sheet", args=[c.pk])).content
     play(client, c, "fight-end-turn")
     assert c.current_hp == max_hp - 4
-    assert e.amount == 4  # AP still needed to extinguish, spendable over several turns
     play(client, c, "effect-pay", id=e.pk, ap="1")
     e.refresh_from_db()
     assert e.active and e.amount == 3 and c.fight["ap"] == max_ap - 1
+    play(client, c, "fight-turn")  # no burning damage at "My turn"
+    assert c.current_hp == max_hp - 4
+    play(client, c, "fight-end-turn")  # the current amount is the damage
+    assert c.current_hp == max_hp - 4 - 3
+    play(client, c, "effect-pay", id=e.pk, ap="2")
     play(client, c, "fight-end-turn")
-    play(client, c, "effect-pay", id=e.pk, ap="3")
+    assert c.current_hp == max_hp - 4 - 3 - 1
+    play(client, c, "effect-pay", id=e.pk, ap="5")  # capped at the 1 AP left
     e.refresh_from_db()
-    assert not e.active and c.fight["ap"] == max_ap - 3
+    assert not e.active and e.amount == 0 and c.fight["ap"] == max_ap - 1
+    assert add(client, c, "burning-4").amount == 16
 
 
-def test_radiation_burns_decay_and_renew(char):
+def test_radiation_burns_replace_decay_at_refresh(char):
     client, c = char
     max_hp = c.compute().max_hp
     fight(client, c)
-    e = add(client, c, "radiation-burns", 2)
-    play(client, c, "fight-end-turn")  # not at refresh: at the start of the next turn
-    assert c.current_hp in (None, max_hp)
-    play(client, c, "fight-turn")
+    e = add(client, c, "radiation-burns", 5)
+    play(client, c, "fight-turn")  # not at "My turn"
     e.refresh_from_db()
-    assert c.current_hp == max_hp - 2 and e.amount == 1
-    add(client, c, "radiation-burns", 3)  # a new hit renews it
+    assert c.current_hp in (None, max_hp) and e.amount == 5
+    play(client, c, "fight-end-turn")  # at the AP refresh, then 1 less
     e.refresh_from_db()
-    assert e.amount == 3
-    for _ in range(3):
+    assert c.current_hp == max_hp - 5 and e.amount == 4
+    add(client, c, "radiation-burns", 2)  # a new, weaker hit replaces it
+    e.refresh_from_db()
+    assert e.amount == 2 and EffectEntry.objects.filter(key="status:radiation-burns").count() == 1
+    for _ in range(2):
         play(client, c, "fight-end-turn")
-        play(client, c, "fight-turn")
     e.refresh_from_db()
-    assert not e.active and c.current_hp == max_hp - 2 - 6 and c.wounds_taken == 0
+    assert not e.active and c.current_hp == max_hp - 5 - 3 and c.wounds_taken == 0
 
 
 def test_stunned_takes_ap_and_ends_at_refresh(char):
@@ -128,6 +135,34 @@ def test_stunned_takes_ap_and_ends_at_refresh(char):
     play(client, c, "fight-end-turn")
     e.refresh_from_db()
     assert not e.active and c.fight["ap"] == max_ap
+
+
+def test_stunned_outside_fight_only_informs(char):
+    client, c = char
+    resp = play(client, c, "effect-add", kind="status", key="status:stunned", amount="2")
+    assert c.fight == {} and b"only costs AP in fight mode" in resp.content
+    assert EffectEntry.objects.get(key="status:stunned").active
+
+
+def test_pay_outside_fight_changes_nothing(char):
+    client, c = char
+    head = add(client, c, "disoriented")
+    play(client, c, "effect-add", kind="called", location="6", which="normal")
+    groin = EffectEntry.objects.get(key="normal:groin")
+    play(client, c, "effect-add", kind="called", location="11", which="fatal")
+    leg = EffectEntry.objects.get(key="fatal:leg")
+    burn = add(client, c, "burning-1")
+    for e in (head, groin, leg, burn):
+        resp = play(client, c, "effect-pay", id=e.pk, ap="1")
+        assert b"only apply in fight mode" in resp.content
+        e.refresh_from_db()
+        assert e.active and e.amount == {burn.pk: 2, leg.pk: 1}.get(e.pk, 0)
+    assert c.fight == {}
+    play(client, c, "effect-remove", id=head.pk)  # Disoriented lowers the AP pool
+    fight(client, c)
+    play(client, c, "effect-pay", id=groin.pk)  # in fight mode the cost ends it
+    groin.refresh_from_db()
+    assert not groin.active
 
 
 def test_neck_bleeding_one_wound_per_turn(char):
@@ -167,6 +202,7 @@ def test_fixed_cost_removal_and_bandage(char):
 def test_undo_restores_amount(char):
     client, c = char
     e = add(client, c, "bleeding", 12)
+    fight(client, c)
     play(client, c, "effect-pay", id=e.pk, ap="1")
     actionlog.undo(None, actionlog.last_entry(c))
     e.refresh_from_db()

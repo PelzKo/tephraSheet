@@ -30,7 +30,7 @@
  "highly-irradiated-2": {"name": "Stark verstrahlt S2", "text": "−4 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
  "highly-irradiated-3": {"name": "Stark verstrahlt S3", "text": "−5 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
  "highly-irradiated-4": {"name": "Stark verstrahlt S4", "text": "−6 auf alle Würfe, bis die AP von Verstrahlt ausgegeben wurden."},
- "radiation-burns": {"name": "Strahlenverbrennung", "text": "Nicht absorbierbarer TP-Schaden zu Beginn des nächsten Zuges, danach jeden Zug 1 weniger; ein neuer Treffer erneuert sie."},
+ "radiation-burns": {"name": "Strahlenverbrennung", "text": "Nicht absorbierbarer TP-Schaden bei jeder AP-Auffrischung, danach jeden Zug 1 weniger; ein neuer Treffer ersetzt sie."},
  "static-shock": {"name": "Statischer Schock", "text": "−2/−4/−6/−8 (je nach Marque) auf den nächsten Ausweichwurf innerhalb des nächsten Zuges."}
 },
 "LOCATION_LABELS": {"1": "Kopf", "2": "Augen", "3": "Ohren", "4": "Hals", "5": "Torso", "6": "Unterleib", "7": "Linker Arm", "8": "Rechter Arm", "9": "Linke Hand", "10": "Rechte Hand", "11": "Linkes Bein", "12": "Rechtes Bein"},
