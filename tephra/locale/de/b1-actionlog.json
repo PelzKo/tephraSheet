@@ -51,5 +51,7 @@
  "last {n} changes": "letzte {n} Änderungen",
  "no": "nein",
  "undone": "rückgängig gemacht",
- "yes": "ja"
+ "yes": "ja",
+ "Export as TSV": "Als TSV exportieren",
+ "Sorted by status and type; new entries are set to In progress.": "Sortiert nach Status und Art; neue Einträge werden auf „In Arbeit“ gesetzt."
 }

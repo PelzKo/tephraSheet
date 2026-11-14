@@ -40,6 +40,8 @@
 <div class="paper" id="feedback">
   <h2>{% t "Feedback" %}{% if feedback_open %} <span class="tag">{% t "{n} open" n=feedback_open %}</span>{% endif %}</h2>
   {% if feedback %}
+  <form method="post" action="{% url 'gm_feedback_export' %}" onsubmit="setTimeout(() => location.reload(), 1500)">{% csrf_token %}
+    <button class="btn small">{% t "Export as TSV" %}</button> <span class="small muted">{% t "Sorted by status and type; new entries are set to In progress." %}</span></form>
   <div class="table-scroll"><table class="data feedback-table">
     <tr><th>{% t "Date" %}</th><th>{% t "Type" %}</th><th>{% t "Status" %}</th><th>{% t "From" %}</th><th>{% t "Where" %}</th><th>{% t "Message" %}</th><th data-nosort></th></tr>
     {% for f in feedback %}

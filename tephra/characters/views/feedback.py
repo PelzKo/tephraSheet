@@ -7,8 +7,9 @@ from django.conf import settings
 from django.contrib import messages
 from django.contrib.admin.views.decorators import staff_member_required
 from django.core.mail import send_mail
-from django.http import JsonResponse
+from django.http import HttpResponse, JsonResponse
 from django.shortcuts import get_object_or_404, redirect
+from django.utils import timezone
 from django.views.decorators.http import require_POST
 
 from rules.lang import gettext as _
@@ -124,3 +125,42 @@ def feedback_delete(request, pk):
     get_object_or_404(Feedback, pk=pk).delete()
     messages.success(request, _("Feedback deleted."))
     return redirect("gm_settings")
+
+
+EXPORT_COLUMNS = ["id", "status", "category", "created", "from", "character", "page", "message", "note", "meta"]
+
+
+def _tsv_cell(value):
+    """One line per row: tabs and line breaks inside a field would break the TSV.
+    Player text starting with = + - @ gets a leading ' so spreadsheets don't run it as a formula."""
+    text = str(value)
+    if text[:1] in ("=", "+", "-", "@"):
+        text = "'" + text
+    return text.replace("\\", "\\\\").replace("\t", "\\t").replace("\r\n", "\\n").replace("\n", "\\n").replace("\r", "\\n")
+
+
+def export_tsv(entries):
+    """Feedback as TSV ordered by status, then category, then date (oldest first).
+    Newlines in texts are written as a literal \\n, backslashes as \\\\."""
+    status_rank = {s: i for i, (s, _l) in enumerate(Feedback.STATUS_CHOICES)}
+    cat_rank = {c: i for i, (c, _l) in enumerate(Feedback.CATEGORY_CHOICES)}
+    rows = sorted(entries, key=lambda f: (status_rank.get(f.status, 99), cat_rank.get(f.category, 99), f.created))
+    lines = ["\t".join(EXPORT_COLUMNS)]
+    for f in rows:
+        lines.append("\t".join(_tsv_cell(v) for v in (
+            f.pk, f.status, f.category, f.created.isoformat(timespec="minutes"), f.name, f.character_name,
+            " ".join(filter(None, [f.page_title, f.page_url])), f.message, f.note,
+            json.dumps(f.meta, ensure_ascii=False) if f.meta else "")))
+    return "\n".join(lines) + "\n"
+
+
+@staff_member_required(login_url="gm_login")
+@require_POST
+def feedback_export(request):
+    """Download all feedback as TSV (status as it was before the export); new entries become "In progress"."""
+    entries = list(Feedback.objects.all())
+    body = export_tsv(entries)
+    Feedback.objects.filter(pk__in=[f.pk for f in entries if f.status == "new"]).update(status="progress")
+    resp = HttpResponse(body, content_type="text/tab-separated-values; charset=utf-8")
+    resp["Content-Disposition"] = f'attachment; filename="tephra_feedback_{timezone.localdate():%Y-%m-%d}.tsv"'
+    return resp

@@ -521,3 +521,27 @@ def test_chosen_fixed_traits_own_race_only_and_unique(client_char):
         "action": "save", "fixed_traits": ["elf/tough", "elf/tough", "human/peerless", "human/peerless"]})
     c.refresh_from_db()
     assert c.fixed_traits == ["human/peerless"]
+
+
+def test_feedback_export_tsv(client, db):
+    from datetime import timedelta
+    old = Feedback.objects.create(category="feature", message="Dark mode", status="done")
+    bug = Feedback.objects.create(category="bug", name="=HYPERLINK(1)", message="line one\nline\ttwo", meta={"tab": "page1"})
+    idea = Feedback.objects.create(category="feature", message="Dice roller")
+    Feedback.objects.filter(pk=idea.pk).update(created=bug.created - timedelta(days=1))
+    url = reverse("gm_feedback_export")
+    assert client.post(url).status_code == 302  # narrator only
+    assert Feedback.objects.get(pk=bug.pk).status == "new"
+    User.objects.create_superuser("gm", "gm@example.com", "pw")
+    client.login(username="gm", password="pw")
+    assert client.get(url).status_code == 405
+    resp = client.post(url)
+    assert resp["Content-Type"].startswith("text/tab-separated-values")
+    lines = resp.content.decode().splitlines()
+    assert lines[0].split("\t")[:3] == ["id", "status", "category"]
+    rows = [line.split("\t") for line in lines[1:]]
+    assert all(len(r) == 10 for r in rows)
+    # new bug, new feature, done feature; status as it was before the export
+    assert [(r[0], r[1]) for r in rows] == [(str(bug.pk), "new"), (str(idea.pk), "new"), (str(old.pk), "done")]
+    assert rows[0][7] == "line one\\nline\\ttwo" and rows[0][4] == "'=HYPERLINK(1)"
+    assert dict(Feedback.objects.values_list("pk", "status")) == {bug.pk: "progress", idea.pk: "progress", old.pk: "done"}

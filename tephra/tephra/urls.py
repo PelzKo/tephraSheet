@@ -62,6 +62,7 @@ urlpatterns = [
     path("feedback/", feedback.feedback_submit, name="feedback"),
     path("language/", general.set_language, name="set_language"),
     path("gm/feedback/<int:pk>/status/", feedback.feedback_status, name="gm_feedback_status"),
+    path("gm/feedback/export/", feedback.feedback_export, name="gm_feedback_export"),
     path("gm/feedback/<int:pk>/delete/", feedback.feedback_delete, name="gm_feedback_delete"),
     path("wiki/", wiki_views.wiki_index, name="wiki"),
     path("wiki/new/", wiki_views.edit, name="wiki_new"),
