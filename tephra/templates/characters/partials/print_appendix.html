@@ -3,7 +3,7 @@
   <h1>{{ character.name }} – {% t "Appendix" %}</h1>
   <h2>{% t "Inventory" %}</h2>
   <table class="print-list">
-    {% for i in items %}<tr><td>{% if i.quantity > 1 %}{{ i.quantity }}× {% endif %}<b>{{ i.name|item_name }}</b></td><td>{{ i.get_slot_display|t }}</td>
+    {% for i in items %}<tr><td>{% if i.quantity > 1 %}{{ i.quantity }}× {% endif %}<b>{{ i.name|item_name }}</b>{% if i.house_rule %} ({% t "House rule" %}){% endif %}</td><td>{{ i.get_slot_display|t }}</td>
       <td>{% for a in i.augments %}{% with aug=a.0|augment %}{{ aug.name }} mQ {{ a.1|roman }}{% if not forloop.last %}, {% endif %}{% endwith %} · {% endfor %}{{ i|item_desc }}{% if i.notes %} · {{ i.notes }}{% endif %}</td></tr>
     {% empty %}<tr><td>{% t "Nothing carried yet." %}</td></tr>{% endfor %}
   </table>

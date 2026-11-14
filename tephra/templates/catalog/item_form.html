@@ -18,6 +18,7 @@
     <div class="field"><label for="{{ form.price_princes.id_for_label }}">{% t "Price (princes)" %}</label>{{ form.price_princes }}</div>
     <div class="field"><label><input type="checkbox" name="beta" x-model="beta" {% if form.beta.value %}checked{% endif %}> {% t "Beta (+2 slots)" %}</label>
       <label>{{ form.concealable }} {% t "Concealable" %}</label>
+      <label title="{% t "House rule: this item skips the augment slot limit and the augment/item compatibility check." %}"><input type="checkbox" name="house_rule" x-model="houseRule" {% if form.house_rule.value %}checked{% endif %}> {% t "House rule" %}</label>
       {% if form.is_starting_gear %}<label>{{ form.is_starting_gear }} {% t "Starting gear" %}</label>{% endif %}
       {% if form.memento %}<label><input type="checkbox" name="memento" x-model="memento" {% if form.memento.value %}checked{% endif %}> {% t "Memento (Luck augments work while carried)" %}</label>
         <label x-show="memento">{% t "Binding marque" %} <select name="binding">{% for v in "01234" %}<option value="{{ v }}" {% if form.binding.value|stringformat:"s" == v %}selected{% endif %}>{% if v == "0" %}{% t "not bound" %}{% else %}mQ {{ v }}{% endif %}</option>{% endfor %}</select></label>{% endif %}</div>
@@ -125,7 +126,7 @@ window.itemCreator = function (tables, augChoices) {
       for (const k in vars || {}) out = out.split("{" + k + "}").join(vars[k]);
       return out;
     },
-    tables, augChoices, kind: "", size: "", material: "metal", beta: false, memento: false, augs: [], pick: "",
+    tables, augChoices, kind: "", size: "", material: "metal", beta: false, memento: false, houseRule: false, augs: [], pick: "",
     init() {
       const f = this.$root;
       this.kind = f.querySelector("[name=kind]").value;
@@ -133,6 +134,7 @@ window.itemCreator = function (tables, augChoices) {
       this.material = f.querySelector("[name=material]").value;
       this.beta = f.querySelector("[name=beta]").checked;
       this.memento = !!f.querySelector("[name=memento]")?.checked;
+      this.houseRule = f.querySelector("[name=house_rule]").checked;
       try { this.augs = JSON.parse(f.querySelector("[name=augments_json]").getAttribute("value") || "[]"); } catch (e) { this.augs = []; }
     },
     get isWeapon() { return ["melee", "firearm", "bow", "crossbow"].includes(this.kind); },
@@ -144,12 +146,12 @@ window.itemCreator = function (tables, augChoices) {
     autoHands() { const h = this.auto("hands"); return h === 2 ? this.tt("two-handed") : h === 1 ? this.tt("one-handed") : "–"; },
     armor(key) { const row = this.tables.armor[this.size]; return row ? row[key] : "–"; },
     get slots() { return (this.kind === 'ammo' ? 1 : (this.tables.slots[this.material] || 3)) + (this.beta ? 2 : 0); },
-    get augOptions() { return (this.augChoices[this.kind] || []).concat(this.memento ? this.augChoices.memento || [] : []); },
+    get augOptions() { return this.houseRule ? this.augChoices.all : (this.augChoices[this.kind] || []).concat(this.memento ? this.augChoices.memento || [] : []); },
     isMemento(slug) { return (this.find(slug) || {}).list === "memento"; },
     get usedSlots() { return this.augs.reduce((s, a) => s + (this.isMemento(a[0]) ? 0 : ((this.find(a[0]) || {}).slots || 0)), 0); },
     get mementoSlots() { return 3 + (this.beta ? 2 : 0); },
     get usedMementoSlots() { return this.augs.reduce((s, a) => s + (this.isMemento(a[0]) ? ((this.find(a[0]) || {}).slots || 0) : 0), 0); },
-    find(slug) { return (this.augOptions || []).find(o => o.slug === slug); },
+    find(slug) { return (this.augChoices.all || []).find(o => o.slug === slug); },
     nameOf(slug) { const o = this.find(slug); return o ? o.name : slug; },
     effectOf(slug, m) { const o = this.find(slug); return o ? (o.marques[m - 1] || o.marques[0] || "") : ""; },
     infoOf(slug) {

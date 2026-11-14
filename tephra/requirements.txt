@@ -3,5 +3,6 @@ gunicorn>=23.0
 whitenoise>=6.8
 python-dotenv>=1.0
 markdown>=3.7
+Pillow>=11.0
 sentry-sdk>=2.0
 mysqlclient>=2.2; sys_platform != "win32"

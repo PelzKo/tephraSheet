@@ -70,6 +70,7 @@ class ItemFields(models.Model):
     extension = models.CharField(max_length=40, blank=True, help_text="rule extension key; empty = core")
     memento = models.BooleanField(default=False, help_text="Memento: its Luck augments work while carried")
     binding = models.PositiveSmallIntegerField(default=0, help_text="Binding marque (0 = not bound)")
+    house_rule = models.BooleanField(default=False, help_text="House rule: no augment slot/compatibility checks")
 
     class Meta:
         abstract = True
@@ -77,7 +78,7 @@ class ItemFields(models.Model):
     ITEM_FIELDS = ["name", "kind", "size", "variants", "material", "beta", "concealable", "hands", "ap_use", "ap_ready",
                    "dc", "reach", "range", "increment", "soak", "eva_penalty", "spd_penalty",
                    "climb_swim_penalty", "deflect_bonus", "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "augments",
-                   "modifiers", "price_dukes", "description", "extension", "memento", "binding"]
+                   "modifiers", "price_dukes", "description", "extension", "memento", "binding", "house_rule"]
 
     def item_values(self):
         return {f: getattr(self, f) for f in self.ITEM_FIELDS}

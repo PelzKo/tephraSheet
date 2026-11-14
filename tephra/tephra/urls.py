@@ -17,6 +17,7 @@ urlpatterns = [
     path("lock-all/", general.lock_all, name="lock_all"),
     path("pass/", general.passphrase_view, name="passphrase"),
     path("c/<int:pk>/password/", general.password_view, name="password"),
+    path("c/<int:pk>/portrait/", general.portrait_view, name="portrait"),
     path("c/<int:pk>/delete/", general.delete_view, name="delete_character"),
     path("c/<int:pk>/wizard/", wizard.wizard, name="wizard"),
     path("c/<int:pk>/wizard/<int:step>/", wizard.wizard, name="wizard_step"),

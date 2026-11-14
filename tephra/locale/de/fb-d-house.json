@@ -1,0 +1,13 @@
+{
+  "Choose an image first.": "Wähle zuerst ein Bild aus.",
+  "House rule": "Hausregel",
+  "House rule: this item skips the augment slot limit and the augment/item compatibility check.": "Hausregel: Für diesen Gegenstand werden Augment-Slots und die Augment-/Gegenstandsprüfung nicht geprüft.",
+  "JPEG, PNG or WebP, max. 2 MB": "JPEG, PNG oder WebP, max. 2 MB",
+  "Only JPEG, PNG or WebP images can be used as portrait.": "Als Porträt gehen nur JPEG-, PNG- oder WebP-Bilder.",
+  "Portrait": "Porträt",
+  "Portrait removed.": "Porträt entfernt.",
+  "Portrait saved.": "Porträt gespeichert.",
+  "Remove portrait": "Porträt entfernen",
+  "The portrait is larger than 2 MB.": "Das Porträt ist größer als 2 MB.",
+  "This file is not a readable image.": "Diese Datei ist kein lesbares Bild."
+}

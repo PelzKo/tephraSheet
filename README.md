@@ -54,6 +54,7 @@ Environment variables go in `tephra/.env` (see `.env.sample`):
 | `ADMIN_URL` | path of the Django admin, default `narrator-admin/` |
 | `SECURE_HSTS_SECONDS` | HSTS max-age when `LOCAL=False`, default one year; `0` switches it off |
 | `BACKUP_DIR` | where `bin/backup.sh` writes dumps, default `~/backups/tephra` |
+| `MEDIA_ROOT` | uploaded character portraits, default `tephra/media/`. They are never served as public files (no web-server alias needed): the app serves them only to sessions with access to the character. Not in `bin/backup.sh`; back the folder up yourself if portraits matter |
 | `SENTRY_DSN`, `EMAIL_*` | optional |
 
 ### Initial server setup (Uberspace)

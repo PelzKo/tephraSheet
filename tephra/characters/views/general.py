@@ -10,6 +10,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.cache import cache
 from django.db import connection
+from django.http import FileResponse, Http404
 from django.utils import timezone as dj_timezone
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
@@ -18,7 +19,7 @@ from django.views.decorators.http import require_POST
 from rules.extensions import EXTENSIONS
 from rules.lang import get_language, gettext as _
 from rules.registry import get_registry
-from .. import access, actionlog
+from .. import access, actionlog, portrait as portraits
 from ..middleware import remember_pass
 from . import trash as trash_views
 from .feedback import mail_configured
@@ -162,6 +163,40 @@ def delete_view(request, character):
     character.save(update_fields=["deleted_at"])
     messages.success(request, _("Character moved to the trash. The narrator can restore it on the narrator page."))
     return redirect("character_list")
+
+
+@access.character_view
+def portrait_view(request, character):
+    """GET serves the portrait (only with access, never cached publicly); POST uploads or removes it."""
+    if request.method == "POST":
+        old = character.portrait.name
+        if request.POST.get("remove"):
+            character.portrait = ""
+        else:
+            upload = request.FILES.get("portrait")
+            if not upload:
+                messages.error(request, _("Choose an image first."))
+                return redirect(f"{character.get_absolute_url()}?tab=story")
+            try:
+                character.portrait.save("p.webp", portraits.process(upload), save=False)
+            except portraits.PortraitError as exc:
+                messages.error(request, str(exc))
+                return redirect(f"{character.get_absolute_url()}?tab=story")
+        character.save(update_fields=["portrait", "updated"])
+        if old:
+            character.portrait.storage.delete(old)
+        actionlog.log(request, "portrait", character, {"portrait": old}, {"portrait": character.portrait.name})
+        messages.success(request, _("Portrait saved.") if character.portrait else _("Portrait removed."))
+        return redirect(f"{character.get_absolute_url()}?tab=story")
+    if not character.portrait:
+        raise Http404
+    try:
+        resp = FileResponse(character.portrait.open("rb"), content_type="image/webp")
+    except FileNotFoundError:
+        raise Http404
+    resp["Cache-Control"] = "private, no-store"
+    resp["Vary"] = "Cookie"
+    return resp
 
 
 class GMLoginView(auth_views.LoginView):

@@ -13,7 +13,7 @@ from .models import ItemTemplate
 FORM_FIELDS = ["name", "kind", "size", "material", "beta", "concealable", "hands", "ap_use", "ap_ready", "dc", "reach",
                "range", "increment", "soak", "eva_penalty", "spd_penalty", "climb_swim_penalty", "deflect_bonus",
                "acc_bonus", "stk_bonus", "deflect_ranged", "deflect_melee", "price_dukes", "description", "memento",
-               "binding"]
+               "binding", "house_rule"]
 
 
 class ItemForm(forms.ModelForm):
@@ -75,6 +75,8 @@ class ItemForm(forms.ModelForm):
 
     def clean(self):
         data = super().clean()
+        if data.get("house_rule"):  # the group allows any augments on this item (slots and kind unchecked)
+            return data
         augs = data.get("augments_json") or []
         kind = data.get("kind")
         reg = get_registry()
@@ -122,4 +124,5 @@ def augment_choices_json():
                       "marques": a["marques"], "list": "/".join(a["lists"]), "notes": a["notes"],
                       "text_html": effect_html(a["text"], "mq"), "two_marque": a.get("two_marque", False)}
                      for a in offer(reg.augments.values()) if lists.intersection(a["lists"])]
+    out["all"] = list({a["slug"]: a for opts in out.values() for a in opts}.values())  # house-rule items
     return out

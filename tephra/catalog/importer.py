@@ -40,7 +40,7 @@ ALIASES = {
 }
 # Export = import format; price as exact dukes, plus the columns the creator knows beyond the template.
 EXPORT_HEADER = [h for h in TEMPLATE_HEADER if h not in ("price", "quantity")] + [
-    "price_dukes", "acc_bonus", "stk_bonus", "memento", "binding", "extension", "modifiers"]
+    "price_dukes", "acc_bonus", "stk_bonus", "memento", "binding", "house_rule", "extension", "modifiers"]
 MAX_ROWS = 2000
 NAME_MAX = 120
 KIND_ALIASES = {"weapon": "melee", "melee weapon": "melee", "gun": "firearm", "pistol": "firearm", "rifle": "firearm",
@@ -49,7 +49,7 @@ KIND_ALIASES = {"weapon": "melee", "melee weapon": "melee", "gun": "firearm", "p
 INT_FIELDS = ["dc", "ap_use", "ap_ready", "reach", "range", "increment", "soak", "eva_penalty", "spd_penalty",
               "climb_swim_penalty", "deflect_bonus", "acc_bonus", "stk_bonus", "price_dukes", "quantity", "binding"]
 NOT_NULL_INTS = {"price_dukes", "quantity", "binding"}  # the others: empty cell = "use the size table"
-BOOL_FIELDS = ["deflect_ranged", "deflect_melee", "concealable", "beta", "is_starting_gear", "memento"]
+BOOL_FIELDS = ["deflect_ranged", "deflect_melee", "concealable", "beta", "is_starting_gear", "memento", "house_rule"]
 KINDS = {k for k, _ in KIND_CHOICES}
 SIZES = {s for s, _ in SIZE_CHOICES}
 MATERIALS = {m for m, _ in MATERIAL_CHOICES}
@@ -142,9 +142,9 @@ def parse_price(v):
     return int(round(amount))
 
 
-def parse_augments(text, kind, errors, memento=False):
+def parse_augments(text, kind, errors, memento=False, house_rule=False):
     reg = get_registry()
-    lists = AUGMENT_LISTS_BY_KIND.get(kind)
+    lists = None if house_rule else AUGMENT_LISTS_BY_KIND.get(kind)
     if lists and memento:
         lists = lists | {"memento"}
     out = []
@@ -267,6 +267,7 @@ def parse_rows(text):
             except ValueError as exc:
                 errors.append(str(exc))
         if "augments" in raw:
-            values["augments"] = parse_augments(raw["augments"], kind, errors, memento=values.get("memento", False))
+            values["augments"] = parse_augments(raw["augments"], kind, errors, memento=values.get("memento", False),
+                                                 house_rule=values.get("house_rule", False))
         result.append({"line": n, "values": values, "errors": errors})
     return result

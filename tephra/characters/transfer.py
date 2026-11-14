@@ -20,7 +20,7 @@ from .models import Automaton, Character, CustomModifier, EffectEntry, Inventory
 
 FORMAT, VERSION = "tephra-character", 1
 MAX_BYTES = 2_000_000
-CHARACTER_SKIP = {"id", "password", "created", "updated", "deleted_at"}
+CHARACTER_SKIP = {"id", "password", "created", "updated", "deleted_at", "portrait"}
 CHILDREN = {  # export key: (model, fields not in the file)
     "items": (InventoryItem, {"id", "character", "template"}),
     "effects": (EffectEntry, {"id", "character"}),

@@ -259,6 +259,8 @@ tr.fb-closed td { opacity: .55; }
 .ap-left { font: 700 18px/1 Anton, sans-serif; padding: 2px 8px; border-radius: 12px; background: var(--paper-2); }
 .ap-left.empty { background: #e7b4a8; }
 
+.portrait-box { margin: 6px 0; }
+.portrait { max-width: 96px; max-height: 120px; object-fit: cover; border: 1px solid var(--brass); border-radius: 4px; }
 .journal-block { border-left: 4px solid var(--brass); padding: 2px 10px; margin: 8px 0; }
 .journal-block.lvl2 { margin-left: 18px; border-left-width: 2px; }
 .journal-block.lvl3 { margin-left: 36px; border-left-width: 1px; }

@@ -8,6 +8,14 @@
       <button type="button" class="btn small" x-on:click="edit = !edit" x-text="edit ? '{% t "Show journal" %}' : '{% t "Edit" %}'"></button>
     </div>
   </div>
+  <div class="row portrait-box">
+    {% if character.portrait %}<img class="portrait" src="{% url 'portrait' character.pk %}" alt="{% t "Portrait" %}" width="96">{% endif %}
+    <form method="post" action="{% url 'portrait' character.pk %}" enctype="multipart/form-data" class="row small">{% csrf_token %}
+      <label>{% t "Portrait" %} <input type="file" name="portrait" accept="image/jpeg,image/png,image/webp" required onchange="this.form.requestSubmit()"></label>
+      <span class="muted">{% t "JPEG, PNG or WebP, max. 2 MB" %}</span>
+    </form>
+    {% if character.portrait %}<form method="post" action="{% url 'portrait' character.pk %}">{% csrf_token %}<button class="btn small danger" name="remove" value="1">{% t "Remove portrait" %}</button></form>{% endif %}
+  </div>
   <form class="row quick-add" hx-post="{% url 'play' character.pk 'story-append' %}" hx-target="#sheet-body" hx-swap="outerHTML">
     <input type="hidden" name="tab" value="story">
     <input type="text" name="line" required maxlength="2000" class="grow" data-draft="story-line" placeholder="{% t "Add a line to the journal…" %}" aria-label="{% t "Add a line to the journal" %}">

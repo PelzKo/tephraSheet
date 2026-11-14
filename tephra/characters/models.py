@@ -1,6 +1,6 @@
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.cache import cache
-from django.db import models
+from django.db import models, transaction
 from django.db.models.signals import post_delete, post_save
 from django.dispatch import receiver
 from django.urls import reverse
@@ -109,6 +109,7 @@ class Character(models.Model):
     fight = models.JSONField(default=dict, blank=True,
                              help_text='fight mode: {"active": bool, "ap": AP left, "my_turn": bool, "round": n}')
     story_notes = models.TextField(blank=True, help_text="campaign journal; '# Heading' lines start a new block")
+    portrait = models.FileField(upload_to="portraits/", blank=True, help_text="served by the portrait view (access-checked)")
     plan = models.JSONField(default=list, blank=True,
                             help_text='planned level-ups: [{"level": n, "type": "specialty|skill|augment|note", ...}]')
 
@@ -519,3 +520,11 @@ class Throttle(models.Model):
     key = models.CharField(max_length=255, unique=True)
     count = models.PositiveIntegerField(default=0)
     expires = models.DateTimeField(db_index=True)
+
+
+@receiver(post_delete, sender=Character)
+def _remove_portrait(sender, instance, **kwargs):
+    """Deleting a character for good (trash purge, trash view, drafts) removes its portrait file."""
+    if instance.portrait:
+        name, storage = instance.portrait.name, instance.portrait.storage
+        transaction.on_commit(lambda: storage.delete(name))

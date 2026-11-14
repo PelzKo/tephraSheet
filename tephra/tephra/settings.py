@@ -129,6 +129,8 @@ USE_TZ = True
 STATIC_URL = "static/"
 STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_DIRS = [BASE_DIR / "static"]
+# Uploads (character portraits); never served as public files, only through the access-checked portrait view.
+MEDIA_ROOT = os.environ.get("MEDIA_ROOT") or BASE_DIR / "media"
 STORAGES = {
     "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
     "staticfiles": {
