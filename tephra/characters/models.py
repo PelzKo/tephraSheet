@@ -176,6 +176,17 @@ class Character(models.Model):
 
         return compute(self.to_state())
 
+    def clamp_trackers(self):
+        """Lower current HP/wounds taken to the (recomputed) maxima, e.g. after armor or Fatigued changed."""
+        new = self.compute()
+        changed = False
+        if self.current_hp is not None and self.current_hp > new.max_hp:
+            self.current_hp, changed = new.max_hp, True
+        if self.wounds_taken > new.max_wounds:
+            self.wounds_taken, changed = new.max_wounds, True
+        if changed:
+            self.save(update_fields=["current_hp", "wounds_taken"])
+
     @property
     def pending_levelups(self):
         if self.status != "active" or self.level >= tables.MAX_LEVEL:

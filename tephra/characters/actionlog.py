@@ -146,6 +146,7 @@ def undo(request, entry):
         if character.current_hp is not None:
             character.current_hp = max(0, min(new_max, character.current_hp - (old_max - new_max)))
     character.save()
+    character.clamp_trackers()
     entry.undone = True
     entry.save(update_fields=["undone"])
     log(request, f"undo:{entry.action}"[:40], character, now, snapshot(character))

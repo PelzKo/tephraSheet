@@ -441,15 +441,7 @@ def play(request, pk, action, p):
     if action in ("stance", "toggle", "effect_add"):
         end_unavailable(request, character)
     character.save()
-    # Clamp current values if max values changed (e.g. armor, fatigue).
-    new = character.compute()
-    changed = False
-    if character.current_hp is not None and character.current_hp > new.max_hp:
-        character.current_hp, changed = new.max_hp, True
-    if character.wounds_taken > new.max_wounds:
-        character.wounds_taken, changed = new.max_wounds, True
-    if changed:
-        character.save(update_fields=["current_hp", "wounds_taken"])
+    character.clamp_trackers()
     actionlog.log(request, f"play:{action}", character, before, actionlog.snapshot(character))
     if target:
         target.refresh_from_db()

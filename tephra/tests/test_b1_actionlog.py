@@ -191,3 +191,19 @@ def test_feedback_note_and_mail(admin_client, client, db, settings):
     client.post(reverse("gm_feedback_note", args=[f.pk]), {"note": "hacked"})
     f.refresh_from_db()
     assert f.note == "fixed in 1.2"
+
+
+def test_undo_effect_removal_clamps_trackers(admin_client, db):
+    """Undoing the removal of Fatigued lowers current HP to the halved maximum again."""
+    call_command("seed_catalog")
+    c = Character.objects.create()
+    services.random_all(c, random.Random(1))
+    services.finish_creation(c)
+    full = c.compute().max_hp
+    play(admin_client, c, "effect_add", {"kind": "status", "key": "status:fatigued"})
+    fatigued = EffectEntry.objects.get(key="status:fatigued")
+    play(admin_client, c, "effect_remove", {"id": fatigued.pk})
+    Character.objects.filter(pk=c.pk).update(current_hp=full)  # healed afterwards
+    actionlog.undo(None, actionlog.last_entry(c))
+    c.refresh_from_db()
+    assert c.compute().max_hp < full and c.current_hp == c.compute().max_hp
