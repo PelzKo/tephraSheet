@@ -33,4 +33,9 @@
     <textarea name="story_notes" rows="18" data-draft="story" placeholder="{% t "# Day 1 – Daion" %}&#10;{% t "Why we are here, who we met, what we plan …" %}">{% if conflict.field == "story_notes" %}{{ conflict.mine }}{% else %}{{ character.story_notes }}{% endif %}</textarea>
     <div class="row" style="margin-top:8px"><button class="btn small primary">{% t "Save journal" %}</button></div>
   </form>
+  {% if level_history %}
+  <details class="level-history-box" data-keep="level-history">
+    <summary><h2 style="display:inline">{% t "Level history" %}</h2></summary>
+    <div class="table-scroll">{% include "characters/partials/level_history.html" %}</div>
+  </details>{% endif %}
 </div>

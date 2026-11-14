@@ -60,3 +60,28 @@ def sections(text):
             lines.append(line)
     push()
     return out
+
+
+def level_history(character):
+    """C3: one row per LevelLog for the Story tab and the print page; names from the registry (unknown = slug)."""
+    from rules.registry import get_registry
+
+    reg = get_registry()
+
+    def spec(slug):
+        return reg.specialties.get(slug, {}).get("name", slug)
+
+    def aug(slug):
+        return reg.augments.get(slug, {}).get("name", slug)
+
+    rows = []
+    for log in character.level_logs.all():
+        d = log.data or {}
+        specialties = [spec(s) for s, _l in d.get("specialties", [])] or ([spec(d["specialty"])] if d.get("specialty") else [])
+        retrofit = d.get("retrofit") or []
+        rows.append({"level": log.level, "created": log.created,
+                     "skills": sorted(((s, p) for s, p in (d.get("skills") or {}).items() if p), key=lambda kv: kv[0]),
+                     "specialties": specialties,
+                     "retrofit": (spec(retrofit[0]), spec(retrofit[1])) if len(retrofit) == 2 and all(retrofit) else None,
+                     "augments": [aug(a) for a in d.get("augments") or []]})
+    return rows

@@ -25,3 +25,7 @@
   {% if journal %}<h2>{% t "Story journal" %}</h2>
     {% for s in journal %}{% if s.title %}<h3>{{ s.title }}</h3>{% endif %}{{ s.html|safe }}{% endfor %}{% endif %}
 </section>
+{% if level_history %}<section class="print-appendix print-history">
+  <h1>{{ character.name }} – {% t "Level history" %}</h1>
+  {% include "characters/partials/level_history.html" %}
+</section>{% endif %}

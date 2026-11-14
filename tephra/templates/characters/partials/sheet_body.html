@@ -120,6 +120,8 @@
       <a class="btn small" href="{% url 'password' character.pk %}">{% t "Password" %}</a>
       <button class="btn small" type="button" onclick="window.print()">{% t "Print" %}</button>
       <a class="btn small" href="{% url 'sheet' character.pk %}?print=pencil" title="{% t "Empty trackers for HP, wounds, XP and money; stats without stance and toggle modifiers" %}">{% t "Pencil print" %}</a>
+      {% if level_history %}<button class="btn small" type="button" title="{% t "Print the sheet with an extra page listing what was chosen at each level" %}"
+        onclick="document.body.classList.add('print-history-on'); addEventListener('afterprint', () => document.body.classList.remove('print-history-on'), {once: true}); window.print()">{% t "Print with level history" %}</button>{% endif %}
       <form class="inline" method="post" action="{% url 'lock' character.pk %}">{% csrf_token %}<button class="btn small" type="submit">{% t "Lock" %}</button></form>
     </div>
   </div>
