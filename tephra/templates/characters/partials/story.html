@@ -2,7 +2,7 @@
 <div class="paper journal" x-data="{edit: {{ journal|yesno:'false,true' }}{% if conflict.field == "story_notes" %} || true{% endif %}, q: ''}"
      x-init="if ($el.querySelector('[data-draft-restored]')) edit = true">
   <div class="row spread">
-    <h2>{% t "Story journal" %}</h2>
+    <h2>{% t "Story journal" %} {% include "partials/help_link.html" with slug="story-journal" %}</h2>
     <div class="row">
       <input type="search" x-show="!edit" x-model="q" placeholder="{% t "Search the journal…" %}" aria-label="{% t "Search the journal" %}">
       <button type="button" class="btn small" x-on:click="edit = !edit" x-text="edit ? '{% t "Show journal" %}' : '{% t "Edit" %}'"></button>

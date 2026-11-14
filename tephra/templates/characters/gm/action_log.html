@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="paper">
-  <h1>{% t "Action log" %}</h1>
+  <h1>{% t "Action log" %} {% include "partials/help_link.html" with slug="narrator" %}</h1>
   <p class="small muted"><a href="{% url 'gm_settings' %}">{% t "Narrator settings" %}</a> · {% t "Entries older than 180 days are removed." %}</p>
   <form class="row" method="get">
     <select name="character" aria-label="{% t "Character" %}"><option value="">{% t "All characters" %}</option>

@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="paper">
-  <h1>{% t "Narrator settings" %}</h1>
+  <h1>{% t "Narrator settings" %} {% include "partials/help_link.html" with slug="narrator" %}</h1>
   <form method="post" class="stack">{% csrf_token %}
     {% for field in form %}
       {% if field.name == "enabled_extensions" or field.name == "disabled_races" %}

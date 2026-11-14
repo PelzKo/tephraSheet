@@ -5,7 +5,7 @@
       x-on:submit="if (dup && $event.submitter && $event.submitter.value === 'apply') $event.preventDefault()">
   {% csrf_token %}
   <div class="row spread">
-    <h1>{% t "{name}: level {old} → {new}" name=character.name old=character.level new=new_level %}</h1>
+    <h1>{% t "{name}: level {old} → {new}" name=character.name old=character.level new=new_level %} {% include "partials/help_link.html" with slug="planner" %}</h1>
     <button class="btn dice" name="action" value="random" formnovalidate> {% t "Random level-up" %}</button>
   </div>
   {% if catch_up %}<p class="muted"><b>{% t "Level {level} of {target}" level=new_level target=character.target_level %}</b> · {% t "Building up to starting level {n}: level up one level at a time." n=character.target_level %}</p>{% endif %}

@@ -1,7 +1,7 @@
 {% load sheet_tags %}
 <div class="paper">
   <div class="row spread">
-    <h2>{% t "Inventory" %}{% if liquid_max %} <span class="tag" title="{% t "Living liquids you can maintain (DIY table)" %}">{% t "Living liquids: {n} / {max}" n=liquid_count max=liquid_max %}</span>{% endif %}{% if memento_max %} <span class="tag" title="{% t "Mementos you can create and maintain: 1 + 1 per 4 Luck" %}">{% t "Mementos: {n} / {max}" n=memento_count max=memento_max %}</span>{% endif %}</h2>
+    <h2>{% t "Inventory" %}{% if liquid_max %} <span class="tag" title="{% t "Living liquids you can maintain (DIY table)" %}">{% t "Living liquids: {n} / {max}" n=liquid_count max=liquid_max %}</span>{% endif %}{% if memento_max %} <span class="tag" title="{% t "Mementos you can create and maintain: 1 + 1 per 4 Luck" %}">{% t "Mementos: {n} / {max}" n=memento_count max=memento_max %}</span>{% endif %} {% include "partials/help_link.html" with slug="items" %}</h2>
     <div class="row">
       <a class="btn small primary" href="{% url 'catalog' %}?for={{ character.pk }}">{% t "Add from catalog" %}</a>
       <a class="btn small" href="{% url 'item_create' %}?for={{ character.pk }}">{% t "Create item" %}</a>
@@ -108,7 +108,7 @@
 </div>
 
 <div class="paper">
-  <h2>{% t "Effects" %}</h2>
+  <h2>{% t "Effects" %} {% include "partials/help_link.html" with slug="effects" %}</h2>
   {% for e in effects %}
     <div class="inv-slot"><div><b>{{ e.get_kind_display|t }}</b>{% if e.location %} · {{ e.location }} {{ e.location_name|t }}{% endif %}: {{ e.text }}{% if e.lost_wounds %} {% t "(−{n} max wounds)" n=e.lost_wounds %}{% endif %}
       {% if e.ends_with_breather %}<span class="tag">{% t "ends with breather" %}</span>{% endif %}

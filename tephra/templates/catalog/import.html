@@ -1,7 +1,7 @@
 {% extends "base.html" %}{% load sheet_tags %}
 {% block content %}
 <div class="paper">
-  <div class="row spread"><h1>{% t "Bulk import" %}{% if character %} <span class="muted" style="font-size:18px">{% t "for {name}" name=character %}</span>{% endif %}</h1>
+  <div class="row spread"><h1>{% t "Bulk import" %}{% if character %} <span class="muted" style="font-size:18px">{% t "for {name}" name=character %}</span>{% endif %} {% include "partials/help_link.html" with slug="items" %}</h1>
     <a class="btn" href="{% url 'catalog_import_template' %}">{% t "Download CSV template" %}</a></div>
   <p class="muted small">{% t "Upload a CSV file or paste a table (from a spreadsheet, CSV with , or ;, or a markdown table). Needed column: name. Useful: kind (melee, firearm, bow, crossbow, armor, deflection, ammo, gear, animal, vehicle), size, variants (flexible/polearm/throwing/impromptu/double-barreled), material, price (5 pr, 3 d), augments (Accurate II; Damaging I), description, quantity. Empty numbers use the rules' size tables." %}</p>
   <form method="post" enctype="multipart/form-data" class="stack">{% csrf_token %}

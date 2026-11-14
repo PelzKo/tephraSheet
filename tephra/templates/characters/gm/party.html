@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="paper">
-  <h1>{% t "Party overview" %}</h1>
+  <h1>{% t "Party overview" %} {% include "partials/help_link.html" with slug="narrator" %}</h1>
   <p class="small muted"><a href="{% url 'gm_settings' %}">{% t "Narrator settings" %}</a> · {% t "Refreshes every 10 seconds." %}</p>
   <div hx-get="{% url 'gm_party' %}" hx-trigger="every 10s" hx-swap="innerHTML">{% include "characters/gm/_party_table.html" %}</div>
 </div>
