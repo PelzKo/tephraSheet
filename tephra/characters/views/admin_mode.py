@@ -9,7 +9,7 @@ from rules.extensions import offer, offer_races
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .. import access, services
+from .. import access, actionlog, services
 from ..models import Character, CustomModifier
 from .sheet import _respond
 
@@ -38,12 +38,14 @@ def misc_adjust(request, character):
             delta = int(request.POST.get("delta", 0))
         except ValueError:
             delta = 0
+        before = actionlog.snapshot(character)
         misc = dict(character.misc)
         misc[key] = misc.get(key, 0) + delta
         if not misc[key]:
             del misc[key]
         character.misc = misc
         character.save(update_fields=["misc"])
+        actionlog.log(request, "admin:misc", character, before, actionlog.snapshot(character))
     return _respond(request, character)
 
 
@@ -53,6 +55,7 @@ def edit_choices(request, character):
     if request.method == "POST":
         p = request.POST
         action = p.get("action", "save")
+        before = actionlog.snapshot(character)
         if action == "save":
             if p.get("race") in reg.races:
                 character.race = p["race"]
@@ -95,7 +98,6 @@ def edit_choices(request, character):
             character.specialties = specs
             have = {f"spec:{s}" for s, _l in specs} | {f"aug:{a}" for a in character.augments}
             character.narrator_granted = [k for k in character.narrator_granted if k in have]
-            messages.success(request, _("Saved (no rule validation in admin mode)."))
         elif action == "add_specialty":
             slug = p.get("slug")
             if slug in reg.specialties:
@@ -125,6 +127,12 @@ def edit_choices(request, character):
             character.misc = {}
         character.save()
         services.grant_race_items(character)  # body items of a changed race/traits
+        entry = actionlog.log(request, f"admin:{action}", character, before, actionlog.snapshot(character))
+        if entry:
+            messages.success(request, _("Saved (no rule validation in admin mode): {changes}",
+                                        changes=actionlog.summary(entry.before, entry.after)))
+        elif action == "save":
+            messages.info(request, _("Nothing changed."))
         return redirect("edit_choices", pk=character.pk)
     race = reg.races.get(character.race)
     all_traits = [t for t in reg.traits.values()]

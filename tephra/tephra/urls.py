@@ -5,7 +5,7 @@ from django.urls import path
 
 from catalog import views as catalog_views
 from wiki import views as wiki_views
-from characters.views import admin_mode, automatons, feedback, general, levelup, pets, planner, sheet, wizard
+from characters.views import admin_mode, automatons, feedback, general, levelup, narrator, pets, planner, sheet, wizard
 
 urlpatterns = [
     path("", general.character_list, name="character_list"),
@@ -46,6 +46,11 @@ urlpatterns = [
     path("gm/login/", general.GMLoginView.as_view(), name="gm_login"),
     path("gm/logout/", auth_views.LogoutView.as_view(next_page="character_list"), name="gm_logout"),
     path("gm/", general.gm_settings, name="gm_settings"),
+    path("gm/log/", narrator.action_log, name="gm_action_log"),
+    path("gm/party/", narrator.party, name="gm_party"),
+    path("gm/group/", narrator.group_action, name="gm_group_action"),
+    path("c/<int:pk>/undo/", narrator.undo, name="gm_undo"),
+    path("gm/feedback/<int:pk>/note/", feedback.feedback_note, name="gm_feedback_note"),
     path("gm/password/<int:pk>/", general.gm_reset_password, name="gm_reset_password"),
     path("feedback/", feedback.feedback_submit, name="feedback"),
     path("language/", general.set_language, name="set_language"),

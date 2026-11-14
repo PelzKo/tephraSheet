@@ -39,6 +39,7 @@ class NarratorSettings(models.Model):
     disabled_races = models.JSONField(default=list, blank=True)
     # Hash of the group passphrase every visitor must enter once per browser; empty = no gate.
     passphrase = models.CharField(max_length=128, blank=True)
+    feedback_email = models.EmailField(blank=True, help_text="Send new feedback to this address (needs the server's mail settings)")
 
     class Meta:
         verbose_name_plural = "narrator settings"
@@ -413,6 +414,7 @@ class Feedback(models.Model):
                                   related_name="feedback")
     character_name = models.CharField(max_length=120, blank=True, help_text="snapshot, kept if the character is deleted")
     meta = models.JSONField(default=dict, blank=True)
+    note = models.TextField(blank=True, help_text="narrator-only note")
 
     class Meta:
         ordering = ["-created"]
@@ -441,6 +443,32 @@ def drop_card_cache(sender, instance, **kwargs):
     pk = instance.pk if isinstance(instance, Character) else getattr(instance, "character_id", None)
     if pk:
         cache.delete_many([card_cache_key(pk, code) for code in languages()])
+
+
+class ActionLog(models.Model):
+    """Who changed what (``characters/actionlog.py``). ``before``/``after`` hold only the changed fields."""
+
+    ACTOR_CHOICES = [("narrator", "Narrator"), ("session", "Player session"), ("anonymous", "Anonymous"),
+                     ("system", "System")]
+
+    created = models.DateTimeField(auto_now_add=True, db_index=True)
+    actor = models.CharField(max_length=10, choices=ACTOR_CHOICES)
+    actor_detail = models.CharField(max_length=200, blank=True, help_text="narrator login or the session's unlocked characters")
+    ip = models.CharField(max_length=45, blank=True)
+    action = models.CharField(max_length=40, db_index=True)
+    character = models.ForeignKey(Character, null=True, blank=True, on_delete=models.SET_NULL, related_name="actions")
+    object_type = models.CharField(max_length=30, blank=True)
+    object_id = models.IntegerField(null=True, blank=True)
+    object_label = models.CharField(max_length=120, blank=True)
+    before = models.JSONField(default=dict, blank=True)
+    after = models.JSONField(default=dict, blank=True)
+    undone = models.BooleanField(default=False)
+
+    class Meta:
+        ordering = ["-created", "-pk"]
+
+    def __str__(self):
+        return f"{self.created:%Y-%m-%d %H:%M} {self.action} {self.object_label}"
 
 
 class Throttle(models.Model):

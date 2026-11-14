@@ -9,7 +9,7 @@ from rules.engine import tables
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .. import access
+from .. import access, actionlog
 from ..models import Automaton
 
 AUG_ROWS = 2  # empty augment rows offered beyond the filled ones
@@ -75,12 +75,15 @@ def automaton_edit(request, character, auto_id=None):
     auto = get_object_or_404(Automaton, pk=auto_id, character=character) if auto_id else None
     if request.method == "POST":
         if auto and request.POST.get("action") == "delete":
+            actionlog.log(request, "automaton:delete", auto)
             auto.delete()
             messages.success(request, _("{name} removed.", name=auto.name))
             return redirect(f"{character.get_absolute_url()}?tab=pets")
         auto = auto or Automaton(character=character)
+        before = actionlog.values(auto) if auto.pk else {}
         _from_post(auto, request.POST, character)
         auto.save()
+        actionlog.log(request, "automaton:edit" if before else "automaton:create", auto, before, actionlog.values(auto))
         if request.POST.get("action") == "done":
             return redirect(f"{character.get_absolute_url()}?tab=pets")
         return redirect("automaton_edit", pk=character.pk, auto_id=auto.pk)

@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<div class="paper">
+  <h1>{% t "Action log" %}</h1>
+  <p class="small muted"><a href="{% url 'gm_settings' %}">{% t "Narrator settings" %}</a> · {% t "Entries older than 180 days are removed." %}</p>
+  <form class="row" method="get">
+    <select name="character" aria-label="{% t "Character" %}"><option value="">{% t "All characters" %}</option>
+      {% for c in characters %}<option value="{{ c.pk }}" {% if f.character == c.pk|stringformat:"d" %}selected{% endif %}>{{ c }}</option>{% endfor %}</select>
+    <select name="action" aria-label="{% t "Action" %}"><option value="">{% t "All actions" %}</option>
+      {% for a in actions %}<option value="{{ a }}" {% if f.action == a %}selected{% endif %}>{{ a }}</option>{% endfor %}</select>
+    <select name="actor" aria-label="{% t "Who" %}"><option value="">{% t "Everyone" %}</option>
+      {% for v, l in actors %}<option value="{{ v }}" {% if f.actor == v %}selected{% endif %}>{{ l|t }}</option>{% endfor %}</select>
+    <label>{% t "From" %} <input type="date" name="start" value="{{ f.start }}"></label>
+    <label>{% t "To" %} <input type="date" name="end" value="{{ f.end }}"></label>
+    <button class="btn small">{% t "Filter" %}</button>
+  </form>
+  <div class="table-scroll"><table class="data">
+    <tr><th>{% t "Date" %}</th><th>{% t "Who" %}</th><th>{% t "IP" %}</th><th>{% t "Action" %}</th><th>{% t "Object" %}</th><th data-nosort>{% t "Changes" %}</th></tr>
+    {% for e, changes in rows %}
+      <tr><td data-sort="{{ e.created|date:'c' }}" style="white-space:nowrap">{{ e.created|date:"Y-m-d H:i:s" }}</td>
+        <td>{{ e.get_actor_display|t }}{% if e.actor_detail %} <span class="small muted">({{ e.actor_detail }})</span>{% endif %}</td>
+        <td class="small">{{ e.ip }}</td>
+        <td>{{ e.action }}{% if e.undone %} <span class="tag">{% t "undone" %}</span>{% endif %}</td>
+        <td>{% if e.character %}<a href="{{ e.character.get_absolute_url }}">{{ e.object_label }}</a>{% else %}{{ e.object_label }}{% endif %}</td>
+        <td class="small">{% for k, old, new in changes %}<div><b>{{ k }}</b>: {{ old }} → {{ new }}</div>{% endfor %}</td></tr>
+    {% empty %}<tr data-nosort><td colspan="6" class="muted">{% t "No entries." %}</td></tr>{% endfor %}
+  </table></div>
+  {% if page.has_other_pages %}
+  <div class="row" style="margin-top:8px">
+    {% if page.has_previous %}<a class="btn small" href="{% querystring page=page.previous_page_number %}">{% t "Previous" %}</a>{% endif %}
+    <span class="small muted">{% t "Page {n} of {total}" n=page.number total=page.paginator.num_pages %}</span>
+    {% if page.has_next %}<a class="btn small" href="{% querystring page=page.next_page_number %}">{% t "Next" %}</a>{% endif %}
+  </div>
+  {% endif %}
+</div>
+{% endblock %}

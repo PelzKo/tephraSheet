@@ -1,0 +1,15 @@
+<div class="paper" id="group">
+  <h2>{% t "Table" %}</h2>
+  <p><a class="btn" href="{% url 'gm_party' %}">{% t "Party overview" %}</a> <a class="btn" href="{% url 'gm_action_log' %}">{% t "Action log" %}</a></p>
+  <h3>{% t "Group actions" %}</h3>
+  <p class="small muted">{% t "Applied to every active character, each change logged like a play action." %}</p>
+  <div class="row">
+    <form class="row" method="post" action="{% url 'gm_group_action' %}" onsubmit="return confirm('{% t "Give every active character this much XP?" %}')">{% csrf_token %}
+      <input type="hidden" name="what" value="xp"><label>{% t "XP" %} <input type="number" name="amount" value="1" min="-99" max="99" required style="width:5em"></label>
+      <button class="btn small">{% t "XP to all" %}</button></form>
+    <form method="post" action="{% url 'gm_group_action' %}" onsubmit="return confirm('{% t "Breather for every active character?" %}')">{% csrf_token %}
+      <input type="hidden" name="what" value="breather"><button class="btn small">{% t "Breather for all" %}</button></form>
+    <form method="post" action="{% url 'gm_group_action' %}" onsubmit="return confirm('{% t "End fight mode for every active character?" %}')">{% csrf_token %}
+      <input type="hidden" name="what" value="end_fight"><button class="btn small">{% t "End fight for all" %}</button></form>
+  </div>
+</div>

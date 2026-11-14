@@ -10,7 +10,7 @@ from rules.extensions import enabled
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .. import access
+from .. import access, actionlog
 from ..models import Pet
 
 PET_ATTRS = pet_rules.ATTRS
@@ -87,10 +87,12 @@ def pet_edit(request, character, pet_id=None):
     animals = get_registry().animals
     if request.method == "POST":
         if pet and request.POST.get("action") == "delete":
+            actionlog.log(request, "pet:delete", pet)
             pet.delete()
             messages.success(request, _("{name} removed.", name=pet.name))
             return redirect(f"{character.get_absolute_url()}?tab=pets")
         pet = pet or Pet(character=character, template=next(iter(animals["templates"])))
+        before = actionlog.values(pet) if pet.pk else {}
         preset = presets().get(request.POST.get("preset", ""))
         if preset and not pet.pk:
             pet.name, pet.preset, pet.origin = request.POST.get("name") or preset["name"], preset["slug"], "preset"
@@ -100,6 +102,7 @@ def pet_edit(request, character, pet_id=None):
         else:
             _from_post(pet, request.POST, animals)
         pet.save()
+        actionlog.log(request, "pet:edit" if before else "pet:create", pet, before, actionlog.values(pet))
         for problem in validate(pet, animals):
             messages.warning(request, problem)
         if request.POST.get("action") == "done":
