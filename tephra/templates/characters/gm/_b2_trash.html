@@ -1,0 +1,47 @@
+{# /gm/ section: export, snapshots, duplicate, import, abandoned drafts, trash (views/trash.py gm_context). #}
+<div class="paper" id="transfer">
+  <h2>{% t "Export, copies and snapshots" %}</h2>
+  <div class="table-scroll"><table class="data">
+    <tr><th>{% t "Name" %}</th><th data-nosort>{% t "Export" %}</th><th data-nosort>{% t "Snapshots before level-ups" %}</th><th data-nosort>{% t "Duplicate" %}</th></tr>
+    {% for c in transfer_characters %}
+      <tr><td><a href="{{ c.get_absolute_url }}">{{ c }}</a></td>
+        <td><a class="btn small" href="{% url 'export_character' c.pk %}" download>{% t "Download" %}</a></td>
+        <td>{% with snaps=c.snapshots.all %}{% if snaps %}<details class="small"><summary>{% t "{n} snapshot(s)" n=snaps|length %}</summary>
+          {% for s in snaps %}<div><a href="{% url 'gm_snapshot' s.pk %}" download>{% t "Level {level}" level=s.level %} · {{ s.created|date:"Y-m-d H:i" }}</a></div>{% endfor %}</details>
+          {% else %}<span class="muted small">–</span>{% endif %}{% endwith %}</td>
+        <td><form class="row" method="post" action="{% url 'gm_duplicate' c.pk %}">{% csrf_token %}
+          <input type="text" name="name" placeholder="{% t "{name} (copy)" name=c %}" aria-label="{% t "Name of the copy" %}">
+          <input type="password" name="password" minlength="8" required autocomplete="new-password" placeholder="{% t "new password" %}" aria-label="{% t "Password of the copy" %}">
+          <button class="btn small">{% t "Duplicate" %}</button></form></td></tr>
+    {% empty %}<tr><td colspan="4" class="muted">{% t "No characters yet." %}</td></tr>{% endfor %}
+  </table></div>
+  <h3>{% t "Import a character" %}</h3>
+  <form class="row" method="post" action="{% url 'gm_import' %}" enctype="multipart/form-data">{% csrf_token %}
+    <input type="file" name="file" accept=".json,application/json" required aria-label="{% t "Character file (JSON)" %}">
+    <input type="text" name="name" placeholder="{% t "Name (empty = from the file)" %}" aria-label="{% t "Name" %}">
+    <input type="password" name="password" minlength="8" required autocomplete="new-password" placeholder="{% t "new password" %}" aria-label="{% t "Password" %}">
+    <button class="btn small primary">{% t "Import as new character" %}</button>
+  </form>
+  <p class="small muted">{% t "An import always creates a new character; existing characters are never overwritten." %}</p>
+</div>
+<div class="paper" id="trash">
+  <h2>{% t "Trash" %}</h2>
+  <form method="post" action="{% url 'gm_drafts_to_trash' %}" onsubmit="return confirm('{% t "Move {n} draft(s) untouched for {days} days or more to the trash?" n=abandoned_drafts days=draft_days %}')">{% csrf_token %}
+    <button class="btn small" {% if not abandoned_drafts %}disabled{% endif %}>{% t "Move {n} abandoned draft(s) to the trash" n=abandoned_drafts %}</button>
+    <span class="small muted">{% t "Drafts nobody changed for {days} days." days=draft_days %}</span></form>
+  {% if trash_entries %}
+  <div class="table-scroll"><table class="data">
+    <tr><th>{% t "Type" %}</th><th>{% t "Name" %}</th><th>{% t "Deleted" %}</th><th>{% t "Deleted for good on" %}</th><th data-nosort></th></tr>
+    {% for e in trash_entries %}
+      <tr><td>{% if e.kind == "character" %}{% t "Character" %}{% elif e.kind == "wiki" %}{% t "Wiki page" %}{% else %}{% t "Catalog item" %}{% endif %}</td>
+        <td>{{ e.obj }}</td>
+        <td data-sort="{{ e.deleted_at|date:'c' }}">{{ e.deleted_at|date:"Y-m-d H:i" }}</td>
+        <td data-sort="{{ e.purge_on|date:'c' }}">{{ e.purge_on|date:"Y-m-d" }}</td>
+        <td><form class="row" method="post" action="{% url 'gm_trash' e.kind e.obj.pk %}">{% csrf_token %}
+          <button class="btn small" name="action" value="restore">{% t "Restore" %}</button>
+          <button class="btn small danger" name="action" value="purge" onclick="return confirm('{% t "Delete {name} for good? This cannot be undone." name=e.obj|escapejs %}')">{% t "Delete for good" %}</button></form></td></tr>
+    {% endfor %}
+  </table></div>
+  {% else %}<p class="muted">{% t "The trash is empty." %}</p>{% endif %}
+  <p class="small muted">{% t "Deleted characters, wiki pages and catalog items stay here for {days} days, then they are deleted for good." days=trash_days %}</p>
+</div>

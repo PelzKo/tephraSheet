@@ -125,8 +125,9 @@ def edit(request, slug=None):
         ctx = {"page": p, "title": title, "body": body, "name": name, "updated": request.POST.get("updated", ""),
                "max_body": MAX_BODY}
         if request.POST.get("delete") and p and request.user.is_staff:
-            p.delete()
-            messages.success(request, _("Page deleted."))
+            p.deleted_at = timezone.now()
+            p.save(update_fields=["deleted_at"])
+            messages.success(request, _("Page moved to the trash. The narrator can restore it on the narrator page."))
             return redirect("wiki")
         if not title:
             messages.error(request, _("Give the page a title."))
@@ -150,7 +151,7 @@ def edit(request, slug=None):
         if p is None:
             base = slugify(title)[:100] or "page"
             new_slug, n = base, 2
-            while WikiPage.objects.filter(slug=new_slug).exists():
+            while WikiPage.all_objects.filter(slug=new_slug).exists():  # trashed pages keep their slug
                 new_slug, n = f"{base}-{n}", n + 1
             p = WikiPage.objects.create(slug=new_slug, title=title, body=body, updated_by=name, language=language)
         else:

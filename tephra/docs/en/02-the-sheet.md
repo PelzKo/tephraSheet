@@ -12,4 +12,5 @@
 - **Saving:** if a tap could not be saved (no connection), a red bar says *Not saved – tap to retry*. Text you type in the journal, the notes and the *Found something?* row is kept on the device until it is saved.
 - **Several devices:** the sheet reloads by itself when the character was changed on another device (not while you are typing or a window is open). If the journal or the notes were saved elsewhere in the meantime, your save is refused and both versions are shown.
 - **Print** prints both pages plus an appendix with the full inventory, augments, notes, effects, specialty texts, companions and journal. **Pencil print** leaves HP, wounds, XP and money empty and shows stats without stance and toggle bonuses. **Print with level history** adds a page listing what was chosen at each level.
+- **Export** downloads everything about the character (inventory, effects, companions, journal, level history) as a JSON file. The narrator can import such a file as a new character.
 - **Offline:** a sheet you opened before can still be read without a connection (read only).

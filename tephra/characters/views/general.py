@@ -10,6 +10,7 @@ from django.contrib.auth import views as auth_views
 from django.contrib.auth.hashers import check_password, make_password
 from django.core.cache import cache
 from django.db import connection
+from django.utils import timezone as dj_timezone
 from django.shortcuts import get_object_or_404, redirect, render
 from django.utils.http import url_has_allowed_host_and_scheme
 from django.views.decorators.http import require_POST
@@ -19,6 +20,7 @@ from rules.lang import get_language, gettext as _
 from rules.registry import get_registry
 from .. import access
 from ..middleware import remember_pass
+from . import trash as trash_views
 from ..models import Character, Feedback, NarratorSettings, card_cache_key
 
 CARD_TTL = 600  # rows changed with queryset.update() skip the save signal; this bounds the staleness
@@ -151,8 +153,9 @@ def delete_view(request, character):
     if not access.is_gm(request) and character.status != "draft":
         messages.error(request, _("Only the narrator can delete finished characters."))
         return redirect("sheet", pk=character.pk)
-    character.delete()
-    messages.success(request, _("Character deleted."))
+    character.deleted_at = dj_timezone.now()
+    character.save(update_fields=["deleted_at"])
+    messages.success(request, _("Character moved to the trash. The narrator can restore it on the narrator page."))
     return redirect("character_list")
 
 
@@ -249,7 +252,7 @@ def gm_settings(request):
     return render(request, "characters/gm_settings.html", {
         "form": form, "characters": Character.objects.all(), "feedback": feedback,
         "feedback_open": sum(1 for f in feedback if f.is_open), "feedback_statuses": Feedback.STATUS_CHOICES,
-        "server": server_info()})
+        "server": server_info(), **trash_views.gm_context()})
 
 
 @staff_member_required(login_url="gm_login")

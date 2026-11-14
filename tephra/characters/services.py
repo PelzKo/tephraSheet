@@ -13,7 +13,8 @@ from rules.extensions import is_offered
 from rules.lang import gettext as _
 from rules.registry import get_registry
 
-from .models import Character, InventoryItem, LevelLog, NarratorSettings
+from . import transfer
+from .models import Character, CharacterSnapshot, InventoryItem, LevelLog, NarratorSettings
 
 NATIONALITY_TYPES = {"nationality"}
 NARRATOR_STORY_TYPES = {"achievement"}  # granted by the narrator in admin mode, never picked in the wizard
@@ -509,6 +510,7 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
     errors = leveling.validate_levelup_skills(skill_delta)
     if errors:
         return errors
+    snapshot = transfer.export_character(character)  # stored only if the level-up goes through
     old_max_hp = character.compute().max_hp
     new_level = character.level + 1
     skills = dict(character.skills)
@@ -554,6 +556,7 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
         character.current_hp = max(0, min(new_max_hp, character.current_hp + new_max_hp - old_max_hp))
     # Plan entries of earlier levels are done (the one of this level stays for the augments page).
     character.plan = [e for e in character.plan if e.get("level", 0) >= new_level]
+    CharacterSnapshot.record(character, snapshot)
     character.save()
     data = {"skills": skill_delta, "specialty": specialty, "retrofit": list(retrofit or []), "augments": list(augments)}
     if retrofit and retrofit[0] and retrofit[1]:
