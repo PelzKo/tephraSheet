@@ -7,4 +7,4 @@
 - **Sonstiges:** Andauernde Darbietungen wie **Schlachthymne** und **Epischer Tanz** sind keine Haltungen. Beim Einschalten werden die Kosten angezeigt (2 AP zum Beginnen, 1 AP jede weitere Runde). Verknüpfte Spezialisierungen schalten mit: Siegeshymne addiert den Bonus der Schlachthymne zur Schlagkraft, Der Tanz endet nie den Tanzbonus zur Verteidigung. Solange sie aktiv sind, steht der Bonus in den Notizen.
 - **Situativ:** Schalter für bedingte Boni (z. B. „bei 0 TP“).
 - **Geld:** 1 König = 10 Prinzen = 100 Dukes. Klicke auf ein Geld-Zahnrad, um Geld zu bekommen, auszugeben oder zu verschieben.
-- **Admin-Modus** erlaubt Änderungen an Werten, die die Regeln sonst festlegen (wenn der Erzähler es erlaubt).
+- **Admin-Modus** erlaubt Änderungen an Werten, die die Regeln sonst festlegen (wenn der Erzähler es erlaubt). Dort hinzugefügte Spezialisierungen und Augments sind mit **Erz.** markiert und werden von Regelprüfungen nie entfernt. Im Admin-Modus lässt sich der Erstellungsassistent erneut öffnen, um Entscheidungen zu ändern: Er speichert nur, würfelt nie neu und schließt nicht noch einmal ab.

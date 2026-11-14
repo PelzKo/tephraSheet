@@ -89,6 +89,8 @@ class Character(models.Model):
     augments = models.JSONField(default=list, blank=True)
     body_augments = models.JSONField(default=list, blank=True, help_text='[["slug", marque], ...]')
     stories = models.JSONField(default=list, blank=True)
+    narrator_granted = models.JSONField(default=list, blank=True,
+                                        help_text='added in admin mode, never dropped by revalidation: ["spec:<slug>", "aug:<slug>"]')
     specialty_choices = models.JSONField(default=dict, blank=True,
                                          help_text='choices made when learning, e.g. {"<battle-theme slug>": "singing"}')
 

@@ -1,0 +1,8 @@
+{% load sheet_tags %}<table class="data">
+    <thead><tr><th>{% t "Value" %}</th><th>{% t "Now" %}</th><th>{% t "Planned" %}</th><th>{% t "Change" %}</th></tr></thead>
+    <tbody>
+      {% for r in rows %}<tr{% if r.diff %} class="changed"{% endif %}><td>{{ r.label|t }}</td><td class="num">{{ r.now }}</td><td class="num">{{ r.then }}</td>
+        <td class="num">{% if r.diff %}<b>{{ r.diff|signed }}</b>{% endif %}</td></tr>{% endfor %}
+      {% for r in skill_rows %}<tr class="changed"><td>{{ r.skill|t }}</td><td class="num">{{ r.now }}</td><td class="num">{{ r.then }}</td><td class="num"><b>{{ r.diff|signed }}</b></td></tr>{% endfor %}
+    </tbody>
+  </table>

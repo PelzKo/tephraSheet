@@ -6,17 +6,20 @@
   <div class="field"><label>{% t "Weapon (left hand)" %}</label>
     <select name="weapon1"><option value="">{% t "– none –" %}</option>
       {% for w in weapons %}<option value="{{ w.pk }}" {% if equipped.weapon1.template_id == w.pk %}selected{% endif %}>{{ w.name|item_name }} ({{ w.get_kind_display|t }})</option>{% endfor %}
-      {% if equipped.weapon1 and not equipped.weapon1.template_id %}<option value="custom" selected>{{ equipped.weapon1.name }}</option>{% endif %}</select></div>
+      {% if keep.weapon1 %}<option value="custom" selected>{{ keep.weapon1.name|item_name }}</option>{% endif %}</select></div>
   <div class="field"><label>{% t "Weapon (right hand)" %}</label>
     <select name="weapon2"><option value="">{% t "– none –" %}</option>
       {% for w in weapons %}<option value="{{ w.pk }}" {% if equipped.weapon2.template_id == w.pk %}selected{% endif %}>{{ w.name|item_name }} ({{ w.get_kind_display|t }})</option>{% endfor %}
-      {% if equipped.weapon2 and not equipped.weapon2.template_id %}<option value="custom" selected>{{ equipped.weapon2.name }}</option>{% endif %}</select></div>
+      {% if keep.weapon2 %}<option value="custom" selected>{{ keep.weapon2.name|item_name }}</option>{% endif %}</select></div>
   <div class="field"><label>{% t "Armor" %}</label>
+    {% if body_armor %}<p>{{ body_armor|item_name }} <span class="muted small">{% t "Your body is your armor." %}</span></p>{% else %}
     <select name="armor"><option value="">{% t "– unarmored –" %}</option>
-      {% for w in armors %}<option value="{{ w.pk }}" {% if equipped.armor.template_id == w.pk %}selected{% endif %}>{{ w.name|item_name }}</option>{% endfor %}</select></div>
+      {% for w in armors %}<option value="{{ w.pk }}" {% if equipped.armor.template_id == w.pk %}selected{% endif %}>{{ w.name|item_name }}</option>{% endfor %}
+      {% if keep.armor %}<option value="custom" selected>{{ keep.armor.name|item_name }}</option>{% endif %}</select>{% endif %}</div>
   <div class="field"><label>{% t "Deflection item" %}</label>
     <select name="deflection"><option value="">{% t "– none –" %}</option>
-      {% for w in deflections %}<option value="{{ w.pk }}" {% if equipped.deflection.template_id == w.pk %}selected{% endif %}>{{ w.name|item_name }}</option>{% endfor %}</select></div>
+      {% for w in deflections %}<option value="{{ w.pk }}" {% if equipped.deflection.template_id == w.pk %}selected{% endif %}>{{ w.name|item_name }}</option>{% endfor %}
+      {% if keep.deflection %}<option value="custom" selected>{{ keep.deflection.name|item_name }}</option>{% endif %}</select></div>
 </div>
 <div class="row" style="margin-top:10px"><button class="btn" name="action" value="equip" formnovalidate>{% t "Update preview" %}</button></div>
 <h3 style="margin-top:14px">{% t "Preview" %}</h3>

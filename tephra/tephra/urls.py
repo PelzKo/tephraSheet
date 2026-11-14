@@ -22,6 +22,7 @@ urlpatterns = [
     path("c/<int:pk>/play/<slug:action>/", sheet.play_action, name="play"),
     path("c/<int:pk>/levelup/", levelup.levelup, name="levelup"),
     path("c/<int:pk>/levelup/options/", levelup.levelup_options, name="levelup_options"),
+    path("c/<int:pk>/levelup/preview/", levelup.levelup_preview, name="levelup_preview"),
     path("c/<int:pk>/planner/", planner.planner, name="planner"),
     path("c/<int:pk>/augments/", levelup.augments_view, name="augments"),
     path("c/<int:pk>/pets/new/", pets.pet_edit, name="pet_new"),

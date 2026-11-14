@@ -17,6 +17,7 @@
           <td class="num">{{ c.entry.level }}</td>
           <td>{% for s, v in c.entry.skills.items %}{{ s|t }} +{{ v }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
           <td>{% if c.specialty %}{{ c.specialty.name }} <span class="muted small">({{ c.specialty.skill|default:"General"|t }})</span>{% endif %}
+            {% if c.retrofit|length == 2 %}<div class="small">{% t "Retrofit: {old} → {new}" old=c.retrofit.0.name new=c.retrofit.1.name %}</div>{% endif %}
             {% for pr in c.problems %}<div class="why small">✗ {{ pr }}</div>{% empty %}{% if c.specialty %}<span class="tag ok">✓ {% t "can be learned" %}</span>{% endif %}{% endfor %}</td>
           <td>{% for a in c.augments %}{{ a.name }}{% if not forloop.last %}, {% endif %}{% endfor %}</td>
           <td class="small">{{ c.entry.note }}</td>
@@ -54,6 +55,12 @@
       {% regroup specialties by skill as by_skill %}
       {% for g in by_skill %}<optgroup label="{% if g.grouper %}{{ g.grouper|t }}{% else %}{% t "General (Sciences)" %}{% endif %}">{% for s in g.list %}<option value="{{ s.slug }}" {% if s.slug == entry.specialty %}selected{% endif %}>{{ s.name }}</option>{% endfor %}</optgroup>{% endfor %}
     </select></div>
+    {% if retrofit_level %}
+    <div class="field"><label>{% t "Retrofit: replace specialty" %}</label><select name="retrofit_old"><option value="">{% t "– keep all –" %}</option>
+      {% for s in specialties %}<option value="{{ s.slug }}" {% if s.slug == retrofit.0 %}selected{% endif %}>{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div>
+    <div class="field"><label>{% t "…for this specialty (same attribute)" %}</label><select name="retrofit_new"><option value="">–</option>
+      {% for s in specialties %}<option value="{{ s.slug }}" {% if s.slug == retrofit.1 %}selected{% endif %}>{{ s.name }} ({{ s.attribute|t }})</option>{% endfor %}</select></div>
+    {% endif %}
     <div class="field"><label>{% t "Augments to learn" %} <span class="muted small">{% t "(Ctrl/⌘-click for several)" %}</span></label>
       <select name="augments" multiple size="5">
         {% regroup augments by skill as by_aug %}
@@ -71,14 +78,7 @@
 {% if checks %}
 <div class="paper">
   <h2>{% t "Preview: level {old} → {new}" old=character.level new=plan_level %}</h2>
-  <table class="data">
-    <thead><tr><th>{% t "Value" %}</th><th>{% t "Now" %}</th><th>{% t "Planned" %}</th><th>{% t "Change" %}</th></tr></thead>
-    <tbody>
-      {% for r in rows %}<tr{% if r.diff %} class="changed"{% endif %}><td>{{ r.label|t }}</td><td class="num">{{ r.now }}</td><td class="num">{{ r.then }}</td>
-        <td class="num">{% if r.diff %}<b>{{ r.diff|signed }}</b>{% endif %}</td></tr>{% endfor %}
-      {% for r in skill_rows %}<tr class="changed"><td>{{ r.skill|t }}</td><td class="num">{{ r.now }}</td><td class="num">{{ r.then }}</td><td class="num"><b>{{ r.diff|signed }}</b></td></tr>{% endfor %}
-    </tbody>
-  </table>
+  {% include "characters/partials/preview_table.html" %}
 </div>
 {% endif %}
 {% endblock %}

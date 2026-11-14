@@ -91,8 +91,8 @@ def set_nationality_story(character, slug):
     character.stories = stories
 
 
-def random_step1(character, rng):
-    r = creation.random_race_and_nationality(rng)
+def random_step1(character, rng, race=None):
+    r = creation.random_race_and_nationality(rng, race=race)
     set_race(character, r["race"])
     character.nationality = r["nationality"]
     character.fixed_traits = r["fixed_traits"] or character.fixed_traits
@@ -105,28 +105,38 @@ def random_step1(character, rng):
 
 # --------------------------------------------------------------------------- revalidation
 def revalidate(character):
-    """Drop specialties/augments that are no longer legal after earlier choices changed."""
+    """Drop specialties/augments of a draft that are no longer legal after earlier choices changed.
+    Finished characters (edited in admin mode) and narrator-granted entries are never touched.
+    Returns the names of what was removed."""
+    if character.status != "draft":
+        return []
+    reg = get_registry()
+    granted = set(character.narrator_granted)
     state = character.to_state()
-    kept = []
+    kept, removed = [], []
     for slug, level in character.specialties:
-        spec = get_registry().specialties.get(slug)
+        spec = reg.specialties.get(slug)
         if not spec:
             continue
         state.specialties = [(s, l) for s, l in kept]
-        ok, _reasons = check_specialty(spec, state, compute(state))
-        if ok:
+        if f"spec:{slug}" in granted or check_specialty(spec, state, compute(state))[0]:
             kept.append((slug, level))
+        else:
+            removed.append(spec["name"])
     character.specialties = [list(k) for k in kept]
     state.specialties = kept
     sheet = compute(state)
     capacity = sheet.stats["aug"].total
     augs = []
     for slug in character.augments:
-        aug = get_registry().augments.get(slug)
+        aug = reg.augments.get(slug)
         state.augments = augs
-        if aug and check_augment(aug, state, sheet)[0] and len(augs) < capacity:
+        if f"aug:{slug}" in granted or aug and check_augment(aug, state, sheet)[0] and len(augs) < capacity:
             augs.append(slug)
+        elif aug:
+            removed.append(aug["name"])
     character.augments = augs
+    return removed
 
 
 # --------------------------------------------------------------------------- steps 4/5
@@ -204,6 +214,9 @@ def set_augments(character, slugs):
     for slug in slugs:
         aug = reg.augments.get(slug)
         if not aug:
+            continue
+        if f"aug:{slug}" in character.narrator_granted and slug in owned:
+            kept.append(slug)  # narrator-granted: no checks
             continue
         if slug not in owned and not is_offered(aug):
             errors.append(_("{name}: not offered by the narrator.", name=aug["name"]))
@@ -415,10 +428,10 @@ def random_finishings(character, rng):
 
 
 # --------------------------------------------------------------------------- random per step / all
-def random_step(character, step, rng=None):
+def random_step(character, step, rng=None, race=None):
     rng = rng or random.Random()
     if step == 1:
-        random_step1(character, rng)
+        random_step1(character, rng, race)
         character.save()
         grant_race_items(character)
     elif step == 2:
@@ -450,10 +463,10 @@ def random_step(character, step, rng=None):
 
 
 @transaction.atomic
-def random_all(character, rng=None):
+def random_all(character, rng=None, race=None):
     rng = rng or random.Random()
     for step in (1, 2, 4, 5, 6, 7, 9, 10):
-        random_step(character, step, rng)
+        random_step(character, step, rng, race)
     character.wizard_step = 10
     character.save()
 
@@ -470,9 +483,24 @@ def finish_creation(character):
     character.status = "active"
     character.wizard_step = 10
     reset_health(character)
+    if character.level < character.target_level:  # higher starting level: its starting money, granted once
+        character.money_on_hand = starting_money(character.target_level)
     character.save()
     LevelLog.objects.create(character=character, level=1, data={
         "skills": character.skills, "specialties": character.specialties, "augments": character.augments})
+
+
+def legal_specialties(character):
+    """Slugs of learned specialties whose prerequisites are met."""
+    return legal_in_state(character.to_state())
+
+
+def legal_in_state(state):
+    """Slugs of the state's specialties whose prerequisites are met."""
+    reg = get_registry()
+    sheet = compute(state)
+    return {s for s, _l in state.specialties
+            if s in reg.specialties and check_specialty(reg.specialties[s], state, sheet, ignore_owned=True)[0]}
 
 
 @transaction.atomic
@@ -481,6 +509,7 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
     errors = leveling.validate_levelup_skills(skill_delta)
     if errors:
         return errors
+    old_max_hp = character.compute().max_hp
     new_level = character.level + 1
     skills = dict(character.skills)
     for s, p in skill_delta.items():
@@ -493,6 +522,7 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
         errs = leveling.validate_retrofit(*retrofit)
         if errs:
             return errs
+        legal_before = legal_specialties(character)
         old = [list(s) for s in character.specialties]
         idx = next((i for i, (s, _) in enumerate(old) if s == retrofit[0]), None)
         if idx is None:
@@ -503,6 +533,12 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
         errs = add_specialties_sequentially(character, [retrofit[1]], level=replaced_level, options=options)
         if errs:
             return errs
+        reg = get_registry()
+        broken = [reg.specialties[s]["name"] for s in legal_before - legal_specialties(character)
+                  if s != retrofit[0]]
+        if broken:
+            return [_("Can't replace {name}: {names} would lose a prerequisite.",
+                      name=reg.specialties[retrofit[0]]["name"], names=", ".join(broken))]
     errs = add_specialties_sequentially(character, [specialty], level=new_level, options=options)
     if errs:
         return errs
@@ -512,10 +548,19 @@ def apply_levelup(character, skill_delta, specialty, retrofit=None, augments=(),
             return errs
     if from_xp:
         character.xp = max(0, character.xp - tables.XP_PER_LEVEL)
-    reset_health(character)
+    # More max HP raise current HP by the same amount; wounds stay.
+    new_max_hp = character.compute().max_hp
+    if character.current_hp is not None:
+        character.current_hp = max(0, min(new_max_hp, character.current_hp + new_max_hp - old_max_hp))
+    # Plan entries of earlier levels are done (the one of this level stays for the augments page).
+    character.plan = [e for e in character.plan if e.get("level", 0) >= new_level]
     character.save()
-    LevelLog.objects.create(character=character, level=new_level, data={
-        "skills": skill_delta, "specialty": specialty, "retrofit": list(retrofit or []), "augments": list(augments)})
+    data = {"skills": skill_delta, "specialty": specialty, "retrofit": list(retrofit or []), "augments": list(augments)}
+    if retrofit and retrofit[0] and retrofit[1]:
+        data["retrofit_level"] = replaced_level
+    if options:
+        data["options"] = {k: v for k, v in options.items() if v}
+    LevelLog.objects.create(character=character, level=new_level, data=data)
     return []
 
 

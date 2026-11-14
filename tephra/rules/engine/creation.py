@@ -128,11 +128,11 @@ def nationality_stories(nationality_slug, race_slug=None):
             if s["type"] == "nationality" and s["group"] == nat["story_group"] and story_allowed(s, race_slug)]
 
 
-def random_race_and_nationality(rng=None):
+def random_race_and_nationality(rng=None, race=None):
     rng = rng_or_default(rng)
     reg = get_registry()
-    race = rng.choice([r["slug"] for r in offer_races(reg.races.values())
-                       if r.get("group") != "Variant"])  # variants need the narrator's approval
+    race = race or rng.choice([r["slug"] for r in offer_races(reg.races.values())
+                               if r.get("group") != "Variant"])  # variants need the narrator's approval
     nats = [n["slug"] for n in offer(reg.nationalities.values()) if n["slug"] != "other"]
     nat = rng.choice(nats)
     fixed = random_fixed_choice(race, rng)

@@ -3,9 +3,9 @@
 {% block content %}
 <div class="row spread" style="color:var(--paper);margin-bottom:8px">
   <h1 style="margin:0">{% if character.name %}{{ character.name }}{% else %}{% t "New character" %}{% endif %}</h1>
-  <form method="post" action="{% url 'wizard_step' character.pk step %}" onsubmit="return confirm('{% t "Roll a complete random character? This replaces your current choices." %}')">
+  {% if draft %}<form method="post" action="{% url 'wizard_step' character.pk step %}" onsubmit="return confirm('{% t "Roll a complete random character? This replaces your current choices." %}')">
     {% csrf_token %}<button class="btn brass dice" name="action" value="random_all"> {% t "Random character" %}</button>
-  </form>
+  </form>{% else %}<a class="btn" href="{% url 'sheet' character.pk %}">{% t "Back to sheet" %}</a>{% endif %}
 </div>
 <nav class="steps">
   {% for s in steps %}<a href="{% url 'wizard_step' character.pk s.n %}" class="{% if s.current %}current{% elif s.done %}done{% endif %}"><b>{{ s.n }}</b>{{ s.label }}</a>{% endfor %}
@@ -15,7 +15,7 @@
   <button name="action" value="save" hidden tabindex="-1" aria-hidden="true" formnovalidate></button>
   <div class="row spread">
     <h2>{{ step }} – {% block step_title %}{% endblock %}</h2>
-    {% block random_btn %}<button class="btn dice" name="action" value="random" formnovalidate> {% t "Random" %}</button>{% endblock %}
+    {% if draft %}{% block random_btn %}<button class="btn dice" name="action" value="random" formnovalidate{% if has_data %} onclick="return confirm('{% t "Fill this step randomly? This replaces what you entered here." %}')"{% endif %}> {% t "Random" %}</button>{% endblock %}{% endif %}
   </div>
   {% block intro %}{% endblock %}
   {% block step %}{% endblock %}
@@ -24,10 +24,12 @@
       {% if step > 1 %}<button class="btn" name="action" value="back" formnovalidate>{% t "← Back" %}</button>{% endif %}
       <button class="btn" name="action" value="save" formnovalidate>{% t "Save" %}</button>
     </div>
-    {% block next_btn %}<button class="btn primary" name="action" value="next">{% t "Next →" %}</button>{% endblock %}
+    {% if draft %}{% block next_btn %}<button class="btn primary" name="action" value="next">{% t "Next →" %}</button>{% endblock %}
+    {% elif step < 10 %}<button class="btn primary" name="action" value="next">{% t "Next →" %}</button>
+    {% else %}<a class="btn primary" href="{% url 'sheet' character.pk %}">{% t "Back to sheet" %}</a>{% endif %}
   </div>
 </form>
-{% if step == 1 %}
+{% if step == 1 and draft %}
 <form method="post" action="{% url 'delete_character' character.pk %}" style="margin-top:14px;text-align:right" onsubmit="return confirm('{% t "Discard this draft?" %}')">{% csrf_token %}<button class="btn small danger">{% t "Discard draft" %}</button></form>
 {% endif %}
 {% endblock %}
