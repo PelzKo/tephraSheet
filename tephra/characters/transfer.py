@@ -8,7 +8,7 @@ import json
 
 from django.core.exceptions import ValidationError
 from django.core.serializers.json import DjangoJSONEncoder
-from django.db import transaction
+from django.db import models, transaction
 from django.utils import timezone
 
 from rules.engine.pets import compute_pet
@@ -30,6 +30,36 @@ CHILDREN = {  # export key: (model, fields not in the file)
     "automatons": (Automaton, {"id", "character", "weapon", "armor"}),
 }
 TOP_KEYS = {"format", "version", "exported", "character", *CHILDREN}
+ID_KEYS = {"items": "item", "custom_modifiers": "custom"}  # children whose pk appears in toggle keys ("item:<pk>…")
+
+
+def _strs(v):
+    return isinstance(v, list) and all(isinstance(x, str) for x in v)
+
+
+def _str_map(v, value_types):
+    return all(isinstance(k, str) and isinstance(x, value_types) and not isinstance(x, bool) for k, x in v.items())
+
+
+def _plan_entry(e):
+    return (isinstance(e, dict) and type(e.get("level")) is int and _str_map(e.get("skills") or {}, int)
+            and isinstance(e.get("specialty", ""), str) and _strs(e.get("augments", []))
+            and _strs(e.get("retrofit") or []) and isinstance(e.get("note", ""), str))
+
+
+FIGHT_TYPES = {"active": bool, "my_turn": bool, "upkeep_choice": bool, "ap": int, "round": int}
+CHARACTER_SHAPES = {  # member types of Character JSON fields (the container type is checked for every JSONField)
+    "fixed_traits": _strs, "random_traits": _strs, "augments": _strs, "stories": _strs, "toggles": _strs,
+    "narrator_granted": _strs,
+    "skills": lambda v: _str_map(v, int), "misc": lambda v: _str_map(v, int),
+    "specialty_choices": lambda v: _str_map(v, str), "trait_choices": lambda v: all(isinstance(k, str) for k in v),
+    "specialties": lambda v: all(isinstance(x, list) and len(x) == 2 and isinstance(x[0], str) and type(x[1]) is int
+                                 for x in v),
+    "body_augments": lambda v: all(isinstance(x, list) and len(x) == 2 and isinstance(x[0], str) and type(x[1]) is int
+                                   for x in v),
+    "fight": lambda v: all(k in FIGHT_TYPES and type(x) is FIGHT_TYPES[k] for k, x in v.items()),
+    "plan": lambda v: all(map(_plan_entry, v)),
+}
 
 
 class TransferError(Exception):
@@ -54,6 +84,9 @@ def export_character(character):
             "character": _dump(character, CHARACTER_SKIP), "items": [_dump(i, CHILDREN["items"][1]) for i in items]}
     for key in ("effects", "custom_modifiers", "level_logs", "pets"):
         data[key] = [_dump(o, CHILDREN[key][1]) for o in getattr(character, key).all()]
+    for key in ID_KEYS:  # file-local ids, so import can rewrite toggle keys to the new pks
+        for row, obj in zip(data[key], getattr(character, key).all() if key != "items" else items):
+            row["id"] = obj.pk
     data["automatons"] = [dict(_dump(a, CHILDREN["automatons"][1]), weapon=index.get(a.weapon_id),
                                armor=index.get(a.armor_id)) for a in character.automatons.all()]
     return json.loads(json.dumps(data, cls=DjangoJSONEncoder))
@@ -88,6 +121,14 @@ def _build(model, row, skip, label, errors, extra=()):
                 setattr(obj, fields[name].attname, fields[name].to_python(value))
             except (ValidationError, TypeError, ValueError):
                 errors.append(_("{label}: invalid value for {name}.", label=label, name=name))
+                continue
+            # JSONField only checks serializability: the value must have the default's container type (list/dict)
+            shape = CHARACTER_SHAPES.get(name) if model is Character else None
+            if isinstance(fields[name], models.JSONField) and callable(fields[name].default) and (
+                    type(value) is not type(fields[name].default()) or shape and not shape(value)):
+                errors.append(_("{label}: invalid value for {name}.", label=label, name=name))
+        elif name == "id" and type(value) is not int:
+            errors.append(_("{label}: invalid value for {name}.", label=label, name=name))
     try:
         obj.full_clean(exclude=["character", "template", "weapon", "armor"], validate_unique=False)
     except ValidationError as e:
@@ -143,7 +184,7 @@ def import_character(data, name, password):
         if not isinstance(values, list):
             errors.append(_("{label}: not a list.", label=key))
             continue
-        extra = ("weapon", "armor") if model is Automaton else ()
+        extra = ("weapon", "armor") if model is Automaton else ("id",) if key in ID_KEYS else ()
         rows[key] = [(r, _build(model, r, skip, f"{key} {n + 1}", errors, extra)) for n, r in enumerate(values)]
     if errors:
         raise TransferError(errors)
@@ -164,6 +205,7 @@ def import_character(data, name, password):
             character.name = name[:120]
         character.set_password(password)
         character.save()
+        new_ids = {prefix: {} for prefix in ID_KEYS.values()}
         for key in CHILDREN:
             for row, obj in rows[key]:
                 obj.character = character
@@ -172,8 +214,12 @@ def import_character(data, name, password):
                     obj.armor = items[row["armor"]] if row.get("armor") is not None else None
                 created = getattr(obj, "created", None)
                 obj.save()
+                if key in ID_KEYS and "id" in row:
+                    new_ids[ID_KEYS[key]][row["id"]] = obj.pk
                 if row.get("created"):  # keep the file's date (auto_now_add set it to now)
                     type(obj).objects.filter(pk=obj.pk).update(created=created)
+        character.toggles = [k for k in map(lambda k: _remap_toggle(k, new_ids), character.toggles) if k]
+        character.save(update_fields=["toggles"])
         try:  # the data must work with the rules engine, or the sheet would not open
             character.compute()
             level_history(character)
@@ -184,6 +230,17 @@ def import_character(data, name, password):
         except Exception:  # noqa: BLE001 – any engine error means the file does not fit the rules
             raise TransferError([_("The character data does not fit the rules (the sheet could not be computed).")])
     return character
+
+
+def _remap_toggle(key, new_ids):
+    """``item:<old pk>[:aug:…]``/``custom:<old pk>`` with the new pk; None for an id not in the file (it could
+    match an unrelated new child)."""
+    kind, _sep, rest = key.partition(":")
+    old, sep, tail = rest.partition(":")
+    if kind not in new_ids or not old.isdigit():
+        return key
+    new = new_ids[kind].get(int(old))
+    return f"{kind}:{new}{sep}{tail}" if new else None
 
 
 def duplicate_character(character, name, password):

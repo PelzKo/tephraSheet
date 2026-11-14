@@ -146,6 +146,39 @@ def test_import_validates_strictly(admin_client, db, mutate, message):
     assert Character.all_objects.count() == before
 
 
+def test_duplicate_remaps_id_based_toggle_keys(db):
+    c = full_character()
+    cm = c.custom_modifiers.get()
+    sword = c.items.get(name="Saber")
+    c.toggles = [f"custom:{cm.pk}", f"item:{sword.pk}", f"item:{sword.pk}:aug:x", "custom:99999", "spec:foo"]
+    c.save()
+    twin = transfer.duplicate_character(c, "Twin", PW)
+    new_cm, new_sword = twin.custom_modifiers.get(), twin.items.get(name="Saber")
+    assert twin.toggles == [f"custom:{new_cm.pk}", f"item:{new_sword.pk}", f"item:{new_sword.pk}:aug:x", "spec:foo"]
+    assert new_cm.as_modifier()["key"] in twin.toggles
+
+
+@pytest.mark.parametrize("field, value", [
+    ("fight", ["bad"]), ("fight", {"ap": "3"}), ("plan", [{"level": "x"}]), ("plan", ["bad"]),
+    ("toggles", {"a": 1}), ("toggles", [1]), ("skills", {"Brute": "2"}), ("misc", []),
+    ("specialty_choices", {"x": 1}), ("narrator_granted", "spec:x"), ("trait_rolls", {}),
+])
+def test_import_validates_json_field_shapes(db, field, value):
+    data = transfer.export_character(finished())
+    data["character"][field] = value
+    with pytest.raises(transfer.TransferError, match=field):
+        transfer.import_character(data, "X", PW)
+
+
+def test_import_validates_child_json_fields_and_ids(db):
+    data = transfer.export_character(full_character())
+    data["pets"][0]["traits"] = {"a": 1}
+    data["items"][0]["id"] = "1"
+    with pytest.raises(transfer.TransferError) as err:
+        transfer.import_character(data, "X", PW)
+    assert "traits" in str(err.value) and "id" in str(err.value)
+
+
 def test_import_refuses_big_file_and_short_password(admin_client, db):
     data = transfer.export_character(finished())
     with pytest.raises(transfer.TransferError):
