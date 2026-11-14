@@ -2,7 +2,7 @@
 {% block content %}
 <div class="paper">
   <div class="row spread">
-    <h1>{% t "Planner: {name}" name=character.name %}</h1>
+    <h1>{% t "Planner: {name}" name=character.name %} {% include "partials/help_link.html" with slug="planner" %}</h1>
     <a class="btn" href="{% url 'sheet' character.pk %}">{% t "Back to the sheet" %}</a>
   </div>
   <p class="muted">{% t "Plan your next levels. The plan changes nothing on the sheet; it preselects your choices on the level-up page and shows what your character would look like." %}</p>

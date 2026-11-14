@@ -12,3 +12,6 @@ Jedes Volk erhält seine festen Merkmale und **ein** zufälliges Merkmal (W12 w�
 - **Farishtaa – Missglückte Operation** gibt die Elfenmerkmale Baumausreißer-Stärke und Schwache Seelen.
 
 Wenn der Erzähler es erlaubt, kannst du dein Zufallsmerkmal wählen statt zu würfeln.
+
+## Erweiterungen
+Neben dem Spielerhandbuch kennt die App Erweiterungen (mehr Völker, Augments, Gegenstände und Regeln wie Mementos, Lebende Flüssigkeiten oder Pets & Predators). Der Erzähler entscheidet, welche angeboten werden, und kann Völker für neue Charaktere abschalten. Nur Eingeschaltetes erscheint im Assistenten, beim Stufenaufstieg, im Planer und im Katalog; ein Charakter behält, was er schon hat, auch wenn der Erzähler eine Erweiterung später ausschaltet. Die Regeln der Erweiterungen stehen in der Regelreferenz des Wikis.

@@ -12,3 +12,6 @@ Every race gets its fixed traits plus **one** random trait (roll d12). Special c
 - **Farishtaa – Botched Surgery** gives the elf traits Tree-Ripping Strength and Weak Soul.
 
 If the narrator allows it, you can pick your random trait instead of rolling.
+
+## Extensions
+Besides the Playing Guide, the app knows extensions (more races, augments, items and rules such as Mementos, Living Liquids or Pets & Predators). The narrator decides which are offered, and may also switch off races for new characters. Only what is switched on appears in the wizard, at level-up, in the planner and in the catalog; a character keeps what it already has even if the narrator switches an extension off later. The extensions' rules are in the wiki's rules reference.

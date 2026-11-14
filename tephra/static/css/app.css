@@ -295,3 +295,7 @@ tr.fb-closed td { opacity: .55; }
 .liquid-stats { display: flex; flex-wrap: wrap; gap: 4px 12px; margin: 6px 0; }
 .pet-card { border-top: 1px solid var(--line); padding: 10px 0; }
 .pet-stats { display: flex; flex-wrap: wrap; gap: 4px 14px; margin: 4px 0; }
+/* Context help "?" (templates/partials/help_link.html) */
+.help-link { display: inline-grid; place-items: center; width: 1.3em; height: 1.3em; border-radius: 50%; border: 1px solid var(--ink-soft);
+  font-size: 13px; font-weight: bold; text-decoration: none; vertical-align: middle; color: inherit; }
+@media print { .help-link { display: none; } }

@@ -164,6 +164,7 @@
     <button type="button" :class="{on: tab==='story'}" x-on:click="setTab('story')">{% t "Story" %}</button>
     {% if pets or automatons %}<button type="button" :class="{on: tab==='pets'}" x-on:click="setTab('pets')">{% t "Companions" %}</button>{% endif %}
     <a class="btn small" href="{% url 'planner' character.pk %}">{% t "Planner" %}</a>
+    {% include "partials/help_link.html" with slug="the-sheet" %}
   </nav>
 
   <div class="pages{% if sheet.hands.has_wings %} has-wings{% endif %}" :data-tab="tab" data-tab="{{ tab }}">
@@ -182,7 +183,7 @@
     {% include "characters/partials/inventory.html" %}
   </div>
   <div class="inventory" x-show="tab==='pets'" {% if tab != "pets" %}style="display:none"{% endif %}>
-    <div class="paper"><div class="row spread"><h2>{% t "Companions" %}</h2>
+    <div class="paper"><div class="row spread"><h2>{% t "Companions" %} {% include "partials/help_link.html" with slug="companions" %}</h2>
       <span>{% if pets_enabled %}<a class="btn small" href="{% url 'pet_new' character.pk %}">{% t "New animal" %}</a>{% endif %}
         <a class="btn small" href="{% url 'automaton_new' character.pk %}">{% t "New automaton" %}</a></span></div>
       {% for c in pets %}{% include "characters/partials/pet_card.html" with p=c.p s=c.s hp_left=c.hp_left %}{% endfor %}

@@ -2,7 +2,7 @@
 {% block content %}
 <div class="paper">
   <div class="row spread">
-    <h1>{% t "Catalog" %}{% if character %} <span class="muted" style="font-size:18px">→ {% t "adding to {name}" name=character %}</span>{% endif %}</h1>
+    <h1>{% t "Catalog" %}{% if character %} <span class="muted" style="font-size:18px">→ {% t "adding to {name}" name=character %}</span>{% endif %} {% include "partials/help_link.html" with slug="items" %}</h1>
     <div class="row">
       <a class="btn primary" href="{% url 'item_create' %}{% if character %}?for={{ character.pk }}{% endif %}">{% t "Create item" %}</a>
       <a class="btn" href="{% url 'catalog_import' %}{% if character %}?for={{ character.pk }}{% endif %}">{% t "Bulk import" %}</a>

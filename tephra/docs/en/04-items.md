@@ -11,3 +11,11 @@
 - **From the catalog:** search the catalog right in the inventory tab and add an item without leaving the sheet.
 - **Give** hands an item (or part of a stack) to another character you have unlocked; both journals note it.
 - On page 2, tap a gear line with a quantity (ammunition, stacks) for − / +.
+
+## Bulk import format
+**Bulk import** (catalog) takes a CSV file or a pasted table: from a spreadsheet, CSV with `,` or `;`, or a markdown table. The first row names the columns; only `name` is needed. *Download CSV template* gives a sample file.
+
+- Useful columns: `kind` (melee, firearm, bow, crossbow, armor, deflection, ammo, gear, animal, vehicle …), `size`, `variants` (flexible / polearm / throwing / impromptu / double-barreled), `material`, `price` (`5 pr`, `3 d`), `augments` (`Accurate II; Damaging I`), `description`, `quantity`. Common other names are understood (e.g. *type* for kind, *cost* for price, *qty* for quantity).
+- Empty number columns (damage class, AP, range, soak …) use the rules' size tables.
+- The preview lists every row with its problems; only rows without problems are imported. Opened from a character's inventory, you choose whether they go into that inventory or into the shared catalog.
+- The file from **Export CSV** has the same format (with the exact price in dukes and a few more columns), so it can be edited and imported again.
