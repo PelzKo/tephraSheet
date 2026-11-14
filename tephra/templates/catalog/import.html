@@ -22,13 +22,13 @@
       <td class="small">{{ r.errors|join:"; " }}</td>
       <td class="small">{% if r.status == "new" %}{% t "new" %}{% elif r.status == "update" %}{% t "updates existing" %}{% elif r.status == "unchanged" %}{% t "unchanged" %}{% elif r.status == "skipped" %}{% t "skipped (Playing Guide item)" %}{% else %}{% t "error" %}{% endif %}</td></tr>{% endfor %}
   </table></div>
-  {% if ok_count %}
+  {% if ok_count or catalog_ok %}
   <form method="post" class="row" style="margin-top:10px">{% csrf_token %}
     {% if character %}<input type="hidden" name="for" value="{{ character.pk }}">
-      <label><input type="radio" name="target" value="inventory" checked> {% t "Into {name}'s inventory" name=character %}</label>
-      <label><input type="radio" name="target" value="catalog"> {% t "Into the shared catalog" %}</label>
+      <label><input type="radio" name="target" value="inventory"{% if ok_count %} checked{% endif %}> {% t "Into {name}'s inventory" name=character %}</label>
+      <label><input type="radio" name="target" value="catalog"{% if not ok_count %} checked{% endif %}> {% t "Into the shared catalog" %}</label>
     {% else %}<input type="hidden" name="target" value="catalog">{% endif %}
-    <button class="btn primary" name="action" value="commit">{% if ok_count == 1 %}{% t "Import 1 item" %}{% else %}{% t "Import {n} items" n=ok_count %}{% endif %}</button>
+    <button class="btn primary" name="action" value="commit">{% with n=ok_count|default:catalog_ok %}{% if n == 1 %}{% t "Import 1 item" %}{% else %}{% t "Import {n} items" n=n %}{% endif %}{% endwith %}</button>
   </form>
   {% endif %}
 </div>

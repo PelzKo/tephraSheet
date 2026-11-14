@@ -180,3 +180,28 @@ def test_csv_update_rows_are_checked_merged_with_the_existing_item(client):
                                         augments=[["armsmith-melee-gnome-sized", 1]])
     assert _import(client, "name,kind,size\nHouse,melee,heavy\n")[0]["status"] == "update"
     assert ItemTemplate.objects.get(pk=house.pk).size == "heavy"
+
+
+@pytest.mark.django_db
+def test_import_parser_errors_never_reach_the_catalog_lookup(client):
+    for text in ("kind,size\nmelee,medium\n", "name,kind\n,melee\nX,laser\n"):  # no name column; blank name, bad kind
+        rows = _import(client, text)
+        assert rows and all(r["status"] == "error" and r["errors"] for r in rows)
+    assert not ItemTemplate.objects.exists()
+
+
+@pytest.mark.django_db
+def test_character_preview_keeps_valid_catalog_updates_importable(client):
+    ItemTemplate.objects.create(name="Tiny", kind="melee", size="light", source="custom")
+    client.post(reverse("character_new"))
+    c = Character.objects.get()
+    url = reverse("catalog_import") + f"?for={c.pk}"
+    text = "name,kind,augments\nTiny,melee,Gnome-Sized\n"  # fails as a new item (no size), fine merged with Tiny
+    resp = client.post(url, {"action": "preview", "text": text})
+    assert resp.context["rows"][0]["errors"] and resp.context["rows"][0]["status"] == "update"
+    assert 'name="action" value="commit"' in resp.content.decode()
+    client.post(url, {"action": "commit", "target": "inventory"})
+    assert not InventoryItem.objects.filter(character=c).exists()  # inventory still refuses it as a new item
+    client.post(url, {"action": "preview", "text": text})
+    client.post(url, {"action": "commit", "target": "catalog"})
+    assert ItemTemplate.objects.get(name="Tiny").augments == [["armsmith-melee-gnome-sized", 1]]

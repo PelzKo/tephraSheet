@@ -324,11 +324,13 @@ def _import_status(values, gm):
 def _catalog_row(row, gm):
     """(errors, status, existing) of an import row into the catalog. An update is checked as the merged item, and only
     when the row changes what decides the fit (as ItemForm), so legacy items still take unrelated updates."""
+    if any(e not in row.get("fit", []) for e in row["errors"]):  # parser errors: values may lack name/kind
+        return row["errors"], "error", None
     values = _catalog_values(row, gm)
     status, existing = _import_status(values, gm)
     errors = row["errors"]
     if existing is not None:
-        errors = [e for e in errors if e not in row.get("fit", [])]
+        errors = []
         if any(_norm(getattr(existing, f)) != _norm(values[f]) for f in ItemForm.FIT_FIELDS if f in values):
             errors += item_requirements.problems({**existing.item_values(), **values})
     return errors, ("error" if errors else status), existing
@@ -367,9 +369,9 @@ def import_view(request):
             return redirect(f"{character.get_absolute_url()}?tab=inventory")
         counts = {"new": 0, "update": 0, "unchanged": 0, "skipped": 0, "error": 0}
         for r in rows:
-            values = _catalog_values(r, gm)
             _errors, status, existing = _catalog_row(r, gm)
             counts[status] += 1
+            values = _catalog_values(r, gm)
             if status == "new":
                 ItemTemplate.objects.create(**values, source="custom")
             elif status == "update":
@@ -386,14 +388,12 @@ def import_view(request):
         counts = {"new": 0, "update": 0, "unchanged": 0, "skipped": 0, "error": 0}
         shown = []  # display copies: the session keeps the rows as parsed, commit rechecks for its target
         for r in rows:
-            if character:  # the inventory target (default) takes every row as a new item
-                errors = r["errors"]
-                status = "error" if errors else _import_status(_catalog_values(r, gm), gm)[0]
-            else:
-                errors, status, _existing = _catalog_row(r, gm)
-            shown.append({**r, "errors": errors, "status": status})
+            errors, status, _existing = _catalog_row(r, gm)  # the Catalog column and summary: the catalog target
             counts[status] += 1
+            # the inventory target takes every row as a new item: Problems shows the row's own check
+            shown.append({**r, "errors": r["errors"] if character else errors, "status": status})
         rows = shown
+    catalog_ok = counts and len(rows) - counts["error"]
     return render(request, "catalog/import.html", {
         "rows": rows, "character": character, "ok_count": sum(1 for r in rows or [] if not r["errors"]),
-        "summary": _import_summary(counts) if counts else ""})
+        "catalog_ok": catalog_ok, "summary": _import_summary(counts) if counts else ""})
