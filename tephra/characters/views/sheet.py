@@ -491,9 +491,9 @@ def pay_effect(request, character, effect, ap):
     ``bandage`` stops the death timer. Paid like stances (pay_ap: from the round's AP in fight mode)."""
     r = effect.rules
     if r.get("per_ap"):
-        ap = max(1, min(ap, -(-effect.amount // r["per_ap"])))  # never more AP than it takes to stop it
+        ap = max(1, min(ap, -(-effect.amount_now // r["per_ap"])))  # never more AP than it takes to stop it
         if pay_ap(request, character, ap, effect.text, stop=True):
-            effect.amount = max(0, effect.amount - ap * r["per_ap"])
+            effect.amount = max(0, effect.amount_now - ap * r["per_ap"])
             effect.active = effect.amount > 0
             effect.save(update_fields=["amount", "active"])
     elif effect.pay_cost and pay_ap(request, character, effect.pay_cost, effect.text, stop=True):

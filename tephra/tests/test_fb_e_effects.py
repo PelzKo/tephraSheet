@@ -184,3 +184,43 @@ def test_export_import_carries_amount(char):
     assert data["effects"][0]["amount"] == 9
     copy = transfer.import_character(data, "Ada 2", "password1")
     assert copy.effects.get().amount == 9
+
+
+def legacy(c, key, kind="status"):
+    """An effect row as saved before amounts existed (amount 0)."""
+    return EffectEntry.objects.create(character=c, kind=kind, key=key, text=key, amount=0)
+
+
+def test_legacy_rows_fall_back_to_rule_amounts(char):
+    client, c = char
+    burn, irr, high = legacy(c, "status:burning-2"), legacy(c, "status:irradiated"), legacy(c, "status:highly-irradiated-2")
+    bleed, arm = legacy(c, "status:bleeding"), legacy(c, "fatal:arm", "fatal")
+    assert burn.amount_now == 4 and burn.amount_text == "(4)"
+    assert irr.pay_cost == 1 and high.pay_cost == 1  # no free End (0 AP) button
+    assert bleed.amount_text == "" and arm.pay_cost == 0  # unknown bleeding; bandage 0 = bandaged
+    html = client.get(reverse("sheet", args=[c.pk])).content
+    assert b"End (1 AP)" in html and b"End (0 AP)" not in html
+    max_ap = fight(client, c)
+    play(client, c, "effect-pay", id=burn.pk, ap="1")  # 1 AP does not put out Burning T2
+    burn.refresh_from_db()
+    assert burn.active and burn.amount == 3 and c.fight["ap"] == max_ap - 1
+    play(client, c, "effect-pay", id=bleed.pk, ap="5")  # unknown amount: 1 AP stops it
+    bleed.refresh_from_db()
+    assert not bleed.active and c.fight["ap"] == max_ap - 2
+    play(client, c, "fight-end-turn")  # bleeding 0 deals no damage, nothing crashes
+
+
+def test_backfill_migration(char):
+    import importlib
+
+    from django.apps import apps
+    client, c = char
+    mig = importlib.import_module("characters.migrations.0030_backfill_effect_amount")
+    burn, arm, bleed = legacy(c, "status:burning-3"), legacy(c, "fatal:arm", "fatal"), legacy(c, "status:bleeding")
+    mig.backfill(apps, None)
+    for e in (burn, arm, bleed):
+        e.refresh_from_db()
+    assert burn.amount == 8 and arm.amount == 1 and arm.pay_cost == 3 and bleed.amount == 0
+    from rules.engine import effects
+    assert all(effects.EFFECTS[k]["start"] == v for k, v in mig.START.items())
+    assert all(effects.EFFECTS[k]["bandage"] for k in mig.BANDAGE)

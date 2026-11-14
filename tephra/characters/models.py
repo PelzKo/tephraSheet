@@ -367,11 +367,20 @@ class EffectEntry(models.Model):
         return effects.EFFECTS.get(self.key, {})
 
     @property
+    def amount_now(self):
+        """The amount; an active row saved before amounts existed (0) falls back to the rule's ``start`` (Burning)
+        or 1 for asked AP costs (Irradiated). Bandage 0 = bandaged and Bleeding 0 = unknown stay 0."""
+        r = self.rules
+        if self.amount or not self.active:
+            return self.amount
+        return r.get("start") or (1 if r.get("cost") == "amount" else 0)
+
+    @property
     def amount_text(self):
         """Shown after the effect name: "(7)", or "(not bandaged)" while a severed limb's death timer runs."""
-        if not self.amount:
+        if not self.amount_now:
             return ""
-        return "({})".format(_("not bandaged") if self.rules.get("bandage") else self.amount)
+        return "({})".format(_("not bandaged") if self.rules.get("bandage") else self.amount_now)
 
     @property
     def pay_cost(self):
@@ -379,7 +388,7 @@ class EffectEntry(models.Model):
         r = self.rules
         if r.get("bandage"):
             return r["bandage"] if self.amount else 0
-        return self.amount if r.get("cost") == "amount" else r.get("cost", 0)
+        return self.amount_now if r.get("cost") == "amount" else r.get("cost", 0)
 
 
 class JournalRevision(models.Model):
