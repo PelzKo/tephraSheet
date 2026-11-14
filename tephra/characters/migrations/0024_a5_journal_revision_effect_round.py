@@ -7,7 +7,7 @@ from django.db import migrations, models
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('characters', '0020_automaton'),
+        ('characters', '0023_a2_narrator_granted'),
     ]
 
     operations = [
