@@ -251,7 +251,8 @@ def augment_check(request):
     augs = [a for a in augs if isinstance(a, list) and len(a) == 2 and a[0] in reg.augments] \
         if isinstance(augs, list) else []
     item = {"kind": p.get("kind", ""), "size": p.get("size", ""), "material": p.get("material", ""),
-            "variants": p.getlist("variants"), "ap_ready": _int(p.get("ap_ready")), "augments": augs}
+            "variants": p.getlist("variants"), "ap_ready": _int(p.get("ap_ready")), "augments": augs,
+            "beta": bool(p.get("beta"))}
     out = {"selected": {}, "options": {}}
     if p.get("house_rule"):
         return JsonResponse(out)
@@ -261,7 +262,8 @@ def augment_check(request):
             out["selected"][slug] = "; ".join(reasons)
     for slug, aug in reg.augments.items():
         if (aug.get("item") or "aether" in item["variants"]) and slug not in on:
-            if reasons := item_requirements.augment_reasons(slug, {**item, "augments": [*augs, [slug, 1]]}):
+            tried = {**item, "augments": [*augs, [slug, 1]]}
+            if reasons := item_requirements.augment_reasons(slug, tried) + item_requirements.count_problems(tried):
                 out["options"][slug] = "; ".join(reasons)
     return JsonResponse(out)
 

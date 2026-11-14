@@ -117,6 +117,14 @@ def test_aether_limit_in_the_form_and_picker(client):
     assert ItemForm({**data, "house_rule": "on"}).is_valid()
     r = client.post(reverse("augment_check"), {**data, "augments_json": "[]"}).json()
     assert "armsmith-melee-cryothermal" in r["options"] and "armsmith-melee-accurate" not in r["options"]
+    # the count limit is in the picker too: 3 augments are full (5 with beta)
+    from rules.engine import tables
+    full = [[a, 1] for a in list(tables.AETHER_SHAPED["augments"])[:3]]
+    r = client.post(reverse("augment_check"), {**data, "augments_json": json.dumps(full)}).json()
+    other = next(a for a in tables.AETHER_SHAPED["augments"] if a not in [f[0] for f in full])
+    assert "at most 3" in r["options"].get(other, "")
+    r = client.post(reverse("augment_check"), {**data, "beta": "on", "augments_json": json.dumps(full)}).json()
+    assert "at most" not in r["options"].get(other, "")
     extensions.set_offer()
 
 

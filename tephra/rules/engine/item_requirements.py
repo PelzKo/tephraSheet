@@ -78,10 +78,15 @@ def problems(item):
     for slug in dict.fromkeys(s for s, _m in item.get("augments") or []):
         name = reg.augments[slug]["name"] if slug in reg.augments else slug
         out += [_("{augment}: {reason}", augment=name, reason=r) for r in augment_reasons(slug, item)]
+    return out + count_problems(item)
+
+
+def count_problems(item):
+    """The aether-shaped weapon's augment count limit (3, or 5 with beta) as a list of messages."""
     limit = tables.AETHER_SHAPED["max_beta" if item.get("beta") else "max"]
     if "aether" in (item.get("variants") or []) and len(item.get("augments") or []) > limit:
-        out.append(_("An aether-shaped weapon takes at most {max} augments.", max=limit))
-    return out
+        return [_("An aether-shaped weapon takes at most {max} augments.", max=limit)]
+    return []
 
 
 def install_notes(aug):
